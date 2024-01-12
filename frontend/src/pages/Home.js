@@ -1,35 +1,36 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from "react"
+import { useStoriesContext } from "../hooks/useStoriesContext"
 
-//components
-import StoryDetails from '../components/StoryDetails'
-import StoryForm from '../components/StoryForm'
+// components
+import StoryForm from "../components/StoryForm"
+import StoryDetails from "../components/StoryDetails"
 
 const Home = () => {
-    const [stories, setStories] = useState(null)
+  const { stories, dispatch } = useStoriesContext()
 
-    useEffect(() => {
-        const fetchStories = async () => {
-            const response = await fetch('/api/stories')
-            const json = await response.json()
+  useEffect(() => {
+    const fetchStories = async () => {
+      const response = await fetch('/api/stories')
+      const json = await response.json()
 
-            if (response.ok) {
-                setStories(json)
-            }
-        }
+      if (response.ok) {
+        dispatch({type: 'SET_STORIES', payload: json})
+      }
+    }
 
-        fetchStories()
-    }, [])
+    fetchStories()
+  }, [dispatch])
 
-    return (
-        <div className="home">
-            <div className="stories">
-                {stories && stories.map((story) => (
-                    <StoryDetails ke ={story._id} story={story} />
-                ))}
-            </div>
-            <StoryForm />
-        </div>
-    )
+  return (
+    <div className="home">
+      <div className="stories">
+        {stories && stories.map(story => (
+          <StoryDetails story={story} key={story._id} />
+        ))}
+      </div>
+      <StoryForm />
+    </div>
+  )
 }
 
 export default Home

@@ -1,6 +1,8 @@
 import { useState } from "react"
+import { useStoriesContext } from "../hooks/useStoriesContext"
 
 const StoryForm = () => {
+    const { dispatch } = useStoriesContext()
     const [title, setTitle] = useState('')
     const [tags, setTags] = useState('')
     const [content, setContent] = useState('')
@@ -28,7 +30,8 @@ const StoryForm = () => {
             setTags('')
             setContent('')
             setError(null)
-            console.log('New Story Posted')
+            console.log('New Story Posted', json)
+            dispatch({type: 'CREATE_STORY', payload: json})
         }
     }
 
