@@ -16,7 +16,7 @@ header {
 header .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0px 0px;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -109,36 +109,43 @@ div.error {
   margin: 20px 0;
 }
 
-.logo-container {
-  margin-left: 60%;
-  margin-right: 50%;
+/* Navbar styles */
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 0 20px; /* Adjust padding as needed */
+  background: #fff;
 }
 
-.createstorylink {
-  margin-left: 80%;
-  margin-right: 1%;
-  padding-left: 2px; 
-  padding-right: 2px;
-  border: 1px solid #0a6e1a;
-  background-color: #0a6e1a;
-  color: white;
-  border-radius: 10px;
-  display: inline-block;
-  transition: background-color 0.3s; 
-  color: #9c9117;
+.nav-logo h1 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800; /* Using the imported Poppins font */
+  color: var(--primary);
+  margin: 0;
 }
 
-.createstorylink:hover {
-  background-color: #04390a;
+.nav-links {
+  display: flex;
+  list-style-type: none; /* Remove bullet points from list */
+  margin-left: auto; /* Push the navigation to the right */
 }
 
-.createstorytitle {
-  text-align: center;
-
+.nav-item {
+ 
+font-family: 'Poppins', sans-serif;
+font-weight: 400; 
+color: var(--primary);
+text-decoration: none;
+margin: 0 15px; /* Adjust spacing between navigation items */
+transition: color 0.3s ease;  /* Transition property for smooth color change */
 }
 
-.logo-container {
-  text-align: center;
+.nav-item:hover {
+color: var(--error); /* Color change on hover */
 }
 
-
+.nav-icon {
+font-size: 24px; /* Icon size */
+color: var(--primary);
+cursor: pointer;
+}
