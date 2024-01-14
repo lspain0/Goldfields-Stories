@@ -1,25 +1,20 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-//pages and components
-import Home from './pages/Home'
-import CreateStory from './pages/stories/CreateStory';
-import Navbar from './components/Navbar'
+// Pages and components
+import Home from './pages/Home';
+import Class from './pages/Class'; // Import the Class component
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Navbar />
+        <Navbar />
         <div className="pages">
           <Routes>
-          <Route
-              path="/createstory"
-              element={<CreateStory />}
-            />
-            <Route
-              path="/"
-              element={<Home />}
-            />
+            <Route path="/" element={<Home />} />
+            <Route path="/class" element={<Class />} />
+            {/* Add other routes as needed */}
           </Routes>
         </div>
       </BrowserRouter>
