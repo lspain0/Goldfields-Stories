@@ -3,7 +3,6 @@ import { useStoriesContext } from "../hooks/useStoriesContext"
 import { Link } from 'react-router-dom'
 
 // components
-import StoryForm from "../components/StoryForm"
 import StoryDetails from "../components/StoryDetails"
 import Logo from "../components/logo"
 
@@ -25,7 +24,7 @@ const Home = () => {
 
   return (
     <body>
-      <div className="home">
+      <div className="logo-container">
         <Logo />
       </div>
       <Link to="/createstory">

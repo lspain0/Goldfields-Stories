@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Logo from "../components/logo"
+import '../index.css';
 
 function Class() {
   const [className, setClassName] = useState('');
@@ -29,6 +31,9 @@ function Class() {
 
   return (
     <div>
+        <div className="logo-container">
+        <Logo />
+      </div>
       <h2>Create a New Class</h2>
       <form onSubmit={handleSubmit}>
         <div>
