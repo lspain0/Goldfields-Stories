@@ -1,15 +1,14 @@
 import React from "react";
 import Logo from "../../components/logo";
+import StoryForm from "../../components/StoryForm"
 
 const CreateStory = () => {
     return (
         <body>
-      <div className="home">
+      <div className="logo-container">
         <Logo />
       </div>
-            <div className="createstorytitle">
-                <h1>Create a Story</h1>
-            </div>
+            <StoryForm />
         </body>
     );
 };
