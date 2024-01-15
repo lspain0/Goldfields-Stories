@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Class from './pages/Class'; // Import the Class component
 import Navbar from './components/Navbar';
+import CreateStory from './pages/stories/CreateStory';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/class" element={<Class />} />
+            <Route path="/createstory" element={<CreateStory />} />
             {/* Add other routes as needed */}
           </Routes>
         </div>
