@@ -150,12 +150,6 @@ color: var(--primary);
 cursor: pointer;
 }
 
-.logo-container {
-  margin-left: 60%;
-  margin-right: 50%;
-  text-align: center;
-}
-
 .createstorylink {
   margin-left: 80%;
   margin-right: 1%;
@@ -178,3 +172,13 @@ cursor: pointer;
   text-align: center;
 
 }
+
+/* logo styles */
+.logo-container {
+  display: flex; /* Displays flexbox items inline */
+  justify-content: center; /* Aligns logo horizontally */
+  align-items: center; /* Aligns logo vertically */
+  min-height: 100px; /* Adjust min-height as needed */
+  width: 100%;
+}
+
