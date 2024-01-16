@@ -24,20 +24,19 @@ const Home = () => {
 
   return (
     <body>
-      <div className="logo-container">
-        <Logo />
+      <Logo />
+      <div className="home">
+  
       </div>
       <Link to="/createstory">
         <div className="createstorylink">      
-            <h3>Create a new Story</h3>
+            <button>Create a new Story</button>
         </div></Link>
 
-      <div className="home">
         <div className="stories">
           {stories && stories.map(story => (
             <StoryDetails story={story} key={story._id} />
           ))}
-        </div>
       </div>
     </body>
   )
