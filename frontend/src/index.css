@@ -150,7 +150,7 @@ color: var(--primary);
 cursor: pointer;
 }
 
-button {
+.create-story-button {
     background: var(--error);
     border: 0;
     color: #fff;

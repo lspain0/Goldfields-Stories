@@ -30,7 +30,7 @@ const Home = () => {
       </div>
       <Link to="/createstory">
         <div className="createstorylink">      
-            <button>Create a new Story</button>
+            <button className="create-story-button">Create a new Story</button>
         </div></Link>
 
         <div className="stories">
