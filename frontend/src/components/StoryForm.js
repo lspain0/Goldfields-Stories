@@ -1,24 +1,26 @@
 import { useState } from "react";
 import { useStoriesContext } from "../hooks/useStoriesContext";
 import Select from 'react-select';
-import '../index.css';
 
 const StoryForm = () => {
   const { dispatch } = useStoriesContext();
   const [title, setTitle] = useState('');
-  const [children, setChildren] = useState('');
+  const [children, setChildren] = useState([]);
   const [tags, setTags] = useState([]);
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
+    // Convert selected children to a comma-separated string
+    const childrenString = children.map((child) => child.value).join(',');
+
     // Convert selected tags to a comma-separated string
     const tagsString = tags.map((tag) => tag.value).join(',');
-  
-    const story = { title, children, tags: tagsString, content };
-  
+
+    const story = { title, children: childrenString, tags: tagsString, content };
+
     try {
       const response = await fetch('/api/stories', {
         method: 'POST',
@@ -27,16 +29,16 @@ const StoryForm = () => {
           'Content-Type' : 'application/json'
         }
       });
-  
+
       const json = await response.json();
-  
+
       if (!response.ok) {
         setError(json.error);
       }
-  
+
       if (response.ok) {
         setTitle('');
-        setChildren('');
+        setChildren([]);
         setTags([]);
         setContent('');
         setError(null);
@@ -48,7 +50,7 @@ const StoryForm = () => {
       setError('An error occurred while submitting the form.');
     }
   };
-  
+
   return (
     <form className="create" onSubmit={handleSubmit}>
       <h3>Create a new Story</h3>
@@ -61,10 +63,16 @@ const StoryForm = () => {
       />
 
       <label>Children in this story:</label>
-      <input
-        type="text"
-        onChange={(e) => setChildren(e.target.value)}
+      <Select
+        isMulti
+        options={[
+          { value: 'child1', label: 'Child 1' },
+          { value: 'child2', label: 'Child 2' },
+          // Add more options as needed
+        ]}
+        onChange={(selectedOptions) => setChildren(selectedOptions)}
         value={children}
+        isSearchable
       />
 
       <label>Learning Tags:</label>
@@ -80,8 +88,6 @@ const StoryForm = () => {
         isSearchable
       />
 
-      <br></br>
-
       <label>Story Content:</label>
       <textarea
         type="text"
@@ -89,9 +95,7 @@ const StoryForm = () => {
         value={content}
       />
 
-      <div className="centered-button">
-        <button>Post Story</button>
-      </div>
+      <button>Post Story</button>
       {error && <div className="error">{error}</div>}
     </form>
   );
