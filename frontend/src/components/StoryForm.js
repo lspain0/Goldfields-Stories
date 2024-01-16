@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useStoriesContext } from "../hooks/useStoriesContext";
 import Select from 'react-select';
+import '../index.css';
 
 const StoryForm = () => {
   const { dispatch } = useStoriesContext();
@@ -88,7 +89,9 @@ const StoryForm = () => {
         value={content}
       />
 
-      <button>Post Story</button>
+      <div className="centered-button">
+        <button>Post Story</button>
+      </div>
       {error && <div className="error">{error}</div>}
     </form>
   );
