@@ -1,9 +1,10 @@
 import { useEffect } from "react"
 import { useStoriesContext } from "../hooks/useStoriesContext"
+import { Link } from 'react-router-dom'
 
 // components
-import StoryForm from "../components/StoryForm"
 import StoryDetails from "../components/StoryDetails"
+import Logo from "../components/logo"
 
 const Home = () => {
   const { stories, dispatch } = useStoriesContext()
@@ -22,14 +23,23 @@ const Home = () => {
   }, [dispatch])
 
   return (
-    <div className="home">
-      <div className="stories">
-        {stories && stories.map(story => (
-          <StoryDetails story={story} key={story._id} />
-        ))}
+    <body>
+      <Logo />
+      <div className="home">
+  
       </div>
-      <StoryForm />
-    </div>
+        <div className="createstorylink">  
+          <Link to="/createstory">  
+            <button className="create-story-button">Create a new Story</button>
+          </Link>  
+        </div>
+
+        <div className="stories">
+          {stories && stories.map(story => (
+            <StoryDetails story={story} key={story._id} />
+          ))}
+      </div>
+    </body>
   )
 }
 
