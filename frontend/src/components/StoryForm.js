@@ -75,6 +75,8 @@ const StoryForm = () => {
         isSearchable
       />
 
+      <br></br>
+
       <label>Learning Tags:</label>
       <Select
         isMulti
@@ -88,6 +90,8 @@ const StoryForm = () => {
         isSearchable
       />
 
+      <br></br>
+
       <label>Story Content:</label>
       <textarea
         type="text"
@@ -95,7 +99,9 @@ const StoryForm = () => {
         value={content}
       />
 
-      <button>Post Story</button>
+      <div className="centered-button">
+        <button>Post Story</button>
+      </div>
       {error && <div className="error">{error}</div>}
     </form>
   );

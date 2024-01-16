@@ -28,10 +28,11 @@ const Home = () => {
       <div className="home">
   
       </div>
-      <Link to="/createstory">
-        <div className="createstorylink">      
+        <div className="createstorylink">  
+          <Link to="/createstory">  
             <button className="create-story-button">Create a new Story</button>
-        </div></Link>
+          </Link>  
+        </div>
 
         <div className="stories">
           {stories && stories.map(story => (
