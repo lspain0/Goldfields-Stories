@@ -1,32 +1,22 @@
-import React, { useState } from 'react';
-import Logo from "../components/logo"
+import React, { useState, useContext } from 'react'; // Added useContext import
+import Logo from "../components/logo";
 import '../index.css';
+import ClassForm from '../components/ClassForm.js';
+import { ClassesContext } from '../context/ClassesContext'; // Import your context
 
 function Class() {
   const [className, setClassName] = useState('');
   const [subject, setSubject] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState('');
+  const { classes, addClass } = useContext(ClassesContext); // Destructure classes from context
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     try {
-      const response = await fetch('/api/classes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ className, subject }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      setMessage(`Class '${result.className}' with subject '${result.subject}' created successfully.`);
+      await addClass({ className, subject });
+      setMessage(`Class '${className}' with subject '${subject}' created successfully.`);
       setClassName('');
       setSubject('');
     } catch (error) {
@@ -43,34 +33,27 @@ function Class() {
         <Logo />
       </div>
       <h2>Create a New Class</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="className">Class Name:</label> {/* 'htmlFor' in JSX corresponds to 'for' in HTML */}
-          <input
-            id="className" 
-            name="className" 
-            type="text"
-            value={className}
-            onChange={(e) => setClassName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="subject">Subject:</label> {/* Associate the label with input using 'htmlFor' */}
-          <input
-            id="subject" 
-            name="subject" 
-            type="text"
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Creating...' : 'Create Class'}
-        </button>
-      </form>
+      <ClassForm
+        className={className}
+        setClassName={setClassName}
+        subject={subject}
+        setSubject={setSubject}
+        isSubmitting={isSubmitting}
+        handleSubmit={handleSubmit}
+      />
       {message && <p>{message}</p>}
+      <div>
+        <h3>Created Classes</h3>
+        {classes.length > 0 ? (
+          <ul>
+            {classes.map((c, index) => (
+              <li key={index}>{`${c.className} - ${c.subject}`}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>No classes created yet.</p>
+        )}
+      </div>
     </div>
   );
 }
