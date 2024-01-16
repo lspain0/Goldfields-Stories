@@ -7,6 +7,10 @@ const storySchema = new Schema({
         type: String,
         required: true
     },
+    children: {
+        type: String,
+        required: true
+    },
     tags: {
         type: String,
         required: true

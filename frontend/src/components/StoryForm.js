@@ -1,17 +1,18 @@
-import { useState } from "react"
-import { useStoriesContext } from "../hooks/useStoriesContext"
+import { useState } from "react";
+import { useStoriesContext } from "../hooks/useStoriesContext";
 
 const StoryForm = () => {
-    const { dispatch } = useStoriesContext()
-    const [title, setTitle] = useState('')
-    const [tags, setTags] = useState('')
-    const [content, setContent] = useState('')
-    const [error, setError] = useState('')
+    const { dispatch } = useStoriesContext();
+    const [title, setTitle] = useState('');
+    const [children, setChildren] = useState('');
+    const [tags, setTags] = useState('');
+    const [content, setContent] = useState('');
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
-        const story = {title, tags, content}
+        const story = { title, children, tags, content };
 
         const response = await fetch('/api/stories', {
             method: 'POST',
@@ -19,21 +20,23 @@ const StoryForm = () => {
             headers: {
                 'Content-Type' : 'application/json'
             }
-        })
-        const json = await response.json()
+        });
+
+        const json = await response.json();
 
         if (!response.ok) {
-            setError(json.error)
+            setError(json.error);
         }
         if (response.ok) {
-            setTitle('')
-            setTags('')
-            setContent('')
-            setError(null)
-            console.log('New Story Posted', json)
-            dispatch({type: 'CREATE_STORY', payload: json})
+            setTitle('');
+            setChildren('');
+            setTags('');
+            setContent('');
+            setError(null);
+            console.log('New Story Posted', json);
+            dispatch({ type: 'CREATE_STORY', payload: json });
         }
-    }
+    };
 
     return (
         <form className="create" onSubmit={handleSubmit}>
@@ -46,7 +49,14 @@ const StoryForm = () => {
                 value={title}
             />
 
-            <label>Tags:</label>
+            <label>Children in this story:</label>
+            <input
+                type="text"
+                onChange={(e) => setChildren(e.target.value)}
+                value={children}
+            />
+
+            <label>Learning Tags:</label>
             <input
                 type="text"
                 onChange={(e) => setTags(e.target.value)}
@@ -63,7 +73,7 @@ const StoryForm = () => {
             <button>Post Story</button>
             {error && <div className="error">{error}</div>}
         </form>
-    )
-}
+    );
+};
 
-export default StoryForm
+export default StoryForm;
