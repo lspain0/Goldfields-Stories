@@ -12,6 +12,7 @@ if (result.error) {
 const express = require('express')
 const mongoose = require('mongoose')
 const storyRoutes = require('./routes/stories')
+const classRoutes = require('./routes/classRoutes');
 
 //express app
 const app = express()
@@ -44,5 +45,8 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: 'Internal Server Error' });
   });
   
+// Use class routes
+app.use('/api/classes', classRoutes);
+
 
 
