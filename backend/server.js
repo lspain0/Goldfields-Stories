@@ -8,7 +8,7 @@ const storyRoutes = require('./routes/stories')
 //express app
 const app = express()
 
-//middleware
+//middleware app
 app.use(express.json())
 
 app.use((req, res, next) => {
