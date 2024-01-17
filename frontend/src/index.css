@@ -175,19 +175,6 @@ textarea {
   height: 300px;
 }
 
-.centered-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 20px;
-}
-
-.collapsed-group {
-  height: 0;
-  overflow: hidden;
-  transition: height 0.3s ease-in-out;
-}
-
-.hidden-tag {
+.collapsed {
   display: none;
 }
