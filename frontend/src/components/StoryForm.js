@@ -1,17 +1,41 @@
 import React, { useState } from "react";
 import Select, { components } from "react-select";
 import { useStoriesContext } from "../hooks/useStoriesContext";
-import { tagOptions } from "./docs/data";
-import Dropdown from "./Dropdown";
 import '../index.css';
+import { groupedOptions } from "./docs/data";
+
+const handleHeaderClick = id => {
+  const node = document.querySelector(`#${id}`).parentElement
+    .nextElementSibling;
+  const classes = node.classList;
+  if (classes.contains("collapsed")) {
+    node.classList.remove("collapsed");
+  } else {
+    node.classList.add("collapsed");
+  }
+};
+
+const CustomGroupHeading = props => {
+  return (
+    <div
+      className="group-heading-wrapper"
+      onClick={() => handleHeaderClick(props.id)}
+    >
+      <components.GroupHeading {...props} />
+    </div>
+  );
+};
+
 
 const StoryForm = () => {
+
   const { dispatch } = useStoriesContext();
   const [title, setTitle] = useState('');
   const [children, setChildren] = useState([]);
   const [tags, setTags] = useState([]);
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,7 +105,15 @@ const StoryForm = () => {
       <br />
 
       <label>Learning Tags:</label>
-      <Dropdown />
+      <Select
+        options={groupedOptions}
+        isMulti
+        blurInputOnSelect={false}
+        closeMenuOnSelect={false}
+        components={{ GroupHeading: CustomGroupHeading }}
+        onChange={(selectedOptions) => setTags(selectedOptions)}
+        value={tags}
+    />
 
       <br />
 
@@ -99,5 +131,7 @@ const StoryForm = () => {
     </form>
   );
 };
+
+
 
 export default StoryForm;
