@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react'; // Added useContext import
+import React, { useState, useContext } from 'react';
 import Logo from "../components/logo";
-import '../index.css';
+import '../class.css';
 import ClassForm from '../components/ClassForm.js';
-import { ClassesContext } from '../context/ClassesContext'; // Import your context
+import { ClassesContext } from '../context/ClassesContext';
 
 function Class() {
   const [className, setClassName] = useState('');
@@ -32,7 +32,6 @@ function Class() {
       <div className="logo-container">
         <Logo />
       </div>
-      <h2>Create a New Class</h2>
       <ClassForm
         className={className}
         setClassName={setClassName}
