@@ -1,6 +1,45 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import Select, { components } from "react-select";
 import { useStoriesContext } from "../hooks/useStoriesContext";
-import Select from 'react-select';
+import { tagOptions } from "./docs/data";
+import '../index.css';
+
+const HideGroupHeading = (props) => {
+  return (
+    <div
+      className={`collapse-group-heading ${props.isCollapsed ? "collapsed-group" : ""}`}
+      onClick={() => {
+        const groupList = document.querySelector(`#${props.id}`).parentElement.parentElement;
+        groupList.classList.toggle("collapsed-group");
+        groupList.style.height = groupList.classList.contains("collapsed-group") ? "0" : "auto";
+      }}
+    >
+      <components.GroupHeading {...props} />
+    </div>
+  );
+};
+
+const HideGroupMenuList = (props) => {
+  const newChildren = React.Children.map(props.children, (child) => {
+    if (child.type === components.Option || child.type === components.Group) {
+      const isGroupCollapsed = props.selectProps.options.some(
+        (group) => group.label === child.props.label && group.collapsed
+      );
+
+      return React.cloneElement(child, {
+        className: `${child.props.className || ""} ${
+          isGroupCollapsed ? "hidden-tag" : ""
+        }`,
+      });
+    }
+    return child;
+  });
+
+  return <components.MenuList {...props}>{newChildren}</components.MenuList>;
+};
+
+
+
 
 const StoryForm = () => {
   const { dispatch } = useStoriesContext();
@@ -75,22 +114,24 @@ const StoryForm = () => {
         isSearchable
       />
 
-      <br></br>
+      <br />
 
       <label>Learning Tags:</label>
       <Select
-        isMulti
-        options={[
-          { value: 'tag1', label: 'Tag 1' },
-          { value: 'tag2', label: 'Tag 2' },
-          // Add more options as needed
-        ]}
+        isMulti   
+        options={tagOptions}
+        blurInputOnSelect={false}
+        closeMenuOnSelect={false}
+        components={{
+          GroupHeading: HideGroupHeading,
+          MenuList: HideGroupMenuList
+        }}
         onChange={(selectedOptions) => setTags(selectedOptions)}
         value={tags}
         isSearchable
       />
 
-      <br></br>
+      <br />
 
       <label>Story Content:</label>
       <textarea
