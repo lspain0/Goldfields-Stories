@@ -80,18 +80,17 @@ const StoryForm = () => {
 
   return (
     <form className="create" onSubmit={handleSubmit}>
-      <h3>Create a new Story</h3>
 
-      <label>Story Title:</label>
-      <input
+      <input className="short-input" placeholder="Story title..."
         type="text"
         onChange={(e) => setTitle(e.target.value)}
         value={title}
       />
 
-      <label>Children in this story:</label>
-      <Select
+      <Select className="short-select" placeholder="Children in this story..."
         isMulti
+        blurInputOnSelect={false}
+        closeMenuOnSelect={false}
         options={[
           { value: 'child1', label: 'Child 1' },
           { value: 'child2', label: 'Child 2' },
@@ -102,10 +101,7 @@ const StoryForm = () => {
         isSearchable
       />
 
-      <br />
-
-      <label>Learning Tags:</label>
-      <Select
+      <Select className="short-select" placeholder="Learning tags..."
         options={groupedOptions}
         isMulti
         blurInputOnSelect={false}
@@ -115,10 +111,7 @@ const StoryForm = () => {
         value={tags}
     />
 
-      <br />
-
-      <label>Story Content:</label>
-      <textarea
+      <textarea placeholder="Start writing..."
         type="text"
         onChange={(e) => setContent(e.target.value)}
         value={content}

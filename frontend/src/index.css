@@ -70,36 +70,49 @@ header a {
 label, input {
   display: block;
 }
+
 input {
   padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 15px;
+  margin-bottom: 10px;
   width: 100%;
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.short-input {
+  width: 70%;
+  
+}
+
+.short-select {
+  width: 70%;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 textarea {
   padding: 10px;
-  margin-top: 10px;
+  margin-top: 0px;
   margin-bottom: 20px;
-  height: 30%;
   width: 100%;
+  height: 450px;
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
 }
 
-form button {
+button {
   background: var(--error);
   border: 0;
-  color: #fff;
+  color: #FFF;
   padding: 10px;
   font-family: Verdana, sans-serif;
   border-radius: 4px;
   cursor: pointer;
 }
+
 div.error {
   padding: 10px;
   background: #ffefef;
@@ -131,7 +144,6 @@ div.error {
 }
 
 .nav-item {
- 
 font-family: 'Poppins', sans-serif;
 font-weight: 400; 
 color: var(--primary);
@@ -150,18 +162,6 @@ color: var(--primary);
 cursor: pointer;
 }
 
-.create-story-button {
-    background: var(--error);
-    border: 0;
-    color: #fff;
-    padding: 10px;
-    font-family: Verdana, sans-serif;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-
-/* logo styles */
 .logo-container {
   display: flex; /* Displays flexbox items inline */
   justify-content: center; /* Aligns logo horizontally */
@@ -170,11 +170,11 @@ cursor: pointer;
   width: 100%;
 }
 
-textarea {
-  width: 100%;
-  height: 300px;
-}
-
 .collapsed {
   display: none;
+}
+
+.centered-button {
+  text-align: center;
+  margin-bottom: 10px;
 }
