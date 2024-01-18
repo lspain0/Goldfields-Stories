@@ -26,9 +26,6 @@ const ClassForm = ({ className, setClassName, subject, setSubject, isSubmitting,
           className="class-form-input"
           required
         />
-        <button type="button" className="class-student-button">
-          <i className="fa fa-plus"></i> Add Students
-        </button>
         <button type="submit" disabled={isSubmitting} className="class-form-button">
           {isSubmitting ? 'Creating...' : 'Add Class'}
         </button>
