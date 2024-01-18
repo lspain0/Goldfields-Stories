@@ -58,3 +58,14 @@
     font-family: 'Poppins', sans-serif;
     margin: 10px 0;
 }
+
+.class-form-h3
+{
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    color: #ad0f0f;
+}
+
+.message-container {
+    text-align: center;
+  }

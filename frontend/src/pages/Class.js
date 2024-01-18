@@ -1,14 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext } from "react";
 import Logo from "../components/logo";
-import '../class.css';
-import ClassForm from '../components/ClassForm.js';
-import { ClassesContext } from '../context/ClassesContext';
+import "../class.css";
+import ClassForm from "../components/ClassForm.js";
+import { ClassesContext } from "../context/ClassesContext";
 
 function Class() {
-  const [className, setClassName] = useState('');
-  const [subject, setSubject] = useState('');
+  const [className, setClassName] = useState("");
+  const [subject, setSubject] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const { classes, addClass } = useContext(ClassesContext); // Destructure classes from context
 
   const handleSubmit = async (e) => {
@@ -16,9 +16,11 @@ function Class() {
     setIsSubmitting(true);
     try {
       await addClass({ className, subject });
-      setMessage(`Class '${className}' with subject '${subject}' created successfully.`);
-      setClassName('');
-      setSubject('');
+      setMessage(
+        `Class '${className}' created successfully.`
+      );
+      setClassName("");
+      setSubject("");
     } catch (error) {
       console.error("Error creating class:", error);
       setMessage("Failed to create class. Please try again.");
@@ -40,9 +42,9 @@ function Class() {
         isSubmitting={isSubmitting}
         handleSubmit={handleSubmit}
       />
-      {message && <p>{message}</p>}
+      {message && <div className="message-container"><p>{message}</p></div>}
       <div>
-        <h3>Created Classes</h3>
+        <h3 className="class-form-h3">Created Classes</h3>
         {classes.length > 0 ? (
           <ul>
             {classes.map((c, index) => (
