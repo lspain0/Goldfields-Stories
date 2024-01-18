@@ -31,40 +31,45 @@ function Class() {
     setMessage("");
   };
 
-  return (
-    <div>
+ return (
+    <div className="class-page-container">
       <div className="logo-container">
         <Logo />
       </div>
-      <ClassForm
-        className={className}
-        setClassName={setClassName}
-        subject={subject}
-        setSubject={setSubject}
-        isSubmitting={isSubmitting}
-        handleSubmit={handleSubmit}
-      />
-      <div className="message-wrapper"> {/* Wrapper added */}
-        {message && (
-          <div className="message-container">
-            <p>{message}</p>
-            <button className="message-close-btn" onClick={clearMessage}>
-              &times;
-            </button>
-          </div>
-        )}
+      <div className="class-form-container">
+        <ClassForm
+          className={className}
+          setClassName={setClassName}
+          subject={subject}
+          setSubject={setSubject}
+          isSubmitting={isSubmitting}
+          handleSubmit={handleSubmit}
+        />
+        <div className="message-wrapper">
+          {message && (
+            <div className="message-container">
+              <p>{message}</p>
+              <button className="message-close-btn" onClick={clearMessage}>
+                &times;
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-      <div>
+      <div className="classes-container">
         <h3 className="class-form-h3">Created Classes</h3>
-        {classes.length > 0 ? (
-          <ul>
-            {classes.map((c, index) => (
-              <li key={index}>{`${c.className} - ${c.subject}`}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>No classes created yet.</p>
-        )}
+        <div className="cards-container">
+          {classes.length > 0 ? (
+            classes.map((c, index) => (
+              <div key={index} className="class-card">
+                <span>{c.className}</span>
+                <span>{c.subject}</span>
+              </div>
+            ))
+          ) : (
+            <p>No classes created yet.</p>
+          )}
+        </div>
       </div>
     </div>
   );
