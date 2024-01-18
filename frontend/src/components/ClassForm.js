@@ -4,7 +4,7 @@ import '../class.css';
 const ClassForm = ({ className, setClassName, subject, setSubject, isSubmitting, handleSubmit }) => {
   return (
     <div className="class-form-container">
-      <h2 className="class-form-header">Create a New Class</h2>
+      
       <form onSubmit={handleSubmit} className="class-form">
         <input
           id="className"
