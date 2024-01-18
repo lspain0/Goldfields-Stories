@@ -14,7 +14,9 @@ export const ClassesProvider = ({ children }) => {
           throw new Error('HTTP error! status: ' + response.status);
         }
         const data = await response.json();
-        setClasses(data);
+        // Ensure each class has a students array
+        const classesWithStudents = data.map(c => ({ ...c, students: c.students || [] }));
+        setClasses(classesWithStudents);
       } catch (error) {
         console.error("Could not fetch classes:", error);
       }
@@ -33,14 +35,38 @@ export const ClassesProvider = ({ children }) => {
         body: JSON.stringify(newClass),
       });
       const addedClass = await response.json();
-      setClasses(prevClasses => [...prevClasses, addedClass]);
+      setClasses(prevClasses => [...prevClasses, { ...addedClass, students: [] }]);
     } catch (error) {
       console.error("Error creating class:", error);
     }
   };
 
+  const addStudentToClass = async (classId, studentName) => {
+    try {
+      // Assuming your backend can handle this POST request
+      const response = await fetch(`/api/classes/${classId}/students`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: studentName }),
+      });
+      if (!response.ok) {
+        throw new Error('HTTP error! status: ' + response.status);
+      }
+      const addedStudent = await response.json();
+      
+      // Update the state
+      setClasses(prevClasses => prevClasses.map(c => 
+        c.id === classId ? { ...c, students: [...c.students, addedStudent] } : c
+      ));
+    } catch (error) {
+      console.error("Error adding student:", error);
+    }
+  };
+
   return (
-    <ClassesContext.Provider value={{ classes, addClass }}>
+    <ClassesContext.Provider value={{ classes, addClass, addStudentToClass }}>
       {children}
     </ClassesContext.Provider>
   );

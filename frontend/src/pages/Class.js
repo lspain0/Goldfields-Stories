@@ -76,7 +76,7 @@ function Class() {
         <div className="cards-container">
           {classes.length > 0 ? (
             classes.map((c, index) => (
-              <Link to={`/class/${c.id}`} key={index} className="class-card">
+              <Link to={`/class/${c.id}`} key={c.id} className="class-card">
                 <span>{c.className}</span>
                 <span>{c.subject}</span>
               </Link>

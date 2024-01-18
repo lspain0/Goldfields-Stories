@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Class from './pages/Class';
 import Navbar from './components/Navbar';
 import CreateStory from './pages/stories/CreateStory';
+import AddStudentPage from './pages/AddStudentPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
               <Route path="/createstory" element={<CreateStory />} />
               <Route path="/classeslist" element={<ClassesList />} />
               <Route path="/class/:classId" element={<ClassDetails />} />
+              <Route path="/class/:classId/addstudent" element={<AddStudentPage />} />
             </Routes>
           </div>
         </BrowserRouter>
