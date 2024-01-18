@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap');
+
+.class-form-container {
+    width: 300px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.class-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.class-form input {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px 0;
+    border: 2px solid #326C6F;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.class-form button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px auto;
+    width: calc(100% - 40px);
+    border: none;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background: #326C6F;
+    color: white;
+}
+
+.class-form button:hover {
+    background: #224957;
+}
+
+.class-form input:focus {
+    border-color: #0056b3;
+    outline: none;
+}
+
+/* If you have any error messages within the form */
+.class-form .error {
+    color: #ff0000;
+    font-family: 'Poppins', sans-serif;
+    margin: 10px 0;
+}
+
+.message-wrapper {
+    text-align: center; 
+    margin: 20px 0;
+}
+
+.message-container {
+    display: inline-flex; 
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #f2f4f8;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.message-container p {
+    margin: 0;
+}
+
+.message-close-btn {
+    margin-left: 10px; 
+    cursor: pointer;
+    color: #000000;
+    font-size: 1.5em;
+    background: none;
+    border: none;
+}
+
+.message-close-btn:hover {
+    color: #ff6b6b; /* Hover effect for the close button */
+}
+
+/* Additional styling for animations or transitions */
+.message-container-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.message-container-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+}
+
+.message-container-exit {
+    opacity: 1;
+}
+
+.message-container-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+}
+
+/*created classes style*/
+  .classes-container {
+    margin-top: 30px;
+  }
+  
+  .cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    padding: 20px;
+  }
+  
+  .class-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: #f9f9f9;
+    transition: transform 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .class-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .class-form-h3 {
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    font-size: 25px;
+}
+  

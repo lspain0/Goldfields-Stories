@@ -1,5 +1,3 @@
-// ClassesContext.js
-
 import React, { createContext, useState, useEffect } from 'react';
 
 export const ClassesContext = createContext();
@@ -11,7 +9,7 @@ export const ClassesProvider = ({ children }) => {
     // Fetch classes from the backend when the context provider mounts
     const fetchClasses = async () => {
       try {
-        const response = await fetch('/api/classes'); // Adjust if needed
+        const response = await fetch('/api/classes');
         if (!response.ok) {
           throw new Error('HTTP error! status: ' + response.status);
         }
