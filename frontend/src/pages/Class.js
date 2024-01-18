@@ -16,9 +16,7 @@ function Class() {
     setIsSubmitting(true);
     try {
       await addClass({ className, subject });
-      setMessage(
-        `Class '${className}' created successfully.`
-      );
+      setMessage(`Class '${className}' created successfully.`);
       setClassName("");
       setSubject("");
     } catch (error) {
@@ -27,6 +25,10 @@ function Class() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const clearMessage = () => {
+    setMessage("");
   };
 
   return (
@@ -42,7 +44,16 @@ function Class() {
         isSubmitting={isSubmitting}
         handleSubmit={handleSubmit}
       />
-      {message && <div className="message-container"><p>{message}</p></div>}
+      <div className="message-wrapper"> {/* Wrapper added */}
+        {message && (
+          <div className="message-container">
+            <p>{message}</p>
+            <button className="message-close-btn" onClick={clearMessage}>
+              &times;
+            </button>
+          </div>
+        )}
+      </div>
       <div>
         <h3 className="class-form-h3">Created Classes</h3>
         {classes.length > 0 ? (

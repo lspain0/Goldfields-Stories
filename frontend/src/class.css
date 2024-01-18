@@ -3,15 +3,16 @@
 .class-form-container {
     width: 300px;
     margin: auto;
-   
-    
+
+
 }
 
 .class-form-header {
     text-align: center;
     font-family: 'Poppins', sans-serif;
     /* Directly set the color used in your image for the header */
-    color: #000000 /* Replace with the hex code of the color you want */
+    color: #000000
+        /* Replace with the hex code of the color you want */
 }
 
 .class-form {
@@ -32,40 +33,95 @@
 .class-form button {
     padding: 10px;
     font-size: 16px;
-    margin-top: 10px;
-    width: calc(100% - 20px);
+    margin: 10px auto;
+    width: calc(100% - 40px);
     border: none;
     border-radius: 20px;
     font-family: 'Poppins', sans-serif;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    background: #326C6F; /* Replace with the hex code of the color you want */
+    background: #326C6F;
+    /* Replace with the hex code of the color you want */
     color: white;
 }
 
 .class-form button:hover {
-    background: #224957; /* Replace with the hex code of the hover color you want */
+    background: #224957;
+    /* Replace with the hex code of the hover color you want */
 }
 
 .class-form input:focus {
-    border-color: #0056b3; /* Replace with the hex code of the focus color you want */
+    border-color: #0056b3;
+    /* Replace with the hex code of the focus color you want */
     outline: none;
 }
 
 /* If you have any error messages within the form */
 .class-form .error {
-    color: #ff0000; /* Replace with the hex code of the error color you want */
+    color: #ff0000;
+    /* Replace with the hex code of the error color you want */
     font-family: 'Poppins', sans-serif;
     margin: 10px 0;
 }
 
-.class-form-h3
-{
+.class-form-h3 {
     text-align: left;
     font-family: 'Poppins', sans-serif;
     color: #ad0f0f;
 }
 
+.message-wrapper {
+    text-align: center; /* This centers the inline-flex child horizontally */
+    margin: 20px 0; /* Adds vertical spacing */
+}
+
 .message-container {
-    text-align: center;
-  }
+    display: inline-flex; /* Keeps the container sized to its content */
+    align-items: center; /* Aligns items vertically */
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #f2f4f8;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative; /* For absolute positioning of the close button */
+    transition: all 0.3s ease;
+}
+
+.message-container p {
+    margin: 0; /* Ensures there's no extra space around the paragraph */
+}
+
+.message-close-btn {
+    margin-left: 10px; /* Space between the message text and close button */
+    cursor: pointer;
+    color: #000000;
+    font-size: 1.5em;
+    background: none;
+    border: none;
+}
+
+.message-close-btn:hover {
+    color: #ff6b6b; /* Hover effect for the close button */
+}
+
+/* Additional styling for animations or transitions */
+.message-container-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.message-container-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+}
+
+.message-container-exit {
+    opacity: 1;
+}
+
+.message-container-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+}
