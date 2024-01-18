@@ -14,6 +14,20 @@ function Class() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // Convert new class name to lowercase for case-insensitive comparison
+    const newClassNameLower = className.toLowerCase();
+
+    // Check for duplicate class name (case-insensitive)
+    const isDuplicate = classes.some(
+      (c) => c.className.toLowerCase() === newClassNameLower
+    );
+    if (isDuplicate) {
+      setMessage(`Error: A class with the name '${className}' already exists.`);
+      setIsSubmitting(false);
+      return; // Early return to prevent adding a duplicate
+    }
+
     try {
       await addClass({ className, subject });
       setMessage(`Class '${className}' created successfully.`);
@@ -31,7 +45,7 @@ function Class() {
     setMessage("");
   };
 
- return (
+  return (
     <div className="class-page-container">
       <div className="logo-container">
         <Logo />
