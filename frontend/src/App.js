@@ -1,8 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ClassesProvider } from './context/ClassesContext';
 import ClassesList from './components/ClassesList';
-
-// Other imports
+import ClassDetails from './components/ClassDetails';
 import Home from './pages/Home';
 import Class from './pages/Class';
 import Navbar from './components/Navbar';
@@ -19,7 +18,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/class" element={<Class />} />
               <Route path="/createstory" element={<CreateStory />} />
-              <Route path="/classeslist" element={<ClassesList />} /> {/* New route */}
+              <Route path="/classeslist" element={<ClassesList />} />
+              <Route path="/class/:classId" element={<ClassDetails />} />
             </Routes>
           </div>
         </BrowserRouter>

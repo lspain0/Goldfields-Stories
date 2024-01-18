@@ -3,6 +3,7 @@ import Logo from "../components/logo";
 import "../class.css";
 import ClassForm from "../components/ClassForm.js";
 import { ClassesContext } from "../context/ClassesContext";
+import { Link } from "react-router-dom";
 
 function Class() {
   const [className, setClassName] = useState("");
@@ -75,10 +76,10 @@ function Class() {
         <div className="cards-container">
           {classes.length > 0 ? (
             classes.map((c, index) => (
-              <div key={index} className="class-card">
+              <Link to={`/class/${c.id}`} key={index} className="class-card">
                 <span>{c.className}</span>
                 <span>{c.subject}</span>
-              </div>
+              </Link>
             ))
           ) : (
             <p>No classes created yet.</p>
