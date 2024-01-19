@@ -10,10 +10,14 @@ const AddStudentPage = () => {
   const { addStudentToClass } = useContext(ClassesContext);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  try {
     await addStudentToClass(classId, studentName);
     navigate(`/class/${classId}`);
-  };
+  } catch (error) {
+    console.error("Failed to add student:", error);
+  }
+};
 
   return (
     <div>
