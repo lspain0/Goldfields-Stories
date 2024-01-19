@@ -1,77 +1,130 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState } from "react";
+import Select, { components } from "react-select";
+import { useStoriesContext } from "../hooks/useStoriesContext";
+import '../index.css';
+import { groupedOptions } from "./docs/data";
 
-const ImageTextInput = () => {
-  const [text, setText] = useState('');
-  const [image, setImage] = useState(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+const handleHeaderClick = id => {
+  const node = document.querySelector(`#${id}`).parentElement
+    .nextElementSibling;
+  const classes = node.classList;
+  if (classes.contains("collapsed")) {
+    node.classList.remove("collapsed");
+  } else {
+    node.classList.add("collapsed");
+  }
+};
 
-  const handleTextChange = useCallback((e) => {
-    setText(e.target.innerText);
-  }, []);
-
-  const handleImageChange = useCallback((e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = (event) => {
-        setImage(event.target.result);
-      };
-
-      reader.readAsDataURL(file);
-    }
-  }, []);
-
-  const handleImageMove = useCallback((e) => {
-    setPosition({
-      x: e.nativeEvent.offsetX,
-      y: e.nativeEvent.offsetY,
-    });
-  }, []);
-
-  useEffect(() => {
-    if (image) {
-      const img = new Image();
-      img.src = image;
-      img.onload = () => {
-        // Handle image loading if needed
-      };
-    }
-  }, [image]);
-
+const CustomGroupHeading = props => {
   return (
-    <div>
-      <input type="file" accept="image/*" onChange={handleImageChange} />
-      <div
-        contentEditable
-        style={{
-          border: '1px solid #ccc',
-          padding: '8px',
-          minHeight: '100px',
-          position: 'relative',
-        }}
-        onInput={handleTextChange}
-      >
-        {image && (
-          <img
-            src={image}
-            alt="Uploaded"
-            style={{
-              position: 'absolute',
-              top: `${position.y}px`,
-              left: `${position.x}px`,
-              width: '50px', // adjust as needed
-              height: '50px', // adjust as needed
-            }}
-            onMouseMove={handleImageMove}
-            draggable={false}
-          />
-        )}
-        {text}
-      </div>
+    <div
+      className="group-heading-wrapper"
+      onClick={() => handleHeaderClick(props.id)}
+    >
+      <components.GroupHeading {...props} />
     </div>
   );
 };
 
-export default ImageTextInput;
+
+const StoryForm = () => {
+
+  const { dispatch } = useStoriesContext();
+  const [title, setTitle] = useState('');
+  const [children, setChildren] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [content, setContent] = useState('');
+  const [error, setError] = useState('');
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Convert selected children to a comma-separated string
+    const childrenString = children.map((child) => child.value).join(',');
+
+    // Convert selected tags to a comma-separated string
+    const tagsString = tags.map((tag) => tag.value).join(',');
+
+    const story = { title, children: childrenString, tags: tagsString, content };
+
+    try {
+      const response = await fetch('/api/stories', {
+        method: 'POST',
+        body: JSON.stringify(story),
+        headers: {
+          'Content-Type' : 'application/json'
+        }
+      });
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        setError(json.error);
+      }
+
+      if (response.ok) {
+        setTitle('');
+        setChildren([]);
+        setTags([]);
+        setContent('');
+        setError(null);
+        console.log('New Story Posted', json);
+        dispatch({ type: 'CREATE_STORY', payload: json });
+      }
+    } catch (error) {
+      console.error('Error submitting the form:', error);
+      setError('An error occurred while submitting the form.');
+    }
+  };
+
+  return (
+    <form className="create" onSubmit={handleSubmit}>
+
+      <input className="short-input" placeholder="Story title..."
+        type="text"
+        onChange={(e) => setTitle(e.target.value)}
+        value={title}
+      />
+
+      <Select className="short-select" placeholder="Children in this story..."
+        isMulti
+        blurInputOnSelect={false}
+        closeMenuOnSelect={false}
+        options={[
+          { value: 'child1', label: 'Child 1' },
+          { value: 'child2', label: 'Child 2' },
+          // Add more options as needed
+        ]}
+        onChange={(selectedOptions) => setChildren(selectedOptions)}
+        value={children}
+        isSearchable
+      />
+
+      <Select className="short-select" placeholder="Learning tags..."
+        options={groupedOptions}
+        isMulti
+        blurInputOnSelect={false}
+        closeMenuOnSelect={false}
+        components={{ GroupHeading: CustomGroupHeading }}
+        onChange={(selectedOptions) => setTags(selectedOptions)}
+        value={tags}
+    />
+
+      <textarea placeholder="Start writing..."
+        type="text"
+        onChange={(e) => setContent(e.target.value)}
+        value={content}
+      />
+
+      <div className="centered-button">
+        <button>Post Story</button>
+      </div>
+      {error && <div className="error">{error}</div>}
+    </form>
+  );
+};
+
+
+
+export default StoryForm;
