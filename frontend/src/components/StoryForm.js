@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Select, { components } from "react-select";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import the styles
 import { useStoriesContext } from "../hooks/useStoriesContext";
 import '../index.css';
 import { groupedOptions } from "./docs/data";
@@ -26,16 +28,13 @@ const CustomGroupHeading = props => {
   );
 };
 
-
 const StoryForm = () => {
-
   const { dispatch } = useStoriesContext();
   const [title, setTitle] = useState('');
   const [children, setChildren] = useState([]);
   const [tags, setTags] = useState([]);
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -109,11 +108,11 @@ const StoryForm = () => {
         components={{ GroupHeading: CustomGroupHeading }}
         onChange={(selectedOptions) => setTags(selectedOptions)}
         value={tags}
-    />
+      />
 
-      <textarea placeholder="Start writing..."
-        type="text"
-        onChange={(e) => setContent(e.target.value)}
+      <ReactQuill
+        placeholder="Start writing..."
+        onChange={(value) => setContent(value)}
         value={content}
       />
 
@@ -124,7 +123,5 @@ const StoryForm = () => {
     </form>
   );
 };
-
-
 
 export default StoryForm;
