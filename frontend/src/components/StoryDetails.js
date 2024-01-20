@@ -6,11 +6,10 @@ function truncate(str, n){
 const StoryDetails = ({ story }) => {
     return (
         <div className="story-card">
-            <h4 className="story-h4">{story.title}</h4>
-            <p className="story-p"><strong>Tags: </strong>{story.tags}</p>
+            <h4 className="story-h4">{truncate(story.content, 30)}</h4>
             <p className="story-p">{truncate(story.content, 60)}</p>
-            <p className="story-p">{story.children}</p>
-            <p className="story-p">{story.createdAt}</p>
+            <sub className="story-children">{story.children}</sub>
+            <sub className="story-sub">{"Story shared by Author\n"+story.createdAt}</sub>
         </div>
     )
     
