@@ -6,6 +6,7 @@ const {
   createClass,
   deleteClass,
   updateClass,
+  addStudent,
 } = require('../controllers/classController'); // Adjust the path to where your classController is located
 
 // Routes for the Class model
@@ -14,5 +15,6 @@ router.get('/:id', getClass); // Get a single class by ID
 router.post('/', createClass); // Create a new class
 router.delete('/:id', deleteClass); // Delete a class by ID
 router.patch('/:id', updateClass); // Update a class by ID
+router.post('/:id/students', addStudent); // Add a student to a class by ID
 
 module.exports = router;

@@ -143,4 +143,21 @@
     color: #000000;
     font-size: 25px;
 }
+
+/* Style for Add Student Button */
+.add-student-btn {
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 16px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-student-btn:hover {
+    background-color: #45a049;
+  }
   
