@@ -1,10 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Select, { components } from "react-select";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import the styles
 import { useStoriesContext } from "../hooks/useStoriesContext";
 import '../index.css';
 import { groupedOptions } from "./docs/data";
+
+const UploadWidget = ({ onImageUpload }) => {
+  const cloudinaryRef = useRef();
+  const widgetRef = useRef();
+
+  useEffect(() => {
+    cloudinaryRef.current = window.cloudinary;
+    widgetRef.current = cloudinaryRef.current.createUploadWidget({
+      cloudName: 'drpnvb7qc',
+      uploadPreset: 'tetlineq'
+    }, function(error, result) {
+      if (!error && result && result.event === "success") {
+        const imageUrl = result.info.secure_url;
+        onImageUpload(imageUrl);
+      }
+    });
+  }, [onImageUpload]);
+
+  return (
+    <button onClick={() => widgetRef.current.open()}>
+      Upload Button
+    </button>
+  );
+};
 
 const handleHeaderClick = id => {
   const node = document.querySelector(`#${id}`).parentElement
@@ -35,6 +59,11 @@ const StoryForm = () => {
   const [tags, setTags] = useState([]);
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
+
+  const handleImageUpload = imageUrl => {
+    // Insert the image URL at the current cursor position in the editor
+    setContent(content + `\n<img src="${imageUrl}" alt="uploaded" />\n`);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,49 +107,52 @@ const StoryForm = () => {
   };
 
   return (
-    <form className="create" onSubmit={handleSubmit}>
+    <body>
+      <UploadWidget onImageUpload={handleImageUpload} />
+      <form className="create" onSubmit={handleSubmit}>
 
-      <input className="short-input" placeholder="Story title..."
-        type="text"
-        onChange={(e) => setTitle(e.target.value)}
-        value={title}
-      />
+        <input className="short-input" placeholder="Story title..."
+          type="text"
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+        />
 
-      <Select className="short-select" placeholder="Children in this story..."
-        isMulti
-        blurInputOnSelect={false}
-        closeMenuOnSelect={false}
-        options={[
-          { value: 'child1', label: 'Child 1' },
-          { value: 'child2', label: 'Child 2' },
-          // Add more options as needed
-        ]}
-        onChange={(selectedOptions) => setChildren(selectedOptions)}
-        value={children}
-        isSearchable
-      />
+        <Select className="short-select" placeholder="Children in this story..."
+          isMulti
+          blurInputOnSelect={false}
+          closeMenuOnSelect={false}
+          options={[
+            { value: 'child1', label: 'Child 1' },
+            { value: 'child2', label: 'Child 2' },
+            // Add more options as needed
+          ]}
+          onChange={(selectedOptions) => setChildren(selectedOptions)}
+          value={children}
+          isSearchable
+        />
 
-      <Select className="short-select" placeholder="Learning tags..."
-        options={groupedOptions}
-        isMulti
-        blurInputOnSelect={false}
-        closeMenuOnSelect={false}
-        components={{ GroupHeading: CustomGroupHeading }}
-        onChange={(selectedOptions) => setTags(selectedOptions)}
-        value={tags}
-      />
+        <Select className="short-select" placeholder="Learning tags..."
+          options={groupedOptions}
+          isMulti
+          blurInputOnSelect={false}
+          closeMenuOnSelect={false}
+          components={{ GroupHeading: CustomGroupHeading }}
+          onChange={(selectedOptions) => setTags(selectedOptions)}
+          value={tags}
+        />
 
-      <ReactQuill
-        placeholder="Start writing..."
-        onChange={(value) => setContent(value)}
-        value={content}
-      />
+        <ReactQuill
+          placeholder="Start writing..."
+          onChange={(value) => setContent(value)}
+          value={content}
+        />
 
-      <div className="centered-button">
-        <button>Post Story</button>
-      </div>
-      {error && <div className="error">{error}</div>}
-    </form>
+        <div className="centered-button">
+          <button>Post Story</button>
+        </div>
+        {error && <div className="error">{error}</div>}
+      </form>
+    </body>
   );
 };
 
