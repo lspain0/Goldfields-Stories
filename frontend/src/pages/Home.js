@@ -34,11 +34,12 @@ const Home = () => {
           </Link>  
         </div>
 
-        <div className="stories">
+        <div className="story-cards-container">
           {stories && stories.map(story => (
             <StoryDetails story={story} key={story._id} />
           ))}
       </div>
+      
     </body>
   )
 }
