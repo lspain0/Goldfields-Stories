@@ -28,16 +28,19 @@ const ClassDetails = () => {
       <h1>{classDetails.className} / {classDetails.subject}</h1>
       <button onClick={handleAddStudent}>Add Student</button>
       {classDetails.students && classDetails.students.length > 0 ? (
-        <ul>
+        <div className="student-cards-container">
           {classDetails.students.map((student, index) => (
-            <li key={student._id || student.name}>{student.name}</li>
+            <div key={student._id || student.name} className="student-card">
+              <span>{student.name}</span>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         <p>No students in this class yet.</p>
       )}
     </div>
   );
+  
 };
 
 export default ClassDetails;

@@ -49,3 +49,34 @@
     font-family: 'Poppins', sans-serif;
     margin: 10px 0;
 }
+
+.student-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Adjust the minmax() to control the card sizes */
+    gap: 20px; /* Adjust the space between cards */
+    padding: 20px;
+    justify-content: center; /* Centers cards in the container */
+  }
+  
+  .student-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns items to the start of the card */
+    justify-content: center;
+    padding: 20px; /* Adjust the padding inside the card */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    border-radius: 10px; /* Rounded corners */
+    background: #fff; /* White background */
+    width: 100%; /* Card width is determined by the grid */
+    box-sizing: border-box; /* Include padding in the width */
+    transition: transform 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden; /* Ensures no content spills out */
+    border: 1px solid #e0e0e0; /* Light border similar to the example */
+  }
+  
+  .student-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
