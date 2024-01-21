@@ -238,3 +238,9 @@ cursor: pointer;
   margin-top: auto;
   font-size: 0.8em;
 }
+
+.story-link {
+  all: unset;
+  cursor: pointer;
+}
+

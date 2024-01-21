@@ -59,6 +59,7 @@ const StoryForm = () => {
   const [tags, setTags] = useState([]);
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
+  const quillRef = useRef();
 
   const handleImageUpload = imageUrl => {
     // Insert the image URL at the current cursor position in the editor
@@ -106,6 +107,12 @@ const StoryForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (quillRef.current) {
+      // Additional setup or handling can be added here
+    }
+  }, []);
+
   return (
     <body>
       <UploadWidget onImageUpload={handleImageUpload} />
@@ -142,9 +149,23 @@ const StoryForm = () => {
         />
 
         <ReactQuill
+          ref={quillRef}
           placeholder="Start writing..."
           onChange={(value) => setContent(value)}
           value={content}
+          modules={{
+            toolbar: {
+              container: [
+                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                ['blockquote'],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                [{ 'align': [] }],
+                [{ 'color': [] }, { 'background': [] }],
+                ['clean'],
+              ],
+            },
+          }}
         />
 
         <div className="centered-button">

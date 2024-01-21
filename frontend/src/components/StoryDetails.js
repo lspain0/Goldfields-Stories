@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 function truncate(str, n){
     return (str.length > n) ? str.slice(0, n-1) + '...' : str;
   };
@@ -19,12 +20,14 @@ function removeTags(str) {
 
 const StoryDetails = ({ story }) => {
     return (
-        <div className="story-card">
-            <h4 className="story-h4">{truncate(removeTags(story.title), 30)}</h4>
-            <p className="story-p">{truncate(removeTags(story.content), 60)}</p>
-            <sub className="story-children">{story.children}</sub>
-            <sub className="story-sub">{"Story shared by Author\n"+story.createdAt}</sub>
-        </div>
+        <Link className='story-link' to={`/story/${story._id}`} key={story._id}>
+            <div className="story-card">
+                <h4 className="story-h4">{truncate(removeTags(story.title), 30)}</h4>
+                <p className="story-p">{truncate(removeTags(story.content), 60)}</p>
+                <sub className="story-children">{story.children}</sub>
+                <sub className="story-sub">{"Story shared by Author\n"+story.createdAt}</sub> 
+            </div>
+        </Link>
     )
     
 }

@@ -13,7 +13,7 @@ const storySchema = new Schema({
     },
     tags: {
         type: String,
-        required: true
+        required: false
     },
     content: {
         type: String,
