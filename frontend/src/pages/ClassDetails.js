@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ClassesContext } from "../context/ClassesContext";
-import "../class.css";
+import "../student.css";
 
 
 const ClassDetails = () => {

@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ClassesProvider } from './context/ClassesContext';
 import ClassesList from './components/ClassesList';
-import ClassDetails from './components/ClassDetails';
+import ClassDetails from './pages/ClassDetails';
 import Home from './pages/Home';
 import Class from './pages/Class';
 import Navbar from './components/Navbar';
