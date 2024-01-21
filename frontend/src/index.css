@@ -198,8 +198,10 @@ cursor: pointer;
   transition: transform 0.3s ease;
   font-family: 'Poppins', sans-serif;
   max-width: 100%;
-  max-height: 300px;
+  max-height: 600px;
   word-wrap: break-word;
+  min-height: 200px;
+  max-height: 200px;
 }
 
 .story-card:hover {
@@ -224,7 +226,8 @@ cursor: pointer;
 }
 
 .story-h4 { 
-  margin: 0;
+  margin: 0px;
+  padding-top: 20%;
   max-inline-size: 90%;
   padding-top: 10px;
   word-wrap: break-word;
@@ -233,5 +236,5 @@ cursor: pointer;
 
 .story-sub {
   margin-top: auto;
-  font-size: 0.8em; /* Adjust the font size as needed */
+  font-size: 0.8em;
 }
