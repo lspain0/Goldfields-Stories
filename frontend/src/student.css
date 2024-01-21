@@ -80,3 +80,33 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
   
+  /* Styling for the h1 element */
+h1 {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    color: #000000; /* Adjust the color as needed */
+    font-size: 25px; /* Adjust the size as needed */
+    margin-top: 20px; /* Spacing from the top */
+  }
+  
+  /* Styling for the button in ClassDetails */
+  .student-details-button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px auto;
+    width: auto; /* Adjust width as needed */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background: #326C6F; /* Adjust background color as needed */
+    color: white;
+    display: block; /* To enable margin auto to work */
+  }
+  
+  .student-details-button:hover {
+    background: #224957; /* Adjust hover background color as needed */
+  }
+  

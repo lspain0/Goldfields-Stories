@@ -21,7 +21,7 @@ const AddStudentPage = () => {
 
   return (
     <div>
-      <h1>Add Student</h1>
+      <h1>Add New Student</h1>
       <StudentForm
         studentName={studentName}
         setStudentName={setStudentName}

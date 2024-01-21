@@ -26,7 +26,7 @@ const ClassDetails = () => {
   return (
     <div>
       <h1>{classDetails.className} / {classDetails.subject}</h1>
-      <button onClick={handleAddStudent}>Add Student</button>
+      <button className="student-details-button" onClick={handleAddStudent}>Add Student</button>
       {classDetails.students && classDetails.students.length > 0 ? (
         <div className="student-cards-container">
           {classDetails.students.map((student, index) => (
