@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap');
+
+.student-form-container {
+    width: 300px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.student-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.student-form input {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px 0;
+    border: 2px solid #326C6F;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.student-form button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px auto;
+    width: calc(100% - 40px);
+    border: none;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background: #326C6F;
+    color: white;
+}
+
+.student-form button:hover {
+    background: #224957;
+}
+
+.student-form input:focus {
+    border-color: #0056b3;
+    outline: none;
+}
+
+.student-form .error {
+    color: #ff0000;
+    font-family: 'Poppins', sans-serif;
+    margin: 10px 0;
+}

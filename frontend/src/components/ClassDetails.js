@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ClassesContext } from "../context/ClassesContext";
+import "../class.css";
+
 
 const ClassDetails = () => {
   const { classId } = useParams();
@@ -23,8 +25,7 @@ const ClassDetails = () => {
 
   return (
     <div>
-      <h1>{classDetails.className}</h1>
-      <p>{classDetails.subject}</p>
+      <h1>{classDetails.className} / {classDetails.subject}</h1>
       <button onClick={handleAddStudent}>Add Student</button>
       {classDetails.students && classDetails.students.length > 0 ? (
         <ul>

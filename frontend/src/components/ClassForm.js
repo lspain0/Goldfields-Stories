@@ -1,5 +1,4 @@
 import React from 'react';
-import '../class.css';
 
 const ClassForm = ({ className, setClassName, subject, setSubject, isSubmitting, handleSubmit }) => {
   return (
