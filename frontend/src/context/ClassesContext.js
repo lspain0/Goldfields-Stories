@@ -29,7 +29,19 @@ export const ClassesProvider = ({ children }) => {
   }, []);
 
   const addClass = async (newClass) => {
-    // existing code
+    try {
+      const response = await fetch('/api/classes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newClass),
+      });
+      const addedClass = await response.json();
+      setClasses(prevClasses => [...prevClasses, addedClass]);
+    } catch (error) {
+      console.error("Error creating class:", error);
+    }
   };
 
   // Updated to handle new student object with image upload
