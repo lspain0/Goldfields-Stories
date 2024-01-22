@@ -30,15 +30,15 @@ export const ClassesProvider = ({ children }) => {
 
   const addClass = async (newClass) => {
     try {
-      const response = await fetch('/api/classes', {
-        method: 'POST',
+      const response = await fetch("/api/classes", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(newClass),
       });
       const addedClass = await response.json();
-      setClasses(prevClasses => [...prevClasses, addedClass]);
+      setClasses((prevClasses) => [...prevClasses, addedClass]);
     } catch (error) {
       console.error("Error creating class:", error);
     }
@@ -49,7 +49,7 @@ export const ClassesProvider = ({ children }) => {
     try {
       const formData = new FormData();
       for (const key in student) {
-        if (key === 'image' && student[key]) {
+        if (key === "image" && student[key]) {
           formData.append(key, student[key]);
         } else {
           formData.append(key, String(student[key])); // Ensure non-file values are converted to strings
@@ -65,9 +65,7 @@ export const ClassesProvider = ({ children }) => {
       const updatedClass = await response.json();
       setClasses((prevClasses) =>
         prevClasses.map((c) =>
-          c.id === classId
-            ? { ...c, students: updatedClass.students }
-            : c
+          c.id === classId ? { ...c, students: updatedClass.students } : c
         )
       );
     } catch (error) {
