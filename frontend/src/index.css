@@ -6,13 +6,17 @@
   --primary: #000000;
   --error: #9c9117;
 }
+
 body {
   background: #f1f1f1;
   margin: 0;
-  font-family: Verdana, sans-serif;}
+  font-family: Verdana, sans-serif;
+}
+
 header {
   background: #fff;
 }
+
 header .container {
   max-width: 1400px;
   margin: 0 auto;
@@ -21,11 +25,13 @@ header .container {
   align-items: center;
   justify-content: space-between;
 }
+
 header a {
   color: #333;
   text-decoration: none;
 }
-.pages{
+
+.pages {
   max-width: 1400px;
   padding: 20px;
   margin: 0 auto;
@@ -37,24 +43,28 @@ header a {
   grid-template-columns: 3fr 1fr;
   gap: 100px;
 }
+
 .story-details {
   background: #fff;
   border-radius: 4px;
   margin: 20px auto;
   padding: 20px;
   position: relative;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
 }
+
 .story-details h4 {
   margin: 0 0 10px 0;
   font-size: 1.2em;
   color: var(--primary);
 }
+
 .story-details p {
   margin: 0;
   font-size: 0.9em;
   color: #555;
 }
+
 .story-details span {
   position: absolute;
   top: 20px;
@@ -67,7 +77,8 @@ header a {
 }
 
 /* new story form */
-label, input {
+label,
+input {
   display: block;
 }
 
@@ -83,7 +94,6 @@ input {
 
 .short-input {
   width: 70%;
-  
 }
 
 .short-select {
@@ -126,47 +136,47 @@ div.error {
 .navbar {
   display: flex;
   align-items: center;
-  padding: 0 20px; /* Adjust padding as needed */
+  padding: 0 20px;
   background: #fff;
 }
 
 .nav-logo h1 {
   font-family: 'Poppins', sans-serif;
-  font-weight: 800; /* Using the imported Poppins font */
+  font-weight: 800;
   color: var(--primary);
   margin: 0;
 }
 
 .nav-links {
   display: flex;
-  list-style-type: none; /* Remove bullet points from list */
-  margin-left: auto; /* Push the navigation to the right */
+  list-style-type: none;
+  margin-left: auto;
 }
 
 .nav-item {
-font-family: 'Poppins', sans-serif;
-font-weight: 400; 
-color: var(--primary);
-text-decoration: none;
-margin: 0 15px; /* Adjust spacing between navigation items */
-transition: color 0.3s ease;  /* Transition property for smooth color change */
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  color: var(--primary);
+  text-decoration: none;
+  margin: 0 15px;
+  transition: color 0.3s ease;
 }
 
 .nav-item:hover {
-color: var(--error); /* Color change on hover */
+  color: var(--error);
 }
 
 .nav-icon {
-font-size: 24px; /* Icon size */
-color: var(--primary);
-cursor: pointer;
+  font-size: 24px;
+  color: var(--primary);
+  cursor: pointer;
 }
 
 .logo-container {
-  display: flex; /* Displays flexbox items inline */
-  justify-content: center; /* Aligns logo horizontally */
-  align-items: center; /* Aligns logo vertically */
-  min-height: 100px; /* Adjust min-height as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
   width: 100%;
 }
 
@@ -209,29 +219,26 @@ cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.story-p { 
-  margin:0; 
-  max-inline-size: 90%;
-  max-height: fit-content;
-  word-wrap: break-word;
-  text-align: left;
-
-}
-
-.story-date { 
-  margin:0; 
+.story-p {
+  margin: 0;
   max-inline-size: 90%;
   max-height: fit-content;
   word-wrap: break-word;
 }
 
-.story-h4 { 
+.story-date {
+  margin: 0;
+  max-inline-size: 90%;
+  max-height: fit-content;
+  word-wrap: break-word;
+}
+
+.story-h4 {
   margin: 0px;
   padding-top: 20%;
   max-inline-size: 90%;
   padding-top: 10px;
   word-wrap: break-word;
-  text-align: left;
 }
 
 .story-sub {
@@ -244,3 +251,15 @@ cursor: pointer;
   cursor: pointer;
 }
 
+/* Styling for Quill alignments */
+.ql-align-left {
+  text-align: left;
+}
+
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-align-right {
+  text-align: right;
+}

@@ -3,7 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 
 // components
 
-const Home = () => {
+const StoryPage = () => {
   const location = useLocation();
   const [currentStory, setCurrentStory] = useState(null);
 
@@ -40,8 +40,6 @@ const Home = () => {
     return { __html: html };
   };
 
-  const parser = new DOMParser()
-
   return (
     <body>
       {/* parse HTML content */}
@@ -51,4 +49,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default StoryPage;
