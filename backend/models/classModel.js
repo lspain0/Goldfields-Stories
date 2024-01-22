@@ -1,12 +1,29 @@
-// models/Class.js
 const mongoose = require('mongoose');
 
 const studentSchema = new mongoose.Schema({
-  name: {
+  firstName: {
     type: String,
     required: true,
-  }
-  // Add any other student fields if necessary
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  gender: {
+    type: String,
+    required: true,
+  },
+  dob: {
+    type: Date,
+    required: true,
+  },
+  emergencyContact: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: Buffer, 
+  },
 });
 
 const classSchema = new mongoose.Schema({
@@ -18,7 +35,7 @@ const classSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  students: [studentSchema] // Adding an array of student objects
+  students: [studentSchema],
 });
 
 module.exports = mongoose.model('Class', classSchema);

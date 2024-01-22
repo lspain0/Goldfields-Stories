@@ -81,23 +81,29 @@ const updateClass = async (req, res) => {
 // Add a student to a class
 const addStudent = async (req, res) => {
   const { id } = req.params;
-  const { name } = req.body;
+  const student = req.body;
+
+  // Check if an image was uploaded and is available in req.file
+  if (req.file) {
+    // Convert the image file buffer to a MongoDB Buffer
+    student.image = Buffer.from(req.file.buffer);
+  }
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No class found" });
   }
   try {
     const updatedClass = await Class.findByIdAndUpdate(
       id,
-      { $push: { students: { name } } },
-      { new: true } // Return the updated class
+      { $push: { students: student } },
+      { new: true }
     );
     if (!updatedClass) {
       return res.status(404).json({ error: "No class found" });
     }
     res.status(200).json(updatedClass);
-  } 
-  catch (error) {
-    console.error(error); // This will log the entire error object
+  } catch (error) {
+    console.error(error);
     res.status(400).json({ error: error.message });
   }
 };

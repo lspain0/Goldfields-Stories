@@ -29,39 +29,27 @@ export const ClassesProvider = ({ children }) => {
   }, []);
 
   const addClass = async (newClass) => {
-    try {
-      const response = await fetch("/api/classes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newClass),
-      });
-      const addedClass = await response.json();
-      setClasses((prevClasses) => [
-        ...prevClasses,
-        { ...addedClass, students: [] },
-      ]);
-    } catch (error) {
-      console.error("Error creating class:", error);
-    }
+    // existing code
   };
 
-  // Inside your ClassesContext provider
-  const addStudentToClass = async (classId, studentName) => {
+  // Updated to handle new student object with image upload
+  const addStudentToClass = async (classId, student) => {
     try {
+      const formData = new FormData();
+      for (const key in student) {
+        if (key === 'image' && student[key]) {
+          formData.append(key, student[key]);
+        } else {
+          formData.append(key, String(student[key])); // Ensure non-file values are converted to strings
+        }
+      }
       const response = await fetch(`/api/classes/${classId}/students`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: studentName }),
+        body: formData,
       });
-
       if (!response.ok) {
         throw new Error("HTTP error! status: " + response.status);
       }
-
       const updatedClass = await response.json();
       setClasses((prevClasses) =>
         prevClasses.map((c) =>

@@ -3,12 +3,22 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ClassesContext } from "../context/ClassesContext";
 import "../student.css";
 
-
 const ClassDetails = () => {
   const { classId } = useParams();
   const navigate = useNavigate();
   const { classes } = useContext(ClassesContext);
   const [classDetails, setClassDetails] = useState(null);
+
+  // Function to convert buffer to URL
+  const bufferToUrl = (buffer) => {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  };
 
   useEffect(() => {
     const classInfo = classes.find((c) => c.id === classId);
@@ -25,13 +35,31 @@ const ClassDetails = () => {
 
   return (
     <div>
-      <h1>{classDetails.className} / {classDetails.subject}</h1>
-      <button className="student-details-button" onClick={handleAddStudent}>Add Student</button>
+      <h1>
+        {classDetails.className} / {classDetails.subject}
+      </h1>
+      <button className="student-details-button" onClick={handleAddStudent}>
+        Add Student
+      </button>
       {classDetails.students && classDetails.students.length > 0 ? (
         <div className="student-cards-container">
-          {classDetails.students.map((student, index) => (
-            <div key={student._id || student.name} className="student-card">
-              <span>{student.name}</span>
+          {classDetails.students.map((student) => (
+            <div key={student._id} className="student-card">
+              {student.image && (
+                <img
+                  src={`data:image/jpeg;base64,${bufferToUrl(
+                    student.image.data
+                  )}`}
+                  alt={`${student.firstName} ${student.lastName}`}
+                  className="student-card-image"
+                />
+              )}
+              <div className="student-card-info">
+                <span>
+                  {student.firstName} {student.lastName}
+                </span>
+                <span>DOB: {new Date(student.dob).toLocaleDateString()}</span>
+              </div>
             </div>
           ))}
         </div>
@@ -40,7 +68,6 @@ const ClassDetails = () => {
       )}
     </div>
   );
-  
 };
 
 export default ClassDetails;

@@ -4,28 +4,41 @@ import { ClassesContext } from '../context/ClassesContext';
 import StudentForm from '../components/StudentForm';
 
 const AddStudentPage = () => {
-  const [studentName, setStudentName] = useState('');
+  const [student, setStudent] = useState({
+    image: null,
+    firstName: '',
+    lastName: '',
+    gender: '',
+    dob: '',
+    emergencyContact: ''
+  });
   const { classId } = useParams();
   const navigate = useNavigate();
   const { addStudentToClass } = useContext(ClassesContext);
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    await addStudentToClass(classId, studentName);
+    e.preventDefault();
+    try {
+      // You will need to modify addStudentToClass to handle the new student object
+      await addStudentToClass(classId, student);
+      navigate(`/class/${classId}`);
+    } catch (error) {
+      console.error("Failed to add student:", error);
+    }
+  };
+
+  const handleBack = () => {
     navigate(`/class/${classId}`);
-  } catch (error) {
-    console.error("Failed to add student:", error);
-  }
-};
+  };
 
   return (
     <div>
       <h1>Add New Student</h1>
       <StudentForm
-        studentName={studentName}
-        setStudentName={setStudentName}
+        student={student}
+        setStudent={setStudent}
         handleSubmit={handleSubmit}
+        handleBack={handleBack}
       />
     </div>
   );
