@@ -8,6 +8,7 @@ const ClassDetails = () => {
   const navigate = useNavigate();
   const { classes } = useContext(ClassesContext);
   const [classDetails, setClassDetails] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Function to convert buffer to URL
   const bufferToUrl = (buffer) => {
@@ -23,14 +24,21 @@ const ClassDetails = () => {
   useEffect(() => {
     const classInfo = classes.find((c) => c.id === classId);
     setClassDetails(classInfo);
+    
+    // Set loading to false after fetching the class
+    setIsLoading(false);
   }, [classId, classes]);
 
   const handleAddStudent = () => {
     navigate(`/class/${classId}/addstudent`);
   };
 
+  if (isLoading) {
+    return <p>Loading...</p>; // Show loading message during loading state
+  }
+
   if (!classDetails) {
-    return <p>Class not found.</p>;
+    return <p>Class not found.</p>; // Show this only if not loading and classDetails is null
   }
 
   return (
