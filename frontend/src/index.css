@@ -271,21 +271,21 @@ div.error {
   overflow-y: scroll;
 }
 
-
 .story-content {
   float: left;
   width: 70%;
   height: 800px;
-  overflow-y: scroll;
-  margin-right: 10px; 
+  word-wrap: break-word;
+  margin-right: 10px;
 }
+
 
 .story-info {
   float: right;
   width: 28%;
   word-break: break-all;
   height: 800px;
-  overflow-y: scroll;
+  overflow-y: scroll;;
 }
 @media (max-width: 600px) {
   .story-content,
