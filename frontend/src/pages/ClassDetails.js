@@ -24,7 +24,7 @@ const ClassDetails = () => {
   useEffect(() => {
     const classInfo = classes.find((c) => c.id === classId);
     setClassDetails(classInfo);
-    
+
     // Set loading to false after fetching the class
     setIsLoading(false);
   }, [classId, classes]);
@@ -63,7 +63,7 @@ const ClassDetails = () => {
                 />
               )}
               <div className="student-card-info">
-                <span>
+                <span className="student-name">
                   {student.firstName} {student.lastName}
                 </span>
                 <span>DOB: {new Date(student.dob).toLocaleDateString()}</span>
