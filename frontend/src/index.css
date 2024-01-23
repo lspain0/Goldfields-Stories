@@ -271,13 +271,6 @@ div.error {
   overflow-y: scroll;
 }
 
-.story-info {
-  float: right;
-  width: 30%;
-  word-break: break-all;
-  height: 850px;
-  overflow-y: scroll;
-}
 
 .story-content {
   float: left;
@@ -294,6 +287,31 @@ div.error {
   height: 800px;
   overflow-y: scroll;
 }
+@media (max-width: 600px) {
+  .story-content,
+  .story-info {
+    width: 100%;
+    float: none;
+    margin-right: 0; /* Reset margin for small screens */
+  }
+
+@media (max-height: 870px) {
+  .story-content {
+    float: left;
+    width: 70%;
+    height: 750px;
+    overflow-y: scroll;
+    margin-right: 10px;
+  }
+  .story-info {
+    float: right;
+    width: 28%;
+    word-break: break-all;
+    height: 750px;
+    overflow-y: scroll;
+  }
+}
+}
 
 @media (max-height: 770px) {
   .story-content {
@@ -301,10 +319,11 @@ div.error {
     width: 70%;
     height: 650px;
     overflow-y: scroll;
+    margin-right: 10px;
   }
   .story-info {
     float: right;
-    width: 30%;
+    width: 28%;
     word-break: break-all;
     height: 650px;
     overflow-y: scroll;
@@ -316,7 +335,15 @@ div.error {
   overflow: hidden;
 }
 
-html, body{
-    width: 100%;
-    height: 100%
+.right-align-span {
+  text-align: right;
+}
+
+.info-line {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-content {
+  text-align: right;
 }

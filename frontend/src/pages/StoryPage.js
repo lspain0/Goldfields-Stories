@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, Link } from 'react-router-dom';
 
-// components
-
 const StoryPage = () => {
   const location = useLocation();
   const [currentStory, setCurrentStory] = useState(null);
@@ -40,6 +38,45 @@ const StoryPage = () => {
     return { __html: html };
   };
 
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const formattedDate = date.toLocaleDateString('en-UK', options);
+
+    return formattedDate;
+  };
+
+  const generateStoryInfoHTML = () => {
+    return (
+      <div className="story-info">
+        <div className="info-line">
+          <p>Author:</p>
+          <p className="info-content">Author Author</p>
+        </div>
+        <hr className="solid" />
+        <div className="info-line">
+          <p>Story Date:</p>
+          <p className="info-content">{formatTimestamp(currentStory.createdAt)}</p>
+        </div>
+        <hr className="solid" />
+        <p>Children in this story:</p>
+        <p>{currentStory.children}</p>
+        <hr className="solid" />
+        {currentStory.tags !== '' && (
+          <>
+            <p>Learning Tags:</p>
+            <p>{currentStory.tags}</p>
+            <hr className="solid" />
+          </>
+        )}
+      </div>
+    );
+  };
+  
+  
+  
+  
   return (
     <body className="story-page-body">
       <div className="story-content">
@@ -47,64 +84,7 @@ const StoryPage = () => {
         <h3 dangerouslySetInnerHTML={parseHTML(currentStory.title)} />
         <div dangerouslySetInnerHTML={parseHTML(currentStory.content)} />
       </div>
-      <div className="story-info">
-        <p>hellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohellohellohellohellohellohellohello
-        hellohellohellohellohellohello
-        </p>
-      </div>
+      {generateStoryInfoHTML()}
     </body>
   );
 };
