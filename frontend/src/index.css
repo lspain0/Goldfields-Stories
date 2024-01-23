@@ -263,3 +263,31 @@ div.error {
 .ql-align-right {
   text-align: right;
 }
+
+.story-content {
+  float:left;
+  width: 70%;
+  align-self: left;
+  margin-left: 10px;
+  
+}
+
+.story-info {
+  float:auto;
+  word-break: break-all;
+  padding-left: 73%;
+
+  
+} @media (max-width: 600px) {
+  .story-info {
+    padding-left: 2%;
+    clear: both;
+  }
+  .story-content {
+   width: 100%;
+  }
+}
+
+.story-page-body {
+  padding-left: 2%;
+}

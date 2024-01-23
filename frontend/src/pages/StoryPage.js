@@ -41,10 +41,70 @@ const StoryPage = () => {
   };
 
   return (
-    <body>
-      {/* parse HTML content */}
-      <h3 dangerouslySetInnerHTML={parseHTML(currentStory.title)} />
-      <div dangerouslySetInnerHTML={parseHTML(currentStory.content)} />
+    <body className="story-page-body">
+      <div className="story-content">
+        {/* parse HTML content */}
+        <h3 dangerouslySetInnerHTML={parseHTML(currentStory.title)} />
+        <div dangerouslySetInnerHTML={parseHTML(currentStory.content)} />
+      </div>
+      <div className="story-info">
+        <p>hellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohellohellohellohellohellohellohello
+        hellohellohellohellohellohello
+        </p>
+      </div>
     </body>
   );
 };
