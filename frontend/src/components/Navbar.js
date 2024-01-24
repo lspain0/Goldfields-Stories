@@ -5,7 +5,13 @@ import { FaUserCircle } from 'react-icons/fa';
 const Navbar = () => {
     const location = useLocation(); // This hook gives us the current location object
     let pageTitle;
+    const logoutHandler = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("email");
+        localStorage.removeItem("name");
+        window.location.href = "/login";
 
+    }
     // Determine the page title based on the current path
     switch (location.pathname) {
         case '/':
@@ -37,8 +43,8 @@ const Navbar = () => {
                     <Link to="/stories" className="nav-item">Stories</Link>
                     <Link to="/class" className="nav-item">Class</Link>
                     <Link to="/search" className="nav-item">Search Stories</Link>
-                    <Link to="/logout" className="nav-item">Logout</Link>
-                    <FaUserCircle className="nav-icon"/>
+                    <Link to="/logout" onClick={() => logoutHandler()} className="nav-item">Logout</Link>
+                    <FaUserCircle className="nav-icon" />
                 </div>
             </nav>
         </header>
