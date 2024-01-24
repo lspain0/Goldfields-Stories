@@ -359,3 +359,9 @@ div.error {
   max-width: 100%;
 }
 
+.solid {
+  border: none;
+  height: 1px;
+  background-color: #333;
+}
+
