@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useStoriesContext } from "../hooks/useStoriesContext";
-import { CheckTreePicker } from 'rsuite'; // Import CheckTreePicker
+import { CheckTreePicker } from 'rsuite';
 import '../index.css';
 import { groupedTags } from "./docs/tags";
 
@@ -123,8 +123,8 @@ const StoryForm = () => {
         <CheckTreePicker
           data={groupedTags}
           uncheckableItemValues={['1-1', '1-1-2']}
-          value={selectedCheckTreeValuesChildren} // Use the state variable for value
-          onChange={handleCheckTreePickerChangeChildren} // Update the onChange handler
+          value={selectedCheckTreeValuesChildren}
+          onChange={handleCheckTreePickerChangeChildren}
           cascade={false}
           style={{ width: 220 }}
         />
@@ -132,8 +132,8 @@ const StoryForm = () => {
         <CheckTreePicker
           data={groupedTags}
           uncheckableItemValues={['1-1', '1-1-2']}
-          value={selectedCheckTreeValuesTags} // Use the state variable for value
-          onChange={handleCheckTreePickerChangeTags} // Update the onChange handler
+          value={selectedCheckTreeValuesTags}
+          onChange={handleCheckTreePickerChangeTags}
           cascade={false}
           style={{ width: 220 }}
         />
