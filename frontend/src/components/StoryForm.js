@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import Select from "react-select";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useStoriesContext } from "../hooks/useStoriesContext";
@@ -39,7 +38,8 @@ const StoryForm = () => {
   const [content, setContent] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [error, setError] = useState('');
-  const [selectedCheckTreeValues, setSelectedCheckTreeValues] = useState([]); // New state for CheckTreePicker
+  const [selectedCheckTreeValuesTags, setSelectedCheckTreeValuesTags] = useState([]);
+  const [selectedCheckTreeValuesChildren, setSelectedCheckTreeValuesChildren] = useState([]);
   const quillRef = useRef();
 
   const handleImageUpload = imageUrl => {
@@ -48,10 +48,14 @@ const StoryForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const childrenString = children.map((child) => child.value).join(',');
+  
+    // Ensure that children is always an array of objects
+    const childrenArray = Array.isArray(children) ? children : [{ value: children }];
+  
+    const childrenString = childrenArray.map((child) => child.value).join(',');
     const tagsString = tags;
     const story = { title, children: childrenString, tags: tagsString, content, categories: selectedCategories.join(',') };
-
+  
     try {
       const response = await fetch('/api/stories', {
         method: 'POST',
@@ -60,13 +64,13 @@ const StoryForm = () => {
           'Content-Type': 'application/json'
         }
       });
-
+  
       const json = await response.json();
-
+  
       if (!response.ok) {
         setError(json.error);
       }
-
+  
       if (response.ok) {
         setTitle('');
         setChildren([]);
@@ -89,12 +93,20 @@ const StoryForm = () => {
     }
   }, []);
 
-  const handleCheckTreePickerChange = (values) => {
-    setSelectedCheckTreeValues(values);
+  const handleCheckTreePickerChangeTags = (values) => {
+    setSelectedCheckTreeValuesTags(values);
 
     // Convert selected values to a single comma-separated string
     const tagsString = Array.isArray(values) ? values.join(',') : '';
     setTags(tagsString);
+  };
+
+  const handleCheckTreePickerChangeChildren = (values) => {
+    setSelectedCheckTreeValuesChildren(values);
+
+    // Convert selected values to a single comma-separated string
+    const childrenString = Array.isArray(values) ? values.join(',') : '';
+    setChildren(childrenString);
   };
 
   return (
@@ -108,24 +120,20 @@ const StoryForm = () => {
           value={title}
         />
 
-        <Select className="short-select" placeholder="Children in this story..."
-          isMulti
-          blurInputOnSelect={false}
-          closeMenuOnSelect={false}
-          options={[
-            { value: 'child1', label: 'Child 1' },
-            { value: 'child2', label: 'Child 2' },
-          ]}
-          onChange={(selectedOptions) => setChildren(selectedOptions)}
-          value={children}
-          isSearchable
+        <CheckTreePicker
+          data={groupedTags}
+          uncheckableItemValues={['1-1', '1-1-2']}
+          value={selectedCheckTreeValuesChildren} // Use the state variable for value
+          onChange={handleCheckTreePickerChangeChildren} // Update the onChange handler
+          cascade={false}
+          style={{ width: 220 }}
         />
 
         <CheckTreePicker
           data={groupedTags}
           uncheckableItemValues={['1-1', '1-1-2']}
-          value={selectedCheckTreeValues} // Use the state variable for value
-          onChange={handleCheckTreePickerChange} // Update the onChange handler
+          value={selectedCheckTreeValuesTags} // Use the state variable for value
+          onChange={handleCheckTreePickerChangeTags} // Update the onChange handler
           cascade={false}
           style={{ width: 220 }}
         />
