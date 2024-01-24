@@ -248,6 +248,10 @@ div.error {
   font-size: 0.8em;
 }
 
+.story-date {
+  font-size: 0.8em;
+}
+
 .story-link {
   all: unset;
   cursor: pointer;
@@ -279,6 +283,7 @@ div.error {
   height: 800px;
   word-wrap: break-word;
   margin-right: 10px;
+  outline:0.01em solid black;
 }
 
 

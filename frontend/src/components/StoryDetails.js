@@ -3,7 +3,14 @@ function truncate(str, n){
     return (str.length > n) ? str.slice(0, n-1) + '...' : str;
   };
 
+const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
 
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const formattedDate = date.toLocaleDateString('en-UK', options);
+
+    return formattedDate;
+};
 
 function removeTags(str) {
     if ((str === null) || (str === ''))
@@ -25,7 +32,8 @@ const StoryDetails = ({ story }) => {
                 <h4 className="story-h4">{truncate(removeTags(story.title), 30)}</h4>
                 <p className="story-p">{truncate(removeTags(story.content), 60)}</p>
                 <sub className="story-children">{story.children}</sub>
-                <sub className="story-sub">{"Story shared by Author\n"+story.createdAt}</sub> 
+                <sub className="story-sub">{"Story shared by Author\n"}</sub> 
+                <sub className='story-date'>{formatTimestamp(story.createdAt)}</sub>
             </div>
         </Link>
     )
