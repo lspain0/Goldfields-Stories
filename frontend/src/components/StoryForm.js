@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import Select, { components } from "react-select";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Import the styles
+import "react-quill/dist/quill.snow.css";
 import { useStoriesContext } from "../hooks/useStoriesContext";
+import { CheckTreePicker } from 'rsuite';
 import '../index.css';
-import { groupedOptions } from "./docs/data";
+import { groupedTags } from "./docs/tags";
 
 const UploadWidget = ({ onImageUpload }) => {
   const cloudinaryRef = useRef();
@@ -15,7 +15,7 @@ const UploadWidget = ({ onImageUpload }) => {
     widgetRef.current = cloudinaryRef.current.createUploadWidget({
       cloudName: 'drpnvb7qc',
       uploadPreset: 'tetlineq'
-    }, function(error, result) {
+    }, function (error, result) {
       if (!error && result && result.event === "success") {
         const imageUrl = result.info.secure_url;
         onImageUpload(imageUrl);
@@ -30,73 +30,53 @@ const UploadWidget = ({ onImageUpload }) => {
   );
 };
 
-const handleHeaderClick = id => {
-  const node = document.querySelector(`#${id}`).parentElement
-    .nextElementSibling;
-  const classes = node.classList;
-  if (classes.contains("collapsed")) {
-    node.classList.remove("collapsed");
-  } else {
-    node.classList.add("collapsed");
-  }
-};
-
-const CustomGroupHeading = props => {
-  return (
-    <div
-      className="group-heading-wrapper"
-      onClick={() => handleHeaderClick(props.id)}
-    >
-      <components.GroupHeading {...props} />
-    </div>
-  );
-};
-
 const StoryForm = () => {
   const { dispatch } = useStoriesContext();
   const [title, setTitle] = useState('');
   const [children, setChildren] = useState([]);
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState('');
   const [content, setContent] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [error, setError] = useState('');
+  const [selectedCheckTreeValuesTags, setSelectedCheckTreeValuesTags] = useState([]);
+  const [selectedCheckTreeValuesChildren, setSelectedCheckTreeValuesChildren] = useState([]);
   const quillRef = useRef();
 
   const handleImageUpload = imageUrl => {
-    // Insert the image URL at the current cursor position in the editor
     setContent(content + `\n<img src="${imageUrl}" alt="uploaded" />\n`);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Convert selected children to a comma-separated string
-    const childrenString = children.map((child) => child.value).join(',');
-
-    // Convert selected tags to a comma-separated string
-    const tagsString = tags.map((tag) => tag.value).join(',');
-
-    const story = { title, children: childrenString, tags: tagsString, content };
-
+  
+    // Ensure that children is always an array of objects
+    const childrenArray = Array.isArray(children) ? children : [{ value: children }];
+  
+    const childrenString = childrenArray.map((child) => child.value).join(',');
+    const tagsString = tags;
+    const story = { title, children: childrenString, tags: tagsString, content, categories: selectedCategories.join(',') };
+  
     try {
       const response = await fetch('/api/stories', {
         method: 'POST',
         body: JSON.stringify(story),
         headers: {
-          'Content-Type' : 'application/json'
+          'Content-Type': 'application/json'
         }
       });
-
+  
       const json = await response.json();
-
+  
       if (!response.ok) {
         setError(json.error);
       }
-
+  
       if (response.ok) {
         setTitle('');
         setChildren([]);
-        setTags([]);
+        setTags('');
         setContent('');
+        setSelectedCategories([]);
         setError(null);
         console.log('New Story Posted', json);
         dispatch({ type: 'CREATE_STORY', payload: json });
@@ -113,6 +93,22 @@ const StoryForm = () => {
     }
   }, []);
 
+  const handleCheckTreePickerChangeTags = (values) => {
+    setSelectedCheckTreeValuesTags(values);
+
+    // Convert selected values to a single comma-separated string
+    const tagsString = Array.isArray(values) ? values.join(',') : '';
+    setTags(tagsString);
+  };
+
+  const handleCheckTreePickerChangeChildren = (values) => {
+    setSelectedCheckTreeValuesChildren(values);
+
+    // Convert selected values to a single comma-separated string
+    const childrenString = Array.isArray(values) ? values.join(',') : '';
+    setChildren(childrenString);
+  };
+
   return (
     <body>
       <UploadWidget onImageUpload={handleImageUpload} />
@@ -124,28 +120,22 @@ const StoryForm = () => {
           value={title}
         />
 
-        <Select className="short-select" placeholder="Children in this story..."
-          isMulti
-          blurInputOnSelect={false}
-          closeMenuOnSelect={false}
-          options={[
-            { value: 'child1', label: 'Child 1' },
-            { value: 'child2', label: 'Child 2' },
-            // Add more options as needed
-          ]}
-          onChange={(selectedOptions) => setChildren(selectedOptions)}
-          value={children}
-          isSearchable
+        <CheckTreePicker
+          data={groupedTags}
+          uncheckableItemValues={['1-1', '1-1-2']}
+          value={selectedCheckTreeValuesChildren}
+          onChange={handleCheckTreePickerChangeChildren}
+          cascade={false}
+          style={{ width: 220 }}
         />
 
-        <Select className="short-select" placeholder="Learning tags..."
-          options={groupedOptions}
-          isMulti
-          blurInputOnSelect={false}
-          closeMenuOnSelect={false}
-          components={{ GroupHeading: CustomGroupHeading }}
-          onChange={(selectedOptions) => setTags(selectedOptions)}
-          value={tags}
+        <CheckTreePicker
+          data={groupedTags}
+          uncheckableItemValues={['1-1', '1-1-2']}
+          value={selectedCheckTreeValuesTags}
+          onChange={handleCheckTreePickerChangeTags}
+          cascade={false}
+          style={{ width: 220 }}
         />
 
         <ReactQuill
