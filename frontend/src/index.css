@@ -1,6 +1,7 @@
 /* google font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
-@import "rsuite/dist/rsuite.css";
+@import 'rsuite/dist/rsuite-no-reset.min.css';
+
 
 /* layout */
 :root {
@@ -348,3 +349,4 @@ div.error {
 .info-content {
   text-align: right;
 }
+

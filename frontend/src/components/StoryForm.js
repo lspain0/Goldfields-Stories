@@ -8,6 +8,8 @@ import '../index.css';
 import { groupedOptions } from "./docs/data";
 import { groupedTags } from "./docs/tags";
 
+
+
 const UploadWidget = ({ onImageUpload }) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
