@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ClassesContext } from "../context/ClassesContext";
 import "../student.css";
+import TransferStudentModal from '../components/TransferStudentModal'; // Import the modal component
 
 const ClassDetails = () => {
   const { classId } = useParams();
@@ -9,6 +10,12 @@ const ClassDetails = () => {
   const { classes } = useContext(ClassesContext);
   const [classDetails, setClassDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [showTransferModal, setShowTransferModal] = useState(false);
+
+  const handleTransferClick = () => {
+    setShowTransferModal(true);
+  };
 
   // Function to convert buffer to URL
   const bufferToUrl = (buffer) => {
@@ -34,11 +41,11 @@ const ClassDetails = () => {
   };
 
   if (isLoading) {
-    return <p>Loading...</p>; // Show loading message during loading state
+    return <p>Loading...</p>;
   }
 
   if (!classDetails) {
-    return <p>Class not found.</p>; // Show this only if not loading and classDetails is null
+    return <p>Class not found.</p>;
   }
 
   return (
@@ -49,15 +56,23 @@ const ClassDetails = () => {
       <button className="student-details-button" onClick={handleAddStudent}>
         Add Student
       </button>
+      <button className="student-details-button" onClick={handleTransferClick}>
+        Transfer Student
+      </button>
+      {showTransferModal && (
+        <TransferStudentModal
+          students={classDetails.students}
+          currentClassId={classId}
+          onClose={() => setShowTransferModal(false)}
+        />
+      )}
       {classDetails.students && classDetails.students.length > 0 ? (
         <div className="student-cards-container">
           {classDetails.students.map((student) => (
             <div key={student._id} className="student-card">
               {student.image && (
                 <img
-                  src={`data:image/jpeg;base64,${bufferToUrl(
-                    student.image.data
-                  )}`}
+                  src={`data:image/jpeg;base64,${bufferToUrl(student.image.data)}`}
                   alt={`${student.firstName} ${student.lastName}`}
                   className="student-card-image"
                 />

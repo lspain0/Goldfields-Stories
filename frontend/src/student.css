@@ -162,3 +162,24 @@ h1 {
   margin-bottom: 5px;
   /* Space between lines */
 }
+
+.transfer-student-button {
+  padding: 10px 20px; /* Consistent padding */
+  font-size: 16px; /* Consistent font size */
+  margin: 10px auto; /* Center button */
+  display: block; /* Enable margin:auto to work */
+  width: auto; /* Auto-width to fit content */
+  border: none; /* No border */
+  border-radius: 20px; /* Rounded corners */
+  font-family: 'Poppins', sans-serif; /* Consistent font */
+  cursor: pointer; /* Cursor indicates clickable */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  background: #326C6F; /* Consistent background color */
+  color: white; /* Text color */
+  text-align: center; /* Center the text */
+}
+
+.transfer-student-button:hover {
+  background: #224957; /* Darker shade on hover */
+}
+

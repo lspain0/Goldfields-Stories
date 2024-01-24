@@ -20,6 +20,7 @@ const {
   deleteClass,
   updateClass,
   addStudent,
+  transferStudent,
 } = require('../controllers/classController');
 
 // Routes for the Class model
@@ -29,5 +30,6 @@ router.post('/', createClass); // Create a new class
 router.delete('/:id', deleteClass); // Delete a class by ID
 router.patch('/:id', updateClass); // Update a class by ID
 router.post('/:id/students', upload.single('image'), addStudent); // Add a student to a class, handling image upload
+router.post('/transfer-student', transferStudent); // Transfer a student to a new class
 
 module.exports = router;

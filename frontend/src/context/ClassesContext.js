@@ -73,8 +73,28 @@ export const ClassesProvider = ({ children }) => {
     }
   };
 
+  const transferStudent = async (studentId, oldClassId, newClassId) => {
+    try {
+      const response = await fetch("/api/classes/transfer-student", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ studentId, oldClassId, newClassId }),
+      });
+      if (!response.ok) {
+        throw new Error("HTTP error! status: " + response.status);
+      }
+      // You might want to update the classes state here if necessary
+    } catch (error) {
+      console.error("Error transferring student:", error);
+    }
+  };
+
   return (
-    <ClassesContext.Provider value={{ classes, addClass, addStudentToClass }}>
+    <ClassesContext.Provider
+      value={{ classes, addClass, addStudentToClass, transferStudent }}
+    >
       {children}
     </ClassesContext.Provider>
   );

@@ -108,6 +108,28 @@ const addStudent = async (req, res) => {
   }
 };
 
+const transferStudent = async (req, res) => {
+  const { studentId, oldClassId, newClassId } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(oldClassId) || !mongoose.Types.ObjectId.isValid(newClassId)) {
+    return res.status(404).json({ error: "Class not found" });
+  }
+
+  try {
+    // Remove student from old class
+    await Class.findByIdAndUpdate(oldClassId, { $pull: { students: { _id: studentId } } });
+
+    // Add student to new class
+    const student = await Class.findById(oldClassId).select({ students: { $elemMatch: { _id: studentId } } });
+    await Class.findByIdAndUpdate(newClassId, { $push: { students: student } });
+
+    res.status(200).json({ message: "Student transferred successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getClasses,
   getClass,
@@ -115,4 +137,5 @@ module.exports = {
   deleteClass,
   updateClass,
   addStudent,
+  transferStudent,
 };
