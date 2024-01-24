@@ -362,6 +362,6 @@ div.error {
 .solid {
   border: none;
   height: 1px;
-  background-color: #333;
+  background-color: #333; 
 }
 

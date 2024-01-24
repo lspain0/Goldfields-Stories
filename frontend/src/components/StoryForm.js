@@ -5,6 +5,10 @@ import { useStoriesContext } from "../hooks/useStoriesContext";
 import { CheckTreePicker } from 'rsuite';
 import '../index.css';
 import { groupedTags } from "./docs/tags";
+import StudentList from "./docs/StudentList";
+
+console.log('StudentList:', StudentList);
+
 
 const UploadWidget = ({ onImageUpload }) => {
   const cloudinaryRef = useRef();
@@ -123,7 +127,7 @@ const StoryForm = () => {
         />
 
         <CheckTreePicker
-          data={groupedTags}
+          data={StudentList()}
           uncheckableItemValues={['1-1', '1-1-2']}
           value={selectedCheckTreeValuesChildren}
           onChange={handleCheckTreePickerChangeChildren}
