@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import Select, { components } from "react-select";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Import the styles
+import "react-quill/dist/quill.snow.css";
 import { useStoriesContext } from "../hooks/useStoriesContext";
+import { CheckTreePicker } from 'rsuite'; // Import CheckTreePicker
 import '../index.css';
 import { groupedOptions } from "./docs/data";
+import { groupedTags } from "./docs/tags";
 
 const UploadWidget = ({ onImageUpload }) => {
   const cloudinaryRef = useRef();
@@ -15,7 +17,7 @@ const UploadWidget = ({ onImageUpload }) => {
     widgetRef.current = cloudinaryRef.current.createUploadWidget({
       cloudName: 'drpnvb7qc',
       uploadPreset: 'tetlineq'
-    }, function(error, result) {
+    }, function (error, result) {
       if (!error && result && result.event === "success") {
         const imageUrl = result.info.secure_url;
         onImageUpload(imageUrl);
@@ -58,31 +60,26 @@ const StoryForm = () => {
   const [children, setChildren] = useState([]);
   const [tags, setTags] = useState([]);
   const [content, setContent] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState([]); // Add state for categories
   const [error, setError] = useState('');
   const quillRef = useRef();
 
   const handleImageUpload = imageUrl => {
-    // Insert the image URL at the current cursor position in the editor
     setContent(content + `\n<img src="${imageUrl}" alt="uploaded" />\n`);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Convert selected children to a comma-separated string
     const childrenString = children.map((child) => child.value).join(',');
-
-    // Convert selected tags to a comma-separated string
     const tagsString = tags.map((tag) => tag.value).join(',');
-
-    const story = { title, children: childrenString, tags: tagsString, content };
+    const story = { title, children: childrenString, tags: tagsString, content, categories: selectedCategories.join(',') }; // Include categories in the story object
 
     try {
       const response = await fetch('/api/stories', {
         method: 'POST',
         body: JSON.stringify(story),
         headers: {
-          'Content-Type' : 'application/json'
+          'Content-Type': 'application/json'
         }
       });
 
@@ -97,6 +94,7 @@ const StoryForm = () => {
         setChildren([]);
         setTags([]);
         setContent('');
+        setSelectedCategories([]); // Reset selected categories
         setError(null);
         console.log('New Story Posted', json);
         dispatch({ type: 'CREATE_STORY', payload: json });
@@ -131,7 +129,6 @@ const StoryForm = () => {
           options={[
             { value: 'child1', label: 'Child 1' },
             { value: 'child2', label: 'Child 2' },
-            // Add more options as needed
           ]}
           onChange={(selectedOptions) => setChildren(selectedOptions)}
           value={children}
@@ -146,6 +143,14 @@ const StoryForm = () => {
           components={{ GroupHeading: CustomGroupHeading }}
           onChange={(selectedOptions) => setTags(selectedOptions)}
           value={tags}
+        />
+
+        <CheckTreePicker
+          data={groupedTags}
+          uncheckableItemValues={['1-1', '1-1-2']}
+          defaultValue={[24]}
+          cascade={false}
+          style={{ width: 220 }}
         />
 
         <ReactQuill

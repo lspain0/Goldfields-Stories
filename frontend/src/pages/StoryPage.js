@@ -74,9 +74,6 @@ const StoryPage = () => {
     );
   };
   
-  
-  
-  
   return (
     <body className="story-page-body">
       <div className="story-content">
