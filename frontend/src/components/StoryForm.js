@@ -1,14 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import Select, { components } from "react-select";
+import Select from "react-select";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useStoriesContext } from "../hooks/useStoriesContext";
 import { CheckTreePicker } from 'rsuite'; // Import CheckTreePicker
 import '../index.css';
-import { groupedOptions } from "./docs/data";
 import { groupedTags } from "./docs/tags";
-
-
 
 const UploadWidget = ({ onImageUpload }) => {
   const cloudinaryRef = useRef();
@@ -34,36 +31,15 @@ const UploadWidget = ({ onImageUpload }) => {
   );
 };
 
-const handleHeaderClick = id => {
-  const node = document.querySelector(`#${id}`).parentElement
-    .nextElementSibling;
-  const classes = node.classList;
-  if (classes.contains("collapsed")) {
-    node.classList.remove("collapsed");
-  } else {
-    node.classList.add("collapsed");
-  }
-};
-
-const CustomGroupHeading = props => {
-  return (
-    <div
-      className="group-heading-wrapper"
-      onClick={() => handleHeaderClick(props.id)}
-    >
-      <components.GroupHeading {...props} />
-    </div>
-  );
-};
-
 const StoryForm = () => {
   const { dispatch } = useStoriesContext();
   const [title, setTitle] = useState('');
   const [children, setChildren] = useState([]);
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState('');
   const [content, setContent] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState([]); // Add state for categories
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [error, setError] = useState('');
+  const [selectedCheckTreeValues, setSelectedCheckTreeValues] = useState([]); // New state for CheckTreePicker
   const quillRef = useRef();
 
   const handleImageUpload = imageUrl => {
@@ -73,8 +49,8 @@ const StoryForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const childrenString = children.map((child) => child.value).join(',');
-    const tagsString = tags.map((tag) => tag.value).join(',');
-    const story = { title, children: childrenString, tags: tagsString, content, categories: selectedCategories.join(',') }; // Include categories in the story object
+    const tagsString = tags;
+    const story = { title, children: childrenString, tags: tagsString, content, categories: selectedCategories.join(',') };
 
     try {
       const response = await fetch('/api/stories', {
@@ -94,9 +70,9 @@ const StoryForm = () => {
       if (response.ok) {
         setTitle('');
         setChildren([]);
-        setTags([]);
+        setTags('');
         setContent('');
-        setSelectedCategories([]); // Reset selected categories
+        setSelectedCategories([]);
         setError(null);
         console.log('New Story Posted', json);
         dispatch({ type: 'CREATE_STORY', payload: json });
@@ -112,6 +88,14 @@ const StoryForm = () => {
       // Additional setup or handling can be added here
     }
   }, []);
+
+  const handleCheckTreePickerChange = (values) => {
+    setSelectedCheckTreeValues(values);
+
+    // Convert selected values to a single comma-separated string
+    const tagsString = Array.isArray(values) ? values.join(',') : '';
+    setTags(tagsString);
+  };
 
   return (
     <body>
@@ -137,20 +121,11 @@ const StoryForm = () => {
           isSearchable
         />
 
-        <Select className="short-select" placeholder="Learning tags..."
-          options={groupedOptions}
-          isMulti
-          blurInputOnSelect={false}
-          closeMenuOnSelect={false}
-          components={{ GroupHeading: CustomGroupHeading }}
-          onChange={(selectedOptions) => setTags(selectedOptions)}
-          value={tags}
-        />
-
         <CheckTreePicker
           data={groupedTags}
           uncheckableItemValues={['1-1', '1-1-2']}
-          defaultValue={[24]}
+          value={selectedCheckTreeValues} // Use the state variable for value
+          onChange={handleCheckTreePickerChange} // Update the onChange handler
           cascade={false}
           style={{ width: 220 }}
         />
