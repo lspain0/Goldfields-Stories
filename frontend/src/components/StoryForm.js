@@ -41,6 +41,7 @@ const StoryForm = () => {
   const [selectedCheckTreeValuesTags, setSelectedCheckTreeValuesTags] = useState([]);
   const [selectedCheckTreeValuesChildren, setSelectedCheckTreeValuesChildren] = useState([]);
   const quillRef = useRef();
+  const currentUser = localStorage.getItem("name");
 
   const handleImageUpload = imageUrl => {
     setContent(content + `\n<img src="${imageUrl}" alt="uploaded" />\n`);
@@ -111,6 +112,7 @@ const StoryForm = () => {
 
   return (
     <body>
+      Author: {currentUser}
       <UploadWidget onImageUpload={handleImageUpload} />
       <form className="create" onSubmit={handleSubmit}>
 
