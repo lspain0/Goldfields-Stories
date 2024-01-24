@@ -7,10 +7,9 @@ import TransferStudentModal from '../components/TransferStudentModal'; // Import
 const ClassDetails = () => {
   const { classId } = useParams();
   const navigate = useNavigate();
-  const { classes } = useContext(ClassesContext);
+  const { classes, fetchClasses } = useContext(ClassesContext);
   const [classDetails, setClassDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
   const [showTransferModal, setShowTransferModal] = useState(false);
 
   const handleTransferClick = () => {
@@ -30,11 +29,18 @@ const ClassDetails = () => {
 
   useEffect(() => {
     const classInfo = classes.find((c) => c.id === classId);
-    setClassDetails(classInfo);
-
-    // Set loading to false after fetching the class
-    setIsLoading(false);
+    if (classInfo) {
+      setClassDetails(classInfo);
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+    }
   }, [classId, classes]);
+
+  const onCloseTransferModal = () => {
+    setShowTransferModal(false);
+    fetchClasses(); // This will re-fetch all class data and ensure the state is updated
+  };
 
   const handleAddStudent = () => {
     navigate(`/class/${classId}/addstudent`);
@@ -63,7 +69,7 @@ const ClassDetails = () => {
         <TransferStudentModal
           students={classDetails.students}
           currentClassId={classId}
-          onClose={() => setShowTransferModal(false)}
+          onClose={onCloseTransferModal}
         />
       )}
       {classDetails.students && classDetails.students.length > 0 ? (

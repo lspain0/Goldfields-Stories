@@ -110,17 +110,21 @@ const addStudent = async (req, res) => {
 
 const transferStudent = async (req, res) => {
   const { studentId, oldClassId, newClassId } = req.body;
-
   if (!mongoose.Types.ObjectId.isValid(oldClassId) || !mongoose.Types.ObjectId.isValid(newClassId)) {
     return res.status(404).json({ error: "Class not found" });
   }
-
   try {
+    // Retrieve the student's data from the old class
+    const oldClass = await Class.findById(oldClassId);
+    const student = oldClass.students.find(s => s._id.toString() === studentId);
+    if (!student) {
+      return res.status(404).json({ error: "Student not found in the old class" });
+    }
+
     // Remove student from old class
     await Class.findByIdAndUpdate(oldClassId, { $pull: { students: { _id: studentId } } });
 
     // Add student to new class
-    const student = await Class.findById(oldClassId).select({ students: { $elemMatch: { _id: studentId } } });
     await Class.findByIdAndUpdate(newClassId, { $push: { students: student } });
 
     res.status(200).json({ message: "Student transferred successfully" });

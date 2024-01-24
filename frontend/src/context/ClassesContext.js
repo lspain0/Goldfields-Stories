@@ -5,26 +5,25 @@ export const ClassesContext = createContext();
 export const ClassesProvider = ({ children }) => {
   const [classes, setClasses] = useState([]);
 
-  useEffect(() => {
-    // Fetch classes from the backend when the context provider mounts
-    const fetchClasses = async () => {
-      try {
-        const response = await fetch("/api/classes");
-        if (!response.ok) {
-          throw new Error("HTTP error! status: " + response.status);
-        }
-        const data = await response.json();
-        // Ensure each class has a students array
-        const classesWithStudents = data.map((c) => ({
-          ...c,
-          students: c.students || [],
-        }));
-        setClasses(classesWithStudents);
-      } catch (error) {
-        console.error("Could not fetch classes:", error);
+  // Function to fetch classes from the backend
+  const fetchClasses = async () => {
+    try {
+      const response = await fetch("/api/classes");
+      if (!response.ok) {
+        throw new Error("HTTP error! status: " + response.status);
       }
-    };
+      const data = await response.json();
+      const classesWithStudents = data.map((c) => ({
+        ...c,
+        students: c.students || [],
+      }));
+      setClasses(classesWithStudents);
+    } catch (error) {
+      console.error("Could not fetch classes:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchClasses();
   }, []);
 
@@ -85,7 +84,7 @@ export const ClassesProvider = ({ children }) => {
       if (!response.ok) {
         throw new Error("HTTP error! status: " + response.status);
       }
-      // You might want to update the classes state here if necessary
+      await fetchClasses(); // Re-fetch classes to update the state
     } catch (error) {
       console.error("Error transferring student:", error);
     }
@@ -93,7 +92,7 @@ export const ClassesProvider = ({ children }) => {
 
   return (
     <ClassesContext.Provider
-      value={{ classes, addClass, addStudentToClass, transferStudent }}
+      value={{ classes, addClass, addStudentToClass, transferStudent, fetchClasses, }}
     >
       {children}
     </ClassesContext.Provider>
