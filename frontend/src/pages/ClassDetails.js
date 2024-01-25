@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ClassesContext } from "../context/ClassesContext";
 import "../student.css";
-import TransferStudentModal from '../components/TransferStudentModal'; // Import the modal component
+import TransferStudentModal from "../components/TransferStudentModal";
 
 const ClassDetails = () => {
   const { classId } = useParams();
@@ -16,6 +16,14 @@ const ClassDetails = () => {
     setShowTransferModal(true);
   };
 
+  // Function to format the date as "DD/MM/YYYY"
+  const formatDate = (date) => {
+    const dobDate = new Date(date);
+    const day = dobDate.getDate().toString().padStart(2, "0");
+    const month = (dobDate.getMonth() + 1).toString().padStart(2, "0");
+    const year = dobDate.getFullYear().toString();
+    return `${day}/${month}/${year}`;
+  };
   // Function to convert buffer to URL
   const bufferToUrl = (buffer) => {
     let binary = "";
@@ -39,7 +47,7 @@ const ClassDetails = () => {
 
   const onCloseTransferModal = () => {
     setShowTransferModal(false);
-    fetchClasses(); // This will re-fetch all class data and ensure the state is updated
+    fetchClasses();
   };
 
   const handleAddStudent = () => {
@@ -78,7 +86,9 @@ const ClassDetails = () => {
             <div key={student._id} className="student-card">
               {student.image && (
                 <img
-                  src={`data:image/jpeg;base64,${bufferToUrl(student.image.data)}`}
+                  src={`data:image/jpeg;base64,${bufferToUrl(
+                    student.image.data
+                  )}`}
                   alt={`${student.firstName} ${student.lastName}`}
                   className="student-card-image"
                 />
@@ -87,7 +97,7 @@ const ClassDetails = () => {
                 <span className="student-name">
                   {student.firstName} {student.lastName}
                 </span>
-                <span>DOB: {new Date(student.dob).toLocaleDateString()}</span>
+                <span>DOB: {formatDate(student.dob)}</span>
               </div>
             </div>
           ))}
