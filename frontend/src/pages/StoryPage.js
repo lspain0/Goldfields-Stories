@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import { useLocation, Link } from 'react-router-dom';
 
+function getName(str) {
+  var firstName = str.split(' ')[0];
+  var lastName = str.split(' ')[1];
+  var fullName = firstName.charAt(0).toUpperCase() + firstName.slice(1) + (' ') + lastName.charAt(0).toUpperCase() + lastName.slice(1)
+
+  return fullName;
+}
+
+
 const StoryPage = () => {
   const location = useLocation();
   const [currentStory, setCurrentStory] = useState(null);
@@ -52,7 +61,7 @@ const StoryPage = () => {
       <div className="story-info">
         <div className="info-line">
           <p>Author:</p>
-          <p className="info-content">Author Author</p>
+          <p className="info-content">{getName(currentStory.author)}</p>
         </div>
         <hr className="solid" />
         <div className="info-line">

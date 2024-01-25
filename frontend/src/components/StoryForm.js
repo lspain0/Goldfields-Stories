@@ -7,6 +7,14 @@ import '../index.css';
 import { groupedTags } from "./docs/tags";
 import StudentList from "./docs/StudentList";
 
+function getName(str) {
+  var firstName = str.split(' ')[0];
+  var lastName = str.split(' ')[1];
+  var fullName = firstName.charAt(0).toUpperCase() + firstName.slice(1) + (' ') + lastName.charAt(0).toUpperCase() + lastName.slice(1)
+
+  return fullName;
+}
+
 const UploadWidget = ({ onImageUpload }) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
@@ -138,7 +146,7 @@ const StoryForm = () => {
             value={title}
           />
           <span className="author-input" readOnly>
-            Author: {currentUser}
+            Author: {getName(currentUser)}
           </span>
         </div>
 
