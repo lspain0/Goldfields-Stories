@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ClassesContext } from "../context/ClassesContext";
 import "../student.css";
-import TransferStudentModal from '../components/TransferStudentModal'; // Import the modal component
+import TransferStudentModal from "../components/TransferStudentModal";
 
 const ClassDetails = () => {
   const { classId } = useParams();
@@ -16,6 +16,14 @@ const ClassDetails = () => {
     setShowTransferModal(true);
   };
 
+  // Function to format the date as "DD/MM/YYYY"
+  const formatDate = (date) => {
+    const dobDate = new Date(date);
+    const day = dobDate.getDate().toString().padStart(2, "0");
+    const month = (dobDate.getMonth() + 1).toString().padStart(2, "0");
+    const year = dobDate.getFullYear().toString();
+    return `${day}/${month}/${year}`;
+  };
   // Function to convert buffer to URL
   const bufferToUrl = (buffer) => {
     let binary = "";
@@ -39,7 +47,12 @@ const ClassDetails = () => {
 
   const onCloseTransferModal = () => {
     setShowTransferModal(false);
-    fetchClasses(); // This will re-fetch all class data and ensure the state is updated
+    fetchClasses();
+  };
+
+  // Function to handle back button click
+  const handleBackClick = () => {
+    navigate("/class");
   };
 
   const handleAddStudent = () => {
@@ -56,13 +69,10 @@ const ClassDetails = () => {
 
   return (
     <div>
-      <h1>
-        {classDetails.className} / {classDetails.subject}
-      </h1>
-      <button className="student-details-button" onClick={handleAddStudent}>
+      <button className="standard-button" onClick={handleAddStudent}>
         Add Student
       </button>
-      <button className="student-details-button" onClick={handleTransferClick}>
+      <button className="standard-button" onClick={handleTransferClick}>
         Transfer Student
       </button>
       {showTransferModal && (
@@ -72,13 +82,23 @@ const ClassDetails = () => {
           onClose={onCloseTransferModal}
         />
       )}
+      <button className="standard-button" onClick={handleBackClick}>
+        Back
+      </button>
+
+      <div className="class-name">
+        {classDetails.className} / {classDetails.subject}
+      </div>
+
       {classDetails.students && classDetails.students.length > 0 ? (
         <div className="student-cards-container">
           {classDetails.students.map((student) => (
             <div key={student._id} className="student-card">
               {student.image && (
                 <img
-                  src={`data:image/jpeg;base64,${bufferToUrl(student.image.data)}`}
+                  src={`data:image/jpeg;base64,${bufferToUrl(
+                    student.image.data
+                  )}`}
                   alt={`${student.firstName} ${student.lastName}`}
                   className="student-card-image"
                 />
@@ -87,7 +107,7 @@ const ClassDetails = () => {
                 <span className="student-name">
                   {student.firstName} {student.lastName}
                 </span>
-                <span>DOB: {new Date(student.dob).toLocaleDateString()}</span>
+                <span>DOB: {formatDate(student.dob)}</span>
               </div>
             </div>
           ))}
