@@ -7,9 +7,6 @@ import '../index.css';
 import { groupedTags } from "./docs/tags";
 import StudentList from "./docs/StudentList";
 
-console.log('StudentList:', StudentList);
-
-
 const UploadWidget = ({ onImageUpload }) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
@@ -27,9 +24,14 @@ const UploadWidget = ({ onImageUpload }) => {
     });
   }, [onImageUpload]);
 
+  const handleButtonClick = (e) => {
+    e.preventDefault(); // Prevent the form from being submitted
+    widgetRef.current.open();
+  };
+
   return (
-    <button onClick={() => widgetRef.current.open()}>
-      Upload Button
+    <button className="story-form-button" onClick={handleButtonClick}>
+      Upload image
     </button>
   );
 };
@@ -115,57 +117,77 @@ const StoryForm = () => {
   };
 
   return (
-    <body>
-      Author: {currentUser}
-      <UploadWidget onImageUpload={handleImageUpload} />
+    <body className="story-form">
       <form className="create" onSubmit={handleSubmit}>
+        <div className="input-container">
+          <input
+            className="short-input"
+            placeholder="Story title..."
+            type="text"
+            onChange={(e) => setTitle(e.target.value)}
+            value={title}
+          />
+          <span className="author-input" readOnly>
+            Author: {currentUser}
+          </span>
+        </div>
 
-        <input className="short-input" placeholder="Story title..."
-          type="text"
-          onChange={(e) => setTitle(e.target.value)}
-          value={title}
-        />
-
-        <CheckTreePicker
+        <CheckTreePicker className="check-tree"
+          placeholder="Add children to this story..."
           data={StudentList()}
           uncheckableItemValues={['1-1', '1-1-2']}
           value={selectedCheckTreeValuesChildren}
           onChange={handleCheckTreePickerChangeChildren}
           cascade={false}
-          style={{ width: 220 }}
+          style={{ width: 600 }}
         />
 
-        <CheckTreePicker
+        <CheckTreePicker className="check-tree2"
+          placeholder="Learning tags..."
           data={groupedTags}
           uncheckableItemValues={['1-1', '1-1-2']}
           value={selectedCheckTreeValuesTags}
           onChange={handleCheckTreePickerChangeTags}
           cascade={false}
-          style={{ width: 220 }}
+          style={{ width: 600 }}
         />
 
-        <ReactQuill
-          ref={quillRef}
-          placeholder="Start writing..."
-          onChange={(value) => setContent(value)}
-          value={content}
-          modules={{
-            toolbar: {
-              container: [
-                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                ['blockquote'],
-                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                [{ 'align': [] }],
-                [{ 'color': [] }, { 'background': [] }],
-                ['clean'],
-              ],
-            },
-          }}
-        />
+        <UploadWidget onImageUpload={handleImageUpload} />
+
+        <div className="quill">
+          <ReactQuill
+            ref={quillRef}
+            placeholder="Start writing..."
+            onChange={(value) => setContent(value)}
+            value={content}
+            modules={{
+              toolbar: {
+                container: [
+                  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                  ['bold', 'italic', 'underline', 'strike'],
+                  ['blockquote'],
+                  [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                  [{ 'align': [] }],
+                  [{ 'color': [] }, { 'background': [] }],
+                  ['clean']
+                ],
+              },
+            }}
+            style={{ height: 'calc(100vh - 280px)' }}
+            formats={[
+              'header',
+              'bold', 'italic', 'underline', 'strike',
+              'blockquote',
+              'list', 'bullet',
+              'align',
+              'color', 'background',
+            ]}
+            theme="snow"
+          />
+        </div>
 
         <div className="centered-button">
-          <button>Post Story</button>
+          <button className="story-form-button">Post Story</button>
         </div>
         {error && <div className="error">{error}</div>}
       </form>
