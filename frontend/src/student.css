@@ -79,27 +79,45 @@
 
 /* Styling for the h1 element */
 h1 {
-  text-align: center;
+  text-align: left;
   font-family: 'Poppins', sans-serif;
   color: #000000;
   /* Adjust the color as needed */
-  font-size: 25px;
+  font-size: 35px;
   /* Adjust the size as needed */
-  margin-top: 20px;
+  margin-top: 100px;
+  /* Spacing from the top */
+}
+
+.class-name {
+  text-align: left;
+  font-family: 'Poppins', sans-serif;
+  color: #000000;
+  /* Adjust the color as needed */
+  font-size: 30px;
+  font-weight: bold;
+  /* Adjust the size as needed */
+  margin-top: 100px;
   /* Spacing from the top */
 }
 
 .student-card-image {
-  position: absolute; /* Position the image absolutely within the card */
-  top: 0; 
+  position: absolute;
+  /* Position the image absolutely within the card */
+  top: 0;
   left: 0;
   right: 0;
   bottom: 40px;
-  width: 100%; /* Full width of the card */
-  height: 55%; /* Full height of the card */
-  object-fit: contain; /* The image will fit within the card, fully visible */
-  margin: auto; /* Center the image */
-  border-top-left-radius: 10px; /* Match the card's border radius */
+  width: 100%;
+  /* Full width of the card */
+  height: 55%;
+  /* Full height of the card */
+  object-fit: contain;
+  /* The image will fit within the card, fully visible */
+  margin: auto;
+  /* Center the image */
+  border-top-left-radius: 10px;
+  /* Match the card's border radius */
   border-top-right-radius: 10px;
 }
 
@@ -108,7 +126,8 @@ h1 {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 15px; /* Adjust the padding as needed */
+  padding: 15px;
+  /* Adjust the padding as needed */
 }
 
 .student-name {
@@ -126,9 +145,12 @@ h1 {
 }
 
 .standard-button {
-  padding: 10px 20px; /* Consistent padding */
-  font-size: 16px; /* Standard font size */
-  width: 180px; /* Standard width */
+  padding: 10px 20px;
+  /* Consistent padding */
+  font-size: 16px;
+  /* Standard font size */
+  width: 180px;
+  /* Standard width */
   border: none;
   border-radius: 20px;
   font-family: 'Poppins', sans-serif;
@@ -136,10 +158,97 @@ h1 {
   transition: background-color 0.3s ease;
   background: #326C6F;
   color: white;
-  margin: 10px auto; /* Center the button */
-  display: block; /* Ensure block level for margin auto */
+  margin: 10px auto;
+  /* Center the button */
+  display: block;
+  /* Ensure block level for margin auto */
+
 }
 
 .standard-button:hover {
   background: #224957;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  /* Stack children vertically */
+  justify-content: center;
+  /* Center children vertically in the viewport */
+  align-items: center;
+  /* Center children horizontally in the viewport */
+
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  /* Stack elements vertically */
+  align-items: center;
+  /* Align form elements to the center */
+  justify-content: center;
+  /* Center form elements vertically, if needed */
+}
+
+.form-row {
+  display: flex;
+  justify-content: center;
+  /* Center elements within the row */
+  align-items: center;
+  width: 100%;
+  /* Full width to allow inner content to center properly */
+  margin-bottom: 5px;
+}
+
+
+.form-row select {
+  flex-grow: 1;
+  /* Allow select to grow and fill the space */
+  margin: 0 10px;
+  /* Spacing on left and right */
+  padding: 8px 20px;
+  /* Aesthetic padding */
+}
+
+/* Button styles for transfer and cancel actions */
+.action-button {
+  flex-grow: 1;
+  padding: 8px 20px;
+  font-size: 16px;
+  font-weight: 400;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+  /* Allows buttons to sit side by side */
+  margin: 0 10px;
+  /* Spacing between buttons */
+}
+
+.transfer-button {
+  background-color: #4CAF50;
+  /* A nice shade of green */
+  color: white;
+}
+
+.transfer-button:hover {
+  background-color: #45a049;
+  /* A darker shade of green */
+  transform: scale(1.05);
+  /* Slightly enlarge on hover */
+}
+
+.cancel-button {
+  background-color: #f44336;
+  /* A bright shade of red */
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #d32f2f;
+  /* A darker shade of red */
+  transform: scale(1.05);
+  /* Slightly enlarge on hover */
 }

@@ -28,7 +28,7 @@ const Navbar = () => {
             break;
         // Add more cases as needed for other routes
         default:
-            pageTitle = 'Goldfields'; // Fallback title
+            pageTitle = 'Goldfields School'; // Fallback title
     }
 
     return (

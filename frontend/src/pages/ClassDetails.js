@@ -52,7 +52,7 @@ const ClassDetails = () => {
 
   // Function to handle back button click
   const handleBackClick = () => {
-    navigate('/class');
+    navigate("/class");
   };
 
   const handleAddStudent = () => {
@@ -69,17 +69,11 @@ const ClassDetails = () => {
 
   return (
     <div>
-      <h1>
-        {classDetails.className} / {classDetails.subject}
-      </h1>
       <button className="standard-button" onClick={handleAddStudent}>
         Add Student
       </button>
       <button className="standard-button" onClick={handleTransferClick}>
         Transfer Student
-      </button>
-      <button className="standard-button" onClick={handleBackClick}>
-        Back
       </button>
       {showTransferModal && (
         <TransferStudentModal
@@ -88,6 +82,14 @@ const ClassDetails = () => {
           onClose={onCloseTransferModal}
         />
       )}
+      <button className="standard-button" onClick={handleBackClick}>
+        Back
+      </button>
+
+      <div className="class-name">
+        {classDetails.className} / {classDetails.subject}
+      </div>
+
       {classDetails.students && classDetails.students.length > 0 ? (
         <div className="student-cards-container">
           {classDetails.students.map((student) => (
