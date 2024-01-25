@@ -55,10 +55,10 @@ const StudentForm = ({ student, setStudent, handleSubmit, handleBack }) => {
           required
           className="student-form-input"
         />
-        <button type="submit" className="student-form-button">
+        <button type="submit" className="standard-button">
           Add Student
         </button>
-        <button type="button" onClick={handleBack} className="student-form-button">
+        <button type="button" onClick={handleBack} className="standard-button">
           Back
         </button>
       </form>

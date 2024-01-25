@@ -50,6 +50,11 @@ const ClassDetails = () => {
     fetchClasses();
   };
 
+  // Function to handle back button click
+  const handleBackClick = () => {
+    navigate('/class');
+  };
+
   const handleAddStudent = () => {
     navigate(`/class/${classId}/addstudent`);
   };
@@ -67,11 +72,14 @@ const ClassDetails = () => {
       <h1>
         {classDetails.className} / {classDetails.subject}
       </h1>
-      <button className="student-details-button" onClick={handleAddStudent}>
+      <button className="standard-button" onClick={handleAddStudent}>
         Add Student
       </button>
-      <button className="student-details-button" onClick={handleTransferClick}>
+      <button className="standard-button" onClick={handleTransferClick}>
         Transfer Student
+      </button>
+      <button className="standard-button" onClick={handleBackClick}>
+        Back
       </button>
       {showTransferModal && (
         <TransferStudentModal

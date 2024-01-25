@@ -21,24 +21,6 @@
   margin: 10px 0;
 }
 
-.student-form button {
-  padding: 10px;
-  font-size: 16px;
-  margin: 10px 0;
-  width: calc(100% - 40px);
-  border: none;
-  border-radius: 20px;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  background: #326C6F;
-  color: white;
-}
-
-.student-form button:hover {
-  background: #224957;
-}
-
 .student-form input:focus {
   border-color: #0056b3;
   outline: none;
@@ -107,32 +89,6 @@ h1 {
   /* Spacing from the top */
 }
 
-/* Styling for the button in ClassDetails */
-.student-details-button {
-  padding: 10px;
-  font-size: 16px;
-  margin: 10px auto;
-  width: auto;
-  /* Adjust width as needed */
-  padding: 10px 20px;
-  border: none;
-  border-radius: 20px;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  background: #326C6F;
-  /* Adjust background color as needed */
-  color: white;
-  display: block;
-  /* To enable margin auto to work */
-}
-
-.student-details-button:hover {
-  background: #224957;
-  /* Adjust hover background color as needed */
-}
-
-
 .student-card-image {
   position: absolute; /* Position the image absolutely within the card */
   top: 0; 
@@ -169,23 +125,21 @@ h1 {
   /* Space between lines */
 }
 
-.transfer-student-button {
+.standard-button {
   padding: 10px 20px; /* Consistent padding */
-  font-size: 16px; /* Consistent font size */
-  margin: 10px auto; /* Center button */
-  display: block; /* Enable margin:auto to work */
-  width: auto; /* Auto-width to fit content */
-  border: none; /* No border */
-  border-radius: 20px; /* Rounded corners */
-  font-family: 'Poppins', sans-serif; /* Consistent font */
-  cursor: pointer; /* Cursor indicates clickable */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-  background: #326C6F; /* Consistent background color */
-  color: white; /* Text color */
-  text-align: center; /* Center the text */
+  font-size: 16px; /* Standard font size */
+  width: 180px; /* Standard width */
+  border: none;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background: #326C6F;
+  color: white;
+  margin: 10px auto; /* Center the button */
+  display: block; /* Ensure block level for margin auto */
 }
 
-.transfer-student-button:hover {
-  background: #224957; /* Darker shade on hover */
+.standard-button:hover {
+  background: #224957;
 }
-
