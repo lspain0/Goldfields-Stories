@@ -67,7 +67,8 @@
   align-items: flex-start;
   /* Aligns items to the start of the card */
   justify-content: space-between;
-  height: 100%;
+  height: 350px;
+  position: relative;
   /* Ensures the card takes up all the height available */
   padding: 20px;
   /* Adjust the padding inside the card */
@@ -131,22 +132,27 @@ h1 {
   /* Adjust hover background color as needed */
 }
 
+
 .student-card-image {
-  width: 100%;
-  /* Full width of the card */
-  height: 150%;
-  /* Maintain aspect ratio */
-  border-top-left-radius: 10px;
-  /* Match the card's border radius */
+  position: absolute; /* Position the image absolutely within the card */
+  top: 0; 
+  left: 0;
+  right: 0;
+  bottom: 40px;
+  width: 100%; /* Full width of the card */
+  height: 55%; /* Full height of the card */
+  object-fit: contain; /* The image will fit within the card, fully visible */
+  margin: auto; /* Center the image */
+  border-top-left-radius: 10px; /* Match the card's border radius */
   border-top-right-radius: 10px;
-  object-fit: cover;
-  /* Ensures the image covers the area */
 }
 
 .student-card-info {
-  margin-top: auto;
-  padding: 15px 0;
-  /* Spacing inside the card */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px; /* Adjust the padding as needed */
 }
 
 .student-name {
