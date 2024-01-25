@@ -13,6 +13,8 @@ import Signup from './pages/Signup';
 import { useEffect, useState } from 'react';
 import axios from './axios';
 import NavbarLogin from './components/NavbarLogin';
+import EditStudentPage from './pages/EditStudentPage';
+
 
 function App() {
 
@@ -68,6 +70,7 @@ function App() {
                 <Route path="/class/:classId" element={<ClassDetails />} />
                 <Route path="/class/:classId/addstudent" element={<AddStudentPage />} />
                 <Route path="/story/:storyid" element={<StoryPage />} />
+                <Route path="/class/:classId/editstudent/:studentId" element={<EditStudentPage />} />
               </Routes>
             </div>
           </BrowserRouter>
