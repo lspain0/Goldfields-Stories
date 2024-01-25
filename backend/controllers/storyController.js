@@ -49,10 +49,10 @@ const getStory = async (req, res) => {
 
 // Create a new story
 const createStory = async (req, res) => {
-  const { title, children, tags, content } = req.body;
+  const { title, children, tags, content, author } = req.body;
 
   try {
-    const story = await Story.create({ title, children, tags, content });
+    const story = await Story.create({ title, children, tags, content, author });
     res.status(200).json(story);
   } catch (error) {
     res.status(400).json({ error: error.message });

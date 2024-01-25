@@ -61,7 +61,17 @@ const StoryForm = () => {
   
     const childrenString = childrenArray.map((child) => child.value).join(',');
     const tagsString = tags;
-    const story = { title, children: childrenString, tags: tagsString, content, categories: selectedCategories.join(',') };
+    console.log('Current User:', currentUser);
+    const story = {
+      title,
+      children: childrenString,
+      tags: tagsString,
+      content,
+      categories: selectedCategories.join(','),
+      author: currentUser,
+    };
+
+    console.log('Story Object:', story);
   
     try {
       const response = await fetch('/api/stories', {
@@ -93,7 +103,7 @@ const StoryForm = () => {
       setError('An error occurred while submitting the form.');
     }
   };
-
+  
   useEffect(() => {
     if (quillRef.current) {
       // Additional setup or handling can be added here
