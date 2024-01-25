@@ -14,8 +14,8 @@ const TransferStudentModal = ({ students, currentClassId, onClose }) => {
 
   return (
     <div className="modal">
-      <form onSubmit={handleSubmit}>
-        <div className="form-row">
+      <form className="transfer-form" onSubmit={handleSubmit}>
+        <div className="transfer-form-row">
           <select
             value={selectedStudent}
             onChange={(e) => setSelectedStudent(e.target.value)}
@@ -33,7 +33,7 @@ const TransferStudentModal = ({ students, currentClassId, onClose }) => {
             Transfer
           </button>
         </div>
-        <div className="form-row">
+        <div className="transfer-form-row">
           <select
             value={newClassId}
             onChange={(e) => setNewClassId(e.target.value)}

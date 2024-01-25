@@ -118,7 +118,7 @@ const StoryForm = () => {
 
   return (
     <body className="story-form">
-      <form className="create" onSubmit={handleSubmit}>
+      <form className="create-story" onSubmit={handleSubmit}>
         <div className="input-container">
           <input
             className="short-input"

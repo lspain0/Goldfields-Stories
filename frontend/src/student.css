@@ -180,7 +180,7 @@ h1 {
 
 }
 
-form {
+.student-form, .transfer-form {
   display: flex;
   flex-direction: column;
   /* Stack elements vertically */
@@ -190,7 +190,7 @@ form {
   /* Center form elements vertically, if needed */
 }
 
-.form-row {
+.student-form-row, .transfer-form-row {
   display: flex;
   justify-content: center;
   /* Center elements within the row */
@@ -201,7 +201,7 @@ form {
 }
 
 
-.form-row select {
+.student-form-row select, .transfer-form-row select {
   flex-grow: 1;
   /* Allow select to grow and fill the space */
   margin: 0 10px;
