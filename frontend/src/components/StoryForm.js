@@ -69,7 +69,6 @@ const StoryForm = () => {
   
     const childrenString = childrenArray.map((child) => child.value).join(',');
     const tagsString = tags;
-    console.log('Current User:', currentUser);
     const story = {
       title,
       children: childrenString,
@@ -78,8 +77,6 @@ const StoryForm = () => {
       categories: selectedCategories.join(','),
       author: currentUser,
     };
-
-    console.log('Story Object:', story);
   
     try {
       const response = await fetch('/api/stories', {
@@ -93,7 +90,7 @@ const StoryForm = () => {
       const json = await response.json();
   
       if (!response.ok) {
-        setError(json.error);
+        alert(json.error);
       }
   
       if (response.ok) {
@@ -105,6 +102,11 @@ const StoryForm = () => {
         setError(null);
         console.log('New Story Posted', json);
         dispatch({ type: 'CREATE_STORY', payload: json });
+
+        alert("Story Posted!");
+        setTimeout(function() {
+          window.location.href = '/';
+      }, 1);
       }
     } catch (error) {
       console.error('Error submitting the form:', error);
