@@ -44,12 +44,36 @@ function getAuthorFirstName(str) {
     str = str.split(' ')[0];
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
-  
+
+
 
 const StoryDetails = ({ story }) => {
+
+    var domParser = new DOMParser();
+    var docElement = domParser.parseFromString(story.content, "text/html").documentElement;
+    var imgTags = docElement.getElementsByTagName("img");
+
+    // Loop through each <img> tag and extract the image file name
+    for (var i = 0; i < imgTags.length; i++) {
+        var imgTag = imgTags[i];
+        var imgSrc = imgTag.src;
+        console.log(imgSrc);
+    }
+        console.log(story.title+imgTags.length);
+
     return (
         <Link className='story-link' to={`/story/${story._id}`} key={story._id}>
             <div className="story-card">
+                <div className="row">
+                    <div className='column'>
+                        <img src='https://cdn.arstechnica.net/wp-content/uploads/2016/02/5718897981_10faa45ac3_b-640x624.jpg'></img>
+                        <img src='https://cdn.arstechnica.net/wp-content/uploads/2016/02/5718897981_10faa45ac3_b-640x624.jpg'></img>
+                    </div>
+                    <div className='column'>
+                        <img src='https://cdn.arstechnica.net/wp-content/uploads/2016/02/5718897981_10faa45ac3_b-640x624.jpg'></img>
+                        <img src='https://cdn.arstechnica.net/wp-content/uploads/2016/02/5718897981_10faa45ac3_b-640x624.jpg'></img>
+                    </div>
+                </div>
                 <sub className="story-children">{checkGroupStory(story.children)}</sub>
                 <h4 className="story-h4">{truncate(removeTags(story.title), 30)}</h4>
                 <p className="story-p">{truncate(removeTags(story.content), 60)}</p>
