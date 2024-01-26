@@ -134,6 +134,35 @@ const transferStudent = async (req, res) => {
   }
 };
 
+const updateStudent = async (req, res) => {
+  const { classId, studentId } = req.params;
+  const updatedInfo = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(classId) || !mongoose.Types.ObjectId.isValid(studentId)) {
+    return res.status(404).json({ error: "Invalid class or student ID" });
+  }
+
+  try {
+    const classToUpdate = await Class.findById(classId);
+    const studentIndex = classToUpdate.students.findIndex(s => s._id.toString() === studentId);
+
+    if (studentIndex === -1) {
+      return res.status(404).json({ error: "Student not found" });
+    }
+
+    // Update the student's details
+    classToUpdate.students[studentIndex] = { ...classToUpdate.students[studentIndex].toJSON(), ...updatedInfo };
+
+    // Save the changes
+    await classToUpdate.save();
+
+    res.status(200).json(classToUpdate.students[studentIndex]);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getClasses,
   getClass,
@@ -142,4 +171,5 @@ module.exports = {
   updateClass,
   addStudent,
   transferStudent,
+  updateStudent,
 };

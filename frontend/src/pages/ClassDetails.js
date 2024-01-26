@@ -16,6 +16,11 @@ const ClassDetails = () => {
     setShowTransferModal(true);
   };
 
+  // Function to handle Edit button click
+  const handleEditStudent = (studentId) => {
+    navigate(`/class/${classId}/editstudent/${studentId}`);
+  };
+
   // Function to format the date as "DD/MM/YYYY"
   const formatDate = (date) => {
     const dobDate = new Date(date);
@@ -109,6 +114,16 @@ const ClassDetails = () => {
                 </span>
                 <span>DOB: {formatDate(student.dob)}</span>
               </div>
+              <select
+                onChange={(e) => {
+                  if (e.target.value === "edit") {
+                    handleEditStudent(student._id);
+                  }
+                }}
+              >
+                <option value="">Actions</option>
+                <option value="edit">Edit</option>
+              </select>
             </div>
           ))}
         </div>

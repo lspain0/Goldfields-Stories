@@ -90,9 +90,51 @@ export const ClassesProvider = ({ children }) => {
     }
   };
 
+  // ... existing imports and code ...
+
+  const updateStudentInClass = async (classId, studentId, updatedStudent) => {
+    try {
+      const formData = new FormData();
+      for (const key in updatedStudent) {
+        if (key === "image" && updatedStudent[key]) {
+          formData.append(key, updatedStudent[key]);
+        } else {
+          formData.append(key, String(updatedStudent[key])); // Convert non-file values to strings
+        }
+      }
+
+      const response = await fetch(
+        `/api/classes/${classId}/students/${studentId}`,
+        {
+          method: "PUT",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("HTTP error! status: " + response.status);
+      }
+      const updatedClass = await response.json();
+      setClasses((prevClasses) =>
+        prevClasses.map((c) =>
+          c.id === classId ? { ...c, students: updatedClass.students } : c
+        )
+      );
+    } catch (error) {
+      console.error("Error updating student:", error);
+    }
+  };
+
   return (
     <ClassesContext.Provider
-      value={{ classes, addClass, addStudentToClass, transferStudent, fetchClasses, }}
+      value={{
+        classes,
+        addClass,
+        addStudentToClass,
+        transferStudent,
+        updateStudentInClass,
+        fetchClasses,
+      }}
     >
       {children}
     </ClassesContext.Provider>
