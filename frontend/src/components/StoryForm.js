@@ -194,15 +194,6 @@ const StoryForm = () => {
               },
             }}
             style={{ height: 'calc(100vh - 280px)' }}
-            formats={[
-              'header',
-              'bold', 'italic', 'underline', 'strike',
-              'blockquote',
-              'list', 'bullet',
-              'align',
-              'color', 'background',
-            ]}
-            theme="snow"
           />
         </div>
 
