@@ -25,15 +25,11 @@ const Home = () => {
   return (
     <body>
       <Logo />
-      <div className="home">
-  
-      </div>
-        <div className="createstorylink">  
+      <div className="createstorylink">  
           <Link to="/createstory">  
             <button className="create-story-button">Create a new Story</button>
           </Link>  
         </div>
-
         <div className="story-cards-container">
           {stories && stories.map(story => (
             <StoryDetails story={story} key={story._id} />

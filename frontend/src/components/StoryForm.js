@@ -166,13 +166,13 @@ const StoryForm = () => {
           className="check-tree2"
           placeholder="Learning tags..."
           data={groupedTags}
-          uncheckableItemValues={['1', '2', '3']}
+          uncheckableItemValues={['1', '2', '3', '4']}
           value={selectedCheckTreeValuesTags}
           onChange={handleCheckTreePickerChangeTags}
           cascade={false}
           style={{ width: 600 }}
           renderMenu={(menu) => (
-            <div style={{ maxWidth: '900px'}}>
+            <div style={{ maxWidth: 'calc(100vh - 100px)'}}>
               {menu}
             </div>
           )}

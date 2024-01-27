@@ -432,3 +432,21 @@ div.error {
 .tags-container {
   overflow-wrap: break-word;
 }
+
+.create-story-button {
+  padding: 10px;
+  font-size: 16px;
+  width: 200px;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background: #326C6F;
+  color: white;
+  margin-left: 2%;
+}
+
+.create-story-button:hover {
+  background: #224957;
+}

@@ -109,4 +109,26 @@ export const groupedTags = [
         },
       ],
     },
+    {
+      label: 'Ngā Uara/Our values',
+      value: '4',
+      children: [
+        {
+          label: '• Kaitiakitanga - Protect and uphold the rights, needs and aspirations of our akonga (learners)',
+          value: '• Kaitiakitanga - Protect and uphold the rights, needs and aspirations of our akonga (learners)',
+        },
+        {
+          label: '• Kotahitanga - Unity in everything we do',
+          value: '• Kotahitanga - Unity in everything we do',
+        },
+        {
+          label: '• Manaakitanga - Support and enhance the Hauora (wellbeing) of our âkonga(learners)',
+          value: '• Manaakitanga - Support and enhance the Hauora (wellbeing) of our âkonga(learners)',
+        },
+        {
+          label: '• Whanaungatanga - Develop and nurture relationships within our school and community.',
+          value: '• Whanaungatanga - Develop and nurture relationships within our school and community.',
+        },
+      ],
+    },
   ];

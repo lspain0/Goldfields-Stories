@@ -83,7 +83,7 @@ const StoryPage = () => {
             <div className="tags-container">
               {currentStory.tags.split('|').map((tag, index, array) => (
                 <React.Fragment key={index}>
-                  <div style={{ border: '1px solid lightblue', borderRadius: '4px', marginBottom: '4px', display: 'inline-block' }}>
+                  <div style={{ border: '2px solid lightblue', borderRadius: '4px', marginBottom: '4px', display: 'inline-block'}}>
                     <sub style={{ margin: '0', padding: '2px 4px', display: 'block' }}>{tag.trim()}</sub>
                   </div>
                   {index !== array.length - 1 && ' '}
