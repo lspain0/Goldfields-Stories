@@ -1,5 +1,10 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useLocation, Link } from 'react-router-dom';
+
+function addSpace(str) {
+  return str.replaceAll(',', (', '))
+}
 
 function getName(str) {
   var firstName = str.split(' ')[0];
@@ -70,12 +75,21 @@ const StoryPage = () => {
         </div>
         <hr className="solid" />
         <p>Children in this story:</p>
-        <p>{currentStory.children}</p>
+        <p>{addSpace(currentStory.children)}</p>
         <hr className="solid" />
         {currentStory.tags !== '' && (
           <>
             <p>Learning Tags:</p>
-            <p>{currentStory.tags}</p>
+            <div className="tags-container">
+              {currentStory.tags.split('|').map((tag, index, array) => (
+                <React.Fragment key={index}>
+                  <div style={{ border: '1px solid lightblue', borderRadius: '4px', marginBottom: '4px', display: 'inline-block' }}>
+                    <sub style={{ margin: '0', padding: '2px 4px', display: 'block' }}>{tag.trim()}</sub>
+                  </div>
+                  {index !== array.length - 1 && ' '}
+                </React.Fragment>
+              ))}
+            </div>
             <hr className="solid" />
           </>
         )}

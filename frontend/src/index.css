@@ -287,9 +287,9 @@ div.error {
 .story-info {
   float: right;
   width: 28%;
-  word-break: break-all;
+  overflow-wrap: break-word;
   height: 800px;
-  overflow-y: scroll;;
+  overflow-y: scroll;
 }
 @media (max-width: 600px) {
   .story-content,
@@ -427,4 +427,8 @@ div.error {
 .image-container img {
   max-width: 100%;
   max-height: 100%;
+}
+
+.tags-container {
+  overflow-wrap: break-word;
 }

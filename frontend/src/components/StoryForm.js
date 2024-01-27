@@ -124,7 +124,7 @@ const StoryForm = () => {
     setSelectedCheckTreeValuesTags(values);
 
     // Convert selected values to a single comma-separated string
-    const tagsString = Array.isArray(values) ? values.join(',') : '';
+    const tagsString = Array.isArray(values) ? values.join('|') : '';
     setTags(tagsString);
   };
 
@@ -161,15 +161,21 @@ const StoryForm = () => {
           cascade={false}
           style={{ width: 600 }}
         />
-
-        <CheckTreePicker className="check-tree2"
+        
+        <CheckTreePicker
+          className="check-tree2"
           placeholder="Learning tags..."
           data={groupedTags}
-          uncheckableItemValues={['1-1', '1-1-2']}
+          uncheckableItemValues={['1', '2', '3']}
           value={selectedCheckTreeValuesTags}
           onChange={handleCheckTreePickerChangeTags}
           cascade={false}
           style={{ width: 600 }}
+          renderMenu={(menu) => (
+            <div style={{ maxWidth: '900px'}}>
+              {menu}
+            </div>
+          )}
         />
 
         <UploadWidget onImageUpload={handleImageUpload} />
