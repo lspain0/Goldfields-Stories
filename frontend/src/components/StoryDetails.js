@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+
 function truncate(str, n){
     return (str.length > n) ? str.slice(0, n-1) + '...' : str;
   };
@@ -46,33 +47,31 @@ function getAuthorFirstName(str) {
 }
 
 
-
 const StoryDetails = ({ story }) => {
 
     var domParser = new DOMParser();
     var docElement = domParser.parseFromString(story.content, "text/html").documentElement;
     var imgTags = docElement.getElementsByTagName("img");
+    const images = [];
 
     // Loop through each <img> tag and extract the image file name
     for (var i = 0; i < imgTags.length; i++) {
         var imgTag = imgTags[i];
         var imgSrc = imgTag.src;
-        console.log(imgSrc);
-    }
-        console.log(story.title+imgTags.length);
 
+        images[i] = imgSrc;
+        
+    }
+
+    if (images.length === 0) {
+        images[0] = './goldfieldslogo.png'
+        
+    }
     return (
         <Link className='story-link' to={`/story/${story._id}`} key={story._id}>
             <div className="story-card">
-                <div className="row">
-                    <div className='column'>
-                        <img src='https://cdn.arstechnica.net/wp-content/uploads/2016/02/5718897981_10faa45ac3_b-640x624.jpg'></img>
-                        <img src='https://cdn.arstechnica.net/wp-content/uploads/2016/02/5718897981_10faa45ac3_b-640x624.jpg'></img>
-                    </div>
-                    <div className='column'>
-                        <img src='https://cdn.arstechnica.net/wp-content/uploads/2016/02/5718897981_10faa45ac3_b-640x624.jpg'></img>
-                        <img src='https://cdn.arstechnica.net/wp-content/uploads/2016/02/5718897981_10faa45ac3_b-640x624.jpg'></img>
-                    </div>
+                <div className="image-container">
+                    <img src={images[0]} alt=""/>
                 </div>
                 <sub className="story-children">{checkGroupStory(story.children)}</sub>
                 <h4 className="story-h4">{truncate(removeTags(story.title), 30)}</h4>
@@ -82,7 +81,6 @@ const StoryDetails = ({ story }) => {
             </div>
         </Link>
     )
-    
 }
 
 export default StoryDetails
