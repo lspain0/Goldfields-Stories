@@ -72,6 +72,25 @@ const ClassDetails = () => {
     return <p>Class not found.</p>;
   }
 
+  const handleDeleteStudent = async (studentId) => {
+    if (window.confirm("Are you sure you want to delete this student?")) {
+      try {
+        const response = await fetch(
+          `/api/classes/${classId}/students/${studentId}`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (!response.ok) {
+          throw new Error("HTTP error! status: " + response.status);
+        }
+        await fetchClasses(); // Refresh the class details to reflect the deletion
+      } catch (error) {
+        console.error("Error deleting student:", error);
+      }
+    }
+  };
+
   return (
     <div>
       <button className="standard-button" onClick={handleAddStudent}>
@@ -118,11 +137,14 @@ const ClassDetails = () => {
                 onChange={(e) => {
                   if (e.target.value === "edit") {
                     handleEditStudent(student._id);
+                  } else if (e.target.value === "delete") {
+                    handleDeleteStudent(student._id);
                   }
                 }}
               >
                 <option value="">Actions</option>
                 <option value="edit">Edit</option>
+                <option value="delete">Delete</option>
               </select>
             </div>
           ))}

@@ -163,6 +163,37 @@ const updateStudent = async (req, res) => {
   }
 };
 
+// Delete a student from a class
+const deleteStudent = async (req, res) => {
+  const { classId, studentId } = req.params;
+
+  // Validate the classId and studentId
+  if (!mongoose.Types.ObjectId.isValid(classId) || !mongoose.Types.ObjectId.isValid(studentId)) {
+    return res.status(404).json({ error: "Invalid class or student ID" });
+  }
+
+  try {
+    // Convert studentId from string to ObjectId
+    const studentObjectId = new mongoose.Types.ObjectId(studentId);
+
+    // Pull the student from the students array in the class document
+    const updatedClass = await Class.findByIdAndUpdate(
+      classId,
+      { $pull: { students: { _id: studentObjectId } } },
+      { new: true }
+    );
+
+    if (!updatedClass) {
+      return res.status(404).json({ error: "No class found or student not in class" });
+    }
+
+    res.status(200).json({ message: "Student deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getClasses,
   getClass,
@@ -172,4 +203,5 @@ module.exports = {
   addStudent,
   transferStudent,
   updateStudent,
+  deleteStudent,
 };
