@@ -12,38 +12,56 @@ const EditStudentPage = () => {
     dob: '',
     emergencyContact: ''
   });
+
   const { classId, studentId } = useParams();
   const navigate = useNavigate();
-  const { classes, updateStudentInClass } = useContext(ClassesContext);
+  const { updateStudentInClass, fetchStudentData } = useContext(ClassesContext);
+
+  // Function to format the date in YYYY-MM-DD format for input[type="date"]
+  const formatDateForInput = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear().toString();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
 
   useEffect(() => {
-    // Fetch the student data from the API
     const fetchStudent = async () => {
       try {
-        const response = await fetch(`/api/classes/${classId}/students/${studentId}`);
-        if (!response.ok) {
-          throw new Error('HTTP error! status: ' + response.status);
+        const data = await fetchStudentData(classId, studentId);
+        if (data && data.dob) {
+          // Format the DOB for input type="date"
+          data.dob = formatDateForInput(data.dob);
         }
-        const data = await response.json();
-        setStudent(data);
+        setStudent(prev => ({ ...prev, ...data }));
       } catch (error) {
         console.error("Failed to fetch student:", error);
       }
     };
 
     fetchStudent();
-  }, [classId, studentId]);
+  }, [classId, studentId, fetchStudentData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Prepare the dob for the backend in ISO format
+    const dobParts = student.dob.split('-');
+    const dobISO = new Date(dobParts[0], dobParts[1] - 1, dobParts[2]).toISOString();
+
+    const updatedStudent = {
+      ...student,
+      dob: dobISO, // Use ISO format for the backend
+    };
+
     try {
-      await updateStudentInClass(classId, studentId, student);
+      await updateStudentInClass(classId, studentId, updatedStudent);
       navigate(`/class/${classId}`);
     } catch (error) {
       console.error("Failed to update student:", error);
     }
   };
-
+  
   const handleBack = () => {
     navigate(`/class/${classId}`);
   };

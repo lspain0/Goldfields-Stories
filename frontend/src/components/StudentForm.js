@@ -1,5 +1,5 @@
-import React from 'react';
-import '../student.css';
+import React from "react";
+import "../student.css";
 
 const StudentForm = ({ student, setStudent, handleSubmit, handleBack }) => {
   const updateField = (e) => {
@@ -32,7 +32,13 @@ const StudentForm = ({ student, setStudent, handleSubmit, handleBack }) => {
           required
           className="student-form-input"
         />
-        <select name="gender" value={student.gender} onChange={updateField} required className="student-form-input">
+        <select
+          name="gender"
+          value={student.gender}
+          onChange={updateField}
+          required
+          className="student-form-input"
+        >
           <option value="">Select Gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
@@ -41,7 +47,7 @@ const StudentForm = ({ student, setStudent, handleSubmit, handleBack }) => {
         <input
           type="date"
           name="dob"
-          value={student.dob}
+          value={student.dob.split("/").reverse().join("-")} // Convert DD/MM/YYYY to YYYY-MM-DD for input display
           onChange={updateField}
           required
           className="student-form-input"

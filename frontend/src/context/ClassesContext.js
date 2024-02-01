@@ -125,6 +125,21 @@ export const ClassesProvider = ({ children }) => {
     }
   };
 
+  // Function to fetch a single student's data from the backend
+  const fetchStudentData = async (classId, studentId) => {
+    try {
+      const response = await fetch(`/api/classes/${classId}/students/${studentId}`);
+      if (!response.ok) {
+        throw new Error('HTTP error! status: ' + response.status);
+      }
+      const data = await response.json();
+      return data; // Return the fetched student data
+    } catch (error) {
+      console.error("Failed to fetch student:", error);
+      throw error; // Rethrow the error to be handled by the calling component
+    }
+  };
+
   return (
     <ClassesContext.Provider
       value={{
@@ -134,6 +149,7 @@ export const ClassesProvider = ({ children }) => {
         transferStudent,
         updateStudentInClass,
         fetchClasses,
+        fetchStudentData,
       }}
     >
       {children}

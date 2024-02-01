@@ -194,6 +194,36 @@ const deleteStudent = async (req, res) => {
   }
 };
 
+const getStudentInClass = async (req, res) => {
+  const { classId, studentId } = req.params;
+
+  try {
+      // Validate the classId
+      if (!mongoose.Types.ObjectId.isValid(classId)) {
+          return res.status(404).json({ error: "Class not found" });
+      }
+
+      // Find the class by classId
+      const foundClass = await Class.findById(classId);
+      if (!foundClass) {
+          return res.status(404).json({ error: "Class not found" });
+      }
+
+      // Find the student in the class's students array
+      const student = foundClass.students.find(s => s._id.toString() === studentId);
+      if (!student) {
+          return res.status(404).json({ error: "Student not found in the class" });
+      }
+
+      // Respond with the found student data
+      res.status(200).json(student);
+  } catch (error) {
+      console.error("Failed to fetch student:", error);
+      res.status(500).json({ error: "An error occurred while fetching the student" });
+  }
+};
+
+
 module.exports = {
   getClasses,
   getClass,
@@ -204,4 +234,5 @@ module.exports = {
   transferStudent,
   updateStudent,
   deleteStudent,
+  getStudentInClass,
 };
