@@ -74,6 +74,7 @@ const EditStudentPage = () => {
         setStudent={setStudent}
         handleSubmit={handleSubmit}
         handleBack={handleBack}
+        formType="edit"
       />
     </div>
   );

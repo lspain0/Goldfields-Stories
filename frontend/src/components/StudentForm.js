@@ -1,7 +1,13 @@
 import React from "react";
 import "../student.css";
 
-const StudentForm = ({ student, setStudent, handleSubmit, handleBack }) => {
+const StudentForm = ({
+  student,
+  setStudent,
+  handleSubmit,
+  handleBack,
+  formType,
+}) => {
   const updateField = (e) => {
     setStudent({ ...student, [e.target.name]: e.target.value });
   };
@@ -62,7 +68,7 @@ const StudentForm = ({ student, setStudent, handleSubmit, handleBack }) => {
           className="student-form-input"
         />
         <button type="submit" className="standard-button">
-          Add Student
+          {formType === "edit" ? "Update Student" : "Add Student"}
         </button>
         <button type="button" onClick={handleBack} className="standard-button">
           Back
