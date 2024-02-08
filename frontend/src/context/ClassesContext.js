@@ -4,6 +4,7 @@ export const ClassesContext = createContext();
 
 export const ClassesProvider = ({ children }) => {
   const [classes, setClasses] = useState([]);
+  const [updateCount, setUpdateCount] = useState(0);
 
   // Function to fetch classes from the backend
   const fetchClasses = async () => {
@@ -89,9 +90,7 @@ export const ClassesProvider = ({ children }) => {
       console.error("Error transferring student:", error);
     }
   };
-
-  // ... existing imports and code ...
-
+  
   const updateStudentInClass = async (classId, studentId, updatedStudent) => {
     try {
       const formData = new FormData();
@@ -99,7 +98,7 @@ export const ClassesProvider = ({ children }) => {
         if (key === "image" && updatedStudent[key]) {
           formData.append(key, updatedStudent[key]);
         } else {
-          formData.append(key, String(updatedStudent[key])); // Convert non-file values to strings
+          formData.append(key, String(updatedStudent[key]));
         }
       }
 
@@ -115,10 +114,10 @@ export const ClassesProvider = ({ children }) => {
         throw new Error("HTTP error! status: " + response.status);
       }
       const updatedClass = await response.json();
+
+      // Directly update the state with the updated class information
       setClasses((prevClasses) =>
-        prevClasses.map((c) =>
-          c.id === classId ? { ...c, students: updatedClass.students } : c
-        )
+        prevClasses.map((c) => (c.id === classId ? updatedClass : c))
       );
     } catch (error) {
       console.error("Error updating student:", error);
@@ -128,9 +127,11 @@ export const ClassesProvider = ({ children }) => {
   // Function to fetch a single student's data from the backend
   const fetchStudentData = async (classId, studentId) => {
     try {
-      const response = await fetch(`/api/classes/${classId}/students/${studentId}`);
+      const response = await fetch(
+        `/api/classes/${classId}/students/${studentId}`
+      );
       if (!response.ok) {
-        throw new Error('HTTP error! status: ' + response.status);
+        throw new Error("HTTP error! status: " + response.status);
       }
       const data = await response.json();
       return data; // Return the fetched student data
@@ -150,6 +151,7 @@ export const ClassesProvider = ({ children }) => {
         updateStudentInClass,
         fetchClasses,
         fetchStudentData,
+        updateCount,
       }}
     >
       {children}

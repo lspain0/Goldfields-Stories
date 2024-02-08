@@ -7,7 +7,7 @@ import TransferStudentModal from "../components/TransferStudentModal";
 const ClassDetails = () => {
   const { classId } = useParams();
   const navigate = useNavigate();
-  const { classes, fetchClasses } = useContext(ClassesContext);
+  const { classes, fetchClasses, updateCount } = useContext(ClassesContext);
   const [classDetails, setClassDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showTransferModal, setShowTransferModal] = useState(false);
@@ -46,9 +46,10 @@ const ClassDetails = () => {
       setClassDetails(classInfo);
       setIsLoading(false);
     } else {
-      setIsLoading(false);
+      setIsLoading(true);
+      fetchClasses().then(() => setIsLoading(false));
     }
-  }, [classId, classes]);
+  }, [classId, classes, fetchClasses]);
 
   const onCloseTransferModal = () => {
     setShowTransferModal(false);
