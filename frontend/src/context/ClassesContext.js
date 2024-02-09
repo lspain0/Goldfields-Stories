@@ -95,27 +95,30 @@ export const ClassesProvider = ({ children }) => {
     try {
       const formData = new FormData();
       for (const key in updatedStudent) {
-        if (key === "image" && updatedStudent[key]) {
-          formData.append(key, updatedStudent[key]);
+        if (key === "image") {
+          if (updatedStudent[key] instanceof File) {
+            formData.append(key, updatedStudent[key]);
+          } else if (typeof updatedStudent[key] === 'string' || updatedStudent[key] instanceof String) {
+            // Assuming you're sending the image as a base64 string when not edited
+            formData.append(key, updatedStudent[key]);
+          }
+          // If the image isn't edited, you might not need to append anything, depending on your backend logic.
         } else {
-          formData.append(key, String(updatedStudent[key]));
+          formData.append(key, String(updatedStudent[key])); // Convert other values to string to match FormData expectations
         }
       }
-
-      const response = await fetch(
-        `/api/classes/${classId}/students/${studentId}`,
-        {
-          method: "PUT",
-          body: formData,
-        }
-      );
-
+  
+      const response = await fetch(`/api/classes/${classId}/students/${studentId}`, {
+        method: "PUT",
+        body: formData,
+      });
+  
       if (!response.ok) {
         throw new Error("HTTP error! status: " + response.status);
       }
       const updatedClass = await response.json();
-
-      // Directly update the state with the updated class information
+  
+      // Update the classes state with the updated class info
       setClasses((prevClasses) =>
         prevClasses.map((c) => (c.id === classId ? updatedClass : c))
       );
@@ -123,6 +126,7 @@ export const ClassesProvider = ({ children }) => {
       console.error("Error updating student:", error);
     }
   };
+  
 
   // Function to fetch a single student's data from the backend
   const fetchStudentData = async (classId, studentId) => {
