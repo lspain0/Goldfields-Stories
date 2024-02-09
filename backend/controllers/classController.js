@@ -150,10 +150,16 @@ const updateStudent = async (req, res) => {
       return res.status(404).json({ error: "Student not found" });
     }
 
-    // Update the student's details
+    // Check if a new image was uploaded and replace the old one if present
+    if (req.file) {
+      const newImage = Buffer.from(req.file.buffer);
+      updatedInfo.image = newImage; // Replace the old image with the new one
+    }
+
+    // Update the student's details with the new info, including the new image if provided
     classToUpdate.students[studentIndex] = { ...classToUpdate.students[studentIndex].toJSON(), ...updatedInfo };
 
-    // Save the changes
+    // Save the changes to the class document
     await classToUpdate.save();
 
     res.status(200).json(classToUpdate.students[studentIndex]);
