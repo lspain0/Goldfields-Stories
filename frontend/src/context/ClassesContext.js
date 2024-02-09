@@ -24,10 +24,12 @@ export const ClassesProvider = ({ children }) => {
     }
   };
 
+  // Update the count when classes are updated
   useEffect(() => {
     fetchClasses();
   }, []);
 
+  //function to update the count
   const addClass = async (newClass) => {
     try {
       const response = await fetch("/api/classes", {
@@ -52,7 +54,7 @@ export const ClassesProvider = ({ children }) => {
         if (key === "image" && student[key]) {
           formData.append(key, student[key]);
         } else {
-          formData.append(key, String(student[key])); // Ensure non-file values are converted to strings
+          formData.append(key, String(student[key]));
         }
       }
       const response = await fetch(`/api/classes/${classId}/students`, {
@@ -73,6 +75,7 @@ export const ClassesProvider = ({ children }) => {
     }
   };
 
+  // Function to transfer a student from one class to another
   const transferStudent = async (studentId, oldClassId, newClassId) => {
     try {
       const response = await fetch("/api/classes/transfer-student", {
@@ -85,12 +88,13 @@ export const ClassesProvider = ({ children }) => {
       if (!response.ok) {
         throw new Error("HTTP error! status: " + response.status);
       }
-      await fetchClasses(); // Re-fetch classes to update the state
+      await fetchClasses();
     } catch (error) {
       console.error("Error transferring student:", error);
     }
   };
-  
+
+  // Function to update a student's data in a class
   const updateStudentInClass = async (classId, studentId, updatedStudent) => {
     try {
       const formData = new FormData();
@@ -98,26 +102,30 @@ export const ClassesProvider = ({ children }) => {
         if (key === "image") {
           if (updatedStudent[key] instanceof File) {
             formData.append(key, updatedStudent[key]);
-          } else if (typeof updatedStudent[key] === 'string' || updatedStudent[key] instanceof String) {
-            // Assuming you're sending the image as a base64 string when not edited
+          } else if (
+            typeof updatedStudent[key] === "string" ||
+            updatedStudent[key] instanceof String
+          ) {
             formData.append(key, updatedStudent[key]);
           }
-          // If the image isn't edited, you might not need to append anything, depending on your backend logic.
         } else {
-          formData.append(key, String(updatedStudent[key])); // Convert other values to string to match FormData expectations
+          formData.append(key, String(updatedStudent[key]));
         }
       }
-  
-      const response = await fetch(`/api/classes/${classId}/students/${studentId}`, {
-        method: "PUT",
-        body: formData,
-      });
-  
+
+      const response = await fetch(
+        `/api/classes/${classId}/students/${studentId}`,
+        {
+          method: "PUT",
+          body: formData,
+        }
+      );
+
       if (!response.ok) {
         throw new Error("HTTP error! status: " + response.status);
       }
       const updatedClass = await response.json();
-  
+
       // Update the classes state with the updated class info
       setClasses((prevClasses) =>
         prevClasses.map((c) => (c.id === classId ? updatedClass : c))
@@ -126,7 +134,6 @@ export const ClassesProvider = ({ children }) => {
       console.error("Error updating student:", error);
     }
   };
-  
 
   // Function to fetch a single student's data from the backend
   const fetchStudentData = async (classId, studentId) => {
@@ -138,10 +145,10 @@ export const ClassesProvider = ({ children }) => {
         throw new Error("HTTP error! status: " + response.status);
       }
       const data = await response.json();
-      return data; // Return the fetched student data
+      return data;
     } catch (error) {
       console.error("Failed to fetch student:", error);
-      throw error; // Rethrow the error to be handled by the calling component
+      throw error;
     }
   };
 

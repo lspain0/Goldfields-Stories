@@ -7,11 +7,12 @@ import TransferStudentModal from "../components/TransferStudentModal";
 const ClassDetails = () => {
   const { classId } = useParams();
   const navigate = useNavigate();
-  const { classes, fetchClasses, updateCount } = useContext(ClassesContext);
+  const { classes, fetchClasses } = useContext(ClassesContext);
   const [classDetails, setClassDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showTransferModal, setShowTransferModal] = useState(false);
 
+  // Function to handle Transfer button click
   const handleTransferClick = () => {
     setShowTransferModal(true);
   };
@@ -29,6 +30,7 @@ const ClassDetails = () => {
     const year = dobDate.getFullYear().toString();
     return `${day}/${month}/${year}`;
   };
+
   // Function to convert buffer to URL
   const bufferToUrl = (buffer) => {
     let binary = "";
@@ -40,6 +42,7 @@ const ClassDetails = () => {
     return window.btoa(binary);
   };
 
+  // Fetch the class details when the component mounts
   useEffect(() => {
     const classInfo = classes.find((c) => c.id === classId);
     if (classInfo) {
@@ -51,6 +54,7 @@ const ClassDetails = () => {
     }
   }, [classId, classes, fetchClasses]);
 
+  // Function to handle closing the transfer modal
   const onCloseTransferModal = () => {
     setShowTransferModal(false);
     fetchClasses();
@@ -61,6 +65,7 @@ const ClassDetails = () => {
     navigate("/class");
   };
 
+  // Function to handle Add Student button click
   const handleAddStudent = () => {
     navigate(`/class/${classId}/addstudent`);
   };
@@ -73,6 +78,7 @@ const ClassDetails = () => {
     return <p>Class not found.</p>;
   }
 
+  // Function to handle deleting a student
   const handleDeleteStudent = async (studentId) => {
     if (window.confirm("Are you sure you want to delete this student?")) {
       try {
@@ -85,13 +91,14 @@ const ClassDetails = () => {
         if (!response.ok) {
           throw new Error("HTTP error! status: " + response.status);
         }
-        await fetchClasses(); // Refresh the class details to reflect the deletion
+        await fetchClasses();
       } catch (error) {
         console.error("Error deleting student:", error);
       }
     }
   };
 
+  // Render the class details
   return (
     <div>
       <button className="standard-button" onClick={handleAddStudent}>

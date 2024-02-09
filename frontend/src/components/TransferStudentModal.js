@@ -6,10 +6,11 @@ const TransferStudentModal = ({ students, currentClassId, onClose }) => {
   const [newClassId, setNewClassId] = useState("");
   const { classes, transferStudent } = useContext(ClassesContext);
 
+  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     await transferStudent(selectedStudent, currentClassId, newClassId);
-    onClose(); // Close the modal after transfer
+    onClose();
   };
 
   return (
@@ -50,7 +51,11 @@ const TransferStudentModal = ({ students, currentClassId, onClose }) => {
                 )
             )}
           </select>
-          <button type="button" onClick={onClose} className="action-button cancel-button">
+          <button
+            type="button"
+            onClick={onClose}
+            className="action-button cancel-button"
+          >
             Cancel
           </button>
         </div>

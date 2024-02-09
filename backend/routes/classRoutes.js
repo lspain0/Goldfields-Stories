@@ -13,6 +13,7 @@ const fileFilter = (req, file, cb) => {
 };
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
+// Import the class controller methods
 const {
   getClasses,
   getClass,
@@ -34,10 +35,8 @@ router.delete('/:id', deleteClass); // Delete a class by ID
 router.patch('/:id', updateClass); // Update a class by ID
 router.post('/:id/students', upload.single('image'), addStudent); // Add a student to a class, handling image upload
 router.post('/transfer-student', transferStudent); // Transfer a student to a new class
-router.put('/:classId/students/:studentId', upload.single('image'), updateStudent);
-router.delete('/:classId/students/:studentId', deleteStudent);
-router.get('/:classId/students/:studentId', getStudentInClass);
-
-
+router.put('/:classId/students/:studentId', upload.single('image'), updateStudent); // Update a student in a class, handling image upload
+router.delete('/:classId/students/:studentId', deleteStudent); // Delete a student from a class
+router.get('/:classId/students/:studentId', getStudentInClass); // Get a student in a class
 
 module.exports = router;

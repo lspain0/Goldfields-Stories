@@ -68,7 +68,7 @@ const updateClass = async (req, res) => {
   const updatedClass = await Class.findOneAndUpdate(
     { _id: id },
     { ...req.body },
-    { new: true } // Return the updated document
+    { new: true }
   );
 
   if (!updatedClass) {
@@ -108,6 +108,7 @@ const addStudent = async (req, res) => {
   }
 };
 
+// Transfer a student to a new class
 const transferStudent = async (req, res) => {
   const { studentId, oldClassId, newClassId } = req.body;
   if (!mongoose.Types.ObjectId.isValid(oldClassId) || !mongoose.Types.ObjectId.isValid(newClassId)) {
@@ -134,6 +135,7 @@ const transferStudent = async (req, res) => {
   }
 };
 
+// Update a student in a class
 const updateStudent = async (req, res) => {
   const { classId, studentId } = req.params;
   const updatedInfo = req.body;
@@ -179,10 +181,8 @@ const deleteStudent = async (req, res) => {
   }
 
   try {
-    // Convert studentId from string to ObjectId
     const studentObjectId = new mongoose.Types.ObjectId(studentId);
 
-    // Pull the student from the students array in the class document
     const updatedClass = await Class.findByIdAndUpdate(
       classId,
       { $pull: { students: { _id: studentObjectId } } },
@@ -200,6 +200,7 @@ const deleteStudent = async (req, res) => {
   }
 };
 
+// Get a student in a class
 const getStudentInClass = async (req, res) => {
   const { classId, studentId } = req.params;
 
@@ -229,7 +230,7 @@ const getStudentInClass = async (req, res) => {
   }
 };
 
-
+// Export the methods
 module.exports = {
   getClasses,
   getClass,

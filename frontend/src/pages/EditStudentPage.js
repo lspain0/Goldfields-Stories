@@ -1,16 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { ClassesContext } from '../context/ClassesContext';
-import StudentForm from '../components/StudentForm';
+import React, { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { ClassesContext } from "../context/ClassesContext";
+import StudentForm from "../components/StudentForm";
 
+// Page to edit a student
 const EditStudentPage = () => {
   const [student, setStudent] = useState({
     image: null,
-    firstName: '',
-    lastName: '',
-    gender: '',
-    dob: '',
-    emergencyContact: ''
+    firstName: "",
+    lastName: "",
+    gender: "",
+    dob: "",
+    emergencyContact: "",
   });
 
   const { classId, studentId } = useParams();
@@ -21,11 +22,12 @@ const EditStudentPage = () => {
   const formatDateForInput = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear().toString();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
 
+  // Fetch the student data when the component mounts
   useEffect(() => {
     const fetchStudent = async () => {
       try {
@@ -34,7 +36,7 @@ const EditStudentPage = () => {
           // Format the DOB for input type="date"
           data.dob = formatDateForInput(data.dob);
         }
-        setStudent(prev => ({ ...prev, ...data }));
+        setStudent((prev) => ({ ...prev, ...data }));
       } catch (error) {
         console.error("Failed to fetch student:", error);
       }
@@ -46,12 +48,16 @@ const EditStudentPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Prepare the dob for the backend in ISO format
-    const dobParts = student.dob.split('-');
-    const dobISO = new Date(dobParts[0], dobParts[1] - 1, dobParts[2]).toISOString();
+    const dobParts = student.dob.split("-");
+    const dobISO = new Date(
+      dobParts[0],
+      dobParts[1] - 1,
+      dobParts[2]
+    ).toISOString();
 
     const updatedStudent = {
       ...student,
-      dob: dobISO, // Use ISO format for the backend
+      dob: dobISO,
     };
 
     try {
@@ -61,7 +67,7 @@ const EditStudentPage = () => {
       console.error("Failed to update student:", error);
     }
   };
-  
+
   const handleBack = () => {
     navigate(`/class/${classId}`);
   };

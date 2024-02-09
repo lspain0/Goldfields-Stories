@@ -10,8 +10,9 @@ function Class() {
   const [subject, setSubject] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
-  const { classes, addClass } = useContext(ClassesContext); // Destructure classes from context
+  const { classes, addClass } = useContext(ClassesContext);
 
+  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -26,7 +27,7 @@ function Class() {
     if (isDuplicate) {
       setMessage(`Error: A class with the name '${className}' already exists.`);
       setIsSubmitting(false);
-      return; // Early return to prevent adding a duplicate
+      return;
     }
 
     try {
@@ -42,6 +43,7 @@ function Class() {
     }
   };
 
+  // Function to clear the message
   const clearMessage = () => {
     setMessage("");
   };

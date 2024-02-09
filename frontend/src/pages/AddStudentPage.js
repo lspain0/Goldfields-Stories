@@ -1,16 +1,16 @@
-import React, { useState, useContext } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { ClassesContext } from '../context/ClassesContext';
-import StudentForm from '../components/StudentForm';
+import React, { useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { ClassesContext } from "../context/ClassesContext";
+import StudentForm from "../components/StudentForm";
 
 const AddStudentPage = () => {
   const [student, setStudent] = useState({
     image: null,
-    firstName: '',
-    lastName: '',
-    gender: '',
-    dob: '',
-    emergencyContact: ''
+    firstName: "",
+    lastName: "",
+    gender: "",
+    dob: "",
+    emergencyContact: "",
   });
   const { classId } = useParams();
   const navigate = useNavigate();
@@ -19,7 +19,6 @@ const AddStudentPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // You will need to modify addStudentToClass to handle the new student object
       await addStudentToClass(classId, student);
       navigate(`/class/${classId}`);
     } catch (error) {
