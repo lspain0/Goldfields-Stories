@@ -37,7 +37,7 @@ const NavbarLogin = () => {
       pageTitle = 'Search Stories';
       break;
     default:
-      pageTitle = 'Goldfields'; 
+      pageTitle = ''; 
   }
 
   // Render the component

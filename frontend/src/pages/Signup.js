@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "../components/logo.js";
+import Logo from "../components/logov2.js";
 import "../class.css";
 import axios from "../axios.js";
 
@@ -59,14 +59,14 @@ function SignUP() {
     <style>
       {`
         body {
-          background: linear-gradient(90deg, rgba(233, 175, 12, 1) 0%, rgba(233, 175, 12, 1) 0%, rgba(50, 108, 111, 1) 100%);
+          background: linear-gradient(90deg, white 0%, white 0%, white 100%);
           margin: 0;
           padding: 0;
         }
       `}
     </style>
     <div className="class-form-container-login">
-      <div className="logo-container">
+      <div className="logo-container2">
         <Logo />
       </div>
       <div className="">
