@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ClassesProvider } from './context/ClassesContext';
 import ClassesList from './components/ClassesList';
 import ClassDetails from './pages/ClassDetails';
-import Home from './pages/Home';
+import Stories from './pages/Stories';
 import Class from './pages/Class';
 import Navbar from './components/Navbar';
 import CreateStory from './pages/stories/CreateStory';
@@ -63,7 +63,7 @@ function App() {
             <Navbar />
             <div className="pages">
               <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/stories" element={<Stories />} />
                 <Route path="/class" element={<Class />} />
                 <Route path="/createstory" element={<CreateStory />} />
                 <Route path="/classeslist" element={<ClassesList />} />

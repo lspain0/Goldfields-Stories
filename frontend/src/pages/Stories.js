@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import StoryDetails from "../components/StoryDetails"
 import Logo from "../components/logo"
 
-const Home = () => {
+const Stories = () => {
   const { stories, dispatch } = useStoriesContext()
 
   useEffect(() => {
@@ -40,4 +40,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Stories
