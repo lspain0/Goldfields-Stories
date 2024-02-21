@@ -1,21 +1,23 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
+import "../home.css";
 
 const Navbar = () => {
     const location = useLocation(); // This hook gives us the current location object
     let pageTitle;
+
     const logoutHandler = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("email");
         localStorage.removeItem("name");
         window.location.href = "/login";
+    };
 
-    }
     // Determine the page title based on the current path
     switch (location.pathname) {
-        case '/':
-            pageTitle = 'Goldfields';
+        case '/home':
+            pageTitle = 'Goldfields School';
             break;
         case '/stories':
             pageTitle = 'Stories';
@@ -34,6 +36,10 @@ const Navbar = () => {
             pageTitle = 'Goldfields School'; // Fallback title
     }
 
+    const isActive = (path) => {
+        return location.pathname === path ? 'nav-item active' : 'nav-item';
+    };
+
     return (
         <header>
             <nav className="navbar">
@@ -42,11 +48,11 @@ const Navbar = () => {
                     <h1>{pageTitle}</h1>
                 </Link>
                 <div className="nav-links">
-                    <Link to="/" className="nav-item">Home</Link>
-                    <Link to="/stories" className="nav-item">Stories</Link>
-                    <Link to="/class" className="nav-item">Class</Link>
-                    <Link to="/search" className="nav-item">Search Stories</Link>
-                    <Link to="/logout" onClick={() => logoutHandler()} className="nav-item">Logout</Link>
+                    <Link to="/home" className={isActive('/home')}>Home</Link>
+                    <Link to="/stories" className={isActive('/stories')}>Stories</Link>
+                    <Link to="/class" className={isActive('/class')}>Class</Link>
+                    <Link to="/search" className={isActive('/search')}>Search Stories</Link>
+                    <Link to="/logout" onClick={logoutHandler} className="nav-item">Logout</Link>
                     <FaUserCircle className="nav-icon" />
                 </div>
             </nav>

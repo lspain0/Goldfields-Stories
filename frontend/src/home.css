@@ -1,0 +1,4 @@
+.nav-item.active {
+    color: #E9AF0C; /* Change this to your active link color */
+    font-weight: bold;
+}
