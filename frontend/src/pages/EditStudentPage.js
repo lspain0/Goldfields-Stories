@@ -11,7 +11,6 @@ const EditStudentPage = () => {
     lastName: "",
     gender: "",
     dob: "",
-    emergencyContact: "",
   });
 
   const { classId, studentId } = useParams();

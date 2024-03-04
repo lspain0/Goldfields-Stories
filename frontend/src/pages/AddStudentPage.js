@@ -10,7 +10,6 @@ const AddStudentPage = () => {
     lastName: "",
     gender: "",
     dob: "",
-    emergencyContact: "",
   });
   const { classId } = useParams();
   const navigate = useNavigate();

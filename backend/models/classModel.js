@@ -17,10 +17,6 @@ const studentSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  emergencyContact: {
-    type: String,
-    required: true,
-  },
   image: {
     type: Buffer, 
   },

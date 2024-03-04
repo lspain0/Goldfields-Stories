@@ -58,15 +58,6 @@ const StudentForm = ({
           required
           className="student-form-input"
         />
-        <input
-          type="text"
-          name="emergencyContact"
-          placeholder="Emergency Contact"
-          value={student.emergencyContact}
-          onChange={updateField}
-          required
-          className="student-form-input"
-        />
         <button type="submit" className="standard-button">
           {formType === "edit" ? "Update Student" : "Add Student"}
         </button>
