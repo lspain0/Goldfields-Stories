@@ -30,10 +30,10 @@ const getClass = async (req, res) => {
 
 // Create a new class
 const createClass = async (req, res) => {
-  const { className, subject } = req.body;
+  const { className} = req.body;
 
   try {
-    const newClass = await Class.create({ className, subject });
+    const newClass = await Class.create({ className });
     res.status(201).json({ ...newClass.toJSON(), id: newClass._id.toString() });
   } catch (error) {
     res.status(400).json({ error: error.message });

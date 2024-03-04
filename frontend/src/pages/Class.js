@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 function Class() {
   const [className, setClassName] = useState("");
-  const [subject, setSubject] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
   const { classes, addClass } = useContext(ClassesContext);
@@ -31,10 +30,9 @@ function Class() {
     }
 
     try {
-      await addClass({ className, subject });
+      await addClass({ className });
       setMessage(`Class '${className}' created successfully.`);
       setClassName("");
-      setSubject("");
     } catch (error) {
       console.error("Error creating class:", error);
       setMessage("Failed to create class. Please try again.");
@@ -57,8 +55,6 @@ function Class() {
         <ClassForm
           className={className}
           setClassName={setClassName}
-          subject={subject}
-          setSubject={setSubject}
           isSubmitting={isSubmitting}
           handleSubmit={handleSubmit}
         />
@@ -80,7 +76,6 @@ function Class() {
             classes.map((c, index) => (
               <Link to={`/class/${c.id}`} key={c.id} className="class-card">
                 <span>{c.className}</span>
-                <span>{c.subject}</span>
               </Link>
             ))
           ) : (

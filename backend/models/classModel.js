@@ -31,10 +31,6 @@ const classSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  subject: {
-    type: String,
-    required: true,
-  },
   students: [studentSchema],
 });
 

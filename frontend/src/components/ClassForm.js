@@ -1,9 +1,8 @@
 import React from 'react';
 
-const ClassForm = ({ className, setClassName, subject, setSubject, isSubmitting, handleSubmit }) => {
+const ClassForm = ({ className, setClassName, isSubmitting, handleSubmit }) => {
   return (
     <div className="class-form-container">
-      
       <form onSubmit={handleSubmit} className="class-form">
         <input
           id="className"
@@ -12,16 +11,6 @@ const ClassForm = ({ className, setClassName, subject, setSubject, isSubmitting,
           placeholder="Class Name"
           value={className}
           onChange={(e) => setClassName(e.target.value)}
-          className="class-form-input"
-          required
-        />
-        <input
-          id="subject"
-          name="subject"
-          type="text"
-          placeholder="Subject"
-          value={subject}
-          onChange={(e) => setSubject(e.target.value)}
           className="class-form-input"
           required
         />

@@ -119,7 +119,7 @@ const ClassDetails = () => {
       </button>
 
       <div className="class-name">
-        {classDetails.className} / {classDetails.subject}
+        {classDetails.className}
       </div>
 
       {classDetails.students && classDetails.students.length > 0 ? (

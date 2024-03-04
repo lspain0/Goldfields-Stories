@@ -13,7 +13,7 @@ const ClassesList = () => {
       <h2>Classes List</h2>
       <ul>
         {classes.map((c, index) => (
-          <li key={index}>{`${c.className} - ${c.subject}`}</li>
+          <li key={index}>{c.className}</li>
         ))}
       </ul>
     </div>
