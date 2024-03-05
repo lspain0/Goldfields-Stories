@@ -30,7 +30,7 @@ const AddStudentPage = () => {
   };
 
   return (
-    <div>
+    <div className="student-form-centered">
       <h1>Add New Student</h1>
       <StudentForm
         student={student}
