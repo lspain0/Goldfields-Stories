@@ -131,6 +131,8 @@
     background: #f9f9f9;
     transition: transform 0.3s ease;
     font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    color: black;
 }
 
 .class-card:hover {
