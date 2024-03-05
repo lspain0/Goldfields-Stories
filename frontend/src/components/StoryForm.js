@@ -50,6 +50,7 @@ const StoryForm = () => {
   const [children, setChildren] = useState([]);
   const [tags, setTags] = useState('');
   const [content, setContent] = useState('');
+  const [state, setState] = useState('pending');
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [error, setError] = useState('');
   const [selectedCheckTreeValuesTags, setSelectedCheckTreeValuesTags] = useState([]);
@@ -76,6 +77,7 @@ const StoryForm = () => {
       content,
       categories: selectedCategories.join(','),
       author: currentUser,
+      state,
     };
   
     try {
@@ -98,6 +100,7 @@ const StoryForm = () => {
         setChildren([]);
         setTags('');
         setContent('');
+        setState('');
         setSelectedCategories([]);
         setError(null);
         console.log('New Story Posted', json);

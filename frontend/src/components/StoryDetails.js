@@ -50,6 +50,12 @@ function getAuthorFirstName(str) {
 
 const StoryDetails = ({ story }) => {
 
+    //prevents pending stories from being displayed on the stories page
+    if (story.state === 'pending')
+    {
+        return null;
+    }
+
     var domParser = new DOMParser();
     var docElement = domParser.parseFromString(story.content, "text/html").documentElement;
     var imgTags = docElement.getElementsByTagName("img");

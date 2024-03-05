@@ -22,6 +22,10 @@ const storySchema = new Schema({
     author: {
         type: String,
         required: true
+    },
+    state: {
+        type: String,
+        required: true
     }
 
 }, { timestamps: true })
