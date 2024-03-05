@@ -75,7 +75,7 @@ const StoryDetails = ({ story }) => {
                     <img src={images[0]} alt=""/>
                 </div>
                 <sub className="story-children">{checkGroupStory(story.children)}</sub>
-                <h4 className="story-h4">{truncate(removeTags(story.title), 30)}</h4>
+                <h4 className="story-h4">{truncate(removeTags(story.title), 65)}</h4>
                 <p className="story-p">{truncate(removeTags(story.content), 60)}</p>
                 <sub className="story-sub">{"Story shared by "+getAuthorFirstName(story.author)+"\n"}</sub> 
                 <sub className='story-date'>{formatTimestamp(story.createdAt)}</sub>
