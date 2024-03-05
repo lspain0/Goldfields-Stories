@@ -105,7 +105,7 @@ const StoryForm = () => {
 
         alert("Story Posted!");
         setTimeout(function() {
-          window.location.href = '/';
+          window.location.href = '/stories';
       }, 1);
       }
     } catch (error) {

@@ -69,7 +69,7 @@ function App() {
                 <Route path="/classeslist" element={<ClassesList />} />
                 <Route path="/class/:classId" element={<ClassDetails />} />
                 <Route path="/class/:classId/addstudent" element={<AddStudentPage />} />
-                <Route path="/story/:storyid" element={<StoryPage />} />
+                <Route path="/stories/:storyid" element={<StoryPage />} />
                 <Route path="/class/:classId/editstudent/:studentId" element={<EditStudentPage />} />
               </Routes>
             </div>

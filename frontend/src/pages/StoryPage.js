@@ -21,7 +21,7 @@ const StoryPage = () => {
 
   useEffect(() => {
     const fetchStoryById = async () => {
-      const storyId = location.pathname.split('/story/')[1];
+      const storyId = location.pathname.split('/stories/')[1];
 
       if (storyId) {
         try {

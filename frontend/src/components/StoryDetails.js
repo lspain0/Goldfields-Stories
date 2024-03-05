@@ -69,7 +69,7 @@ const StoryDetails = ({ story }) => {
         
     }
     return (
-        <Link className='story-link' to={`/story/${story._id}`} key={story._id}>
+        <Link className='story-link' to={`/stories/${story._id}`} key={story._id}>
             <div className="story-card">
                 <div className="image-container">
                     <img src={images[0]} alt=""/>
