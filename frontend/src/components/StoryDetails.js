@@ -50,10 +50,32 @@ function getAuthorFirstName(str) {
 
 const StoryDetails = ({ story }) => {
 
-    //prevents pending stories from being displayed on the stories page
-    if (story.state === 'pending')
+    //used to create the link to the story view, can be either 'pending' or 'stories'
+    var link = "";
+
+    //the below if statements will check the current url to decide whether to show pending or approved stories
+    //there is probably a better way to do this but it works
+
+    //prevents approved stories from being displayed
+    if (window.location.href.includes('pending'))
     {
-        return null;
+        link = "pending";
+        
+        if (story.state !== 'pending')
+        {
+            return null;
+        }
+    }
+
+    //prevents pending stories from being displayed
+    else if (window.location.href.includes('stories'))
+    {
+        link = "stories";
+
+        if (story.state === 'pending')
+        {
+            return null;
+        }
     }
 
     var domParser = new DOMParser();
@@ -75,7 +97,7 @@ const StoryDetails = ({ story }) => {
         
     }
     return (
-        <Link className='story-link' to={`/stories/${story._id}`} key={story._id}>
+        <Link className='story-link' to={`/${link}/${story._id}`} key={story._id}>
             <div className="story-card">
                 <div className="image-container">
                     <img src={images[0]} alt=""/>

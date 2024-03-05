@@ -3,6 +3,7 @@ import { ClassesProvider } from './context/ClassesContext';
 import ClassesList from './components/ClassesList';
 import ClassDetails from './pages/ClassDetails';
 import Stories from './pages/Stories';
+import PendingStories from './pages/PendingStories';
 import Class from './pages/Class';
 import Navbar from './components/Navbar';
 import CreateStory from './pages/stories/CreateStory';
@@ -64,12 +65,14 @@ function App() {
             <div className="pages">
               <Routes>
                 <Route path="/stories" element={<Stories />} />
+                <Route path="/pending" element={<PendingStories />} />
                 <Route path="/class" element={<Class />} />
                 <Route path="/createstory" element={<CreateStory />} />
                 <Route path="/classeslist" element={<ClassesList />} />
                 <Route path="/class/:classId" element={<ClassDetails />} />
                 <Route path="/class/:classId/addstudent" element={<AddStudentPage />} />
                 <Route path="/stories/:storyid" element={<StoryPage />} />
+                <Route path="/pending/:storyid" element={<StoryPage />} />
                 <Route path="/class/:classId/editstudent/:studentId" element={<EditStudentPage />} />
               </Routes>
             </div>

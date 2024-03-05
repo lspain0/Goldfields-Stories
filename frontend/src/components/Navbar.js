@@ -31,6 +31,9 @@ const Navbar = () => {
         case '/createstory':
             pageTitle = 'Create a new Story';
             break;
+        case '/pending':
+            pageTitle = 'Pending Stories';
+            break;
         // Add more cases as needed for other routes
         default:
             pageTitle = 'Goldfields School'; // Fallback title
