@@ -119,8 +119,9 @@ const ClassDetails = () => {
       </button>
 
       <div className="class-name">
-        {classDetails.className}
+        Class: {classDetails.className}
       </div>
+
 
       {classDetails.students && classDetails.students.length > 0 ? (
         <div className="student-cards-container">

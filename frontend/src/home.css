@@ -2,3 +2,10 @@
     color: #E9AF0C; /* Change this to your active link color */
     font-weight: bold;
 }
+
+.navbar {
+    /* Other styles */
+    height: 50px; /* for example, set a fixed height */
+    /* More styles */
+  }
+  
