@@ -54,6 +54,24 @@ const ClassDetails = () => {
     }
   }, [classId, classes, fetchClasses]);
 
+  // Function to handle deleting a class
+  const handleDeleteClass = async () => {
+    if (window.confirm("Are you sure you want to delete this class?")) {
+      try {
+        const response = await fetch(`/api/classes/${classId}`, { method: "DELETE" });
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        await fetchClasses();
+        // Call fetchClasses from your context to refresh the class list
+        navigate("/class");
+        // Navigate back to the classes list page
+      } catch (error) {
+        console.error("Error deleting class:", error);
+      }
+    }
+  };
+  
   // Function to handle closing the transfer modal
   const onCloseTransferModal = () => {
     setShowTransferModal(false);
@@ -107,21 +125,22 @@ const ClassDetails = () => {
       <button className="standard-button" onClick={handleTransferClick}>
         Transfer Student
       </button>
-      {showTransferModal && (
-        <TransferStudentModal
-          students={classDetails.students}
-          currentClassId={classId}
-          onClose={onCloseTransferModal}
-        />
-      )}
+      {/* Delete Class Button with standard-button class for consistent styling */}
+    <button className="standard-button" onClick={handleDeleteClass}>
+      Delete Class
+    </button>
+    {showTransferModal && (
+      <TransferStudentModal
+        students={classDetails.students}
+        currentClassId={classId}
+        onClose={onCloseTransferModal}
+      />
+    )}
       <button className="standard-button" onClick={handleBackClick}>
         Back
       </button>
 
-      <div className="class-name">
-        Class: {classDetails.className}
-      </div>
-
+      <div className="class-name">Class: {classDetails.className}</div>
 
       {classDetails.students && classDetails.students.length > 0 ? (
         <div className="student-cards-container">

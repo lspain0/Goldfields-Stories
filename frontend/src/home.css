@@ -8,4 +8,15 @@
     height: 50px; /* for example, set a fixed height */
     /* More styles */
   }
+
+  .nav-h1 {
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    /* Adjust the color as needed */
+    font-size: 35px;
+    /* Adjust the size as needed */
+    margin-top: 100px;
+    /* Spacing from the top */
+  }
   
