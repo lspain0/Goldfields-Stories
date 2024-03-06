@@ -9,8 +9,20 @@ const StudentForm = ({
   formType,
 }) => {
   const updateField = (e) => {
+    if (e.target.name === "dob") {
+      const selectedDate = new Date(e.target.value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDate > today) {
+        alert("Date of birth cannot be in the future.");
+        return;
+      }
+    }
     setStudent({ ...student, [e.target.name]: e.target.value });
   };
+
+  // Get today's date in YYYY-MM-DD format for the max attribute
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <div className="student-form-container">
@@ -53,10 +65,11 @@ const StudentForm = ({
         <input
           type="date"
           name="dob"
-          value={student.dob.split("/").reverse().join("-")} // Convert DD/MM/YYYY to YYYY-MM-DD for input display
+          value={student.dob.split("/").reverse().join("-")}
           onChange={updateField}
           required
           className="student-form-input"
+          max={today}
         />
         <button type="submit" className="standard-button">
           {formType === "edit" ? "Update Student" : "Add Student"}
