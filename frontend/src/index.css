@@ -210,8 +210,8 @@ div.error {
   max-width: 100%;
   max-height: 600px;
   word-wrap: break-word;
-  min-height: 340px;
-  max-height: 340px;
+  min-height: 370px;
+  max-height: 370px;
 }
 
 .story-card:hover {
@@ -221,7 +221,7 @@ div.error {
 
 .story-p {
   margin: 0;
-  max-inline-size: 98%;
+  max-inline-size: 99%;
   max-height: fit-content;
   word-wrap: break-word;
   padding-bottom: 5px;
