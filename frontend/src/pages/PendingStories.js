@@ -1,4 +1,4 @@
-//This page is basically a duplicate of the stories page, but used for approving pending stories instead of creating new ones
+//This page is basically a duplicate of the stories page, but used for approving/editing pending stories instead of creating/viewing new ones
 //This page should only be visible to admins
 import { useEffect } from "react"
 import { useStoriesContext } from "../hooks/useStoriesContext"
@@ -33,7 +33,6 @@ const PendingStories = () => {
             <StoryDetails story={story} key={story._id} />
           ))}
       </div>
-      
     </body>
   )
 }
