@@ -162,7 +162,7 @@ const StoryForm = () => {
           value={selectedCheckTreeValuesChildren}
           onChange={handleCheckTreePickerChangeChildren}
           cascade={false}
-          style={{ width: 600 }}
+          style={{ width: 660 }}
         />
         
         <CheckTreePicker
@@ -173,7 +173,7 @@ const StoryForm = () => {
           value={selectedCheckTreeValuesTags}
           onChange={handleCheckTreePickerChangeTags}
           cascade={false}
-          style={{ width: 600 }}
+          style={{ width: 660 }}
           renderMenu={(menu) => (
             <div style={{ maxWidth: 'calc(100vh - 100px)'}}>
               {menu}
