@@ -11,6 +11,57 @@ const ClassDetails = () => {
   const [classDetails, setClassDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showTransferModal, setShowTransferModal] = useState(false);
+  const [isEditing, setIsEditing] = useState(false); // State to manage edit mode
+  const [editedClassName, setEditedClassName] = useState(""); // State to manage the edited class name
+  const [isHovering, setIsHovering] = useState(false);
+
+  useEffect(() => {
+    const classInfo = classes.find((c) => c.id === classId);
+    if (classInfo) {
+      setClassDetails(classInfo);
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+      fetchClasses().then(() => setIsLoading(false));
+    }
+  }, [classId, classes, fetchClasses]);
+
+  // Toggle edit mode and set initial edit value
+  const handleEditClassName = () => {
+    setIsEditing(true);
+    setEditedClassName(classDetails.className);
+  };
+
+  // Save the edited class name
+  const handleSaveEdit = async () => {
+    try {
+      const response = await fetch(`/api/classes/${classId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ className: editedClassName }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const updatedClass = await response.json();
+      setClassDetails(updatedClass);
+
+      await fetchClasses();
+
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating class name:", error);
+    }
+  };
+
+  // Cancel editing
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+  };
 
   // Function to handle Transfer button click
   const handleTransferClick = () => {
@@ -54,6 +105,26 @@ const ClassDetails = () => {
     }
   }, [classId, classes, fetchClasses]);
 
+  // Function to handle deleting a class
+  const handleDeleteClass = async () => {
+    if (window.confirm("Are you sure you want to delete this class?")) {
+      try {
+        const response = await fetch(`/api/classes/${classId}`, {
+          method: "DELETE",
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        await fetchClasses();
+        // Call fetchClasses from your context to refresh the class list
+        navigate("/class");
+        // Navigate back to the classes list page
+      } catch (error) {
+        console.error("Error deleting class:", error);
+      }
+    }
+  };
+
   // Function to handle closing the transfer modal
   const onCloseTransferModal = () => {
     setShowTransferModal(false);
@@ -69,14 +140,6 @@ const ClassDetails = () => {
   const handleAddStudent = () => {
     navigate(`/class/${classId}/addstudent`);
   };
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (!classDetails) {
-    return <p>Class not found.</p>;
-  }
 
   // Function to handle deleting a student
   const handleDeleteStudent = async (studentId) => {
@@ -98,6 +161,14 @@ const ClassDetails = () => {
     }
   };
 
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (!classDetails) {
+    return <p>Class not found.</p>;
+  }
+
   // Render the class details
   return (
     <div>
@@ -106,6 +177,9 @@ const ClassDetails = () => {
       </button>
       <button className="standard-button" onClick={handleTransferClick}>
         Transfer Student
+      </button>
+      <button className="standard-button" onClick={handleDeleteClass}>
+        Delete Class
       </button>
       {showTransferModal && (
         <TransferStudentModal
@@ -118,10 +192,37 @@ const ClassDetails = () => {
         Back
       </button>
 
-      <div className="class-name">
-        {classDetails.className}
-      </div>
+      {isEditing ? (
+        <div className="edit-class-name">
+  <input
+    type="text"
+    value={editedClassName}
+    onChange={(e) => setEditedClassName(e.target.value)}
+    className="edit-class-name-input"
+    placeholder="Edit class name"
+  />
+  <div className="edit-buttons">
+    <button onClick={handleSaveEdit} className="save-class-name-button action-button">Save</button>
+    <button onClick={handleCancelEdit} className="cancel-class-name-button action-button">Cancel</button>
+  </div>
+</div>
 
+      ) : (
+        <div
+          className="class-name-container"
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
+          <div className="class-name" onClick={handleEditClassName}>
+            Class: {classDetails.className}
+          </div>
+          {isHovering && (
+            <div className="hover-box">
+              Click to edit class name
+            </div>
+          )}
+        </div>
+      )}
       {classDetails.students && classDetails.students.length > 0 ? (
         <div className="student-cards-container">
           {classDetails.students.map((student) => (

@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ClassesContext } from "../context/ClassesContext";
 import StudentForm from "../components/StudentForm";
+import "../student.css";
 
 const AddStudentPage = () => {
   const [student, setStudent] = useState({
@@ -31,7 +32,7 @@ const AddStudentPage = () => {
 
   return (
     <div className="student-form-centered">
-      <h1>Add New Student</h1>
+      <h1 class="custom-h1">Add New Student</h1>
       <StudentForm
         student={student}
         setStudent={setStudent}

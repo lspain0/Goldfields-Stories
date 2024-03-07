@@ -6,10 +6,13 @@
 }
 
 .student-form-container {
-  width: 300px;
-  margin-top: 50px;
+  position: absolute; /* Positioned relative to the viewport */
+  top: 50%; /* Push down from the top to 50% of the viewport height */
+  left: 50%; /* Push from the left to 50% of the viewport width */
+  transform: translate(-50%, -50%); /* Offset the element by half of its width and height */
+  width: 300px; /* Maintain the width as per your design */
+  margin-top: 0; /* Reset margin-top to 0 */
 }
-
 .student-form {
   display: flex;
   flex-direction: column;
@@ -63,7 +66,7 @@
   /* Soft shadow for depth */
   border-radius: 10px;
   /* Rounded corners */
-  background: #fff;
+  background: #ffffff;
   /* White background */
   width: 100%;
   /* Card width is determined by the grid */
@@ -80,6 +83,7 @@
 .student-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-color: #000000;
 }
 
 /* Styling for the h1 element */
@@ -151,11 +155,8 @@ h1 {
 
 .standard-button {
   padding: 10px 20px;
-  /* Consistent padding */
   font-size: 16px;
-  /* Standard font size */
   width: 180px;
-  /* Standard width */
   border: none;
   border-radius: 20px;
   font-family: 'Poppins', sans-serif;
@@ -164,96 +165,199 @@ h1 {
   background: #326C6F;
   color: white;
   margin: 10px auto;
-  /* Center the button */
   display: block;
-  /* Ensure block level for margin auto */
-
 }
 
 .standard-button:hover {
   background: #224957;
 }
 
+/****************************************************/
+
+/* Button styles for transfer and cancel actions */
 .modal {
   display: flex;
   flex-direction: column;
-  /* Stack children vertically */
   justify-content: center;
-  /* Center children vertically in the viewport */
   align-items: center;
-  /* Center children horizontally in the viewport */
-
 }
 
 .student-form, .transfer-form {
   display: flex;
   flex-direction: column;
-  /* Stack elements vertically */
   align-items: center;
-  /* Align form elements to the center */
   justify-content: center;
-  /* Center form elements vertically, if needed */
 }
 
 .student-form-row, .transfer-form-row {
   display: flex;
   justify-content: center;
-  /* Center elements within the row */
   align-items: center;
   width: 100%;
-  /* Full width to allow inner content to center properly */
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
-
 
 .student-form-row select, .transfer-form-row select {
   flex-grow: 1;
-  /* Allow select to grow and fill the space */
   margin: 0 10px;
-  /* Spacing on left and right */
   padding: 8px 5px;
-  /* Aesthetic padding */
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 10px; 
+  width: 90px; /* Set the width of the select element */
 }
 
-/* Button styles for transfer and cancel actions */
-.action-button {
-  flex-grow: 1;
-  padding: 8px 20px;
+.transfer-button, .cancel-button {
+  flex: 1; /* Both buttons share the space evenly */
+  margin: 5px 10px 5px 0; /* Spacing for the buttons */
   font-size: 16px;
-  font-weight: 400;
-  border: none;
-  border-radius: 5px;
   font-family: 'Poppins', sans-serif;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-  display: inline-block;
-  /* Allows buttons to sit side by side */
-  margin: 0 10px;
-  /* Spacing between buttons */
+  transition: background-color 0.3s ease;
+  margin: 10px 0;
+  width: 180px; /* Set the width of the buttons */
 }
 
 .transfer-button {
-  background-color: #4CAF50;
-  /* A nice shade of green */
-  color: white;
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
 }
 
 .transfer-button:hover {
   background-color: #45a049;
-  /* A darker shade of green */
   transform: scale(1.05);
-  /* Slightly enlarge on hover */
 }
 
 .cancel-button {
-  background-color: #f44336;
-  /* A bright shade of red */
-  color: white;
+  background-color: #f44336; /* Red background */
+  color: white; /* White text */
 }
 
 .cancel-button:hover {
   background-color: #d32f2f;
-  /* A darker shade of red */
   transform: scale(1.05);
-  /* Slightly enlarge on hover */
+}
+/****************************************************/
+
+.custom-h1 {
+  text-align: center; /* Aligns text horizontally to the center */
+  font-family: 'Poppins', sans-serif;
+  color: #000000;
+  font-size: 35px;
+  margin-top: 0; /* Removes default margin */
+  position: absolute; /* Positions the h1 absolutely relative to its positioned parent */
+  /* 50% from the top of the parent element */
+  left: 50%; /* 50% from the left of the parent element */
+  transform: translate(-50%, -50%); /* Offsets the element by its own height and width */
+  padding-top: 200px;
+}
+
+/* Add global box-sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/**** Styling on Class name edit/hover **********/
+.class-name-container {
+  position: relative; /* This makes it a positioning context for absolute children */
+  display: inline-block; /* Allows the hover box to position itself relative to this container */
+}
+
+.class-name h1 {
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
+  transition: color 0.2s ease-in-out;
+  display: inline-block;
+  margin-bottom: 0.5em;
+}
+
+.class-name:hover {
+  color: #555;
+  text-decoration: underline; /* Underline on hover to indicate it's clickable */
+}
+
+.hover-box {
+  display: block;
+  position: absolute;
+  top: 100%; /* Position it below the class-name */
+  left: 0;
+  z-index: 10;
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  padding: 8px 12px;
+  width: auto; /* Adjust width based on content */
+  text-align: center;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(-10px); /* Give it a raised effect */
+  opacity: 0; /* Start as invisible */
+  pointer-events: none; /* No mouse events when it's invisible */
+}
+
+.class-name-container:hover .hover-box {
+  opacity: 1; /* Make the hover box visible on hover */
+  transform: translateY(0px); /* Position it normally */
+  pointer-events: auto; /* Reactivate mouse events */
+}
+/****************************************************/
+
+/* Styling for the input field when editing class name */
+.edit-class-name-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ddd; /* Light grey border */
+  border-radius: 5px;
+  border-color: #000000;
+  font-family: 'Poppins', sans-serif;
+  width: 100%; /* Input field takes full width of its parent */
+  box-sizing: border-box; /* Padding and border included in the width */
+  margin-bottom: 10px; /* Spacing between input and buttons */
+}
+
+/* Container for the input */
+.edit-class-name {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: flex-start; /* Align items to the start of the container */
+  width: fit-content; /* Shrink to fit the content width */
+}
+
+/* Container for the buttons */
+.edit-buttons {
+  display: flex;
+  justify-content: space-between; /* Space out buttons */
+  width: 100%; /* Buttons take full width of their parent */
+}
+
+/* Inherited styles from .action-button with additional button specific styling */
+.save-class-name-button{
+  flex: 1; /* Both buttons share the space evenly */
+  margin: 5px 10px 5px 0; /* Spacing for the buttons */
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+}
+
+.save-class-name-button:hover {
+  background-color: #43A047; /* Slightly darker green on hover */
+  transform: scale(1.05);
+}
+
+.cancel-class-name-button {
+  flex: 1; /* Both buttons share the space evenly */
+  margin: 5px 10px 5px 0; /* Spacing for the buttons */
+  background-color: #f44336; /* Red background */
+  color: white; /* White text */
+}
+
+.cancel-class-name-button:hover {
+  background-color: #d32f2f; /* Slightly darker red on hover */
+  transform: scale(1.05);
 }

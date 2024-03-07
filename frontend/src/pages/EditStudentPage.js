@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ClassesContext } from "../context/ClassesContext";
 import StudentForm from "../components/StudentForm";
+import "../student.css";
 
 // Page to edit a student
 const EditStudentPage = () => {
@@ -73,7 +74,7 @@ const EditStudentPage = () => {
 
   return (
     <div>
-      <h1>Edit Student</h1>
+      <h1 class="custom-h1">Edit Student</h1>
       <StudentForm
         student={student}
         setStudent={setStudent}
