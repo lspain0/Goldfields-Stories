@@ -43,12 +43,9 @@
 .student-cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  /* Adjust the minmax() to control the card sizes */
   gap: 20px;
-  /* Adjust the space between cards */
   padding: 20px;
   justify-content: center;
-  /* Centers cards in the container */
 }
 
 .student-card {
@@ -361,3 +358,36 @@ html, body {
   background-color: #d32f2f; /* Slightly darker red on hover */
   transform: scale(1.05);
 }
+/****************************************************/
+
+/* Styling for the sorting dropdown */
+.sort-dropdown-container {
+  position: absolute;
+  top: center; /* Adjust based on your header's padding */
+  right: 500px; /* Adjust based on your header's padding */
+  z-index: 10; /* Ensure it's above other elements */
+}
+
+/* Update the .sort-dropdown styles for the header context */
+.sort-dropdown {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #326C6F;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  background: white;
+  color: #326C6F;
+  width: auto; 
+  display: inline-block; 
+}
+
+.sort-dropdown:hover {
+  border-color: #224957;
+}
+
+.sort-dropdown:focus {
+  outline: none;
+  border-color: #0056b3;
+}
+

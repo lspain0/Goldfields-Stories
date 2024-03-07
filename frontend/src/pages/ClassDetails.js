@@ -14,6 +14,7 @@ const ClassDetails = () => {
   const [isEditing, setIsEditing] = useState(false); // State to manage edit mode
   const [editedClassName, setEditedClassName] = useState(""); // State to manage the edited class name
   const [isHovering, setIsHovering] = useState(false);
+  const [sortMethod, setSortMethod] = useState("alphabetical");
 
   useEffect(() => {
     const classInfo = classes.find((c) => c.id === classId);
@@ -25,6 +26,28 @@ const ClassDetails = () => {
       fetchClasses().then(() => setIsLoading(false));
     }
   }, [classId, classes, fetchClasses]);
+
+  // Function to handle sort method change
+  const handleSortChange = (e) => {
+    setSortMethod(e.target.value);
+  };
+
+  // Function to sort students based on the selected method
+  const sortStudents = (students) => {
+    switch (sortMethod) {
+      case "alphabetical":
+        return students.sort((a, b) =>
+          `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`)
+        );
+      case "recentlyAdded":
+        return students.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      case "oldestFirst":
+        return students.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      // Add more cases for custom options as needed
+      default:
+        return students;
+    }
+  };
 
   // Toggle edit mode and set initial edit value
   const handleEditClassName = () => {
@@ -172,15 +195,28 @@ const ClassDetails = () => {
   // Render the class details
   return (
     <div>
-      <button className="standard-button" onClick={handleAddStudent}>
-        Add Student
-      </button>
-      <button className="standard-button" onClick={handleTransferClick}>
-        Transfer Student
-      </button>
-      <button className="standard-button" onClick={handleDeleteClass}>
-        Delete Class
-      </button>
+      <div className="header-buttons">
+        <button className="standard-button" onClick={handleAddStudent}>
+          Add Student
+        </button>
+        <button className="standard-button" onClick={handleTransferClick}>
+          Transfer Student
+        </button>
+        <button className="standard-button" onClick={handleDeleteClass}>
+          Delete Class
+        </button>
+        <button className="standard-button" onClick={handleBackClick}>
+          Back
+        </button>
+        {/* Sort dropdown container added to the header */}
+        <div className="sort-dropdown-container">
+          <select onChange={handleSortChange} className="sort-dropdown">
+            <option value="alphabetical">Alphabetical Order</option>
+            <option value="recentlyAdded">Recently Added</option>
+            <option value="oldestFirst">Oldest First</option>
+          </select>
+        </div>
+      </div>
       {showTransferModal && (
         <TransferStudentModal
           students={classDetails.students}
@@ -188,25 +224,21 @@ const ClassDetails = () => {
           onClose={onCloseTransferModal}
         />
       )}
-      <button className="standard-button" onClick={handleBackClick}>
-        Back
-      </button>
 
       {isEditing ? (
         <div className="edit-class-name">
-  <input
-    type="text"
-    value={editedClassName}
-    onChange={(e) => setEditedClassName(e.target.value)}
-    className="edit-class-name-input"
-    placeholder="Edit class name"
-  />
-  <div className="edit-buttons">
-    <button onClick={handleSaveEdit} className="save-class-name-button action-button">Save</button>
-    <button onClick={handleCancelEdit} className="cancel-class-name-button action-button">Cancel</button>
-  </div>
-</div>
-
+          <input
+            type="text"
+            value={editedClassName}
+            onChange={(e) => setEditedClassName(e.target.value)}
+            className="edit-class-name-input"
+            placeholder="Edit class name"
+          />
+          <div className="edit-buttons">
+            <button onClick={handleSaveEdit} className="save-class-name-button action-button">Save</button>
+            <button onClick={handleCancelEdit} className="cancel-class-name-button action-button">Cancel</button>
+          </div>
+        </div>
       ) : (
         <div
           className="class-name-container"
@@ -223,39 +255,41 @@ const ClassDetails = () => {
           )}
         </div>
       )}
+
       {classDetails.students && classDetails.students.length > 0 ? (
         <div className="student-cards-container">
-          {classDetails.students.map((student) => (
-            <div key={student._id} className="student-card">
-              {student.image && (
-                <img
-                  src={`data:image/jpeg;base64,${bufferToUrl(
-                    student.image.data
-                  )}`}
-                  alt={`${student.firstName} ${student.lastName}`}
-                  className="student-card-image"
-                />
-              )}
-              <div className="student-card-info">
-                <span className="student-name">
-                  {student.firstName} {student.lastName}
-                </span>
-                <span>DOB: {formatDate(student.dob)}</span>
+          {sortStudents([...classDetails.students]).map((student, index) => (
+            <React.Fragment key={student._id}>
+              <div className="student-card">
+                {student.image && (
+                  <img
+                    src={`data:image/jpeg;base64,${bufferToUrl(student.image.data)}`}
+                    alt={`${student.firstName} ${student.lastName}`}
+                    className="student-card-image"
+                  />
+                )}
+                <div className="student-card-info">
+                  <span className="student-name">
+                    {student.firstName} {student.lastName}
+                  </span>
+                  <span>DOB: {formatDate(student.dob)}</span>
+                </div>
+                <select
+                  onChange={(e) => {
+                    if (e.target.value === "edit") {
+                      handleEditStudent(student._id);
+                    } else if (e.target.value === "delete") {
+                      handleDeleteStudent(student._id);
+                    }
+                  }}
+                  className="student-actions-dropdown"
+                >
+                  <option value="">Actions</option>
+                  <option value="edit">Edit</option>
+                  <option value="delete">Delete</option>
+                </select>
               </div>
-              <select
-                onChange={(e) => {
-                  if (e.target.value === "edit") {
-                    handleEditStudent(student._id);
-                  } else if (e.target.value === "delete") {
-                    handleDeleteStudent(student._id);
-                  }
-                }}
-              >
-                <option value="">Actions</option>
-                <option value="edit">Edit</option>
-                <option value="delete">Delete</option>
-              </select>
-            </div>
+            </React.Fragment>
           ))}
         </div>
       ) : (
@@ -266,3 +300,4 @@ const ClassDetails = () => {
 };
 
 export default ClassDetails;
+
