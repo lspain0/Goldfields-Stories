@@ -13,7 +13,6 @@ const ClassDetails = () => {
   const [showTransferModal, setShowTransferModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false); // State to manage edit mode
   const [editedClassName, setEditedClassName] = useState(""); // State to manage the edited class name
-  const [isHovering, setIsHovering] = useState(false);
   const [sortMethod, setSortMethod] = useState("alphabetical");
 
   useEffect(() => {
@@ -202,28 +201,20 @@ const ClassDetails = () => {
         <button className="standard-button" onClick={handleTransferClick}>
           Transfer Student
         </button>
-        <button className="standard-button" onClick={handleDeleteClass}>
-          Delete Class
-        </button>
-        <button className="standard-button" onClick={handleBackClick}>
-          Back
-        </button>
-        {/* Sort dropdown container added to the header */}
-        <div className="sort-dropdown-container">
-          <select onChange={handleSortChange} className="sort-dropdown">
-            <option value="alphabetical">Alphabetical Order</option>
-            <option value="recentlyAdded">Recently Added</option>
-            <option value="oldestFirst">Oldest First</option>
-          </select>
-        </div>
-      </div>
-      {showTransferModal && (
+        {showTransferModal && (
         <TransferStudentModal
           students={classDetails.students}
           currentClassId={classId}
           onClose={onCloseTransferModal}
         />
       )}
+        <button className="standard-button" onClick={handleDeleteClass}>
+          Delete Class
+        </button>
+        <button className="standard-button" onClick={handleBackClick}>
+          Back
+        </button>
+      </div>
 
       {isEditing ? (
         <div className="edit-class-name">
@@ -240,20 +231,20 @@ const ClassDetails = () => {
           </div>
         </div>
       ) : (
-        <div
-          className="class-name-container"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
+        <div className="class-name-container">
           <div className="class-name" onClick={handleEditClassName}>
             Class: {classDetails.className}
-          </div>
-          {isHovering && (
             <div className="hover-box">
               Click to edit class name
             </div>
-          )}
+          </div>
+          <select onChange={handleSortChange} className="sort-dropdown">
+            <option value="alphabetical">Alphabetical Order</option>
+            <option value="recentlyAdded">Recently Added</option>
+            <option value="oldestFirst">Oldest First</option>
+          </select>
         </div>
+
       )}
 
       {classDetails.students && classDetails.students.length > 0 ? (
