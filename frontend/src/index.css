@@ -436,7 +436,7 @@ div.error {
   overflow-wrap: break-word;
 }
 
-.create-story-button {
+.create-story-button, .pending-story-button {
   padding: 10px;
   font-size: 16px;
   width: 200px;
@@ -450,6 +450,10 @@ div.error {
   margin-left: 2%;
 }
 
-.create-story-button:hover {
+.pending-story-button {
+  margin-left: 0.5%;
+}
+
+.create-story-button:hover, .pending-story-button:hover {
   background: #224957;
 }

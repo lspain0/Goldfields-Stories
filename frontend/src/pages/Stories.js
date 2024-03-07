@@ -29,6 +29,9 @@ const Stories = () => {
           <Link to="/createstory">  
             <button className="create-story-button">Create a new Story</button>
           </Link>  
+          <Link to="/pending">  
+            <button className="pending-story-button">Pending Stories</button>
+          </Link> 
         </div>
         <div className="story-cards-container">
           {stories && stories.map(story => (
