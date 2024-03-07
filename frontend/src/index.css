@@ -457,3 +457,9 @@ div.error {
 .create-story-button:hover, .pending-story-button:hover {
   background: #224957;
 }
+
+.pending-story-admin-controls {
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-bottom: 1%;
+}

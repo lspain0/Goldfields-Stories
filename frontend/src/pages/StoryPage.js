@@ -1,6 +1,43 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, Link } from 'react-router-dom';
+
+function adminControls() {
+  if (window.location.href.includes('pending')) {
+    return (
+      <div className="pending-story-admin-controls">   
+          <button className="create-story-button" onClick={handlePostStory}>Post Story</button> 
+          <button className="pending-story-button">Edit Story</button>
+          <button className="pending-story-button">Delete Story</button>
+      </div>
+    );
+  }
+}
+
+const handlePostStory = async () => {
+  const storyId = window.location.pathname.split('/')[2];
+
+  try {
+    const response = await fetch(`/api/stories/${storyId}/state`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ state: 'approved' }) // Update state to 'approved'
+    });
+
+    if (response.ok) {
+      // Update state or perform any necessary actions upon successful update
+      console.log(`Story with ID ${storyId} has been successfully approved.`);
+    } else {
+      const errorResponseText = await response.text();
+      console.error(`Error approving story with ID ${storyId}:`, errorResponseText);
+    }
+    
+  } catch (error) {
+    console.error(`Error approving story with ID ${storyId}:`, error);
+  }
+};
+
 
 function addSpace(str) {
   return str.replaceAll(',', (', '))
@@ -99,6 +136,7 @@ const StoryPage = () => {
   
   return (
     <body className="story-page-body">
+      {adminControls()}
       <div className="story-content">
         {/* parse HTML content */}
         <h3 dangerouslySetInnerHTML={parseHTML(currentStory.title)} />

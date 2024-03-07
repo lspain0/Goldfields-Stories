@@ -4,7 +4,8 @@ const {
     getStory,
     createStory,
     deleteStory,
-    updateStory
+    updateStory,
+    updateStoryState
 } = require('../controllers/storyController')
 
 const router = express.Router()
@@ -24,5 +25,7 @@ router.delete('/:id', deleteStory)
 //UPDATE a story
 router.patch('/:id', updateStory)
 
+// PUT request to update the state of a story
+router.put('/:id/state', updateStoryState);
 
 module.exports = router

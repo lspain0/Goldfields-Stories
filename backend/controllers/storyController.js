@@ -93,6 +93,31 @@ const updateStory = async (req, res) => {
   res.status(200).json(story);
 };
 
+// Update the state of a story
+const updateStoryState = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No story found' });
+  }
+
+  try {
+    const updatedStory = await Story.findByIdAndUpdate(
+      id,
+      { state: 'approved' }, // Update state to 'approved'
+      { new: true }
+    );
+
+    if (!updatedStory) {
+      return res.status(404).json({ error: 'No story found' });
+    }
+
+    res.status(200).json(updatedStory);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   logRequest,
   errorHandler,
@@ -102,4 +127,5 @@ module.exports = {
   createStory,
   deleteStory,
   updateStory,
+  updateStoryState,
 };
