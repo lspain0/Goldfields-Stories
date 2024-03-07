@@ -16,25 +16,32 @@ function adminControls() {
 const handlePostStory = async () => {
   const storyId = window.location.pathname.split('/')[2];
 
-  try {
-    const response = await fetch(`/api/stories/${storyId}/state`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ state: 'approved' }) // Update state to 'approved'
-    });
-
-    if (response.ok) {
-      // Update state or perform any necessary actions upon successful update
-      console.log(`Story with ID ${storyId} has been successfully approved.`);
-    } else {
-      const errorResponseText = await response.text();
-      console.error(`Error approving story with ID ${storyId}:`, errorResponseText);
+  if (window.confirm("Are you sure you want to delete this class?")) {
+    try {
+      const response = await fetch(`/api/stories/${storyId}/state`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ state: 'approved' }) // Update state to 'approved'
+      });
+  
+      if (response.ok) {
+        // Update state or perform any necessary actions upon successful update
+        alert("Story Posted!");
+        setTimeout(function() {
+          console.log(`Story with ID ${storyId} has been successfully approved.`);
+          window.location.href = '/stories';
+      }, 1);
+        
+      } else {
+        const errorResponseText = await response.text();
+        console.error(`Error approving story with ID ${storyId}:`, errorResponseText);
+      }
+      
+    } catch (error) {
+      console.error(`Error approving story with ID ${storyId}:`, error);
     }
-    
-  } catch (error) {
-    console.error(`Error approving story with ID ${storyId}:`, error);
   }
 };
 
