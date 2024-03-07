@@ -16,7 +16,7 @@ function adminControls() {
 const handlePostStory = async () => {
   const storyId = window.location.pathname.split('/')[2];
 
-  if (window.confirm("Are you sure you want to delete this class?")) {
+  if (window.confirm("Are you sure you want to post this story?")) {
     try {
       const response = await fetch(`/api/stories/${storyId}/state`, {
         method: 'PUT',
