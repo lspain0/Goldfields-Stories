@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, Link } from 'react-router-dom';
 
-const storyId = window.location.pathname.split('/')[2];
+var storyId;
+
+function loadStoryID() {
+  storyId = window.location.pathname.split('/')[2];
+}
 
 function adminControls() {
   if (window.location.href.includes('pending')) {
@@ -145,6 +149,7 @@ const StoryPage = () => {
   
   return (
     <body className="story-page-body">
+      {loadStoryID()}
       {adminControls()}
       <div className="story-content">
         {/* parse HTML content */}
