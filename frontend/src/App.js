@@ -68,6 +68,7 @@ function App() {
                 <Route path="/pending" element={<PendingStories />} />
                 <Route path="/class" element={<Class />} />
                 <Route path="/createstory" element={<CreateStory />} />
+                <Route path="/editstory/:storyid" element={<CreateStory />} />
                 <Route path="/classeslist" element={<ClassesList />} />
                 <Route path="/class/:classId" element={<ClassDetails />} />
                 <Route path="/class/:classId/addstudent" element={<AddStudentPage />} />

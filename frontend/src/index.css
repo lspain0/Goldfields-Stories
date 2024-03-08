@@ -398,6 +398,7 @@ div.error {
 }
 
 .story-form-button {
+  margin-top: 5px;
   margin-bottom: 5px;
   font-size: 16px;
   width: 150px;
@@ -458,7 +459,7 @@ div.error {
 }
 
 .pending-story-admin-controls {
-  margin-left: 20%;
-  margin-right: 20%;
+  margin-left: 25%;
+  margin-right: 25%;
   margin-bottom: 1%;
 }

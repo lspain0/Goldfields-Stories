@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, Link } from 'react-router-dom';
 
+const storyId = window.location.pathname.split('/')[2];
+
 function adminControls() {
   if (window.location.href.includes('pending')) {
     return (
       <div className="pending-story-admin-controls">   
           <button className="create-story-button" onClick={handlePostStory}>Post Story</button> 
-          <button className="pending-story-button">Edit Story</button>
+          <Link to={`/editstory/${storyId}`}>
+            <button className="pending-story-button">Edit Story</button>
+          </Link>
           <button className="pending-story-button">Delete Story</button>
       </div>
     );
@@ -14,8 +18,6 @@ function adminControls() {
 }
 
 const handlePostStory = async () => {
-  const storyId = window.location.pathname.split('/')[2];
-
   if (window.confirm("Are you sure you want to post this story?")) {
     try {
       const response = await fetch(`/api/stories/${storyId}/state`, {
