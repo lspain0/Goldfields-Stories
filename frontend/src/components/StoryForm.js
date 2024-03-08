@@ -6,6 +6,16 @@ import { CheckTreePicker } from 'rsuite';
 import '../index.css';
 import { groupedTags } from "./docs/tags";
 import StudentList from "./docs/StudentList";
+import { useLocation, Link } from 'react-router-dom';
+
+var editing = false;
+
+function isEditing() {
+  if (window.location.pathname.includes('editstory'))
+  {
+    editing = true;
+  }
+};
 
 function getName(str) {
   var firstName = str.split(' ')[0];
@@ -45,6 +55,8 @@ const UploadWidget = ({ onImageUpload }) => {
 };
 
 const StoryForm = () => {
+  isEditing();
+  const [currentStory, setCurrentStory] = useState(null);
   const { dispatch } = useStoriesContext();
   const [title, setTitle] = useState('');
   const [children, setChildren] = useState([]);
@@ -58,6 +70,32 @@ const StoryForm = () => {
   const quillRef = useRef();
   const currentUser = localStorage.getItem("name");
 
+  useEffect(() => {
+    const fetchStoryById = async () => {
+      if (editing === true) {
+        const storyId = window.location.pathname.split('/')[2];
+  
+        if (storyId) {
+          try {
+            const response = await fetch(`/api/stories/${storyId}`);
+            const json = await response.json();
+  
+            if (response.ok) {
+              setCurrentStory(json);
+              setTitle(json.title); // Set the title to the title of the current story
+            } else {
+              console.error(`Error fetching story with ID ${storyId}:`, json);
+            }
+          } catch (error) {
+            console.error(`Error fetching story with ID ${storyId}:`, error);
+          }
+        }
+      }
+    };
+  
+    fetchStoryById();
+  }, []);
+  
   const handleImageUpload = imageUrl => {
     setContent(content + `\n<img src="${imageUrl}" alt="uploaded" />\n`);
   };
@@ -139,80 +177,84 @@ const StoryForm = () => {
     setChildren(childrenString);
   };
 
-  return (
-    <body className="story-form">
-      <form className="create-story" onSubmit={handleSubmit}>
-        <div className="input-container">
-          <input
-            className="short-input"
-            placeholder="Story title..."
-            type="text"
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
+  if (!currentStory && isEditing === true) {
+    return null;
+  }
+  else {
+    return (
+      <body className="story-form">
+        <form className="create-story" onSubmit={handleSubmit}>
+          <div className="input-container">
+            <input
+              className="short-input"
+              placeholder={"Story title..."}
+              type="text"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <span className="author-input" readOnly>
+              Author: {getName(currentUser)}
+            </span>
+          </div>
+  
+          <CheckTreePicker className="check-tree"
+            placeholder="Add children to this story..."
+            data={StudentList()}
+            uncheckableItemValues={['1-1', '1-1-2']}
+            value={selectedCheckTreeValuesChildren}
+            onChange={handleCheckTreePickerChangeChildren}
+            cascade={false}
+            style={{ width: 660 }}
           />
-          <span className="author-input" readOnly>
-            Author: {getName(currentUser)}
-          </span>
-        </div>
-
-        <CheckTreePicker className="check-tree"
-          placeholder="Add children to this story..."
-          data={StudentList()}
-          uncheckableItemValues={['1-1', '1-1-2']}
-          value={selectedCheckTreeValuesChildren}
-          onChange={handleCheckTreePickerChangeChildren}
-          cascade={false}
-          style={{ width: 660 }}
-        />
-        
-        <CheckTreePicker
-          className="check-tree2"
-          placeholder="Learning tags..."
-          data={groupedTags}
-          uncheckableItemValues={['1', '2', '3', '4']}
-          value={selectedCheckTreeValuesTags}
-          onChange={handleCheckTreePickerChangeTags}
-          cascade={false}
-          style={{ width: 660 }}
-          renderMenu={(menu) => (
-            <div style={{ maxWidth: 'calc(100vh - 100px)'}}>
-              {menu}
-            </div>
-          )}
-        />
-
-        <UploadWidget onImageUpload={handleImageUpload} />
-
-        <div className="quill">
-          <ReactQuill
-            ref={quillRef}
-            placeholder="Start writing..."
-            onChange={(value) => setContent(value)}
-            value={content}
-            modules={{
-              toolbar: {
-                container: [
-                  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                  ['bold', 'italic', 'underline', 'strike'],
-                  ['blockquote'],
-                  [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                  [{ 'align': [] }],
-                  [{ 'color': [] }, { 'background': [] }],
-                  ['clean']
-                ],
-              },
-            }}
-            style={{ height: 'calc(100vh - 280px)' }}
+          
+          <CheckTreePicker
+            className="check-tree2"
+            placeholder="Learning tags..."
+            data={groupedTags}
+            uncheckableItemValues={['1', '2', '3', '4']}
+            value={selectedCheckTreeValuesTags}
+            onChange={handleCheckTreePickerChangeTags}
+            cascade={false}
+            style={{ width: 660 }}
+            renderMenu={(menu) => (
+              <div style={{ maxWidth: 'calc(100vh - 100px)'}}>
+                {menu}
+              </div>
+            )}
           />
-        </div>
-
-        <div className="centered-button">
-          <button className="story-form-button">Post Story</button>
-        </div>
-        {error && <div className="error">{error}</div>}
-      </form>
-    </body>
-  );
-};
-
-export default StoryForm;
+  
+          <UploadWidget onImageUpload={handleImageUpload} />
+  
+          <div className="quill">
+            <ReactQuill
+              ref={quillRef}
+              placeholder="Start writing..."
+              onChange={(value) => setContent(value)}
+              value={content}
+              modules={{
+                toolbar: {
+                  container: [
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    [{ 'align': [] }],
+                    [{ 'color': [] }, { 'background': [] }],
+                    ['clean']
+                  ],
+                },
+              }}
+              style={{ height: 'calc(100vh - 280px)' }}
+            />
+          </div>
+  
+          <div className="centered-button">
+            <button className="story-form-button">Post Story</button>
+          </div>
+          {error && <div className="error">{error}</div>}
+        </form>
+      </body>
+    );
+  };
+  }
+  export default StoryForm;
+  
