@@ -13,7 +13,7 @@ const ClassDetails = () => {
   const [showTransferModal, setShowTransferModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false); // State to manage edit mode
   const [editedClassName, setEditedClassName] = useState(""); // State to manage the edited class name
-  const [sortMethod, setSortMethod] = useState("alphabetical");
+  const [sortMethod, setSortMethod] = useState("alphabetical", "recentlyAdded");
 
   useEffect(() => {
     const classInfo = classes.find((c) => c.id === classId);
@@ -38,10 +38,16 @@ const ClassDetails = () => {
         return students.sort((a, b) =>
           `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`)
         );
-      case "recentlyAdded":
-        return students.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      case "oldestFirst":
-        return students.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        case "recentlyAdded":
+          // Sort by the timestamp part of the MongoDB ObjectId
+          return students.sort((a, b) => 
+            parseInt(b._id.substring(0, 8), 16) - parseInt(a._id.substring(0, 8), 16)
+          );
+        case "oldestFirst":
+          // Sort by the timestamp part of the MongoDB ObjectId
+          return students.sort((a, b) => 
+            parseInt(a._id.substring(0, 8), 16) - parseInt(b._id.substring(0, 8), 16)
+          );
       // Add more cases for custom options as needed
       default:
         return students;
