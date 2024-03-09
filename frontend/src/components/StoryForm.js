@@ -8,10 +8,15 @@ import { groupedTags } from "./docs/tags";
 import StudentList from "./docs/StudentList";
 
 var editing = false;
+var storyId;
 
 function isEditing() {
   if (window.location.pathname.includes('editstory')) {
     editing = true;
+    storyId = window.location.pathname.split('/')[2];
+  }
+  else {
+    editing = false;
   }
 };
 
@@ -84,6 +89,7 @@ const StoryForm = () => {
               setUser(json.author);
               let tagsArray = (json.tags).split('|');
               let childrenArray = (json.children).split(',');
+
               handleCheckTreePickerChangeTags(tagsArray);
               handleCheckTreePickerChangeChildren(childrenArray);
             } else {
@@ -136,39 +142,66 @@ const StoryForm = () => {
       state,
     };
 
-    try {
-      const response = await fetch('/api/stories', {
-        method: 'POST',
-        body: JSON.stringify(story),
-        headers: {
-          'Content-Type': 'application/json'
+    if (editing === true) {
+      try {
+        console.log(storyId)
+        console.log(story)
+        const response = await fetch(`/api/stories/${storyId}`, {
+          method: 'PUT',
+          body: JSON.stringify(story), // Include updated story data here
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+    
+        const json = await response.json();
+    
+        if (!response.ok) {
+          throw new Error(`Error updating story: ${response.statusText}`);
         }
-      });
-
-      const json = await response.json();
-
-      if (!response.ok) {
-        alert(json.error);
+    
+        // Handle success
+      } catch (error) {
+        console.error('Error updating story:', error);
+        // Handle error
       }
+    }
 
-      if (response.ok) {
-        setTitle('');
-        setChildren([]);
-        setTags('');
-        setContent('');
-        setState('');
-        setSelectedCategories([]);
-        setError(null);
-        console.log('New Story Posted', json);
-        dispatch({ type: 'CREATE_STORY', payload: json });
-        alert("Story Posted!");
-        setTimeout(function() {
-          window.location.href = '/stories';
-        }, 1);
+    else {
+      try {
+        const response = await fetch('/api/stories', {
+          method: 'POST',
+          body: JSON.stringify(story),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+  
+        const json = await response.json();
+  
+        if (!response.ok) {
+          alert(json.error);
+        }
+  
+        if (response.ok) {
+          setTitle('');
+          setChildren([]);
+          setTags('');
+          setContent('');
+          setState('');
+          setSelectedCategories([]);
+          setError(null);
+          console.log('New Story Posted', json);
+          dispatch({ type: 'CREATE_STORY', payload: json });
+          alert("Story Posted!");
+          setTimeout(function() {
+            window.location.href = '/stories';
+          }, 1);
+        }
+      } catch (error) {
+        console.error('Error submitting the form:', error);
+        setError('An error occurred while submitting the form.');
       }
-    } catch (error) {
-      console.error('Error submitting the form:', error);
-      setError('An error occurred while submitting the form.');
     }
   };
 

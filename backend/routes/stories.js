@@ -23,7 +23,7 @@ router.post('/', createStory)
 router.delete('/:id', deleteStory)
 
 //UPDATE a story
-router.patch('/:id', updateStory)
+router.put('/:id', updateStory);
 
 // PUT request to update the state of a story
 router.put('/:id/state', updateStoryState);

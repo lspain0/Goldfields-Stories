@@ -84,13 +84,21 @@ const updateStory = async (req, res) => {
     return res.status(404).json({ error: 'No story found' });
   }
 
-  const story = await Story.findOneAndUpdate({ _id: id }, { ...req.body });
+  try {
+    const updatedStory = await Story.findByIdAndUpdate(
+      id,
+      { ...req.body }, // Update story with new values from req.body
+      { new: true }
+    );
 
-  if (!story) {
-    return res.status(404).json({ error: 'No story found' });
+    if (!updatedStory) {
+      return res.status(404).json({ error: 'No story found' });
+    }
+
+    res.status(200).json(updatedStory);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
-
-  res.status(200).json(story);
 };
 
 // Update the state of a story
