@@ -144,8 +144,6 @@ const StoryForm = () => {
 
     if (editing === true) {
       try {
-        console.log(storyId)
-        console.log(story)
         const response = await fetch(`/api/stories/${storyId}`, {
           method: 'PUT',
           body: JSON.stringify(story), // Include updated story data here
@@ -160,10 +158,13 @@ const StoryForm = () => {
           throw new Error(`Error updating story: ${response.statusText}`);
         }
     
-        // Handle success
+        alert("Story Updated!");
+        setTimeout(function() {
+          window.location.href = `/pending/${storyId}`;
+        }, 1);
+
       } catch (error) {
         console.error('Error updating story:', error);
-        // Handle error
       }
     }
 
