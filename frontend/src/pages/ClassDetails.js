@@ -13,7 +13,7 @@ const ClassDetails = () => {
   const [showTransferModal, setShowTransferModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false); // State to manage edit mode
   const [editedClassName, setEditedClassName] = useState(""); // State to manage the edited class name
-  const [sortMethod, setSortMethod] = useState("alphabetical", "recentlyAdded");
+  const [sortMethod, setSortMethod] = useState("alphabetical");
 
   useEffect(() => {
     const classInfo = classes.find((c) => c.id === classId);

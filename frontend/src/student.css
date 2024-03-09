@@ -254,8 +254,6 @@ html, body {
   cursor: pointer; /* Change the cursor to a pointer */
   text-align: left;
 }
-
-/* This is the key change */
 .class-name:hover .hover-box {
   opacity: 1; /* Make hover-box visible when .class-name is hovered */
   transform: translateY(0px); /* Reset the position */

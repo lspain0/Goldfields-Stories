@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Logo from "../components/logo";
 import "../class.css";
 import ClassForm from "../components/ClassForm.js";
@@ -9,7 +9,9 @@ function Class() {
   const [className, setClassName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
-  const { classes, addClass } = useContext(ClassesContext);
+  const { classes, addClass, fetchClasses } = useContext(ClassesContext);
+  const [sortMethod, setSortMethod] = useState("recentlyAdded"); 
+  const [sortedClasses, setSortedClasses] = useState([]);
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -41,6 +43,41 @@ function Class() {
     }
   };
 
+  useEffect(() => {
+    fetchClasses(); // Fetch classes when component mounts
+  }, [fetchClasses]);
+
+  useEffect(() => {
+    const sorted = sortClasses(classes);
+    setSortedClasses(sorted);
+  }, [classes, sortMethod]); // Re-sort whenever classes or sortMethod changes
+ 
+  // Function to handle sort method change
+  const handleSortChange = (e) => {
+    setSortMethod(e.target.value);
+  };
+
+  // Function to sort classes based on the selected method
+  const sortClasses = (classes) => {
+    switch (sortMethod) {
+      case "alphabetical":
+        return [...classes].sort((a, b) =>
+          a.className.localeCompare(b.className)
+        );
+      case "recentlyAdded":
+        return [...classes].sort((a, b) => 
+          parseInt(b._id.substring(0, 8), 16) - parseInt(a._id.substring(0, 8), 16)
+        );
+      case "oldestFirst":
+        return [...classes].sort((a, b) => 
+          parseInt(a._id.substring(0, 8), 16) - parseInt(b._id.substring(0, 8), 16)
+        );
+      // Add more sorting options as needed
+      default:
+        return classes;
+    }
+  };
+
   // Function to clear the message
   const clearMessage = () => {
     setMessage("");
@@ -58,7 +95,7 @@ function Class() {
           isSubmitting={isSubmitting}
           handleSubmit={handleSubmit}
         />
-        <div className="message-wrapper">
+          <div className="message-wrapper">
           {message && (
             <div className="message-container">
               <p>{message}</p>
@@ -68,12 +105,23 @@ function Class() {
             </div>
           )}
         </div>
+        {/* Other content */}
       </div>
       <div className="classes-container">
-        <h3 className="class-form-h3">Created Classes</h3>
+        <div className="classes-header-container">
+          <h3 className="class-form-h3">Created Classes</h3>
+          <div className="sort-dropdown-container">
+            <select className="sort-dropdown" onChange={handleSortChange} value={sortMethod}>
+              <option value="alphabetical">Alphabetical</option>
+              <option value="recentlyAdded">Recently Added</option>
+              <option value="oldestFirst">Oldest First</option>
+              {/* Add other options for sorting methods here */}
+            </select>
+          </div>
+        </div>
         <div className="cards-container">
-          {classes.length > 0 ? (
-            classes.map((c, index) => (
+          {sortedClasses.length > 0 ? (
+            sortedClasses.map((c, index) => (
               <Link to={`/class/${c.id}`} key={c.id} className="class-card">
                 <span>{c.className}</span>
               </Link>
@@ -84,7 +132,7 @@ function Class() {
         </div>
       </div>
     </div>
-  );
+  );  
 }
 
 export default Class;
