@@ -6,7 +6,6 @@ import { CheckTreePicker } from 'rsuite';
 import '../index.css';
 import { groupedTags } from "./docs/tags";
 import StudentList from "./docs/StudentList";
-import { useLocation, Link } from 'react-router-dom';
 
 var editing = false;
 
@@ -80,9 +79,13 @@ const StoryForm = () => {
 
             if (response.ok) {
               setTitle(json.title);
-              setChildren(json.children || []); // Set children from fetched data or use empty array if null
+              setChildren(json.children ? json.children.split(',').map(child => child.trim()) : []);
               setContent(json.content);
               setUser(json.author);
+              let tagsArray = (json.tags).split('|');
+              let childrenArray = (json.children).split(',');
+              handleCheckTreePickerChangeTags(tagsArray);
+              handleCheckTreePickerChangeChildren(childrenArray);
             } else {
               console.error(`Error fetching story with ID ${storyId}:`, json);
             }
@@ -90,11 +93,6 @@ const StoryForm = () => {
             console.error(`Error fetching story with ID ${storyId}:`, error);
           }
         }
-      } else {
-        // If not in edit mode, set default placeholders or values
-        setTitle('Default Title');
-        setChildren([]); // Set empty array as children placeholder
-        setContent(''); // Set empty string as content placeholder
       }
     };
 
@@ -109,16 +107,12 @@ const StoryForm = () => {
 
   const handleCheckTreePickerChangeTags = (values) => {
     setSelectedCheckTreeValuesTags(values);
-
-    // Convert selected values to a single comma-separated string
     const tagsString = Array.isArray(values) ? values.join('|') : '';
     setTags(tagsString);
   };
 
   const handleCheckTreePickerChangeChildren = (values) => {
     setSelectedCheckTreeValuesChildren(values);
-
-    // Convert selected values to a single comma-separated string
     const childrenString = Array.isArray(values) ? values.join(',') : '';
     setChildren(childrenString);
   };
@@ -129,10 +123,7 @@ const StoryForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Ensure that children is always an array of objects
     const childrenArray = Array.isArray(children) ? children : [{ value: children }];
-
     const childrenString = childrenArray.map((child) => child.value).join(',');
     const tagsString = tags;
     const story = {
@@ -170,7 +161,6 @@ const StoryForm = () => {
         setError(null);
         console.log('New Story Posted', json);
         dispatch({ type: 'CREATE_STORY', payload: json });
-
         alert("Story Posted!");
         setTimeout(function() {
           window.location.href = '/stories';
@@ -198,7 +188,8 @@ const StoryForm = () => {
           </span>
         </div>
 
-        <CheckTreePicker className="check-tree"
+        <CheckTreePicker
+          className="check-tree"
           placeholder="Add children to this story..."
           data={StudentList()}
           uncheckableItemValues={['1-1', '1-1-2']}
@@ -207,7 +198,7 @@ const StoryForm = () => {
           cascade={false}
           style={{ width: 660 }}
         />
-        
+
         <CheckTreePicker
           className="check-tree2"
           placeholder="Learning tags..."
@@ -218,7 +209,7 @@ const StoryForm = () => {
           cascade={false}
           style={{ width: 660 }}
           renderMenu={(menu) => (
-            <div style={{ maxWidth: 'calc(100vh - 100px)'}}>
+            <div style={{ maxWidth: 'calc(100vh - 100px)' }}>
               {menu}
             </div>
           )}
