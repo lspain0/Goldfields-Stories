@@ -9,7 +9,7 @@ function Class() {
   const [className, setClassName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
-  const { classes, addClass, fetchClasses } = useContext(ClassesContext);
+  const { classes, addClass } = useContext(ClassesContext);
   const [sortMethod, setSortMethod] = useState("recentlyAdded"); 
   const [sortedClasses, setSortedClasses] = useState([]);
 
@@ -43,9 +43,6 @@ function Class() {
     }
   };
 
-  useEffect(() => {
-    fetchClasses(); // Fetch classes when component mounts
-  }, [fetchClasses]);
 
   useEffect(() => {
     const sorted = sortClasses(classes);
