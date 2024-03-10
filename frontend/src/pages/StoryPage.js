@@ -15,11 +15,36 @@ function adminControls() {
           <Link to={`/editstory/${storyId}`}>
             <button className="pending-story-button">Edit Story</button>
           </Link>
-          <button className="pending-story-button">Delete Story</button>
+          <button className="pending-story-button" onClick={handleDeleteStory}>Delete Story</button>
       </div>
     );
   }
 }
+
+const handleDeleteStory = async () => {
+  if (window.confirm("Are you sure you want to delete this story?")) {
+    try {
+      const response = await fetch(`/api/stories/${storyId}`, {
+        method: 'DELETE'
+      });
+  
+      if (response.ok) {
+        // Update state or perform any necessary actions upon successful update
+        alert("Story Deleted!");
+        setTimeout(function() {
+          window.location.href = '/stories';
+      }, 1);
+        
+      } else {
+        const errorResponseText = await response.text();
+        console.error(`Error deleting story with ID ${storyId}:`, errorResponseText);
+      }
+      
+    } catch (error) {
+      console.error(`Error deleting story with ID ${storyId}:`, error);
+    }
+  }
+};
 
 const handlePostStory = async () => {
   if (window.confirm("Are you sure you want to post this story?")) {
