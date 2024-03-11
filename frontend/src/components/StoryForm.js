@@ -36,7 +36,9 @@ const UploadWidget = ({ onImageUpload }) => {
     cloudinaryRef.current = window.cloudinary;
     widgetRef.current = cloudinaryRef.current.createUploadWidget({
       cloudName: 'drpnvb7qc',
-      uploadPreset: 'tetlineq'
+      uploadPreset: 'tetlineq',
+      sources: [ 'local '],
+      clientAllowedFormats: ['image']
     }, function (error, result) {
       if (!error && result && result.event === "success") {
         const imageUrl = result.info.secure_url;
@@ -56,6 +58,40 @@ const UploadWidget = ({ onImageUpload }) => {
     </button>
   );
 };
+
+const UploadWidgetVideo = ({ onVideoUpload }) => {
+  const cloudinaryRef = useRef();
+  const widgetRef = useRef();
+
+  useEffect(() => {
+    cloudinaryRef.current = window.cloudinary;
+    widgetRef.current = cloudinaryRef.current.createUploadWidget({
+      cloudName: 'drpnvb7qc',
+      uploadPreset: 'tetlineq',
+      sources: [ 'local '],
+      clientAllowedFormats: ['video'],
+      maxFileSize: 500000000
+    }, function (error, result) {
+      if (!error && result && result.event === "success") {
+        const videoUrl = result.info.secure_url;
+        onVideoUpload(videoUrl);
+        console.log(videoUrl);
+      }
+    });
+  }, [onVideoUpload]);
+
+  const handleButtonClick = (e) => {
+    e.preventDefault(); // Prevent the form from being submitted
+    widgetRef.current.open();
+  };
+
+  return (
+    <button className="story-form-button" onClick={handleButtonClick}>
+      Upload Video
+    </button>
+  );
+};
+
 
 const StoryForm = () => {
   isEditing();
@@ -250,8 +286,18 @@ const StoryForm = () => {
         />
 
         <UploadWidget onImageUpload={handleImageUpload} />
+        <UploadWidgetVideo onVideoUpload={handleImageUpload} />
 
         <div className="quill">
+        <iframe
+          title="test"
+          src="https://player.cloudinary.com/embed/?public_id=elephants&cloud_name=demo"
+          width="640"
+          height="360" 
+          allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+          allowfullscreen
+          frameborder="0"
+        ></iframe>
           <ReactQuill
             ref={quillRef}
             placeholder="Start writing..."
