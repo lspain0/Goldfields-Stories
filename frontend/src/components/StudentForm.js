@@ -13,8 +13,8 @@ const StudentForm = ({
   useEffect(() => {
     cloudinaryWidgetRef.current = window.cloudinary.createUploadWidget(
       {
-        cloudName: "your_cloud_name", // Replace with your Cloudinary cloud name
-        uploadPreset: "your_preset", // Replace with your upload preset
+        cloudName: 'drpnvb7qc',
+        uploadPreset: 'tetlineq'
       },
       (error, result) => {
         if (!error && result && result.event === "success") {

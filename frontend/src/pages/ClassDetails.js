@@ -229,7 +229,6 @@ const ClassDetails = () => {
         </div>
 
       )}
-
       {classDetails.students && classDetails.students.length > 0 ? (
         <div className="student-cards-container">
           {sortStudents([...classDetails.students]).map((student, index) => (
