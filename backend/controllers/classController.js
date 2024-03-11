@@ -80,27 +80,24 @@ const updateClass = async (req, res) => {
 
 // Add a student to a class
 const addStudent = async (req, res) => {
-  const { id } = req.params;
-  const student = req.body;
-
-  // Check if an image was uploaded and is available in req.file
-  if (req.file) {
-    // Convert the image file buffer to a MongoDB Buffer
-    student.image = Buffer.from(req.file.buffer);
-  }
+  const { id } = req.params; // Class ID
+  const student = req.body; // Student object from the request body, including the image URL
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No class found" });
   }
+
   try {
     const updatedClass = await Class.findByIdAndUpdate(
       id,
-      { $push: { students: student } },
+      { $push: { students: student } }, // Add the student to the class
       { new: true }
     );
+
     if (!updatedClass) {
       return res.status(404).json({ error: "No class found" });
     }
+
     res.status(200).json(updatedClass);
   } catch (error) {
     console.error(error);
@@ -138,7 +135,7 @@ const transferStudent = async (req, res) => {
 // Update a student in a class
 const updateStudent = async (req, res) => {
   const { classId, studentId } = req.params;
-  const updatedInfo = req.body;
+  const updatedInfo = req.body; // updatedInfo might include a new image URL
 
   if (!mongoose.Types.ObjectId.isValid(classId) || !mongoose.Types.ObjectId.isValid(studentId)) {
     return res.status(404).json({ error: "Invalid class or student ID" });
@@ -152,14 +149,8 @@ const updateStudent = async (req, res) => {
       return res.status(404).json({ error: "Student not found" });
     }
 
-    // Check if a new image was uploaded and replace the old one if present
-    if (req.file) {
-      const newImage = Buffer.from(req.file.buffer);
-      updatedInfo.image = newImage; // Replace the old image with the new one
-    }
-
-    // Update the student's details with the new info, including the new image if provided
-    classToUpdate.students[studentIndex] = { ...classToUpdate.students[studentIndex].toJSON(), ...updatedInfo };
+    // Update the student's details with the new information
+    classToUpdate.students[studentIndex] = { ...classToUpdate.students[studentIndex], ...updatedInfo };
 
     // Save the changes to the class document
     await classToUpdate.save();

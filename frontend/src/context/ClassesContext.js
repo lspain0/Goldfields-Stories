@@ -49,17 +49,12 @@ export const ClassesProvider = ({ children }) => {
   // Updated to handle new student object with image upload
   const addStudentToClass = async (classId, student) => {
     try {
-      const formData = new FormData();
-      for (const key in student) {
-        if (key === "image" && student[key]) {
-          formData.append(key, student[key]);
-        } else {
-          formData.append(key, String(student[key]));
-        }
-      }
       const response = await fetch(`/api/classes/${classId}/students`, {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(student), // Send student data as JSON
       });
       if (!response.ok) {
         throw new Error("HTTP error! status: " + response.status);
@@ -74,7 +69,7 @@ export const ClassesProvider = ({ children }) => {
       console.error("Error adding student:", error);
     }
   };
-
+  
   // Function to transfer a student from one class to another
   const transferStudent = async (studentId, oldClassId, newClassId) => {
     try {
@@ -97,35 +92,22 @@ export const ClassesProvider = ({ children }) => {
   // Function to update a student's data in a class
   const updateStudentInClass = async (classId, studentId, updatedStudent) => {
     try {
-      const formData = new FormData();
-      for (const key in updatedStudent) {
-        if (key === "image") {
-          if (updatedStudent[key] instanceof File) {
-            formData.append(key, updatedStudent[key]);
-          } else if (
-            typeof updatedStudent[key] === "string" ||
-            updatedStudent[key] instanceof String
-          ) {
-            formData.append(key, updatedStudent[key]);
-          }
-        } else {
-          formData.append(key, String(updatedStudent[key]));
-        }
-      }
-
       const response = await fetch(
         `/api/classes/${classId}/students/${studentId}`,
         {
           method: "PUT",
-          body: formData,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedStudent), // Send updated student data as JSON
         }
       );
-
+  
       if (!response.ok) {
         throw new Error("HTTP error! status: " + response.status);
       }
       const updatedClass = await response.json();
-
+  
       // Update the classes state with the updated class info
       setClasses((prevClasses) =>
         prevClasses.map((c) => (c.id === classId ? updatedClass : c))
@@ -134,7 +116,7 @@ export const ClassesProvider = ({ children }) => {
       console.error("Error updating student:", error);
     }
   };
-
+  
   // Function to fetch a single student's data from the backend
   const fetchStudentData = async (classId, studentId) => {
     try {

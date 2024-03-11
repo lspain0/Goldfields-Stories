@@ -38,16 +38,16 @@ const ClassDetails = () => {
         return students.sort((a, b) =>
           `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`)
         );
-        case "recentlyAdded":
-          // Sort by the timestamp part of the MongoDB ObjectId
-          return students.sort((a, b) => 
-            parseInt(b._id.substring(0, 8), 16) - parseInt(a._id.substring(0, 8), 16)
-          );
-        case "oldestFirst":
-          // Sort by the timestamp part of the MongoDB ObjectId
-          return students.sort((a, b) => 
-            parseInt(a._id.substring(0, 8), 16) - parseInt(b._id.substring(0, 8), 16)
-          );
+      case "recentlyAdded":
+        // Sort by the timestamp part of the MongoDB ObjectId
+        return students.sort((a, b) =>
+          parseInt(b._id.substring(0, 8), 16) - parseInt(a._id.substring(0, 8), 16)
+        );
+      case "oldestFirst":
+        // Sort by the timestamp part of the MongoDB ObjectId
+        return students.sort((a, b) =>
+          parseInt(a._id.substring(0, 8), 16) - parseInt(b._id.substring(0, 8), 16)
+        );
       // Add more cases for custom options as needed
       default:
         return students;
@@ -109,29 +109,6 @@ const ClassDetails = () => {
     const year = dobDate.getFullYear().toString();
     return `${day}/${month}/${year}`;
   };
-
-  // Function to convert buffer to URL
-  const bufferToUrl = (buffer) => {
-    let binary = "";
-    const bytes = new Uint8Array(buffer);
-    const len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return window.btoa(binary);
-  };
-
-  // Fetch the class details when the component mounts
-  useEffect(() => {
-    const classInfo = classes.find((c) => c.id === classId);
-    if (classInfo) {
-      setClassDetails(classInfo);
-      setIsLoading(false);
-    } else {
-      setIsLoading(true);
-      fetchClasses().then(() => setIsLoading(false));
-    }
-  }, [classId, classes, fetchClasses]);
 
   // Function to handle deleting a class
   const handleDeleteClass = async () => {
@@ -208,12 +185,12 @@ const ClassDetails = () => {
           Transfer Student
         </button>
         {showTransferModal && (
-        <TransferStudentModal
-          students={classDetails.students}
-          currentClassId={classId}
-          onClose={onCloseTransferModal}
-        />
-      )}
+          <TransferStudentModal
+            students={classDetails.students}
+            currentClassId={classId}
+            onClose={onCloseTransferModal}
+          />
+        )}
         <button className="standard-button" onClick={handleDeleteClass}>
           Delete Class
         </button>
@@ -260,7 +237,7 @@ const ClassDetails = () => {
               <div className="student-card">
                 {student.image && (
                   <img
-                    src={`data:image/jpeg;base64,${bufferToUrl(student.image.data)}`}
+                    src={student.image} // Use the direct URL from the student object
                     alt={`${student.firstName} ${student.lastName}`}
                     className="student-card-image"
                   />
@@ -292,6 +269,7 @@ const ClassDetails = () => {
       ) : (
         <p>No students in this class yet.</p>
       )}
+
     </div>
   );
 };

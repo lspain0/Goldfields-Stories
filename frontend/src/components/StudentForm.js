@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import "../student.css";
 
 const StudentForm = ({
@@ -8,6 +8,23 @@ const StudentForm = ({
   handleBack,
   formType,
 }) => {
+  const cloudinaryWidgetRef = useRef();
+
+  useEffect(() => {
+    cloudinaryWidgetRef.current = window.cloudinary.createUploadWidget(
+      {
+        cloudName: "your_cloud_name", // Replace with your Cloudinary cloud name
+        uploadPreset: "your_preset", // Replace with your upload preset
+      },
+      (error, result) => {
+        if (!error && result && result.event === "success") {
+          // Update the student state with the uploaded image URL
+          setStudent({ ...student, image: result.info.secure_url });
+        }
+      }
+    );
+  }, [student, setStudent]);
+
   const updateField = (e) => {
     if (e.target.name === "dob") {
       const selectedDate = new Date(e.target.value);
@@ -21,17 +38,19 @@ const StudentForm = ({
     setStudent({ ...student, [e.target.name]: e.target.value });
   };
 
-  // Get today's date in YYYY-MM-DD format for the max attribute
+  const handleImageUpload = (e) => {
+    e.preventDefault();
+    cloudinaryWidgetRef.current.open();
+  };
+
   const today = new Date().toISOString().split("T")[0];
 
   return (
     <div className="student-form-container">
       <form onSubmit={handleSubmit} className="student-form">
-        <input
-          type="file"
-          onChange={(e) => setStudent({ ...student, image: e.target.files[0] })}
-          className="student-form-input"
-        />
+        <button onClick={handleImageUpload} className="standard-button">
+          Upload Image
+        </button>
         <input
           type="text"
           name="firstName"
@@ -65,7 +84,7 @@ const StudentForm = ({
         <input
           type="date"
           name="dob"
-          value={student.dob.split("/").reverse().join("-")}
+          value={student.dob ? student.dob.split("/").reverse().join("-") : ""}
           onChange={updateField}
           required
           className="student-form-input"
