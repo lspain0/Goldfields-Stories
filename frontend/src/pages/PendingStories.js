@@ -2,6 +2,7 @@
 //This page should only be visible to admins
 import { useEffect } from "react"
 import { useStoriesContext } from "../hooks/useStoriesContext"
+import { Link } from 'react-router-dom';
 
 // components
 import StoryDetails from "../components/StoryDetails"
@@ -27,7 +28,10 @@ const PendingStories = () => {
     <body>
       <Logo />
       <div className="createstorylink">  
-        </div>
+          <Link to={`/stories`}>
+            <button className="pending-story-button">Approved Stories</button>
+          </Link>
+          </div>
         <div className="story-cards-container">
           {stories && stories.map(story => (
             <StoryDetails story={story} key={story._id} />
