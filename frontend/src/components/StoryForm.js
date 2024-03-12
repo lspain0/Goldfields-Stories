@@ -9,6 +9,26 @@ import StudentList from "./docs/StudentList";
 
 var editing = false;
 var storyId;
+var video = false;
+var optimisedUrl
+
+function displayVideo() {
+
+  if (video === true) {
+    console.log("yes");
+    console.log(optimisedUrl)
+    return <iframe
+    title="test"
+    src={optimisedUrl}
+    width="640"
+    height="360" 
+    allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+    allowfullscreen
+    frameborder="0"
+  ></iframe>
+  }
+
+}
 
 function isEditing() {
   if (window.location.pathname.includes('editstory')) {
@@ -73,9 +93,12 @@ const UploadWidgetVideo = ({ onVideoUpload }) => {
       maxFileSize: 500000000
     }, function (error, result) {
       if (!error && result && result.event === "success") {
-        const videoUrl = result.info.secure_url;
-        onVideoUpload(videoUrl);
-        console.log(videoUrl);
+        let videoUrl = result.info.secure_url;
+        let replacement = "f_auto:video,q_auto";
+        optimisedUrl = videoUrl.replace(/(\/upload\/)[^/]+/, "$1" + replacement);
+        onVideoUpload(optimisedUrl);
+        console.log(optimisedUrl)
+        video = true;
       }
     });
   }, [onVideoUpload]);
@@ -160,7 +183,7 @@ const StoryForm = () => {
   };
 
   const handleImageUpload = imageUrl => {
-    setContent(content + `\n<img src="${imageUrl}" alt="uploaded" />\n`);
+    setContent(content + `\n<img src="${imageUrl}/>\n`);
   };
 
   const handleSubmit = async (e) => {
@@ -289,15 +312,7 @@ const StoryForm = () => {
         <UploadWidgetVideo onVideoUpload={handleImageUpload} />
 
         <div className="quill">
-        <iframe
-          title="test"
-          src="https://player.cloudinary.com/embed/?public_id=elephants&cloud_name=demo"
-          width="640"
-          height="360" 
-          allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-          allowfullscreen
-          frameborder="0"
-        ></iframe>
+          {displayVideo()}
           <ReactQuill
             ref={quillRef}
             placeholder="Start writing..."
