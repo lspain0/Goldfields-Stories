@@ -182,7 +182,8 @@ const StoryForm = () => {
 
   const handleImageUpload = imageUrl => {
     console.log(imageUrl)
-    if (imageUrl !== undefined) {
+    if (imageUrl.includes("f_auto:video,q_auto"))
+    {
       setContent(content + `\n<iframe
       title="test"
       src=${optimisedUrl}
@@ -192,6 +193,9 @@ const StoryForm = () => {
       allowfullscreen
       frameborder="0"
     ></iframe>\n`);}
+    else {
+      setContent(content + `\n<img src="${imageUrl}" alt="uploaded" />\n`);
+    }   
   };
 
   const handleSubmit = async (e) => {
@@ -320,7 +324,6 @@ const StoryForm = () => {
         <UploadWidgetVideo onVideoUpload={handleImageUpload} />
 
         <div className="quill">
-          {displayVideo()}
           <ReactQuill
             ref={quillRef}
             placeholder="Start writing..."
