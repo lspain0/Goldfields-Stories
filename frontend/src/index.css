@@ -465,3 +465,19 @@ div.error {
   margin-right: 25%;
   margin-bottom: 1%;
 }
+
+.quill {
+  background: #f1f1f1;
+}
+
+.ql-toolbar {
+  margin-bottom: 3px;
+}
+
+.ql-snow {
+  border-top-left-radius: 0.7em;
+  border-top-right-radius: 0.7em;
+  border-bottom-left-radius: 0.7em;
+  border-bottom-right-radius: 0.7em;
+  background-color: white;
+}

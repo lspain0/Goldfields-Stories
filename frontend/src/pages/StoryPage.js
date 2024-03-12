@@ -178,7 +178,7 @@ const StoryPage = () => {
       {adminControls()}
       <div className="story-content">
         {/* parse HTML content */}
-        <h3 dangerouslySetInnerHTML={parseHTML(currentStory.title)} />
+        <h2 dangerouslySetInnerHTML={parseHTML(currentStory.title)} />
         <div dangerouslySetInnerHTML={parseHTML(currentStory.content)} />
       </div>
       {generateStoryInfoHTML()}

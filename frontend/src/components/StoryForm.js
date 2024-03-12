@@ -6,27 +6,12 @@ import { CheckTreePicker } from 'rsuite';
 import '../index.css';
 import { groupedTags } from "./docs/tags";
 import StudentList from "./docs/StudentList";
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" />
 
 var editing = false;
 var storyId;
-var video = false;
 var optimisedUrl
 
-function displayVideo() {
-
-  if (video === true) {
-    return <iframe
-    title="test"
-    src={optimisedUrl}
-    width="640"
-    height="360" 
-    allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-    allowfullscreen
-    frameborder="0"
-  ></iframe>
-  }
-
-}
 
 function isEditing() {
   if (window.location.pathname.includes('editstory')) {
@@ -96,7 +81,6 @@ const UploadWidgetVideo = ({ onVideoUpload }) => {
         optimisedUrl = videoUrl.replace(/(\/upload\/)[^/]+/, "$1" + replacement);
         onVideoUpload(optimisedUrl);
         console.log(optimisedUrl)
-        video = true;
       }
     });
   }, [onVideoUpload]);
