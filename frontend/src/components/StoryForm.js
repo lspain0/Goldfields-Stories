@@ -183,8 +183,15 @@ const StoryForm = () => {
   const handleImageUpload = imageUrl => {
     console.log(imageUrl)
     if (imageUrl !== undefined) {
-      setContent(content + `\n<img src="${imageUrl}" alt="uploaded" />\n`);
-    }
+      setContent(content + `\n<iframe
+      title="test"
+      src=${optimisedUrl}
+      width="640"
+      height="360" 
+      allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+      allowfullscreen
+      frameborder="0"
+    ></iframe>\n`);}
   };
 
   const handleSubmit = async (e) => {
