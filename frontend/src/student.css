@@ -85,22 +85,15 @@
 
 .student-card-image {
   position: absolute;
-  /* Position the image absolutely within the card */
   top: 0;
   left: 0;
   right: 0;
   bottom: 40px;
-  width: 100%;
-  /* Full width of the card */
-  height: 60%;
-  /* Full height of the card */
-  object-fit: contain; /* The image will fit within the card, fully visible */
-  /* The image will fit within the card, fully visible */
+  width: 70%;
+  height: 55%;
+  object-fit: cover; 
   margin: auto;
-  /* Center the image */
-  border-top-left-radius: 10px;
-  /* Match the card's border radius */
-  border-top-right-radius: 10px;
+  border-radius: 10px;
 }
 
 .student-card-info {
@@ -109,7 +102,6 @@
   left: 0;
   right: 0;
   padding: 15px;
-  /* Adjust the padding as needed */
 }
 
 .student-name {
@@ -398,7 +390,7 @@ html, body {
   align-items: center;
   gap: 20px; /* Adjust the space between the image and the button as needed */
   padding-top: 10px;
-  max-height: 200px; /* Set a max-height for the container */
+
 }
 
 .student-image {
@@ -408,7 +400,7 @@ html, body {
   border: 2px solid #000000; /* Your desired border color and width */
   border-radius: 10px; /* Adjust for rounded corners if desired */
   margin: auto;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .image-upload-container{
