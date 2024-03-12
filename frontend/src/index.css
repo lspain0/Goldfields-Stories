@@ -481,3 +481,32 @@ div.error {
   border-bottom-right-radius: 0.7em;
   background-color: white;
 }
+
+.quill, iframe {
+  text-align: center;
+}
+
+.iframe {
+  display:block;
+}
+
+#iframe-div{
+  width:100%;
+  float:left;
+  text-align:center;
+}
+div.sub, iframe, image {
+  margin: 0 auto;
+  background-color: #777;
+}
+
+.storycontent, .ql-video {
+  margin-left: 18%;
+  max-width: 100%;
+}
+@media (max-width: 1160px) {
+  .storycontent, .ql-video {
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+}
