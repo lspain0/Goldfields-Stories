@@ -92,9 +92,9 @@
   bottom: 40px;
   width: 100%;
   /* Full width of the card */
-  height: 55%;
+  height: 60%;
   /* Full height of the card */
-  object-fit: contain;
+  object-fit: contain; /* The image will fit within the card, fully visible */
   /* The image will fit within the card, fully visible */
   margin: auto;
   /* Center the image */
@@ -211,19 +211,7 @@
 }
 /****************************************************/
 
-/* Styling for edit student tytle*/
-.custom-h1 {
-  text-align: center; /* Aligns text horizontally to the center */
-  font-family: 'Poppins', sans-serif;
-  color: #000000;
-  font-size: 35px;
-  margin-top: 0; /* Removes default margin */
-  position: absolute; /* Positions the h1 absolutely relative to its positioned parent */
-  /* 50% from the top of the parent element */
-  left: 50%; /* 50% from the left of the parent element */
-  transform: translate(-50%, -50%); /* Offsets the element by its own height and width */
-  padding-top: 200px;
-}
+
 
 /* Add global box-sizing */
 *, *::before, *::after {
@@ -387,3 +375,49 @@ html, body {
 }
 
 /****************************************************/
+/* Styling for edit student tytle*/
+.custom-h1 {
+  text-align: center; /* Aligns text horizontally to the center */
+  font-family: 'Poppins', sans-serif;
+  color: #000000;
+  font-size: 35px;
+  position: absolute; /* Positions the h1 absolutely relative to its positioned parent */
+  left: 50%; /* 50% from the left of the parent element */
+  transform: translate(-50%, -50%); /* Offsets the element by its own height and width */
+  padding-top: 200px;
+  padding-bottom: 100px;
+  
+}
+
+/****************************************************/
+
+/* Styling for the student image upload */
+.student-image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Adjust the space between the image and the button as needed */
+  padding-top: 10px;
+  max-height: 200px; /* Set a max-height for the container */
+}
+
+.student-image {
+  max-width: 25vh; /* Ensure the image doesn't exceed the container width */
+  max-height: 25vh; 
+  min-height: 25vh;
+  border: 2px solid #000000; /* Your desired border color and width */
+  border-radius: 10px; /* Adjust for rounded corners if desired */
+  margin: auto;
+  object-fit: contain;
+}
+
+.image-upload-container{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px; /* Adjust the space between the image and the button as needed */
+  padding-top: 150px;
+  padding-bottom: 1px;
+}
