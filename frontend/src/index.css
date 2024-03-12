@@ -501,7 +501,7 @@ div.sub, iframe, image {
 }
 
 .storycontent, .ql-video {
-  margin-left: 18%;
+  margin-left: 16%;
   max-width: 100%;
 }
 @media (max-width: 1160px) {
