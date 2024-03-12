@@ -15,8 +15,6 @@ var optimisedUrl
 function displayVideo() {
 
   if (video === true) {
-    console.log("yes");
-    console.log(optimisedUrl)
     return <iframe
     title="test"
     src={optimisedUrl}
@@ -183,7 +181,10 @@ const StoryForm = () => {
   };
 
   const handleImageUpload = imageUrl => {
-    setContent(content + `\n<img src="${imageUrl}/>\n`);
+    console.log(imageUrl)
+    if (imageUrl !== undefined) {
+      setContent(content + `\n<img src="${imageUrl}" alt="uploaded" />\n`);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -211,7 +212,7 @@ const StoryForm = () => {
           },
         });
     
-        const json = await response.json();
+        await response.json();
     
         if (!response.ok) {
           throw new Error(`Error updating story: ${response.statusText}`);
@@ -331,7 +332,7 @@ const StoryForm = () => {
                 ],
               },
             }}
-            style={{ height: 'calc(100vh - 280px)' }}
+            style={{ height: '70vh' }}
           />
         </div>
 
