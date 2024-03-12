@@ -168,7 +168,8 @@ const StoryForm = () => {
     console.log(imageUrl)
     if (imageUrl.includes("f_auto:video,q_auto"))
     {
-      setContent(content + `\n<iframe
+      setContent(content + `\n<div id="upload-div">
+      <div class="sub"></div><iframe
       title="test"
       src=${optimisedUrl}
       width="640"
@@ -176,9 +177,10 @@ const StoryForm = () => {
       allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
       allowfullscreen
       frameborder="0"
-    ></iframe>\n`);}
+    ></iframe></div>\n`);}
     else {
-      setContent(content + `\n<img src="${imageUrl}" alt="uploaded" />\n`);
+      setContent(content + `\n<div id="upload-div">
+      <img src="${imageUrl}" align="center" alt="uploaded" />\n`);
     }   
   };
 
