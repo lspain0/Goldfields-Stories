@@ -48,9 +48,16 @@ const StudentForm = ({
   return (
     <div className="student-form-container">
       <form onSubmit={handleSubmit} className="student-form">
-        <button onClick={handleImageUpload} className="standard-button">
-          Upload Image
-        </button>
+        <div className="image-upload-container">
+          {student.image ? (
+            <img src={student.image} alt="Student" className="student-image"/>
+          ) : (
+            <div className="student-image-placeholder"></div>
+          )}
+          <button onClick={handleImageUpload} className="standard-button">
+            Upload Image
+          </button>
+        </div>
         <input
           type="text"
           name="firstName"
