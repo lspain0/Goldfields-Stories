@@ -10,7 +10,7 @@ function Class() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
   const { classes, addClass } = useContext(ClassesContext);
-  const [sortMethod, setSortMethod] = useState("recentlyAdded"); 
+  const [sortMethod, setSortMethod] = useState("alphabetical"); 
   const [sortedClasses, setSortedClasses] = useState([]);
 
   // Function to handle form submission
@@ -45,6 +45,27 @@ function Class() {
 
 
   useEffect(() => {
+    // Function to sort classes based on the selected method
+    const sortClasses = (classes) => {
+      switch (sortMethod) {
+        case "alphabetical":
+          return [...classes].sort((a, b) =>
+            a.className.localeCompare(b.className)
+          );
+        case "recentlyAdded":
+          return [...classes].sort((a, b) => 
+            parseInt(b._id.substring(0, 8), 16) - parseInt(a._id.substring(0, 8), 16)
+          );
+        case "oldestFirst":
+          return [...classes].sort((a, b) => 
+            parseInt(a._id.substring(0, 8), 16) - parseInt(b._id.substring(0, 8), 16)
+          );
+        // Add more sorting options as needed
+        default:
+          return classes;
+      }
+    };
+
     const sorted = sortClasses(classes);
     setSortedClasses(sorted);
   }, [classes, sortMethod]); // Re-sort whenever classes or sortMethod changes
@@ -52,27 +73,6 @@ function Class() {
   // Function to handle sort method change
   const handleSortChange = (e) => {
     setSortMethod(e.target.value);
-  };
-
-  // Function to sort classes based on the selected method
-  const sortClasses = (classes) => {
-    switch (sortMethod) {
-      case "alphabetical":
-        return [...classes].sort((a, b) =>
-          a.className.localeCompare(b.className)
-        );
-      case "recentlyAdded":
-        return [...classes].sort((a, b) => 
-          parseInt(b._id.substring(0, 8), 16) - parseInt(a._id.substring(0, 8), 16)
-        );
-      case "oldestFirst":
-        return [...classes].sort((a, b) => 
-          parseInt(a._id.substring(0, 8), 16) - parseInt(b._id.substring(0, 8), 16)
-        );
-      // Add more sorting options as needed
-      default:
-        return classes;
-    }
   };
 
   // Function to clear the message
