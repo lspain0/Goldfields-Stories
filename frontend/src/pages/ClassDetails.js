@@ -256,7 +256,7 @@ const ClassDetails = () => {
                     }
                   }}
                   className="student-actions-dropdown"
-                >
+                >student-actions-dropdown
                   <option value="">Actions</option>
                   <option value="edit">Edit</option>
                   <option value="delete">Delete</option>
