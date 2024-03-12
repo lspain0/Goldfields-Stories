@@ -342,7 +342,7 @@ const StoryForm = () => {
                 ],
               },
             }}
-            style={{ height: '70vh' }}
+            style={{ height: '67vh' }}
           />
         </div>
 
