@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaUserCircle } from 'react-icons/fa';
 
 // Nav bar login/signup componet
 
@@ -11,18 +10,8 @@ const NavbarLogin = () => {
   const location = useLocation(); 
   let pageTitle;
 
-  // Logout handler function
-  const logoutHandler = () => {
-    
-    localStorage.removeItem("token");
-    localStorage.removeItem("email");
-    localStorage.removeItem("name");
-
-    // Redirect to the login page
-    window.location.href = "/login";
-  }
   
-  // pagetile based on current location
+  // Links to page based on current location
   switch (location.pathname) {
     case '/':
       pageTitle = 'Goldfields';
@@ -48,7 +37,7 @@ const NavbarLogin = () => {
         <Link to="/" className="nav-logo">
           <h1>{pageTitle}</h1>
         </Link>
-        {/*Links ofr login and signup navgitaiton */}
+        {/*Links of login and signup navgitaiton */}
         <div className="nav-links">
           <Link to="/login" className="nav-item">Login</Link>
           <Link to="/signup" className="nav-item">SignUp</Link>

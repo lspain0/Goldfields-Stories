@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, Link } from 'react-router-dom';
+import axios_obj from "../axios";
 
 var storyId;
 
@@ -10,12 +11,12 @@ function loadStoryID() {
 function adminControls() {
   if (window.location.href.includes('pending')) {
     return (
-      <div className="pending-story-admin-controls">   
-          <button className="create-story-button" onClick={handlePostStory}>Post Story</button> 
-          <Link to={`/editstory/${storyId}`}>
-            <button className="pending-story-button">Edit Story</button>
-          </Link>
-          <button className="pending-story-button" onClick={handleDeleteStory}>Delete Story</button>
+      <div className="pending-story-admin-controls">
+        <button className="create-story-button" onClick={handlePostStory}>Post Story</button>
+        <Link to={`/editstory/${storyId}`}>
+          <button className="pending-story-button">Edit Story</button>
+        </Link>
+        <button className="pending-story-button" onClick={handleDeleteStory}>Delete Story</button>
       </div>
     );
   }
@@ -27,19 +28,19 @@ const handleDeleteStory = async () => {
       const response = await fetch(`/api/stories/${storyId}`, {
         method: 'DELETE'
       });
-  
+
       if (response.ok) {
         // Update state or perform any necessary actions upon successful update
         alert("Story Deleted!");
-        setTimeout(function() {
+        setTimeout(function () {
           window.location.href = '/stories';
-      }, 1);
-        
+        }, 1);
+
       } else {
         const errorResponseText = await response.text();
         console.error(`Error deleting story with ID ${storyId}:`, errorResponseText);
       }
-      
+
     } catch (error) {
       console.error(`Error deleting story with ID ${storyId}:`, error);
     }
@@ -56,20 +57,20 @@ const handlePostStory = async () => {
         },
         body: JSON.stringify({ state: 'approved' }) // Update state to 'approved'
       });
-  
+
       if (response.ok) {
         // Update state or perform any necessary actions upon successful update
         alert("Story Posted!");
-        setTimeout(function() {
+        setTimeout(function () {
           console.log(`Story with ID ${storyId} has been successfully approved.`);
           window.location.href = '/stories';
-      }, 1);
-        
+        }, 1);
+
       } else {
         const errorResponseText = await response.text();
         console.error(`Error approving story with ID ${storyId}:`, errorResponseText);
       }
-      
+
     } catch (error) {
       console.error(`Error approving story with ID ${storyId}:`, error);
     }
@@ -97,13 +98,13 @@ const StoryPage = () => {
   useEffect(() => {
     const fetchStoryById = async () => {
       const storyId = location.pathname.split('/')[2];
-
+      
       if (storyId) {
         try {
-          const response = await fetch(`/api/stories/${storyId}`);
-          const json = await response.json();
+          const response = await axios_obj.get(`/stories/${storyId}`);
+          const json = response.data;
 
-          if (response.ok) {
+          if (response.status == "200") {
             setCurrentStory(json);
           } else {
             console.error(`Error fetching story with ID ${storyId}:`, json);
@@ -158,7 +159,7 @@ const StoryPage = () => {
             <div className="tags-container">
               {currentStory.tags.split('|').map((tag, index, array) => (
                 <React.Fragment key={index}>
-                  <div style={{ border: '2px solid lightblue', borderRadius: '4px', marginBottom: '4px', display: 'inline-block'}}>
+                  <div style={{ border: '2px solid lightblue', borderRadius: '4px', marginBottom: '4px', display: 'inline-block' }}>
                     <sub style={{ margin: '0', padding: '2px 4px', display: 'block' }}>{tag.trim()}</sub>
                   </div>
                   {index !== array.length - 1 && ' '}
@@ -171,7 +172,7 @@ const StoryPage = () => {
       </div>
     );
   };
-  
+
   return (
     <body className="story-page-body">
       {loadStoryID()}

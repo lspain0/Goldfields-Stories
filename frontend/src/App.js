@@ -16,8 +16,11 @@ import axios from './axios';
 import NavbarLogin from './components/NavbarLogin';
 import EditStudentPage from './pages/EditStudentPage';
 
+import User from './pages/User';
 
 function App() {
+
+  const [role, setRole] = useState("");
 
   //Login status
   const [login, setLogin] = useState(false);
@@ -40,6 +43,8 @@ function App() {
               // Add other headers as needed
             },
           });
+          localStorage.setItem("role", response?.data?.role);
+          setRole(response?.data?.role);
           setLogin(true);
         }
         else {
@@ -61,7 +66,7 @@ function App() {
       <ClassesProvider>
         <div className="App">
           <BrowserRouter>
-            <Navbar />
+          <Navbar role={role} />
             <div className="pages">
               <Routes>
                 <Route path="/stories" element={<Stories />} />
@@ -75,6 +80,8 @@ function App() {
                 <Route path="/stories/:storyid" element={<StoryPage />} />
                 <Route path="/pending/:storyid" element={<StoryPage />} />
                 <Route path="/class/:classId/editstudent/:studentId" element={<EditStudentPage />} />
+                <Route path="/user" element={<User />} />
+
               </Routes>
             </div>
           </BrowserRouter>

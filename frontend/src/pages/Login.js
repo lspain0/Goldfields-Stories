@@ -23,6 +23,7 @@ function Login() {
       });
       console.log(response?.data);
       localStorage.setItem("name", response?.data?.name);
+      localStorage.setItem("role", response?.data?.role);
       localStorage.setItem("email", response?.data?.email);
       localStorage.setItem("token", response?.data?.token);
 

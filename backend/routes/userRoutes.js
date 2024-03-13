@@ -4,7 +4,12 @@ const {
     createUser,
     validateCreateUser,
     validateLoginUser,
-    authenticateToken
+    authenticateToken,
+    UserList,
+    validateUpdateUser,
+    deleteUser,
+    updateUser,
+    validateDeleteUser
 } = require('../controllers//userController')
 
 const router = express.Router()
@@ -17,8 +22,17 @@ router.post('/create', validateCreateUser, createUser)
 router.post('/login', validateLoginUser, loginUser)
 
 router.get('/checkValidity', authenticateToken, (req, res) => {
-    res.status(200).json({ suucess: 'Passed' });
+    res.status(200).json({ suucess: 'Passed', role: req?.user?.role });
 })
+
+//Delete user
+router.post('/delete', validateDeleteUser, deleteUser)
+
+//Updating tab
+router.post('/update', validateUpdateUser, updateUser)
+
+//Getting all users
+router.get('/userList', UserList)
 
 
 module.exports = router

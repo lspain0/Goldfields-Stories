@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose');
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const secretKey = 'secret_key'; 
@@ -26,7 +27,42 @@ const authenticateToken = (req, res, next) => {
     req.user = decoded;
     next();
   });
+  
 };
+
+
+//Validate update on users request
+const validateUpdateUser = (req, res, next) => {
+  const { id, role } = req.body;
+//int array to store error message
+
+  let err = [];
+  if (!id) {
+    return res.status(400).json({ error: 'ID is required' });
+  }
+
+  //Checking if there are any eerror and if there are status of 400 and error message
+
+  if (err?.length != 0)
+    return res.status(400).json({ error: err });
+
+  next();
+};
+
+//Middleware for deleting user 
+const validateDeleteUser = (req, res, next) => {
+  const { id } = req.body;
+
+  let err = [];
+  if (!id) {
+    return res.status(400).json({ error: 'ID is required' });
+  }
+  if (err?.length != 0)
+    return res.status(400).json({ error: err });
+
+  next();
+};
+
 //Error when name/email/password is not filled
 const validateCreateUser = (req, res, next) => {
   const { name, email, password } = req.body;
@@ -115,10 +151,54 @@ const loginUser = async (req, res) => {
 };
 
 
+// Route to get all users without their password
+const UserList = async (req, res) => {
+  try {
+    const user = await User.find({}).select("-password");
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Route for deleting a user
+const deleteUser = async (req, res) => {
+  const { id } = req.body;
+
+  const _user = await User.findOneAndDelete({ _id: new mongoose.Types.ObjectId(id) });
+  console.log(_user, id);
+
+  if (!_user) {
+    return res.status(404).json({ error: 'No User found' });
+  }
+
+  res.status(200).json(_user);
+};
+
+
+// Updating the users information
+const updateUser = async (req, res) => {
+  const { id } = req.body;
+
+  const _user = await User.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(id) }, { ...req.body });
+
+  if (!_user) {
+    return res.status(404).json({ error: 'No User found' });
+  }
+
+  res.status(200).json(_user);
+};
+
+
 module.exports = {
   loginUser,
   createUser,
   validateCreateUser,
   validateLoginUser,
-  authenticateToken
+  authenticateToken,
+  UserList,
+  deleteUser,
+  updateUser,
+  validateUpdateUser,
+  validateDeleteUser
 };
