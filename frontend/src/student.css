@@ -413,3 +413,19 @@ html, body {
   padding-top: 150px;
   padding-bottom: 1px;
 }
+
+/****************************************************/
+
+/* Styling for gender dropdown */
+.student-form-input{
+  padding: 2px 7px; /* Provides internal space making the dropdown comfortable to click */
+  font-size: 14px; /* Suitable font size for the content within the dropdown */
+  border: 1px solid #326C6F; /* Giving it a distinct border */
+  border-radius: 5px; /* Rounded corners for a softer look */
+  background-color: #f9f9f9; /* A light background that contrasts well with the text */
+  color: #000000; /* Dark color for the text for readability */
+  cursor: pointer; /* Changes the cursor indicating it's an interactive element */
+  transition: all 0.3s ease; /* Smooth transition for interactive states */
+}
+
+/****************************************************/

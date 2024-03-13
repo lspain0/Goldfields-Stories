@@ -79,7 +79,7 @@ const StudentForm = ({
           className="student-form-input"
         />
         <select
-          name="gender"
+          classname="gender"
           value={student.gender}
           onChange={updateField}
           required
