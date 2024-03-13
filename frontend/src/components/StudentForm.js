@@ -14,7 +14,9 @@ const StudentForm = ({
     cloudinaryWidgetRef.current = window.cloudinary.createUploadWidget(
       {
         cloudName: 'drpnvb7qc',
-        uploadPreset: 'tetlineq'
+        uploadPreset: 'tetlineq',
+        sources: [ 'local '],
+      clientAllowedFormats: ['image']
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
