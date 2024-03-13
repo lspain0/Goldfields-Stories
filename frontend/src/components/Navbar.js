@@ -1,11 +1,10 @@
 import React from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import "../home.css";
 
-const Navbar = () => {
+const Navbar = (props) => {
     const location = useLocation(); // This hook gives us the current location object
-    const { classId } = useParams();
     let pageTitle;
 
     const logoutHandler = () => {
@@ -46,6 +45,9 @@ const Navbar = () => {
             case "/pending":
                 pageTitle = "Pending Stories";
                 break;
+            case "/user":
+                pageTitle = "User";
+                break;
             // other static routes
             default:
                 pageTitle = "Goldfields School"; // Fallback title
@@ -66,15 +68,28 @@ const Navbar = () => {
                     <Link to="/home" className={isActive("/home")}>
                         Home
                     </Link>
-                    <Link to="/stories" className={isActive("/stories")}>
-                        Stories
-                    </Link>
-                    <Link to="/class" className={isActive("/class")}>
-                        Class
-                    </Link>
-                    <Link to="/search" className={isActive("/search")}>
-                        Search Stories
-                    </Link>
+                    {
+                        ["Admin", "Teacher", "Parent"].includes(props?.role) &&
+
+                        <Link to="/stories" className={isActive("/stories")}>
+                            Stories
+                        </Link>
+                    }
+                    {
+
+                        ["Admin", "Teacher"].includes(props?.role) &&
+                        <>
+                            <Link to="/class" className={isActive("/class")}>
+                                Class
+                            </Link>
+                            <Link to="/search" className={isActive("/search")}>
+                                Search Stories
+                            </Link>
+                            <Link to="/user" className={isActive("/user")}>
+                                User
+                            </Link>
+                        </>
+                    }
                     <Link to="/logout" onClick={logoutHandler} className="nav-item">
                         Logout
                     </Link>

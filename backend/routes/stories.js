@@ -7,11 +7,13 @@ const {
     updateStory,
     updateStoryState
 } = require('../controllers/storyController')
+const { authenticateToken } = require('../controllers/userController')
+
 
 const router = express.Router()
 
 //GET all stories
-router.get('/', getStories)
+router.get('/', authenticateToken,getStories)
 
 //GET single story
 router.get('/:id', getStory)

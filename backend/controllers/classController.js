@@ -221,6 +221,24 @@ const getStudentInClass = async (req, res) => {
   }
 };
 
+// Defined function getStudentList for route fetch
+const getStudentList = async (req, res) => {
+
+  try {
+    // Trying to get student data 
+
+    const student = await Class.find({}, { "students.image": 0 });
+    // Respond with the found student data
+    res.status(200).json(student);
+  } 
+  catch (error) {
+    //If error occurs, will message with the corrosponding message
+    console.error("Failed to fetch student:", error);
+    res.status(500).json({ error: "An error occurred while fetching the student" });
+  }
+};
+
+
 // Export the methods
 module.exports = {
   getClasses,
@@ -233,4 +251,5 @@ module.exports = {
   updateStudent,
   deleteStudent,
   getStudentInClass,
+  getStudentList
 };

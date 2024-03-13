@@ -21,6 +21,7 @@ export const ClassesProvider = ({ children }) => {
       setClasses(classesWithStudents);
     } catch (error) {
       console.error("Could not fetch classes:", error);
+      setUpdateCount(0)
     }
   };
 
@@ -69,7 +70,7 @@ export const ClassesProvider = ({ children }) => {
       console.error("Error adding student:", error);
     }
   };
-  
+
   // Function to transfer a student from one class to another
   const transferStudent = async (studentId, oldClassId, newClassId) => {
     try {
@@ -102,12 +103,12 @@ export const ClassesProvider = ({ children }) => {
           body: JSON.stringify(updatedStudent), // Send updated student data as JSON
         }
       );
-  
+
       if (!response.ok) {
         throw new Error("HTTP error! status: " + response.status);
       }
       const updatedClass = await response.json();
-  
+
       // Update the classes state with the updated class info
       setClasses((prevClasses) =>
         prevClasses.map((c) => (c.id === classId ? updatedClass : c))
@@ -116,7 +117,7 @@ export const ClassesProvider = ({ children }) => {
       console.error("Error updating student:", error);
     }
   };
-  
+
   // Function to fetch a single student's data from the backend
   const fetchStudentData = async (classId, studentId) => {
     try {

@@ -13,9 +13,12 @@ const {
   updateStudent,
   deleteStudent,
   getStudentInClass,
+  getStudentList
 } = require('../controllers/classController');
 
 // Routes for the Class model
+router.get('/list', getStudentList); 
+
 router.get('/', getClasses); // Get all classes
 router.get('/:id', getClass); // Get a single class by ID
 router.post('/', createClass); // Create a new class
