@@ -27,6 +27,7 @@ const StudentForm = ({
     );
   }, [student, setStudent]);
 
+  // Update the student state when the user types in the form
   const updateField = (e) => {
     if (e.target.name === "dob") {
       const selectedDate = new Date(e.target.value);
@@ -46,6 +47,7 @@ const StudentForm = ({
   };
 
   const today = new Date().toISOString().split("T")[0];
+  const minDate = "1980-01-01";
 
   return (
     <div className="student-form-container">
@@ -79,7 +81,7 @@ const StudentForm = ({
           className="student-form-input"
         />
         <select
-          classname="gender"
+          name="gender"
           value={student.gender}
           onChange={updateField}
           required
@@ -97,6 +99,7 @@ const StudentForm = ({
           onChange={updateField}
           required
           className="student-form-input"
+          min={minDate}
           max={today}
         />
         <button type="submit" className="standard-button">
