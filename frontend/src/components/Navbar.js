@@ -28,7 +28,7 @@ const Navbar = (props) => {
     } else {
         switch (location.pathname) {
             case "/home":
-                pageTitle = "Goldfields School";
+                pageTitle = "";
                 break;
             case "/stories":
                 pageTitle = "Stories";

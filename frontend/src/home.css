@@ -1,22 +1,102 @@
+/****************************************************/
+/* Styling for Nav bar */
 .nav-item.active {
-    color: #E9AF0C; /* Change this to your active link color */
-    font-weight: bold;
+  color: #E9AF0C; 
+  font-weight: bold;
 }
 
 .navbar {
-    /* Other styles */
-    height: 50px; /* for example, set a fixed height */
-    /* More styles */
-  }
+  height: 50px;
+}
 
-  .nav-h1 {
-    text-align: left;
-    font-family: 'Poppins', sans-serif;
-    color: #000000;
-    /* Adjust the color as needed */
-    font-size: 35px;
-    /* Adjust the size as needed */
-    margin-top: 100px;
-    /* Spacing from the top */
-  }
+.nav-h1 {
+  text-align: left;
+  font-family: 'Poppins', sans-serif;
+  color: #000000;
+  font-size: 35px;
+  margin-top: 100px;
+}
+/****************************************************/
+.home-container {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.home-header {
+  padding: 20px;
+}
+
+.home-header h1 {
+  color: #FFFFFF; /* Adjust the color as needed */
+  font-size: 35px;
+  margin: 0;
+}
+
+.home-content {
+  margin: 20px 0;
+}
+
+.home-proverb {
+  margin-top: 20px;
+  font-style: italic;
+  color: #555; /* Adjust the color as needed */
+}
+
+.home-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #f2f2f2; /* Use your secondary color here */
   
+}
+
+.home-contact-info p {
+  margin: 5px 0;
+  color: #333; /* Adjust the color as needed */
+}
+
+/****************************************************/
+/* Additional styles for Home component */
+.home-image-container {
+  position: auto;
+  object-fit: cover;
+}
+
+.home-image-container img {
+  max-width: 100%;
+  max-height: 350px;
+  min-width: 80%;
+  min-height: 350px;
+
+  object-fit: cover; /* Adjusts the image size to cover the container without stretching */
+}
+
+/* You might already have styles for .upload-button and .shuffle-button, but you can adjust as needed */
+.home-upload-button, .home-view-images-button:hover{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 16px;
+  width: 150px;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background: #326C6F;
+  color: white;
+  margin: 10px;
+}
+
+.home-upload-button:hover, .home-view-images-button:hover {
+  background: #224957;/* Darker shade for hover effect, adjust as needed */
+}
+
+/****************************************************/
+.home-uploaded-image img.small-image {
+  max-width: 100px; 
+  max-height: 100px;
+  object-fit: cover;
+}
+
+/****************************************************/

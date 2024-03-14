@@ -29,7 +29,7 @@ function Login() {
 
       setMessage(`User login successfully.`);
       setTimeout(() => {
-        window.location.href = '/';
+        window.location.href = '/home';
       }, 1000);
     } catch (error) {
       if (error.response) {

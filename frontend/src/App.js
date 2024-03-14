@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import axios from './axios';
 import NavbarLogin from './components/NavbarLogin';
 import EditStudentPage from './pages/EditStudentPage';
-
+import Home from "./pages/Home";
 import User from './pages/User';
 
 function App() {
@@ -81,7 +81,7 @@ function App() {
                 <Route path="/pending/:storyid" element={<StoryPage />} />
                 <Route path="/class/:classId/editstudent/:studentId" element={<EditStudentPage />} />
                 <Route path="/user" element={<User />} />
-
+                <Route path="/home" element={<Home />} />
               </Routes>
             </div>
           </BrowserRouter>
