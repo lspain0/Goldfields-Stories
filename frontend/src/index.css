@@ -511,6 +511,18 @@ div.sub, iframe, image {
   }
 }
 
+.rs-check-tree-node-expand-icon-wrapper {
+  min-width: 100%;
+}
+
+.rs-check-tree-node-expand-icon-wrapper:hover {
+  border-top-left-radius: 0.4em;
+  border-top-right-radius: 0.4em;
+  border-bottom-left-radius: 0.4em;
+  border-bottom-right-radius: 0.4em;
+  background: rgba(242, 242, 242, 0.5);
+}
+
 .quill  .ql-video {
   margin-left: 25%;
 }
