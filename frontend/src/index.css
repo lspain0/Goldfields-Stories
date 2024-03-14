@@ -374,13 +374,14 @@ div.error {
 }
 
 .check-tree {
-  margin-right: 2px;
-  padding-bottom: 5px;
+  margin-right: 10px;
+  min-width: 85%
+
 }
 
 .check-tree2 {
   margin-right: 10px;
-  padding-bottom: 5px;
+  min-width: 85%;
 }
 
 .input-container {
@@ -388,9 +389,8 @@ div.error {
 }
 
 .short-input {
-  width: 80%;
+  width: 85%;
   margin-top: 0px;
-  margin-bottom: 5px;
   margin-right: 1%;
   font-size: 18px;
 }
@@ -400,7 +400,6 @@ div.error {
 }
 
 .story-form-button {
-  margin-top: 5px;
   margin-bottom: 5px;
   font-size: 16px;
   width: 150px;
@@ -411,6 +410,7 @@ div.error {
   transition: background-color 0.3s ease;
   background: #326C6F;
   color: white;
+  height: 45px
 }
 
 .story-form-button:hover {
@@ -471,6 +471,7 @@ div.error {
 }
 
 .ql-toolbar {
+  margin-top: 5px;
   margin-bottom: 3px;
 }
 

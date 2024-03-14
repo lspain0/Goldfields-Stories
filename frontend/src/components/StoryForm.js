@@ -287,8 +287,10 @@ const StoryForm = () => {
           value={selectedCheckTreeValuesChildren}
           onChange={handleCheckTreePickerChangeChildren}
           cascade={false}
-          style={{ width: 660 }}
         />
+        
+        <UploadWidget onImageUpload={handleImageUpload} />
+        <div></div>
 
         <CheckTreePicker
           className="check-tree2"
@@ -306,7 +308,7 @@ const StoryForm = () => {
           )}
         />
 
-        <UploadWidget onImageUpload={handleImageUpload} />
+        
         <UploadWidgetVideo onVideoUpload={handleImageUpload} />
 
         <div className="quill">
