@@ -11,6 +11,20 @@ import StudentList from "./docs/StudentList";
 var editing = false;
 var storyId;
 var optimisedUrl
+var roleCheck = false;
+
+function checkRole () {
+  const role = localStorage.getItem("role");
+
+  if (role.includes("Admin"))
+  {
+    roleCheck = true
+  }
+  else if (role.includes("Teacher"))
+  {
+    roleCheck = true
+  }
+}
 
 
 function isEditing() {
@@ -99,6 +113,11 @@ const UploadWidgetVideo = ({ onVideoUpload }) => {
 
 
 const StoryForm = () => {
+  checkRole();
+  if (roleCheck === false)
+  {
+    window.location.href = `/`;
+  }
   isEditing();
   const { dispatch } = useStoriesContext();
   const [title, setTitle] = useState('');

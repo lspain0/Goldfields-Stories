@@ -8,7 +8,27 @@ import { Link } from 'react-router-dom';
 import StoryDetails from "../components/StoryDetails"
 import Logo from "../components/logo"
 
+var roleCheck = false;
+
+function checkRole () {
+  const role = localStorage.getItem("role");
+
+  if (role.includes("Admin"))
+  {
+    roleCheck = true
+  }
+  else if (role.includes("Teacher"))
+  {
+    roleCheck = true
+  }
+}
+
 const PendingStories = () => {
+  checkRole();
+  if (roleCheck === false)
+  {
+    window.location.href = `/`;
+  }
   const { stories, dispatch } = useStoriesContext()
 
   useEffect(() => {
