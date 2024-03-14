@@ -510,3 +510,7 @@ div.sub, iframe, image {
     margin-right: 0%;
   }
 }
+
+.quill  .ql-video {
+  margin-left: 25%;
+}
