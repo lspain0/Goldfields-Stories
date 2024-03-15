@@ -8,7 +8,9 @@ import {
   Dropdown,
   RadioGroup,
   Radio,
-  CheckTree
+  CheckTree,
+  Button,
+  ButtonToolbar
 } from 'rsuite';
 import Logo from "../components/logo";
 import StoryDetails from "../components/StoryDetails";
@@ -17,7 +19,7 @@ import StoryDetails from "../components/StoryDetails";
 const Stories = () => {
   const { stories, dispatch } = useStoriesContext();
   const [role, setRole] = useState("");
-  const [selectedRadioValue, setSelectedRadioValue] = useState(null);
+  const [selectedRadioValue, setSelectedRadioValue] = useState("All");
 
   const sortedData = StudentList().sort((a, b) => {
     const nameA = a.label.split(' ')[0].toLowerCase();
@@ -72,19 +74,18 @@ const Stories = () => {
           <Dropdown className="filter-story-dropdown"
         title="Filter Stories"
       >
-      <Dropdown.Item panel>
-      <h4>Story Type</h4>
-      <RadioGroup name="radio-name">
-        <Radio value="A">All Stories</Radio>
-        <Radio value="B">Individual Stories</Radio>
-        <Radio value="C">Group Stories</Radio>
+      <Dropdown.Item panel className="dropdown-radio">
+      <h4 className="dropdown-header">Story Type</h4>
+      <RadioGroup name="dropdown-radio" value={selectedRadioValue} onChange={handleRadioChange}>
+        <Radio value="All">All Stories</Radio>
+        <Radio value="Individual">Individual Stories</Radio>
+        <Radio value="Group">Group Stories</Radio>
       </RadioGroup>
       </Dropdown.Item>
       <Dropdown.Separator />
 
-
-      <Dropdown.Item panel>
-        <h4>Children</h4>
+      <Dropdown.Item panel className="dropdown-children">
+        <h4 className="dropdown-header">Children</h4>
         <CheckTree
           height={"150px"}
           data={sortedData}
@@ -92,8 +93,8 @@ const Stories = () => {
       </Dropdown.Item>
       <Dropdown.Separator />
 
-      <Dropdown.Item panel>
-        <h4>Learning Tags</h4>
+      <Dropdown.Item panel className="dropdown-tags">
+        <h4 className="dropdown-header">Learning Tags</h4>
         <CheckTree
           height={"150px"}
           data={groupedTags}
@@ -102,6 +103,17 @@ const Stories = () => {
         />
       </Dropdown.Item>
       <Dropdown.Separator />
+
+      <Dropdown.Item panel>
+        <ButtonToolbar>
+        <Button>
+          Reset
+        </Button>
+        <Button>
+          Done
+        </Button>
+      </ButtonToolbar>
+      </Dropdown.Item>
 
       </Dropdown>
         </div>
