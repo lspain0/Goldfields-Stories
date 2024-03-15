@@ -70,8 +70,9 @@ const Stories = () => {
           <Link to="/pending">
             <button className="pending-story-button">Pending Stories</button>
           </Link>
-
-          <Dropdown className="filter-story-dropdown"
+        </div>
+      }
+                <Dropdown className="filter-story-dropdown"
         title="Filter Stories"
       >
       <Dropdown.Item panel className="dropdown-radio">
@@ -116,8 +117,6 @@ const Stories = () => {
       </Dropdown.Item>
 
       </Dropdown>
-        </div>
-      }
       <div className="story-cards-container">
         {stories && stories.map(story => (
           <StoryDetails story={story} key={story._id} />
