@@ -68,14 +68,14 @@ function Home() {
         <Logo />
       </div>
       <div className="home-image-container img">
-          {currentImage && <img src={currentImage} alt="Displayed" className="student-image" />}
-        </div>
-        <button onClick={handleImageUpload} className="home-upload-button">
-          Upload Image
-        </button>
-        <button onClick={toggleShowImages} className="home-upload-button">
-          {showImages ? 'Hide Images' : 'View Images'}
-        </button>
+        {currentImage && <img src={currentImage} alt="Displayed" className="student-image" />}
+      </div>
+      <button onClick={handleImageUpload} className="home-upload-button">
+        Upload Image
+      </button>
+      <button onClick={toggleShowImages} className="home-upload-button">
+        {showImages ? 'Hide Images' : 'View Images'}
+      </button>
       <div className="home-content">
         <p className="home-proverb">
           I te puāwaitanga o te harakeke, he rito whakakī whāruarua - When the flax blossoms, its many offspring begin their journey
