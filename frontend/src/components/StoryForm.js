@@ -118,6 +118,13 @@ const StoryForm = () => {
   {
     window.location.href = `/`;
   }
+
+  const sortedData = StudentList().sort((a, b) => {
+    const nameA = a.label.split(' ')[0].toLowerCase();
+    const nameB = b.label.split(' ')[0].toLowerCase();
+    return nameA.localeCompare(nameB);
+  });
+  
   isEditing();
   const { dispatch } = useStoriesContext();
   const [title, setTitle] = useState('');
@@ -301,7 +308,7 @@ const StoryForm = () => {
         <CheckTreePicker
           className="check-tree"
           placeholder="Add children to this story..."
-          data={StudentList()}
+          data={sortedData}
           uncheckableItemValues={['1-1', '1-1-2']}
           value={selectedCheckTreeValuesChildren}
           onChange={handleCheckTreePickerChangeChildren}
