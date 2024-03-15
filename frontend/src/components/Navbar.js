@@ -45,8 +45,8 @@ const Navbar = (props) => {
             case "/pending":
                 pageTitle = "Pending Stories";
                 break;
-            case "/user":
-                pageTitle = "User";
+            case "/manage_accounts":
+                pageTitle = "Manage Accounts";
                 break;
             // other static routes
             default:
@@ -85,8 +85,8 @@ const Navbar = (props) => {
                             <Link to="/search" className={isActive("/search")}>
                                 Search Stories
                             </Link>
-                            <Link to="/user" className={isActive("/user")}>
-                                User
+                            <Link to="/manage_accounts" className={isActive("/manage_accounts")}>
+                                Manage Accounts
                             </Link>
                         </>
                     }

@@ -145,7 +145,7 @@ function Class() {
                                     return (
                                         <li onClick={() => setSelecetUser(row)}
 
-                                            style={{ padding: "10px", cursor: "pointer", textTransform: "capitalize", backgroundColor: selecetUser?.email == row?.email ? " #0000ff45" : "#80808063", margin: "5px", width: "250px", textAlign: "center", color: "black", fontSize: "20px" }} key={row?._id}>
+                                            style={{ padding: "10px", cursor: "pointer", textTransform: "capitalize", backgroundColor: selecetUser?.email == row?.email ? " #E9AF0C" : "#80808063", margin: "5px", width: "250px", textAlign: "center", color: "black", fontSize: "20px" }} key={row?._id}>
                                             {row?.name}
 
                                         </li>
@@ -159,20 +159,39 @@ function Class() {
                     {
                         Object.keys(selecetUser).length >= 1 &&
 
-                        <div style={{ transition: "opacity 500ms", padding: "10px", margin: "5px", width: "25%", background: "gray", fontWeight: "bold", zIndex: "9", border: "2px solid #80808075" }}>
+                        <div className="story-card" style={{ transition: "opacity 500ms", padding: "10px", margin: "5px", width: "35%", minHeight: "250px", background: "gray", fontWeight: "bold", zIndex: "9", border: "2px solid #80808075" }}>
                             <p style={{ color: parseInt(deleteStatus?.status) === 200 ? "green" : "red" }}>{deleteStatus?.msg}</p>
 
-
                             <div style={{ display: "flex", flexFlow: "column" }}>
-                                <p className="story-p" style={{ textTransform: "capitalize" }}>Full Name: {selecetUser?.name}
+                                <p className="story-p" style={{ textTransform: "capitalize" }}>Full Name: <span style={{ marginLeft: "10px" }}>{selecetUser?.name}</span>
                                     {
                                         role !== "Teacher" && localStorage.getItem("email") !== selecetUser?.email &&
-                                        <img title="Delete User" src="data:image/png;base64,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"
-                                            onClick={() => deleteUser(selecetUser?._id, selecetUser?.name)} style={{ color: "red", cursor: "pointer", float: "right", width: "20px", height: "20px" }} />
+
+                                        <svg onClick={() => deleteUser(selecetUser?._id, selecetUser?.name)} style={{ color: "red", cursor: "pointer", float: "right", width: "20px", height: "20px" }} fill="white" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                            width="50px" height="50px" viewBox="0 0 482.428 482.429">
+                                            <g>
+                                                <g>
+                                                    <path d="M381.163,57.799h-75.094C302.323,25.316,274.686,0,241.214,0c-33.471,0-61.104,25.315-64.85,57.799h-75.098
+                                                            c-30.39,0-55.111,24.728-55.111,55.117v2.828c0,23.223,14.46,43.1,34.83,51.199v260.369c0,30.39,24.724,55.117,55.112,55.117
+                                                            h210.236c30.389,0,55.111-24.729,55.111-55.117V166.944c20.369-8.1,34.83-27.977,34.83-51.199v-2.828
+                                                            C436.274,82.527,411.551,57.799,381.163,57.799z M241.214,26.139c19.037,0,34.927,13.645,38.443,31.66h-76.879
+                                                            C206.293,39.783,222.184,26.139,241.214,26.139z M375.305,427.312c0,15.978-13,28.979-28.973,28.979H136.096
+                                                            c-15.973,0-28.973-13.002-28.973-28.979V170.861h268.182V427.312z M410.135,115.744c0,15.978-13,28.979-28.973,28.979H101.266
+                                                            c-15.973,0-28.973-13.001-28.973-28.979v-2.828c0-15.978,13-28.979,28.973-28.979h279.897c15.973,0,28.973,13.001,28.973,28.979
+                                                            V115.744z"/>
+                                                    <path d="M171.144,422.863c7.218,0,13.069-5.853,13.069-13.068V262.641c0-7.216-5.852-13.07-13.069-13.07
+                                                            c-7.217,0-13.069,5.854-13.069,13.07v147.154C158.074,417.012,163.926,422.863,171.144,422.863z"/>
+                                                    <path d="M241.214,422.863c7.218,0,13.07-5.853,13.07-13.068V262.641c0-7.216-5.854-13.07-13.07-13.07
+                                                            c-7.217,0-13.069,5.854-13.069,13.07v147.154C228.145,417.012,233.996,422.863,241.214,422.863z"/>
+                                                    <path d="M311.284,422.863c7.217,0,13.068-5.853,13.068-13.068V262.641c0-7.216-5.852-13.07-13.068-13.07
+                                                            c-7.219,0-13.07,5.854-13.07,13.07v147.154C298.213,417.012,304.067,422.863,311.284,422.863z"/>
+                                                </g>
+                                            </g>
+                                        </svg>
                                     }
                                 </p>
-                                <p className="story-p">Email Address: {selecetUser?.email}</p>
-                                <p className="story-p">Current Role:{selecetUser?.role}</p>
+                                <p className="story-p">Email Address:<span style={{ marginLeft: "10px" }}>{selecetUser?.email}</span></p>
+                                <p className="story-p">Current Role:<span style={{ marginLeft: "10px" }}>{selecetUser?.role}</span></p>
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                                     {
                                         role !== "Teacher" && localStorage.getItem("email") !== selecetUser?.email &&

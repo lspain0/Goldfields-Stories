@@ -80,7 +80,7 @@ function App() {
                 <Route path="/stories/:storyid" element={<StoryPage />} />
                 <Route path="/pending/:storyid" element={<StoryPage />} />
                 <Route path="/class/:classId/editstudent/:studentId" element={<EditStudentPage />} />
-                <Route path="/user" element={<User />} />
+                <Route path="/manage_accounts" element={<User />} />
                 <Route path="/home" element={<Home />} />
               </Routes>
             </div>
