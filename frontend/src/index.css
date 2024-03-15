@@ -527,3 +527,11 @@ div.sub, iframe, image {
 .quill  .ql-video {
   margin-left: 25%;
 }
+
+.filter-story-dropdown {
+  width: 300px;
+}
+
+.dropdown-children {
+  max-height: 30px;
+}
