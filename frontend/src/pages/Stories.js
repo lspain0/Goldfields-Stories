@@ -15,7 +15,6 @@ import {
 import Logo from "../components/logo";
 import StoryDetails from "../components/StoryDetails";
 
-
 const Stories = () => {
   const { stories, dispatch } = useStoriesContext();
   const [role, setRole] = useState("");
@@ -45,6 +44,20 @@ const Stories = () => {
 
     fetchStories()
   }, [dispatch])
+
+  const [selectedChildrenFilters, setChildren] = useState('');
+
+  const handleCheckTreeChangeChildren = (values) => {
+    const childrenString = Array.isArray(values) ? values.join(',') : '';
+    setChildren(childrenString);
+  };
+
+  const [selectedTagFilters, setTags] = useState('');
+
+  const handleCheckTreeChangeTags = (values) => {
+    const tagString = Array.isArray(values) ? values.join(',') : '';
+    setTags(tagString);
+  };
 
   return (
     <body>
@@ -90,6 +103,7 @@ const Stories = () => {
         <CheckTree
           height={"150px"}
           data={sortedData}
+          onChange={handleCheckTreeChangeChildren}
         />
       </Dropdown.Item>
       <Dropdown.Separator />
@@ -101,6 +115,7 @@ const Stories = () => {
           data={groupedTags}
           uncheckableItemValues={['1', '2', '3', '4']}
           cascade={false}
+          onChange={handleCheckTreeChangeTags}
         />
       </Dropdown.Item>
       <Dropdown.Separator />
@@ -119,7 +134,7 @@ const Stories = () => {
       </Dropdown>
       <div className="story-cards-container">
         {stories && stories.map(story => (
-          <StoryDetails story={story} key={story._id} />
+          <StoryDetails story={story} key={story._id} selectedRadioValue={selectedRadioValue} selectedChildrenFilters={selectedChildrenFilters} selectedTagFilters={selectedTagFilters}/>
         ))}
       </div>
 

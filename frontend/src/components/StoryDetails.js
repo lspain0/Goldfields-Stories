@@ -48,7 +48,49 @@ function getAuthorFirstName(str) {
 }
 
 
-const StoryDetails = ({ story }) => {
+const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, selectedTagFilters }) => {
+    //values for selected story filters
+    let storyTypeFilter = false;
+    let childrenFilter = false;
+    let tagFilter = false;
+
+    //only display stories that fit the filters
+    if (window.location.href.includes('stories')) {
+        
+        //check what story types are filtered to
+        if ((selectedRadioValue === "All") || (selectedRadioValue === "Individual" && !story.children.includes(',')) || (selectedRadioValue === "Group" && story.children.includes(','))) {
+            storyTypeFilter = true;
+        }
+
+        //check if story contains children selected in filters
+        let childrenSubstrings = story.children.split(",");
+        let childrenKeywords = selectedChildrenFilters.split(',')
+
+        for (let i = 0; i < childrenSubstrings.length; i++) {
+            if (childrenKeywords.some(childrenKeyword => childrenSubstrings[i].includes(childrenKeyword))) {
+                childrenFilter = true;
+                break;
+            }
+        }
+
+        //check if story contains children selected in filters
+        let tagSubstrings = story.tags.split("|");
+        let tagKeywords = selectedTagFilters.split(',')
+
+        for (let i = 0; i < tagSubstrings.length; i++) {
+            if (tagKeywords.some(tagKeyword => tagSubstrings[i].includes(tagKeyword))) {
+                tagFilter = true;
+                break;
+            }
+        }
+
+    }
+    //set values to true for pending story page so all stories are displayed
+    else {
+        storyTypeFilter = true;
+        childrenFilter = true;
+        tagFilter = true;
+    }
 
     //used to create the link to the story view, can be either 'pending' or 'stories'
     var link = "";
@@ -96,6 +138,9 @@ const StoryDetails = ({ story }) => {
         images[0] = './goldfieldslogo.png'
         
     }
+    
+    if (storyTypeFilter === true && childrenFilter === true && tagFilter === true)
+
     return (
         <Link className='story-link' to={`/${link}/${story._id}`} key={story._id}>
             <div className="story-card">
