@@ -75,11 +75,13 @@ function Home() {
     cloudinaryWidgetRef.current.open();
   };
 
-  const shuffleImage = () => {
-    if (images.length > 0) {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }
-  };
+// Modify shuffleImage to randomly select an image
+const shuffleImage = () => {
+  if (images.length > 0) {
+    const randomIndex = Math.floor(Math.random() * images.length);
+    setCurrentIndex(randomIndex);
+  }
+};
 
 const handleDeleteImage = async (imageToDelete) => {
   // Assuming imageToDelete is the image URL, you need to find the corresponding image object to get its _id
@@ -122,6 +124,13 @@ const handleDeleteImage = async (imageToDelete) => {
       <button onClick={toggleShowImages} className="home-upload-button">
         {showImages ? 'Hide Images' : 'View Images'}
       </button>
+      {showImages && (
+        <div className="image-gallery">
+          {images.map((image, index) => (
+            <img key={index} src={image} alt={`Gallery ${index}`} />
+          ))}
+        </div>
+      )}
       <div className="home-content">
         <p className="home-proverb">
           I te puāwaitanga o te harakeke, he rito whakakī whāruarua - When the flax blossoms, its many offspring begin their journey

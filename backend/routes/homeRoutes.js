@@ -5,7 +5,7 @@ const HomeImage = require('../models/homeModel'); // Update the path as necessar
 // Route to get all images
 router.get('/', async (req, res) => {
   try {
-    const images = await HomeImage.find().select('_id imageUrl'); // This line is modified
+    const images = await HomeImage.find().sort({ createdAt: 'asc' }).select('_id imageUrl');
     res.json(images);
   } catch (err) {
     res.status(500).json({ message: err.message });
