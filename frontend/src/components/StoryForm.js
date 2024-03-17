@@ -4,7 +4,7 @@ import "react-quill/dist/quill.snow.css";
 import { useStoriesContext } from "../hooks/useStoriesContext";
 import { CheckTreePicker, ButtonToolbar, Modal, Button } from 'rsuite';
 import '../index.css';
-import { convertToText, groupedTags, saveTagsToMongoDB } from "./docs/tags";
+import { convertToString, convertToText, groupedTags } from "./docs/tags";
 import StudentList from "./docs/StudentList";
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" />
 
@@ -93,7 +93,6 @@ const UploadWidgetVideo = ({ onVideoUpload }) => {
         let replacement = "f_auto:video,q_auto";
         optimisedUrl = videoUrl.replace(/(\/upload\/)[^/]+/, "$1" + replacement);
         onVideoUpload(optimisedUrl);
-        console.log(optimisedUrl)
       }
     });
   }, [onVideoUpload]);
@@ -195,7 +194,6 @@ const StoryForm = () => {
   };
 
   const handleImageUpload = imageUrl => {
-    console.log(imageUrl)
     if (imageUrl.includes("f_auto:video,q_auto"))
     {
       setContent(content + `\n<div id="upload-div">
@@ -294,6 +292,7 @@ const StoryForm = () => {
   };
 
   const originalData = convertToText(groupedTags);
+  console.log(convertToString(groupedTags))
 
   return (
     <body className="story-form">

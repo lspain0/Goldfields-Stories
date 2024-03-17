@@ -42,6 +42,21 @@ export function convertToTags(inputData) {
   return outputData;
 }
 
+export function convertToString(groupedTags) {
+  let result = '';
+
+  groupedTags.forEach(group => {
+    result += group.label + '\n';
+    group.children.forEach(child => {
+      result += child.label + '\n';
+    });
+    result += '\n';
+  });
+
+  return result.trim(); // Remove trailing newline
+}
+
+
 export const groupedTags = [
     {
       label: 'Achievement Key',
