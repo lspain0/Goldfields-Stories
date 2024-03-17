@@ -49,7 +49,7 @@ const PendingStories = () => {
       <Logo />
       <div className="createstorylink">  
           <Link to={`/stories`}>
-            <button className="pending-story-button">Approved Stories</button>
+            <button className="create-story-button">Approved Stories</button>
           </Link>
           </div>
         <div className="story-cards-container">
