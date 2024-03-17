@@ -85,7 +85,7 @@ const Stories = () => {
   //closes dropdown when user clicks outside of it
   useEffect(() => {
     const closeDropdown = (event) => {
-      if (!event.target.closest('.rs-dropdown-toggle')) {
+      if (!event.target.closest('.filter-story-dropdown')) {
         setDropdownOpen(false);
       }
     };
