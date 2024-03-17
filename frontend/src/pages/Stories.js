@@ -204,10 +204,10 @@ const Stories = () => {
         <div className="dropdown-button-container">
           <Dropdown.Item panel>
               <ButtonToolbar>
-                <Button onClick={resetFilters}>
+                <Button onClick={resetFilters} appearance="subtle">
                   Reset
                 </Button>
-                <Button onClick={handleDoneClick}>
+                <Button className="dropdown-primary" onClick={handleDoneClick} appearance="primary">
                   Done
                 </Button>
             </ButtonToolbar>

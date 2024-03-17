@@ -556,3 +556,12 @@ div.sub, iframe, image {
 .story-sort-dropdown {
   min-width: 195px;
 }
+
+.dropdown-primary {
+  margin-right: 10px;
+  background: #326C6F;
+}
+
+.dropdown-primary:hover {
+  background-color: #224957;
+}
