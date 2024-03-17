@@ -122,16 +122,6 @@ const handleDeleteImage = async (imageToDelete) => {
       <button onClick={toggleShowImages} className="home-upload-button">
         {showImages ? 'Hide Images' : 'View Images'}
       </button>
-      {showImages && (
-        <div className="home-uploaded-images">
-          {images.map((image, index) => (
-            <div key={index} className="home-uploaded-image">
-              <img src={image} alt={`Uploaded ${index + 1}`} className="home-small-image" />
-              <button onClick={() => handleDeleteImage(image)}>Delete</button>
-            </div>
-          ))}
-        </div>
-      )}
       <div className="home-content">
         <p className="home-proverb">
           I te puāwaitanga o te harakeke, he rito whakakī whāruarua - When the flax blossoms, its many offspring begin their journey

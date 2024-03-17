@@ -104,7 +104,7 @@ const StoryPage = () => {
           const response = await axios_obj.get(`/stories/${storyId}`);
           const json = response.data;
 
-          if (response.status == "200") {
+          if (parseInt(response.status) === 200) {
             setCurrentStory(json);
           } else {
             console.error(`Error fetching story with ID ${storyId}:`, json);

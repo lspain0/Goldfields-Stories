@@ -33,7 +33,7 @@ function Login() {
       }, 1000);
     } catch (error) {
       if (error.response) {
-        const { status, data } = error.response;
+        const {  data } = error.response;
         console.log(data);
         setMessage(data?.error);
 

@@ -276,16 +276,10 @@ div.error {
   float: left;
   width: 70%;
   height: 85vh;
-  overflow-y: scroll;
-}
-
-.story-content {
-  float: left;
-  width: 70%;
-  height: 85vh;
   word-wrap: break-word;
   margin-right: 10px;
   outline:0.01em solid black;
+  overflow-y: scroll;
 }
 
 
@@ -526,4 +520,16 @@ div.sub, iframe, image {
 
 .quill  .ql-video {
   margin-left: 25%;
+}
+
+.filter-story-dropdown {
+  width: 300px;
+}
+
+.dropdown-header, .dropdown-radio, .dropdown-tags {
+  margin-left: 15px;
+}
+
+.dropdown-children {
+  margin-left: 5px;
 }
