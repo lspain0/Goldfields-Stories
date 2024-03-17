@@ -62,6 +62,7 @@ const Stories = () => {
   };
 
   const resetFilters = () => {
+    setSelectedRadioValue('All');
     setChildren('');
     setTags('');
     setReset(reset+' ');
