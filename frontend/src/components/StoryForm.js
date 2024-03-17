@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useStoriesContext } from "../hooks/useStoriesContext";
-import { CheckTreePicker } from 'rsuite';
+import { CheckTreePicker, ButtonToolbar, Modal, Button } from 'rsuite';
 import '../index.css';
-import { groupedTags } from "./docs/tags";
+import { convertToText, groupedTags, saveTagsToMongoDB } from "./docs/tags";
 import StudentList from "./docs/StudentList";
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" />
 
@@ -25,7 +25,6 @@ function checkRole () {
     roleCheck = true
   }
 }
-
 
 function isEditing() {
   if (window.location.pathname.includes('editstory')) {
@@ -113,6 +112,11 @@ const UploadWidgetVideo = ({ onVideoUpload }) => {
 
 
 const StoryForm = () => {
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  
   checkRole();
   if (roleCheck === false)
   {
@@ -289,6 +293,8 @@ const StoryForm = () => {
     }
   };
 
+  const originalData = convertToText(groupedTags);
+
   return (
     <body className="story-form">
       <form className="create-story" onSubmit={handleSubmit}>
@@ -333,9 +339,40 @@ const StoryForm = () => {
             </div>
           )}
         />
-
         
         <UploadWidgetVideo onVideoUpload={handleImageUpload} />
+
+        <ButtonToolbar>
+        <Button onClick={handleOpen}> Edit Tags</Button>
+      </ButtonToolbar>
+
+      <Modal backdrop="static" open={open} onClose={handleClose}>
+        <Modal.Header>
+          <Modal.Title>Edit Tags</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <div>
+      {Object.keys(originalData).map(category => (
+        <div key={category}>
+          <h3>{category}</h3>
+          <ul>
+            {originalData[category].map(item => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+        </Modal.Body>
+        <Modal.Footer>
+        <Button onClick={handleClose} appearance="primary">
+          Save Changes
+        </Button>
+          <Button onClick={handleClose} appearance="subtle">
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
         <div className="quill">
           <ReactQuill

@@ -17,12 +17,14 @@ import StoryDetails from "../components/StoryDetails";
 
 const Stories = () => {
   const { stories, dispatch } = useStoriesContext();
+  var sortedStories = null;
   const [role, setRole] = useState(""); //current user role state
   const [selectedRadioValue, setSelectedRadioValue] = useState("All"); //dropdown radio value state
   const [selectedChildrenFilters, setChildren] = useState(''); //dropdown checktree children state
   const [selectedTagFilters, setTags] = useState(''); //dropdown checktree tag state
   const [reset, setReset] = useState(''); //state to reset checktrees when updated
   const [dropdownOpen, setDropdownOpen] = useState(false); // State to manage dropdown visibility
+  const [sortOption, setSortOption] = useState("Story Date"); // Selected Story Sort Option
 
   //sorts studentlist alphabetically for dropdown
   const sortedData = StudentList().sort((a, b) => {
@@ -82,6 +84,23 @@ const Stories = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
+  //handle change in sort option dropdown
+  const handleSortOptionChange = (option) => {
+    setSortOption(option)
+  }
+
+  //sort stories according to selected sort option
+  const sortStories = (stories) => {
+    if (sortOption === "Story Title") {
+      return [...stories].sort((a, b) =>
+      a.title.localeCompare(b.title)
+    );
+    }
+    else {
+      return stories;
+    }
+  }
+
   //closes dropdown when user clicks outside of it
   useEffect(() => {
     const closeDropdown = (event) => {
@@ -96,6 +115,8 @@ const Stories = () => {
       document.body.removeEventListener('click', closeDropdown);
     };
   }, []); 
+
+  sortedStories = sortStories(stories);
   
   return (
     <body>
@@ -124,6 +145,15 @@ const Stories = () => {
           </Link>
         </span>
       }
+      {/* Dropdown for sorting stories */}
+      <span>
+      <Dropdown
+        className="story-sort-dropdown"
+        title={"Sorted by "+sortOption}>
+        <Dropdown.Item onClick={() => handleSortOptionChange("Story Date")}>Story Date</Dropdown.Item>
+        <Dropdown.Item onClick={() => handleSortOptionChange("Story Title")}>Story Title</Dropdown.Item>
+      </Dropdown>
+      </span>
       {/* Dropdown for filtering stories */}
       <span className="stories-dropdown">
         <Dropdown className="filter-story-dropdown"
@@ -188,8 +218,9 @@ const Stories = () => {
       </div>
       {/* Displays all stories as cards on the page */}
       <div className="story-cards-container">
-        {stories && stories.map(story => (
-          <StoryDetails story={story} key={story._id} selectedRadioValue={selectedRadioValue} selectedChildrenFilters={selectedChildrenFilters} selectedTagFilters={selectedTagFilters}/>
+        {sortedStories && sortedStories.map(story => (
+          <StoryDetails story={story} key={story._id} selectedRadioValue={selectedRadioValue} 
+          selectedChildrenFilters={selectedChildrenFilters} selectedTagFilters={selectedTagFilters} sortOption={sortOption} />
         ))}
       </div>
     </body>

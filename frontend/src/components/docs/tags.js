@@ -1,3 +1,47 @@
+
+export function convertToText(inputData) {
+  let outputData = {};
+
+  for (const category of inputData) {
+      const categoryName = category.label;
+      const categoryItems = [];
+
+      for (const item of category.children) {
+          categoryItems.push(item.label);
+      }
+
+      outputData[categoryName] = categoryItems;
+  }
+
+  return outputData;
+}
+
+export function convertToTags(inputData) {
+  let outputData = [];
+  let counter = 1;
+
+  for (const key in inputData) {
+      const category = {
+          label: key,
+          value: counter.toString(),
+          children: []
+      };
+
+      const items = inputData[key];
+      for (const item of items) {
+          category.children.push({
+              label: item,
+              value: item
+          });
+      }
+
+      outputData.push(category);
+      counter++;
+  }
+
+  return outputData;
+}
+
 export const groupedTags = [
     {
       label: 'Achievement Key',
