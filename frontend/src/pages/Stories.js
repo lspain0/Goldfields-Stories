@@ -19,6 +19,10 @@ const Stories = () => {
   const { stories, dispatch } = useStoriesContext();
   const [role, setRole] = useState("");
   const [selectedRadioValue, setSelectedRadioValue] = useState("All");
+  const [selectedChildrenFilters, setChildren] = useState('');
+  const [selectedTagFilters, setTags] = useState('');
+  const [reset, setReset] = useState('');
+
 
   const sortedData = StudentList().sort((a, b) => {
     const nameA = a.label.split(' ')[0].toLowerCase();
@@ -45,20 +49,24 @@ const Stories = () => {
     fetchStories()
   }, [dispatch])
 
-  const [selectedChildrenFilters, setChildren] = useState('');
 
   const handleCheckTreeChangeChildren = (values) => {
     const childrenString = Array.isArray(values) ? values.join(',') : '';
     setChildren(childrenString);
+  
   };
-
-  const [selectedTagFilters, setTags] = useState('');
 
   const handleCheckTreeChangeTags = (values) => {
     const tagString = Array.isArray(values) ? values.join(',') : '';
     setTags(tagString);
   };
 
+  const resetFilters = () => {
+    setChildren('');
+    setTags('');
+    setReset(reset+' ');
+  };
+  
   return (
     <body>
       <Logo />
@@ -101,6 +109,7 @@ const Stories = () => {
       <Dropdown.Item panel className="dropdown-children">
         <h4 className="dropdown-header">Children</h4>
         <CheckTree
+          key={reset.length}
           height={"150px"}
           data={sortedData}
           onChange={handleCheckTreeChangeChildren}
@@ -111,7 +120,8 @@ const Stories = () => {
       <Dropdown.Item panel className="dropdown-tags">
         <h4 className="dropdown-header">Learning Tags</h4>
         <CheckTree
-          height={"150px"}
+          key={reset.length}
+          height={"150px"}v
           data={groupedTags}
           uncheckableItemValues={['1', '2', '3', '4']}
           cascade={false}
@@ -122,7 +132,7 @@ const Stories = () => {
 
       <Dropdown.Item panel>
         <ButtonToolbar>
-        <Button>
+        <Button onClick={resetFilters}>
           Reset
         </Button>
         <Button>
