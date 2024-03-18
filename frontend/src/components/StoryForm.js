@@ -144,6 +144,7 @@ const StoryForm = () => {
   const [selectedCheckTreeValuesChildren, setSelectedCheckTreeValuesChildren] = useState([]);
   const quillRef = useRef();
   const [currentUser, setUser] = useState(localStorage.getItem("name"));
+  const [tagSet, setTagSet] = useState('')
   const tagID = "65f7a048017d08e34c5e8ee9" //id of the tag set in mongodb
 
   useEffect(() => {
@@ -356,6 +357,24 @@ const StoryForm = () => {
     }
   };
 
+  const getTags = async () => {
+
+    try {
+      const response = await fetch(`/api/tags/${tagID}`);
+      const json = await response.json();
+
+      if (response.ok) {
+        setTagSet(json.content);
+      } else {
+        console.error(`Error fetching story with ID ${storyId}:`, json);
+      }
+    } catch (error) {
+      console.error(`Error fetching story with ID ${storyId}:`, error);
+    }
+    console.log(tagSet)
+  }
+
+  getTags();
 
   return (
     <body className="story-form">
