@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "../components/logov2.js";
+import Logo2 from "../components/logov2.js";
 import "../class.css";
 import axios from "../axios.js";
 
@@ -67,7 +67,7 @@ function Login() {
    
     <div className="class-form-container-login" >
       <div className="logo-container2">
-        <Logo />
+        <Logo2 />
       </div>
       <div className="">
       <h1 className="heading-login" style={{ textAlign: 'center' }}> Sign In </h1>

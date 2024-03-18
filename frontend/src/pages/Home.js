@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import Logo from "../components/logov2";
+import Logo2 from "../components/logov2";
+import Logo from "../components/logo";
+
 import "../home.css";
 
 function Home() {
@@ -9,6 +11,16 @@ function Home() {
   const cloudinaryWidgetRef = useRef();
 
   useEffect(() => {
+    document.body.classList.add('home-page-background');
+
+    // Return a cleanup function that removes the class
+    return () => {
+      document.body.classList.remove('home-page-background');
+    };
+  }, []);
+
+  // useEffect for Cloudinary upload widget
+  useEffect(() => {
     cloudinaryWidgetRef.current = window.cloudinary.createUploadWidget(
       {
         cloudName: "drpnvb7qc",
@@ -16,82 +28,128 @@ function Home() {
         sources: ["local"],
         clientAllowedFormats: ["image"],
       },
-      (error, result) => {
+      async (error, result) => {
         if (!error && result && result.event === "success") {
-          setImages(prevImages => [...prevImages, result.info.secure_url]);
-          // No need to set currentIndex here as it's handled in the useEffect below
+          try {
+            const response = await fetch('/api/images', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ imageUrl: result.info.secure_url }),
+            });
+            if (!response.ok) {
+              throw new Error('Failed to save the image to the backend');
+            }
+            const savedImage = await response.json(); // Get the full image object from the backend
+            setImages(prevImages => [...prevImages, savedImage]); // Update state with the full image object
+          } catch (error) {
+            console.error("Error saving the image:", error);
+          }
         }
       }
     );
+  }, []);
 
-    const timer = setInterval(shuffleImage, 3000);
-    return () => clearInterval(timer);
-  }, [images]);
+  // useEffect to fetch images from backend on component mount
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('/api/images');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        // Set the entire image object in your state, not just the imageUrl
+        setImages(data);
+      } catch (error) {
+        console.error("Failed to fetch images:", error);
+      }
+    };
+    
 
-  // New useEffect to set currentIndex when images array changes
+    fetchImages();
+     // Set up interval for shuffling images
+     const intervalId = setInterval(shuffleImage, 3000);
+
+     // Cleanup function to clear interval
+     return () => clearInterval(intervalId);
+  }, []); 
+
+  // useEffect to update currentIndex when images array changes
   useEffect(() => {
     if (images.length > 0) {
-      setCurrentIndex(images.length - 1); // Set currentIndex to the last image
+      setCurrentIndex(images.length - 1);
     }
-  }, [images]); // This useEffect depends on 'images'
+  }, [images]);
 
   const handleImageUpload = () => {
     cloudinaryWidgetRef.current.open();
   };
 
-  const shuffleImage = () => {
-    if (images.length > 0) {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }
-  };
+// Modify shuffleImage to randomly select an image
+const shuffleImage = () => {
+  if (images.length > 0) {
+    const randomIndex = Math.floor(Math.random() * images.length);
+    setCurrentIndex(randomIndex);
+  }
+};
 
-  const handleDeleteImage = (imageToDelete) => {
-    const newImages = images.filter((image) => image !== imageToDelete);
+const handleDeleteImage = async (imageId) => {
+  try {
+    const response = await fetch(`/api/images/${imageId}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete the image from the backend');
+    }
+    // Filter out the deleted image from your state based on _id
+    const newImages = images.filter((image) => image._id !== imageId);
     setImages(newImages);
+  } catch (error) {
+    console.error("Error deleting the image:", error);
+  }
+};
 
-    if (images[currentIndex] === imageToDelete) {
-      setCurrentIndex((prevIndex) => {
-        return prevIndex === newImages.length ? prevIndex - 1 : prevIndex % newImages.length;
-      });
-    }
-  };
 
   const toggleShowImages = () => {
     setShowImages(!showImages);
   };
 
-  const currentImage = images[currentIndex];
+  const currentImage = images[currentIndex]?.imageUrl;
 
   return (
     <div className="home-container">
       <div className="home-header">
-        <Logo />
+        <Logo2 />
       </div>
       <div className="home-image-container img">
-        {currentImage && <img src={currentImage} alt="Displayed" className="student-image" />}
-      </div>
+      {currentImage && <img src={currentImage} alt="Displayed" className="student-image" />}
+
+</div>
+
       <button onClick={handleImageUpload} className="home-upload-button">
         Upload Image
       </button>
       <button onClick={toggleShowImages} className="home-upload-button">
         {showImages ? 'Hide Images' : 'View Images'}
       </button>
+      {showImages && (
+  <div className="image-gallery">
+    {images.map((image) => (
+      <div key={image._id}>
+        <img src={image.imageUrl} alt="Gallery" />
+        <button onClick={() => handleDeleteImage(image._id)}>Delete</button>
+      </div>
+    ))}
+  </div>
+)}
+
       <div className="home-content">
         <p className="home-proverb">
           I te puāwaitanga o te harakeke, he rito whakakī whāruarua - When the flax blossoms, its many offspring begin their journey
         </p>
         <h1>Nau Mai, Haere Mai</h1>
-
-        {showImages && (
-          <div className="home-uploaded-images">
-            {images.map((image, index) => (
-              <div key={index} className="home-uploaded-image">
-                <img src={image} alt={`Uploaded ${index + 1}`} className="home-small-image" />
-                <button onClick={() => handleDeleteImage(image)}>Delete</button>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
       <div className="home-footer">
         <div className="home-contact-info">

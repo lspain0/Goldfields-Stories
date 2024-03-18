@@ -132,46 +132,7 @@ div.error {
   margin: 20px 0;
 }
 
-/* Navbar styles */
-.navbar {
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  background: #fff;
-  height: 50px; 
-}
 
-.nav-logo h1 {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 800;
-  color: var(--primary);
-  margin: 0;
-}
-
-.nav-links {
-  display: flex;
-  list-style-type: none;
-  margin-left: auto;
-}
-
-.nav-item {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  color: var(--primary);
-  text-decoration: none;
-  margin: 0 15px;
-  transition: color 0.3s ease;
-}
-
-.nav-item:hover {
-  color: var(--error);
-}
-
-.nav-icon {
-  font-size: 24px;
-  color: var(--primary);
-  cursor: pointer;
-}
 
 .logo-container {
   display: flex;
