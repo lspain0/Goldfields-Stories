@@ -17,6 +17,7 @@
   margin-top: 100px;
 }
 /****************************************************/
+
 .home-container {
   text-align: center;
   font-family: 'Poppins', sans-serif;
@@ -45,18 +46,21 @@
 .home-footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 20px;
+  align-items: flex;
+  padding: 50px;
   background-color: #f2f2f2; /* Use your secondary color here */
-  
 }
 
 .home-contact-info p {
-  margin: 5px 0;
+  margin: 2px 0;
   color: #333; /* Adjust the color as needed */
+  text-align: center; 
+  margin-right: 800px;
 }
 
+
 /****************************************************/
+
 /* Additional styles for Home component */
 .home-image-container {
   position: auto;
@@ -69,10 +73,10 @@
   min-width: 80%;
   min-height: 350px;
 
-  object-fit: cover; /* Adjusts the image size to cover the container without stretching */
+  object-fit: cover; 
 }
 
-/* You might already have styles for .upload-button and .shuffle-button, but you can adjust as needed */
+
 .home-upload-button, .home-view-images-button:hover{
   margin-top: 5px;
   margin-bottom: 5px;
@@ -99,4 +103,10 @@
   object-fit: cover;
 }
 
+/****************************************************/
+
+/* home page background */
+.home-page-background {
+  background-color: #FFFFFF; /* Sets the background color to white */
+}
 /****************************************************/

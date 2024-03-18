@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import Logo from "../components/logov2";
+import Logo2 from "../components/logov2";
+import Logo from "../components/logo";
+
 import "../home.css";
 
 function Home() {
@@ -7,6 +9,15 @@ function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showImages, setShowImages] = useState(false);
   const cloudinaryWidgetRef = useRef();
+
+  useEffect(() => {
+    document.body.classList.add('home-page-background');
+
+    // Return a cleanup function that removes the class
+    return () => {
+      document.body.classList.remove('home-page-background');
+    };
+  }, []);
 
   // useEffect for Cloudinary upload widget
   useEffect(() => {
@@ -110,7 +121,7 @@ const handleDeleteImage = async (imageId) => {
   return (
     <div className="home-container">
       <div className="home-header">
-        <Logo />
+        <Logo2 />
       </div>
       <div className="home-image-container img">
       {currentImage && <img src={currentImage} alt="Displayed" className="student-image" />}
@@ -141,6 +152,7 @@ const handleDeleteImage = async (imageId) => {
         <h1>Nau Mai, Haere Mai</h1>
       </div>
       <div className="home-footer">
+      <Logo/>
         <div className="home-contact-info">
           <p>Monday–Friday 9am–5pm</p>
           <p>55 Norwood Road</p>
