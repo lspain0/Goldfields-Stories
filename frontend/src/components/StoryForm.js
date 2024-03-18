@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useStoriesContext } from "../hooks/useStoriesContext";
-import { CheckTreePicker, ButtonToolbar, Modal, Button } from 'rsuite';
+import { CheckTreePicker, ButtonToolbar, Modal, Button, Input, Divider } from 'rsuite';
 import '../index.css';
-import { convertToString, convertToText, groupedTags } from "./docs/tags";
+import { convertToString, convertToText, groupedTags, splitLines } from "./docs/tags";
 import StudentList from "./docs/StudentList";
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" />
 
@@ -146,6 +146,7 @@ const StoryForm = () => {
   const [currentUser, setUser] = useState(localStorage.getItem("name"));
   const [tagSet, setTagSet] = useState('')
   const tagID = "65f7a048017d08e34c5e8ee9" //id of the tag set in mongodb
+  const [tagsArray, setTagsArray] = useState([]);
 
   useEffect(() => {
     const fetchStoryById = async () => {
@@ -371,10 +372,35 @@ const StoryForm = () => {
     } catch (error) {
       console.error(`Error fetching story with ID ${storyId}:`, error);
     }
-    console.log(tagSet)
   }
 
-  getTags();
+  useEffect(() => {
+    if (tagsArray.length < 1) {
+      getTags().then(() => {
+        // Check if tagSet is not an empty string and is properly set
+        if (tagSet && tagSet !== '') {
+          // Split the tagSet using splitLines function
+          const splitTagsArray = splitLines(tagSet);
+          // Update the state with the split tags array
+          setTagsArray(splitTagsArray);
+        }
+      });
+      }
+  });
+
+  const handleDeleteTag = (index) =>{
+
+  }
+
+  const editTagsUI = () => {
+    console.log(tagsArray)
+    return tagsArray.map((line, index) => (
+      <div key={index}>
+        {line.endsWith('!') && <Divider />}
+        <Input value={line.replace('!', '')} />
+      </div>
+    ));
+  }
 
   return (
     <body className="story-form">
@@ -431,7 +457,8 @@ const StoryForm = () => {
         <Modal.Header>
           <Modal.Title>Edit Tags</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body>   
+        {editTagsUI()}     
         <div>
       {Object.keys(originalData).map(category => (
         <div key={category}>
@@ -454,6 +481,7 @@ const StoryForm = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+
 
         <div className="quill">
           <ReactQuill

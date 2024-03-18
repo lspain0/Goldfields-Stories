@@ -56,6 +56,35 @@ export function convertToString(groupedTags) {
   return result.trim(); // Remove trailing newline
 }
 
+export function splitLines(str) {
+  // Split the string by newlines
+  const lines = str.split(/\r?\n/);
+  const result = [];
+
+  let addExclamation = false;
+
+  // Loop through each line
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+
+    // Check if the line is not empty
+    if (line !== '') {
+      // If the previous line was empty or it's the first line, append '!' to it
+      if (addExclamation) {
+        result.push(line + '!');
+        addExclamation = false;
+      } else {
+        result.push(line);
+      }
+    } else {
+      // Set flag to add '!' to the next non-empty line
+      addExclamation = true;
+    }
+  }
+
+  return result;
+}
+
 
 export const groupedTags = [
     {
