@@ -19,9 +19,6 @@ function Home() {
       },
       async (error, result) => {
         if (!error && result && result.event === "success") {
-          // First, update the local state with the new image
-          setImages(prevImages => [...prevImages, result.info.secure_url]);
-          // Then, send the new image URL to your backend for storage
           try {
             const response = await fetch('/api/images', {
               method: 'POST',
@@ -33,13 +30,15 @@ function Home() {
             if (!response.ok) {
               throw new Error('Failed to save the image to the backend');
             }
+            const savedImage = await response.json(); // Get the full image object from the backend
+            setImages(prevImages => [...prevImages, savedImage]); // Update state with the full image object
           } catch (error) {
             console.error("Error saving the image:", error);
           }
         }
       }
     );
-  }, [images]); // Dependency array includes images to re-run the effect when images state updates
+  }, []);
 
   // useEffect to fetch images from backend on component mount
   useEffect(() => {
@@ -50,11 +49,13 @@ function Home() {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        setImages(data.map(img => img.imageUrl));
+        // Set the entire image object in your state, not just the imageUrl
+        setImages(data);
       } catch (error) {
         console.error("Failed to fetch images:", error);
       }
     };
+    
 
     fetchImages();
      // Set up interval for shuffling images
@@ -83,32 +84,28 @@ const shuffleImage = () => {
   }
 };
 
-const handleDeleteImage = async (imageToDelete) => {
-  // Assuming imageToDelete is the image URL, you need to find the corresponding image object to get its _id
-  const imageObject = images.find(img => img.imageUrl === imageToDelete);
-
-  if (imageObject && imageObject._id) {
-    try {
-      const response = await fetch(`/api/images/${imageObject._id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
-        throw new Error('Failed to delete the image from the backend');
-      }
-      // If the image is successfully deleted from the backend, update the local state
-      const newImages = images.filter((image) => image._id !== imageObject._id);
-      setImages(newImages);
-    } catch (error) {
-      console.error("Error deleting the image:", error);
+const handleDeleteImage = async (imageId) => {
+  try {
+    const response = await fetch(`/api/images/${imageId}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete the image from the backend');
     }
+    // Filter out the deleted image from your state based on _id
+    const newImages = images.filter((image) => image._id !== imageId);
+    setImages(newImages);
+  } catch (error) {
+    console.error("Error deleting the image:", error);
   }
 };
+
 
   const toggleShowImages = () => {
     setShowImages(!showImages);
   };
 
-  const currentImage = images[currentIndex];
+  const currentImage = images[currentIndex]?.imageUrl;
 
   return (
     <div className="home-container">
@@ -116,8 +113,10 @@ const handleDeleteImage = async (imageToDelete) => {
         <Logo />
       </div>
       <div className="home-image-container img">
-        {currentImage && <img src={currentImage} alt="Displayed" className="student-image" />}
-      </div>
+      {currentImage && <img src={currentImage} alt="Displayed" className="student-image" />}
+
+</div>
+
       <button onClick={handleImageUpload} className="home-upload-button">
         Upload Image
       </button>
@@ -125,12 +124,16 @@ const handleDeleteImage = async (imageToDelete) => {
         {showImages ? 'Hide Images' : 'View Images'}
       </button>
       {showImages && (
-        <div className="image-gallery">
-          {images.map((image, index) => (
-            <img key={index} src={image} alt={`Gallery ${index}`} />
-          ))}
-        </div>
-      )}
+  <div className="image-gallery">
+    {images.map((image) => (
+      <div key={image._id}>
+        <img src={image.imageUrl} alt="Gallery" />
+        <button onClick={() => handleDeleteImage(image._id)}>Delete</button>
+      </div>
+    ))}
+  </div>
+)}
+
       <div className="home-content">
         <p className="home-proverb">
           I te puāwaitanga o te harakeke, he rito whakakī whāruarua - When the flax blossoms, its many offspring begin their journey
