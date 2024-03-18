@@ -2,11 +2,13 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useStoriesContext } from "../hooks/useStoriesContext";
-import { CheckTreePicker, ButtonToolbar, Modal, Button, Input, Divider } from 'rsuite';
+import { CheckTreePicker, ButtonToolbar, Modal, Button, Input, Divider, InputGroup } from 'rsuite';
 import '../index.css';
 import { convertToString, convertToText, groupedTags, splitLines } from "./docs/tags";
 import StudentList from "./docs/StudentList";
+import SearchIcon from '@rsuite/icons/Search';
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" />
+
 
 var editing = false;
 var storyId;
@@ -391,13 +393,36 @@ const StoryForm = () => {
   const handleDeleteTag = (index) =>{
 
   }
+  const styles = {
+    width: "100%",
+    marginBottom: 10,
+    height: 45
+  };
 
   const editTagsUI = () => {
-    console.log(tagsArray)
+    var deleteButtonText = '';
+
+    function setDeleteButton(line, index) {
+      if (line.endsWith('*') || index === 0) {
+        deleteButtonText = "Delete Group";
+      }
+      else {
+        deleteButtonText = "Delete Tag";
+      }
+    }
+
     return tagsArray.map((line, index) => (
       <div key={index}>
-        {line.endsWith('!') && <Divider />}
-        <Input value={line.replace('!', '')} />
+        {setDeleteButton(line, index)}
+        {line.endsWith('*') && <Divider />}
+        <>
+        <InputGroup style={styles}>
+          <Input defaultValue={line.replace('*', '')} />
+          <InputGroup.Button>
+            {deleteButtonText}
+          </InputGroup.Button>
+        </InputGroup>
+        </>
       </div>
     ));
   }
@@ -458,19 +483,7 @@ const StoryForm = () => {
           <Modal.Title>Edit Tags</Modal.Title>
         </Modal.Header>
         <Modal.Body>   
-        {editTagsUI()}     
-        <div>
-      {Object.keys(originalData).map(category => (
-        <div key={category}>
-          <h3>{category}</h3>
-          <ul>
-            {originalData[category].map(item => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
+        {editTagsUI()}
         </Modal.Body>
         <Modal.Footer>
         <Button onClick={updateTagsContent} appearance="primary">

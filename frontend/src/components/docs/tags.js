@@ -61,7 +61,7 @@ export function splitLines(str) {
   const lines = str.split(/\r?\n/);
   const result = [];
 
-  let addExclamation = false;
+  let addAsterisk = false;
 
   // Loop through each line
   for (let i = 0; i < lines.length; i++) {
@@ -69,16 +69,16 @@ export function splitLines(str) {
 
     // Check if the line is not empty
     if (line !== '') {
-      // If the previous line was empty or it's the first line, append '!' to it
-      if (addExclamation) {
-        result.push(line + '!');
-        addExclamation = false;
+      // If the previous line was empty or it's the first line, append '*' to it
+      if (addAsterisk) {
+        result.push(line + '*');
+        addAsterisk = false;
       } else {
         result.push(line);
       }
     } else {
-      // Set flag to add '!' to the next non-empty line
-      addExclamation = true;
+      // Set flag to add '*' to the next non-empty line
+      addAsterisk = true;
     }
   }
 
