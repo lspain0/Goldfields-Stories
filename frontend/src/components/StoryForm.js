@@ -401,23 +401,40 @@ const StoryForm = () => {
 
   const editTagsUI = () => {
     var deleteButtonText = '';
+    var placeholderTag = '';
+    var tagHeader = '';
 
-    function setDeleteButton(line, index) {
+    function setGroup(line, index) {
+
       if (line.endsWith('*') || index === 0) {
         deleteButtonText = "Delete Group";
+        placeholderTag = "Enter Tag Group Title...";
+        tagHeader = 'Tag Group';
       }
       else {
         deleteButtonText = "Delete Tag";
+        placeholderTag = "Enter Tag Name...";
+        tagHeader = '';
       }
     }
 
     return tagsArray.map((line, index) => (
       <div key={index}>
-        {setDeleteButton(line, index)}
-        {line.endsWith('*') && <Divider />}
+        {setGroup(line, index)}
+        {line.endsWith('*') && 
+        <div>
+          <Button 
+          appearance="primary">
+            Add Tag
+          </Button>
+          <Divider />
+        </div>}
         <>
+        <h4>{tagHeader}</h4>
         <InputGroup style={styles}>
-          <Input defaultValue={line.replace('*', '')} />
+          <Input 
+          defaultValue={line.replace('*', '')}
+          placeholder={placeholderTag} />
           <InputGroup.Button>
             {deleteButtonText}
           </InputGroup.Button>
@@ -484,6 +501,10 @@ const StoryForm = () => {
         </Modal.Header>
         <Modal.Body>   
         {editTagsUI()}
+        <Divider></Divider>
+        <Button appearance="primary">
+          Create New Tag Group
+        </Button>
         </Modal.Body>
         <Modal.Footer>
         <Button onClick={updateTagsContent} appearance="primary">
