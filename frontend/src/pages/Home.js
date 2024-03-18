@@ -152,7 +152,6 @@ const handleDeleteImage = async (imageId) => {
         <h1>Nau Mai, Haere Mai</h1>
       </div>
       <div className="home-footer">
-      <Logo/>
         <div className="home-contact-info">
           <p>Monday–Friday 9am–5pm</p>
           <p>55 Norwood Road</p>
