@@ -144,6 +144,7 @@ const StoryForm = () => {
   const [selectedCheckTreeValuesChildren, setSelectedCheckTreeValuesChildren] = useState([]);
   const quillRef = useRef();
   const [currentUser, setUser] = useState(localStorage.getItem("name"));
+  const tagID = "65f7a048017d08e34c5e8ee9" //id of the tag set in mongodb
 
   useEffect(() => {
     const fetchStoryById = async () => {
@@ -336,7 +337,7 @@ const StoryForm = () => {
         content: tagsContent
       };
 
-      const response = await fetch(`/api/tags/65f7a048017d08e34c5e8ee9`, {
+      const response = await fetch(`/api/tags/${tagID}`, {
         method: 'PUT',
         body: JSON.stringify(requestBody), // Include updated tags data here
         headers: {
