@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useStoriesContext } from "../hooks/useStoriesContext";
@@ -111,6 +111,9 @@ const UploadWidgetVideo = ({ onVideoUpload }) => {
 
 
 const StoryForm = () => {
+
+  const originalData = convertToText(groupedTags);
+  const stringTags = convertToString(groupedTags)
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -290,9 +293,68 @@ const StoryForm = () => {
       }
     }
   };
+  //function to post the initial tag set on mongodb, should only ever need to be used once
+  const postTags = async () => {
+    try {
+      // Convert grouped tags to a string using convertToString function
+      const tagsContent = convertToString(groupedTags);
+  
+      // Construct the request body with the required content field
+      const requestBody = {
+        content: tagsContent
+      };
+  
+      // Send the POST request to the backend API
+      const response = await fetch('/api/tags', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      const json = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(json.error);
+      }
+  
+      console.log('Tags posted successfully:', json);
+      // You can add any further handling here, such as updating state or showing a success message
+    } catch (error) {
+      console.error('Error posting tags:', error);
+      // Handle the error as per your application's requirements
+    }
+  };
 
-  const originalData = convertToText(groupedTags);
-  console.log(convertToString(groupedTags))
+  //function to update the mongodb tag set
+  const updateTagsContent = async (groupedTags) => {
+    try {
+
+      const tagsContent = stringTags;
+      const requestBody = {
+        content: tagsContent
+      };
+
+      const response = await fetch(`/api/tags/65f7a048017d08e34c5e8ee9`, {
+        method: 'PUT',
+        body: JSON.stringify(requestBody), // Include updated tags data here
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      await response.json();
+  
+      if (!response.ok) {
+        throw new Error(`Error updating tags: ${response.statusText}`);
+      }
+
+    } catch (error) {
+      console.error('Error updating tags:', error);
+    }
+  };
+
 
   return (
     <body className="story-form">
@@ -364,7 +426,7 @@ const StoryForm = () => {
     </div>
         </Modal.Body>
         <Modal.Footer>
-        <Button onClick={handleClose} appearance="primary">
+        <Button onClick={updateTagsContent} appearance="primary">
           Save Changes
         </Button>
           <Button onClick={handleClose} appearance="subtle">

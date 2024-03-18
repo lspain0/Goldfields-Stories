@@ -7,6 +7,7 @@ const cors = require('cors');
 const storyRoutes = require('./routes/stories');
 const classRoutes = require('./routes/classRoutes');
 const userRoutes = require('./routes/userRoutes');
+const tagRoutes = require('./routes/tagRoutes');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
 
 app.use('/api/stories', storyRoutes);
 app.use('/api/classes', classRoutes);
+app.use('/api/tags', tagRoutes);
 
 /**
  * New Route added for user routes
