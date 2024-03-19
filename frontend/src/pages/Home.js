@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Logo2 from "../components/logov2";
 import Logo from "../components/logo";
-
 import "../home.css";
 
 function Home() {
@@ -12,23 +11,18 @@ function Home() {
 
   useEffect(() => {
     document.body.classList.add('home-page-background');
-
-    // Return a cleanup function that removes the class
     return () => {
       document.body.classList.remove('home-page-background');
     };
   }, []);
 
-  // useEffect for Cloudinary upload widget
   useEffect(() => {
-    cloudinaryWidgetRef.current = window.cloudinary.createUploadWidget(
-      {
+    cloudinaryWidgetRef.current = window.cloudinary.createUploadWidget({
         cloudName: "drpnvb7qc",
         uploadPreset: "tetlineq",
         sources: ["local"],
         clientAllowedFormats: ["image"],
-      },
-      async (error, result) => {
+      }, async (error, result) => {
         if (!error && result && result.event === "success") {
           try {
             const response = await fetch('/api/images', {
@@ -41,8 +35,9 @@ function Home() {
             if (!response.ok) {
               throw new Error('Failed to save the image to the backend');
             }
-            const savedImage = await response.json(); // Get the full image object from the backend
-            setImages(prevImages => [...prevImages, savedImage]); // Update state with the full image object
+            const newImage = await response.json();
+            setImages(prevImages => [...prevImages, newImage]);
+            setCurrentIndex(prevIndex => prevIndex + 1); // Set to the new image
           } catch (error) {
             console.error("Error saving the image:", error);
           }
@@ -51,70 +46,43 @@ function Home() {
     );
   }, []);
 
-  // useEffect to fetch images from backend on component mount
   useEffect(() => {
     const fetchImages = async () => {
       try {
         const response = await fetch('/api/images');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+        if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
-        // Set the entire image object in your state, not just the imageUrl
         setImages(data);
       } catch (error) {
         console.error("Failed to fetch images:", error);
       }
     };
 
-
     fetchImages();
-    // Set up interval for shuffling images
-    const intervalId = setInterval(shuffleImage, 3000);
-
-    // Cleanup function to clear interval
+    const intervalId = setInterval(() => setCurrentIndex(prevIndex => (prevIndex + 1) % images.length), 3000);
     return () => clearInterval(intervalId);
-  }, []);
-
-  // useEffect to update currentIndex when images array changes
-  useEffect(() => {
-    if (images.length > 0) {
-      setCurrentIndex(images.length - 1);
-    }
-  }, [images]);
+  }, [images.length]);
 
   const handleImageUpload = () => {
     cloudinaryWidgetRef.current.open();
   };
 
-  // Modify shuffleImage to randomly select an image
-  const shuffleImage = () => {
-    if (images.length > 0) {
-      const randomIndex = Math.floor(Math.random() * images.length);
-      setCurrentIndex(randomIndex);
-    }
-  };
-
   const handleDeleteImage = async (imageId) => {
     try {
-      const response = await fetch(`/api/images/${imageId}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
-        throw new Error('Failed to delete the image from the backend');
+      const response = await fetch(`/api/images/${imageId}`, { method: 'DELETE' });
+      if (!response.ok) throw new Error('Failed to delete the image');
+
+      const filteredImages = images.filter(image => image._id !== imageId);
+      setImages(filteredImages);
+      if (currentIndex >= filteredImages.length) {
+        setCurrentIndex(prevIndex => prevIndex > 0 ? prevIndex - 1 : 0);
       }
-      // Filter out the deleted image from your state based on _id
-      const newImages = images.filter((image) => image._id !== imageId);
-      setImages(newImages);
     } catch (error) {
       console.error("Error deleting the image:", error);
     }
   };
 
-
-  const toggleShowImages = () => {
-    setShowImages(!showImages);
-  };
+  const toggleShowImages = () => setShowImages(!showImages);
 
   const currentImage = images[currentIndex]?.imageUrl;
 
@@ -122,10 +90,11 @@ function Home() {
     <div className="home-container">
       <div className="home-header">
         <Logo2 />
+        <Logo />
       </div>
+
       <div className="home-image-container img">
         {currentImage && <img src={currentImage} alt="Displayed" className="student-image" />}
-
       </div>
 
       <button onClick={handleImageUpload} className="home-upload-button">
@@ -134,17 +103,19 @@ function Home() {
       <button onClick={toggleShowImages} className="home-upload-button">
         {showImages ? 'Hide Images' : 'View Images'}
       </button>
+
       {showImages && (
         <div className="image-gallery">
           {images.map((image) => (
             <div key={image._id}>
-              <img src={image.imageUrl} alt="Gallery" />
-              <button onClick={() => handleDeleteImage(image._id)}>Delete</button>
+              <img src={image.imageUrl} alt="Gallery" className="gallery-image"/>
+              <button onClick={() => handleDeleteImage(image._id)} className="delete-button">
+                Delete
+              </button>
             </div>
           ))}
         </div>
       )}
-
 
       <div className="home-content">
         <p className="home-proverb">
