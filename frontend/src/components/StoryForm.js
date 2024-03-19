@@ -398,16 +398,21 @@ const StoryForm = () => {
 
   const editTagsUI   = () => {
     var first = true;
+    var curr = 0;
     const deleteTag = (event) => {
       const button = event.target;
       const tagContainer = button.closest('.tag-edit-input');
       tagContainer.remove();
     };
+
+    const incrementCurr = () => {
+      curr++;
+    }
   
     return (
       <div className="tag-edit-group">
         {tagsArray.map((line, index) => (
-          <div key={index} className="tag-container">
+          <div key={index} className={"tag-container"+curr}>
             {line.endsWith('*')  && (
               <div>
                 <Button appearance="primary">Add Tag</Button>
