@@ -390,59 +390,47 @@ const StoryForm = () => {
       }
   });
 
-  const handleDeleteTag = (index) =>{
-
-  }
   const styles = {
     width: "100%",
     marginBottom: 10,
     height: 45
   };
 
-  const editTagsUI = () => {
-    var deleteButtonText = '';
-    var placeholderTag = '';
-    var tagHeader = '';
-
-    function setGroup(line, index) {
-
-      if (line.endsWith('*') || index === 0) {
-        deleteButtonText = "Delete Group";
-        placeholderTag = "Enter Tag Group Title...";
-        tagHeader = 'Tag Group';
-      }
-      else {
-        deleteButtonText = "Delete Tag";
-        placeholderTag = "Enter Tag Name...";
-        tagHeader = '';
-      }
-    }
-
-    return tagsArray.map((line, index) => (
-      <div key={index}>
-        {setGroup(line, index)}
-        {line.endsWith('*') && 
-        <div>
-          <Button 
-          appearance="primary">
-            Add Tag
-          </Button>
-          <Divider />
-        </div>}
-        <>
-        <h4>{tagHeader}</h4>
-        <InputGroup style={styles}>
-          <Input 
-          defaultValue={line.replace('*', '')}
-          placeholder={placeholderTag} />
-          <InputGroup.Button>
-            {deleteButtonText}
-          </InputGroup.Button>
-        </InputGroup>
-        </>
+  const editTagsUI   = () => {
+    var first = true;
+    const deleteTag = (event) => {
+      const button = event.target;
+      const tagContainer = button.closest('.tag-edit-input');
+      tagContainer.remove();
+    };
+  
+    return (
+      <div className="tag-edit-group">
+        {tagsArray.map((line, index) => (
+          <div key={index} className="tag-container">
+            {line.endsWith('*')  && (
+              <div>
+                <Button appearance="primary">Add Tag</Button>
+                <Divider />
+              </div>
+            )}
+            <h4>{line.endsWith('*') || first === true ? 'Tag Group' : ''}</h4>
+            <InputGroup className="tag-edit-input" style={styles}>
+              <Input
+                defaultValue={line.replace('*', '')}
+                placeholder={line.endsWith('*') ? 'Enter Tag Group Title...' : 'Enter Tag Name...'}
+              />
+              <InputGroup.Button onClick={deleteTag}>
+                {line.endsWith('*') || first === true ? 'Delete Group' : 'Delete Tag'}
+                {first = false}
+              </InputGroup.Button>
+            </InputGroup>
+          </div>
+        ))}
       </div>
-    ));
-  }
+    );
+  };
+  
 
   return (
     <body className="story-form">
