@@ -452,6 +452,7 @@ const StoryForm = () => {
           onChange={(value) => handleTagChange([group[0], ...value], index)}
         />
         <Button onClick={() => deleteTagGroup(index)}>Delete Group</Button>
+        <Divider/>
       </div>
     ));
   };
