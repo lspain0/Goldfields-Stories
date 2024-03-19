@@ -66,15 +66,15 @@ function Home() {
         console.error("Failed to fetch images:", error);
       }
     };
-    
+
 
     fetchImages();
-     // Set up interval for shuffling images
-     const intervalId = setInterval(shuffleImage, 3000);
+    // Set up interval for shuffling images
+    const intervalId = setInterval(shuffleImage, 3000);
 
-     // Cleanup function to clear interval
-     return () => clearInterval(intervalId);
-  }, []); 
+    // Cleanup function to clear interval
+    return () => clearInterval(intervalId);
+  }, []);
 
   // useEffect to update currentIndex when images array changes
   useEffect(() => {
@@ -87,29 +87,29 @@ function Home() {
     cloudinaryWidgetRef.current.open();
   };
 
-// Modify shuffleImage to randomly select an image
-const shuffleImage = () => {
-  if (images.length > 0) {
-    const randomIndex = Math.floor(Math.random() * images.length);
-    setCurrentIndex(randomIndex);
-  }
-};
-
-const handleDeleteImage = async (imageId) => {
-  try {
-    const response = await fetch(`/api/images/${imageId}`, {
-      method: 'DELETE',
-    });
-    if (!response.ok) {
-      throw new Error('Failed to delete the image from the backend');
+  // Modify shuffleImage to randomly select an image
+  const shuffleImage = () => {
+    if (images.length > 0) {
+      const randomIndex = Math.floor(Math.random() * images.length);
+      setCurrentIndex(randomIndex);
     }
-    // Filter out the deleted image from your state based on _id
-    const newImages = images.filter((image) => image._id !== imageId);
-    setImages(newImages);
-  } catch (error) {
-    console.error("Error deleting the image:", error);
-  }
-};
+  };
+
+  const handleDeleteImage = async (imageId) => {
+    try {
+      const response = await fetch(`/api/images/${imageId}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error('Failed to delete the image from the backend');
+      }
+      // Filter out the deleted image from your state based on _id
+      const newImages = images.filter((image) => image._id !== imageId);
+      setImages(newImages);
+    } catch (error) {
+      console.error("Error deleting the image:", error);
+    }
+  };
 
 
   const toggleShowImages = () => {
@@ -124,9 +124,9 @@ const handleDeleteImage = async (imageId) => {
         <Logo2 />
       </div>
       <div className="home-image-container img">
-      {currentImage && <img src={currentImage} alt="Displayed" className="student-image" />}
+        {currentImage && <img src={currentImage} alt="Displayed" className="student-image" />}
 
-</div>
+      </div>
 
       <button onClick={handleImageUpload} className="home-upload-button">
         Upload Image
@@ -135,15 +135,16 @@ const handleDeleteImage = async (imageId) => {
         {showImages ? 'Hide Images' : 'View Images'}
       </button>
       {showImages && (
-  <div className="image-gallery">
-    {images.map((image) => (
-      <div key={image._id}>
-        <img src={image.imageUrl} alt="Gallery" />
-        <button onClick={() => handleDeleteImage(image._id)}>Delete</button>
-      </div>
-    ))}
-  </div>
-)}
+        <div className="image-gallery">
+          {images.map((image) => (
+            <div key={image._id}>
+              <img src={image.imageUrl} alt="Gallery" />
+              <button onClick={() => handleDeleteImage(image._id)}>Delete</button>
+            </div>
+          ))}
+        </div>
+      )}
+
 
       <div className="home-content">
         <p className="home-proverb">
