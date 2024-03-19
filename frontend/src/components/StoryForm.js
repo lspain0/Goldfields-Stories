@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useStoriesContext } from "../hooks/useStoriesContext";
-import { CheckTreePicker, ButtonToolbar, Modal, Button, Input, Divider, InputGroup } from 'rsuite';
+import { CheckTreePicker, ButtonToolbar, Modal, Button, Input, Divider, InputGroup, TagInput } from 'rsuite';
 import '../index.css';
 import { convertToString, convertToText, groupedTags, splitLines } from "./docs/tags";
 import StudentList from "./docs/StudentList";
@@ -147,8 +147,6 @@ const StoryForm = () => {
   const [tagSet, setTagSet] = useState('')
   const tagID = "65f7a048017d08e34c5e8ee9" //id of the tag set in mongodb
   const [tagsArray, setTagsArray] = useState([]);
-  const [groups, setGroups] = useState([['']]);
-
 
   useEffect(() => {
     const fetchStoryById = async () => {
@@ -390,6 +388,11 @@ const StoryForm = () => {
       }
   });
 
+  useEffect(() => {
+    // Update tagGroups whenever tagsArray changes
+    setTagGroups(groupTags(tagsArray));
+  }, [tagsArray]);
+
   const styles = {
     width: "100%",
     marginBottom: 10,
@@ -397,55 +400,60 @@ const StoryForm = () => {
   };
 
   const editTagsUI = () => {
-    function splitArrayByAsteriskOrFirst(arr) {
-      const groups = [];
-      let group = [];
-      arr.forEach(item => {
-        if (item.endsWith('*') || group.length === 0) {
-          if (group.length > 0) {
-            groups.push(group);
-            group = [];
-          }
+  };
+
+  // Function to group tags based on asterisk delimiter
+  const groupTags = (tagsArray) => {
+    const groups = [];
+    let currentGroup = [];
+    tagsArray.forEach((tag) => {
+      if (tag.endsWith("*")) {
+        if (currentGroup.length > 0) {
+          groups.push(currentGroup);
+          currentGroup = [];
         }
-        group.push(item);
-      });
-      if (group.length > 0) {
-        groups.push(group);
       }
-      return groups;
+      currentGroup.push(tag.replace("*", ""));
+    });
+    if (currentGroup.length > 0) {
+      groups.push(currentGroup);
     }
-    
-    // Function to generate HTML for each group
-    function generateHTML(groups) {
-      return groups.map((group, index) => (
-        <div key={index} className="group">
-          {group.map((stringContent, idx) => (
-            <InputGroup style={styles} className="tag-edit-input" key={idx}>
-              <Input defaultValue={stringContent.replace('*', '')} placeholder={'Enter Tag Name...'} />
-              <InputGroup.Button>
-                Button
-              </InputGroup.Button>
-            </InputGroup>
-          ))}
-          <Button>Add Tag</Button>
-          <Divider/>
-        </div>
-      ));
-    }
-    
-    const groups = splitArrayByAsteriskOrFirst(tagsArray);
-    
-    // Function to generate HTML for all groups
-    function generateAllHTML(groups) {
-      return groups.map((group, index) => (
-        <div key={index} id={`group-${index}`}>
-          {generateHTML([group])}
-        </div>
-      ));
-    }
-    
-    const html = generateAllHTML(groups);
-    return html
+    return groups;
+  };
+
+  const [tagGroups, setTagGroups] = useState(groupTags(tagsArray));
+
+  // Function to add a new tag group
+  const addTagGroup = () => {
+    setTagGroups([...tagGroups, [""]]);
+  };
+
+  // Function to delete a tag group
+  const deleteTagGroup = (index) => {
+    const updatedGroups = tagGroups.filter((_, i) => i !== index);
+    setTagGroups(updatedGroups);
+  };
+
+  // Function to handle tag input change within a group
+  const handleTagChange = (value, index) => {
+    const updatedGroups = [...tagGroups];
+    updatedGroups[index] = value;
+    setTagGroups(updatedGroups);
+  };
+
+  // Function to render tag inputs for each group
+  const renderTagInputs = () => {
+    console.log(tagsArray)
+    return tagGroups.map((group, index) => (
+      <div key={index}>
+        <Input defaultValue={group[0]}></Input>
+        <TagInput block
+          value={group.slice(1)} // Exclude the first element as header
+          onChange={(value) => handleTagChange([group[0], ...value], index)}
+        />
+        <Button onClick={() => deleteTagGroup(index)}>Delete Group</Button>
+      </div>
+    ));
   };
 
   return (
@@ -504,9 +512,9 @@ const StoryForm = () => {
           <Modal.Title>Edit Tags</Modal.Title>
         </Modal.Header>
         <Modal.Body>   
-        {editTagsUI()}
+        {renderTagInputs()}
         <Divider></Divider>
-        <Button appearance="primary">
+        <Button appearance="primary" onClick={addTagGroup}>
           Create New Tag Group
         </Button>
         </Modal.Body>
