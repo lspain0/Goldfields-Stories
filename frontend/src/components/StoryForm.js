@@ -147,6 +147,7 @@ const StoryForm = () => {
   const [tagSet, setTagSet] = useState('')
   const tagID = "65f7a048017d08e34c5e8ee9" //id of the tag set in mongodb
   const [tagsArray, setTagsArray] = useState([]);
+  const [indexToDelete, setIndexToDelete] = useState(null);
 
   useEffect(() => {
     const fetchStoryById = async () => {
@@ -428,11 +429,16 @@ const StoryForm = () => {
     setTagGroups([...tagGroups, [""]]);
   };
 
-  // Function to delete a tag group
-  const deleteTagGroup = (index) => {
-    const updatedGroups = tagGroups.filter((_, i) => i !== index);
-    setTagGroups(updatedGroups);
-  };
+// Function to delete a tag group
+const deleteTagGroup = (index) => {
+  // Set the index to be deleted
+  setIndexToDelete(index);
+  const updatedGroups = tagGroups.filter((_, i) => i !== index);
+  setTagGroups(updatedGroups);
+  // Reset indexToDelete after deleting the group
+  setIndexToDelete(null);
+  console.log(tagGroups)
+};
 
   // Function to handle tag input change within a group
   const handleTagChange = (value, index) => {
@@ -441,21 +447,27 @@ const StoryForm = () => {
     setTagGroups(updatedGroups);
   };
 
-  // Function to render tag inputs for each group
-  const renderTagInputs = () => {
-    console.log(tagsArray)
-    return tagGroups.map((group, index) => (
-      <div key={index}>
-        <Input defaultValue={group[0]}></Input>
-        <TagInput block
-          value={group.slice(1)} // Exclude the first element as header
-          onChange={(value) => handleTagChange([group[0], ...value], index)}
-        />
-        <Button onClick={() => deleteTagGroup(index)}>Delete Group</Button>
-        <Divider/>
-      </div>
-    ));
-  };
+// Function to render tag inputs for each group
+const renderTagInputs = () => {
+  return tagGroups.map((group, index) => (
+    <div key={JSON.stringify(group)}>
+      {/* Render the div only if the index is not the one to be deleted */}
+      {index !== indexToDelete && (
+        <>
+          <Input defaultValue={group[0]}></Input>
+          <TagInput
+            block
+            value={group.slice(1)} // Exclude the first element as header
+            onChange={(value) => handleTagChange([group[0], ...value], index)}
+          />
+          <Button onClick={() => deleteTagGroup(index)}>Delete Group</Button>
+          <Divider />
+        </>
+      )}
+    </div>
+  ));
+};
+
 
   return (
     <body className="story-form">
