@@ -6,9 +6,7 @@ import { CheckTreePicker, ButtonToolbar, Modal, Button, Input, Divider, InputGro
 import '../index.css';
 import { convertToString, convertToText, groupedTags, splitLines } from "./docs/tags";
 import StudentList from "./docs/StudentList";
-import SearchIcon from '@rsuite/icons/Search';
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" />
-
 
 var editing = false;
 var storyId;
@@ -149,6 +147,8 @@ const StoryForm = () => {
   const [tagSet, setTagSet] = useState('')
   const tagID = "65f7a048017d08e34c5e8ee9" //id of the tag set in mongodb
   const [tagsArray, setTagsArray] = useState([]);
+  const [groups, setGroups] = useState([['']]);
+
 
   useEffect(() => {
     const fetchStoryById = async () => {
@@ -396,46 +396,57 @@ const StoryForm = () => {
     height: 45
   };
 
-  const editTagsUI   = () => {
-    var first = true;
-    var curr = 0;
-    const deleteTag = (event) => {
-      const button = event.target;
-      const tagContainer = button.closest('.tag-edit-input');
-      tagContainer.remove();
-    };
-
-    const incrementCurr = () => {
-      curr++;
+  const editTagsUI = () => {
+    function splitArrayByAsteriskOrFirst(arr) {
+      const groups = [];
+      let group = [];
+      arr.forEach(item => {
+        if (item.endsWith('*') || group.length === 0) {
+          if (group.length > 0) {
+            groups.push(group);
+            group = [];
+          }
+        }
+        group.push(item);
+      });
+      if (group.length > 0) {
+        groups.push(group);
+      }
+      return groups;
     }
-  
-    return (
-      <div className="tag-edit-group">
-        {tagsArray.map((line, index) => (
-          <div key={index} className={"tag-container"+curr}>
-            {line.endsWith('*')  && (
-              <div>
-                <Button appearance="primary">Add Tag</Button>
-                <Divider />
-              </div>
-            )}
-            <h4>{line.endsWith('*') || first === true ? 'Tag Group' : ''}</h4>
-            <InputGroup className="tag-edit-input" style={styles}>
-              <Input
-                defaultValue={line.replace('*', '')}
-                placeholder={line.endsWith('*') ? 'Enter Tag Group Title...' : 'Enter Tag Name...'}
-              />
-              <InputGroup.Button onClick={deleteTag}>
-                {line.endsWith('*') || first === true ? 'Delete Group' : 'Delete Tag'}
-                {first = false}
+    
+    // Function to generate HTML for each group
+    function generateHTML(groups) {
+      return groups.map((group, index) => (
+        <div key={index} className="group">
+          {group.map((stringContent, idx) => (
+            <InputGroup style={styles} className="tag-edit-input" key={idx}>
+              <Input defaultValue={stringContent.replace('*', '')} placeholder={'Enter Tag Name...'} />
+              <InputGroup.Button>
+                Button
               </InputGroup.Button>
             </InputGroup>
-          </div>
-        ))}
-      </div>
-    );
+          ))}
+          <Button>Add Tag</Button>
+          <Divider/>
+        </div>
+      ));
+    }
+    
+    const groups = splitArrayByAsteriskOrFirst(tagsArray);
+    
+    // Function to generate HTML for all groups
+    function generateAllHTML(groups) {
+      return groups.map((group, index) => (
+        <div key={index} id={`group-${index}`}>
+          {generateHTML([group])}
+        </div>
+      ));
+    }
+    
+    const html = generateAllHTML(groups);
+    return html
   };
-  
 
   return (
     <body className="story-form">
