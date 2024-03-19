@@ -90,7 +90,6 @@ function Home() {
     <div className="home-container">
       <div className="home-header">
         <Logo2 />
-        <Logo />
       </div>
 
       <div className="home-image-container img">
