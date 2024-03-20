@@ -143,7 +143,7 @@ function Home() {
       </div>
       <div className="home-footer">
         <div className="home-contact-info">
-          <div className="logo-container">
+          <div className="logo-container-home">
             <Logo />
           </div>
           <div className="contact-details">

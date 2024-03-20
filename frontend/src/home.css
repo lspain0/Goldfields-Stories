@@ -123,11 +123,16 @@
   width: 100%;
 }
 
-.logo-container {
+.logo-container-home {
   /* Adjustments for the logo size and spacing can be made here */
   max-width: 250px; /* Adjust if necessary */
   height: auto; /* Adjust if necessary */
   flex-shrink: 0; /* Prevent the logo from shrinking */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+  width: 100%;
 }
 .logo-container img {
   max-width: 200px; /* Example size, adjust as needed */
