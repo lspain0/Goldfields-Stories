@@ -12,6 +12,7 @@ var editing = false;
 var storyId;
 var optimisedUrl
 var roleCheck = false;
+var updateCheck = false;
 
 function checkRole () {
   const role = localStorage.getItem("role");
@@ -113,7 +114,6 @@ const UploadWidgetVideo = ({ onVideoUpload }) => {
 const StoryForm = () => {
 
   const originalData = convertToText(groupedTags);
-  const stringTags = convertToString(groupedTags)
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -148,6 +148,10 @@ const StoryForm = () => {
   const tagID = "65f7a048017d08e34c5e8ee9" //id of the tag set in mongodb
   const [tagsArray, setTagsArray] = useState([]);
   const [indexToDelete, setIndexToDelete] = useState(null);
+  const [originalTagGroups, setOriginalTagGroups] = useState([]);
+  const [updatedGroups, setUpdatedGroups] = useState([]);
+  const [stringTags, setStringTags] = useState(convertToString(groupedTags));
+
 
   useEffect(() => {
     const fetchStoryById = async () => {
@@ -331,36 +335,63 @@ const StoryForm = () => {
     }
   };
 
-  //function to update the mongodb tag set
-  const updateTagsContent = async (groupedTags) => {
-    try {
-
-      const tagsContent = stringTags;
-      const requestBody = {
-        content: tagsContent
-      };
-
-      const response = await fetch(`/api/tags/${tagID}`, {
-        method: 'PUT',
-        body: JSON.stringify(requestBody), // Include updated tags data here
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+  function convertArrayToString(arrayOfArrays) {
+    let result = '';
   
-      await response.json();
+    arrayOfArrays.forEach((innerArray, index) => {
+      // Join the inner array elements with a newline character
+      const innerString = innerArray.join('\n');
+      
+      // Append the inner string to the result
+      result += innerString;
   
-      if (!response.ok) {
-        throw new Error(`Error updating tags: ${response.statusText}`);
+      // Add a newline character after each inner array
+      result += '\n';
+  
+      // Add an empty line after each inner array (except for the last one)
+      if (index < arrayOfArrays.length - 1) {
+        result += '\n';
       }
+    });
+  
+    return result;
+  }
 
-    } catch (error) {
-      console.error('Error updating tags:', error);
+// Function to update the mongodb tag set
+const updateTagsContent = async () => {
+  try {
+    setStringTags(convertArrayToString(tagGroups));
+    const tagsContent = stringTags;
+    const requestBody = {
+      content: tagsContent
+    };
+
+    console.log(tagsContent)
+
+    const response = await fetch(`/api/tags/${tagID}`, {
+      method: 'PUT',
+      body: JSON.stringify(requestBody), // Include updated tags data here
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    await response.json();
+
+    if (!response.ok) {
+      throw new Error(`Error updating tags: ${response.statusText}`);
     }
-  };
+
+    // Close the modal and set tagGroups to updatedGroups
+    setOpen(false);
+
+  } catch (error) {
+    console.error('Error updating tags:', error);
+  }
+
+};
 
   const getTags = async () => {
-
     try {
       const response = await fetch(`/api/tags/${tagID}`);
       const json = await response.json();
@@ -368,10 +399,10 @@ const StoryForm = () => {
       if (response.ok) {
         setTagSet(json.content);
       } else {
-        console.error(`Error fetching story with ID ${storyId}:`, json);
+        console.error(`Error fetching tags`);
       }
     } catch (error) {
-      console.error(`Error fetching story with ID ${storyId}:`, error);
+      console.error(`Error fetching tags`);
     }
   }
 
@@ -393,15 +424,6 @@ const StoryForm = () => {
     // Update tagGroups whenever tagsArray changes
     setTagGroups(groupTags(tagsArray));
   }, [tagsArray]);
-
-  const styles = {
-    width: "100%",
-    marginBottom: 10,
-    height: 45
-  };
-
-  const editTagsUI = () => {
-  };
 
   // Function to group tags based on asterisk delimiter
   const groupTags = (tagsArray) => {
@@ -428,24 +450,43 @@ const StoryForm = () => {
   const addTagGroup = () => {
     setTagGroups([...tagGroups, [""]]);
   };
+  
 
 // Function to delete a tag group
 const deleteTagGroup = (index) => {
   // Set the index to be deleted
   setIndexToDelete(index);
+
   const updatedGroups = tagGroups.filter((_, i) => i !== index);
+
+  setUpdatedGroups(tagGroups.filter((_, i) => i !== index))
   setTagGroups(updatedGroups);
   // Reset indexToDelete after deleting the group
   setIndexToDelete(null);
   console.log(tagGroups)
 };
 
-  // Function to handle tag input change within a group
-  const handleTagChange = (value, index) => {
-    const updatedGroups = [...tagGroups];
-    updatedGroups[index] = value;
-    setTagGroups(updatedGroups);
-  };
+const handleTagChange = (value, index) => {
+  updateCheck = false;
+  var updatedGroups = [...tagGroups];
+  updatedGroups[index] = value;
+  setTagGroups(updatedGroups, () => {
+    updateCheck = true;
+  });
+};
+
+
+const handleOpenTags = () => {
+  setOpen(true);
+  // Save the current tagGroups state as the originalTagGroups state
+  setOriginalTagGroups(tagGroups);
+};
+
+const handleCancel = () => {
+  // Revert back to the original tagGroups state when cancel button is clicked
+  setTagGroups(originalTagGroups);
+  setOpen(false); // Close the modal
+};
 
 // Function to render tag inputs for each group
 const renderTagInputs = () => {
@@ -517,7 +558,7 @@ const renderTagInputs = () => {
         <UploadWidgetVideo onVideoUpload={handleImageUpload} />
 
         <ButtonToolbar>
-        <Button onClick={handleOpen}> Edit Tags</Button>
+        <Button onClick={handleOpenTags}> Edit Tags</Button>
       </ButtonToolbar>
 
       <Modal backdrop="static" open={open} onClose={handleClose}>
@@ -535,7 +576,7 @@ const renderTagInputs = () => {
         <Button onClick={updateTagsContent} appearance="primary">
           Save Changes
         </Button>
-          <Button onClick={handleClose} appearance="subtle">
+          <Button onClick={handleCancel} appearance="subtle">
             Cancel
           </Button>
         </Modal.Footer>
