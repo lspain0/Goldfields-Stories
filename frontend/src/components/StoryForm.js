@@ -4,7 +4,7 @@ import "react-quill/dist/quill.snow.css";
 import { useStoriesContext } from "../hooks/useStoriesContext";
 import { CheckTreePicker, ButtonToolbar, Modal, Button, Input, Divider, InputGroup, TagInput } from 'rsuite';
 import '../index.css';
-import { convertToString, convertToText, groupedTags, splitLines } from "./docs/tags";
+import { convertStringToGroupedTags, convertToString, convertToText, splitLines } from "./docs/tags";
 import StudentList from "./docs/StudentList";
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" />
 
@@ -13,6 +13,9 @@ var storyId;
 var optimisedUrl
 var roleCheck = false;
 var updateCheck = false;
+var groupedTags = [];
+const numbers = Array.from({ length: 101 }, (_, index) => index.toString());
+
 
 function checkRole () {
   const role = localStorage.getItem("role");
@@ -394,6 +397,9 @@ const updateTagsContent = async () => {
     if (!response.ok) {
       throw new Error(`Error updating tags: ${response.statusText}`);
     }
+    else {
+      groupedTags = convertStringToGroupedTags(tagsContent);
+    }
 
     // Close the modal and set tagGroups to updatedGroups
     setOpen(false);
@@ -428,6 +434,7 @@ const updateTagsContent = async () => {
           const splitTagsArray = splitLines(tagSet);
           // Update the state with the split tags array
           setTagsArray(splitTagsArray);
+          groupedTags = convertStringToGroupedTags(tagSet);
         }
       });
       }
@@ -500,8 +507,9 @@ const handleCancel = () => {
 
 // Function to render tag inputs for each group
 const renderTagInputs = () => {
+  console.log(tagGroups);
   return tagGroups.map((group, index) => (
-    <div key={JSON.stringify(group)}>
+    <div key={JSON.stringify(group)+index}>
       {/* Render the div only if the index is not the one to be deleted */}
       {index !== indexToDelete && (
         <>
@@ -553,7 +561,7 @@ const renderTagInputs = () => {
           className="check-tree2"
           placeholder="Learning tags..."
           data={groupedTags}
-          uncheckableItemValues={['1', '2', '3', '4']}
+          uncheckableItemValues={numbers}
           value={selectedCheckTreeValuesTags}
           onChange={handleCheckTreePickerChangeTags}
           cascade={false}

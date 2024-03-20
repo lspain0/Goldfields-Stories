@@ -85,6 +85,34 @@ export function splitLines(str) {
   return result;
 }
 
+export const convertStringToGroupedTags = (input) => {
+  const lines = input.split(/\n\s*\n/);
+  let value = 1;
+  const result = [];
+  
+  lines.forEach((line, index) => {
+    const lineItems = line.split('\n').filter(item => item.trim() !== '');
+    if (lineItems.length > 0) {
+      const parentLabel = lineItems.shift();
+      const parentValue = value.toString();
+      value++;
+      const children = lineItems.map(child => ({
+        label: child.trim(),
+        value: child.trim(),
+      }));
+      result.push({
+        label: parentLabel.trim(),
+        value: parentValue,
+        children,
+      });
+    }
+  });
+
+  console.log(result);
+  return result;
+  
+};
+
 
 export const groupedTags = [
     {
