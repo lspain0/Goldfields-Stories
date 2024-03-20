@@ -3,7 +3,6 @@ import { useStoriesContext } from "../hooks/useStoriesContext";
 import { Link } from 'react-router-dom';
 import axios_obj from "../axios";
 import StudentList from "../components/docs/StudentList";
-import { groupedTags } from "../components/docs/tags";
 import {
   Dropdown,
   RadioGroup,
@@ -14,6 +13,10 @@ import {
 } from 'rsuite';
 import Logo from "../components/logo";
 import StoryDetails from "../components/StoryDetails";
+import { convertStringToGroupedTags, splitLines } from "../components/docs/tags";
+
+const numbers = Array.from({ length: 101 }, (_, index) => index.toString());
+var groupedTags = [];
 
 const Stories = () => {
   const { stories, dispatch } = useStoriesContext();
@@ -25,6 +28,39 @@ const Stories = () => {
   const [reset, setReset] = useState(''); //state to reset checktrees when updated
   const [dropdownOpen, setDropdownOpen] = useState(false); // State to manage dropdown visibility
   const [sortOption, setSortOption] = useState("Story Date"); // Selected Story Sort Option
+  const [tagSet, setTagSet] = useState('')
+  const tagID = "65f7a048017d08e34c5e8ee9" //id of the tag set in mongodb
+  const [tagsArray, setTagsArray] = useState([]);
+
+  const getTags = async () => {
+    try {
+      const response = await fetch(`/api/tags/${tagID}`);
+      const json = await response.json();
+
+      if (response.ok) {
+        setTagSet(json.content);
+      } else {
+        console.error(`Error fetching tags`);
+      }
+    } catch (error) {
+      console.error(`Error fetching tags`);
+    }
+  }
+
+  useEffect(() => {
+    if (tagsArray.length < 1) {
+      getTags().then(() => {
+        // Check if tagSet is not an empty string and is properly set
+        if (tagSet && tagSet !== '') {
+          // Split the tagSet using splitLines function
+          const splitTagsArray = splitLines(tagSet);
+          // Update the state with the split tags array
+          setTagsArray(splitTagsArray);
+          groupedTags = convertStringToGroupedTags(tagSet);
+        }
+      });
+      }
+  });
 
   //sorts studentlist alphabetically for dropdown
   const sortedData = StudentList().sort((a, b) => {
@@ -193,7 +229,7 @@ const Stories = () => {
             key={reset.length}
             height={"150px"}
             data={groupedTags}
-            uncheckableItemValues={['1', '2', '3', '4']}
+            uncheckableItemValues={numbers}
             cascade={false}
             onChange={handleCheckTreeChangeTags}
           />

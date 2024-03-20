@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useStoriesContext } from "../hooks/useStoriesContext";
-import { CheckTreePicker, ButtonToolbar, Modal, Button, Input, Divider, InputGroup, TagInput } from 'rsuite';
+import { CheckTreePicker, ButtonToolbar, Modal, Button, Input, Divider, TagInput } from 'rsuite';
 import '../index.css';
-import { convertStringToGroupedTags, convertToString, convertToText, splitLines } from "./docs/tags";
+import { convertStringToGroupedTags, splitLines } from "./docs/tags";
 import StudentList from "./docs/StudentList";
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" />
 
@@ -12,10 +12,8 @@ var editing = false;
 var storyId;
 var optimisedUrl
 var roleCheck = false;
-var updateCheck = false;
 var groupedTags = [];
 const numbers = Array.from({ length: 101 }, (_, index) => index.toString());
-
 
 function checkRole () {
   const role = localStorage.getItem("role");
@@ -116,10 +114,7 @@ const UploadWidgetVideo = ({ onVideoUpload }) => {
 
 const StoryForm = () => {
 
-  const originalData = convertToText(groupedTags);
-
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   
   checkRole();
@@ -152,8 +147,6 @@ const StoryForm = () => {
   const [tagsArray, setTagsArray] = useState([]);
   const [indexToDelete, setIndexToDelete] = useState(null);
   const [originalTagGroups, setOriginalTagGroups] = useState([]);
-  const [updatedGroups, setUpdatedGroups] = useState([]);
-  const [stringTags, setStringTags] = useState(convertToString(groupedTags));
 
 
   useEffect(() => {
@@ -305,7 +298,7 @@ const StoryForm = () => {
     }
   };
   //function to post the initial tag set on mongodb, should only ever need to be used once
-  const postTags = async () => {
+  /*const postTags = async () => {
     try {
       // Convert grouped tags to a string using convertToString function
       const tagsContent = convertToString(groupedTags);
@@ -336,29 +329,8 @@ const StoryForm = () => {
       console.error('Error posting tags:', error);
       // Handle the error as per your application's requirements
     }
-  };
+  };*/
 
-  function convertArrayToString(arrayOfArrays) {
-    let result = '';
-  
-    arrayOfArrays.forEach((innerArray, index) => {
-      // Join the inner array elements with a newline character
-      const innerString = innerArray.join('\n');
-      
-      // Append the inner string to the result
-      result += innerString;
-  
-      // Add a newline character after each inner array
-      result += '\n';
-  
-      // Add an empty line after each inner array (except for the last one)
-      if (index < arrayOfArrays.length - 1) {
-        result += '\n';
-      }
-    });
-  
-    return result;
-  }
 
 // Function to update the mongodb tag set
 const updateTagsContent = async () => {
@@ -373,8 +345,6 @@ const updateTagsContent = async () => {
     // Replace commas with new line characters only if there's no space after them
     modalText = modalText.replace(/,(?!\s)/g, '\n');
 
-
-    setStringTags(convertArrayToString(tagGroups));
     const tagsContent = modalText.trim();
     const requestBody = {
       content: tagsContent
@@ -474,8 +444,6 @@ const deleteTagGroup = (index) => {
   setIndexToDelete(index);
 
   const updatedGroups = tagGroups.filter((_, i) => i !== index);
-
-  setUpdatedGroups(tagGroups.filter((_, i) => i !== index))
   setTagGroups(updatedGroups);
   // Reset indexToDelete after deleting the group
   setIndexToDelete(null);
