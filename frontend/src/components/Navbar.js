@@ -60,10 +60,10 @@ const Navbar = (props) => {
     return (
         <header>
             <nav className="navbar">
-                {/* Display the determined page title */}
-                <Link to="/" className="nav-logo">
+                {/* Display the determined page title - i dont think this link is needed ?*/}
+                {/*<Link to="/home" className="nav-logo">*/}
                     <h1 className="nav-h1">{pageTitle}</h1>
-                </Link>
+                {/*</nav></Link>*/}
                 <div className="nav-links">
                     <Link to="/home" className={isActive("/home")}>
                         Home
