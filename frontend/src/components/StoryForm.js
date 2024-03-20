@@ -370,8 +370,6 @@ const updateTagsContent = async () => {
       modalText += `${input.value}\n`; // Add a new line after each tag
     });
 
-    console.log('Modal Text:', modalText); // Check if this logs the gathered text
-
     // Replace commas with new line characters only if there's no space after them
     modalText = modalText.replace(/,(?!\s)/g, '\n');
 
@@ -381,8 +379,6 @@ const updateTagsContent = async () => {
     const requestBody = {
       content: tagsContent
     };
-
-    console.log(tagsContent)
 
     const response = await fetch(`/api/tags/${tagID}`, {
       method: 'PUT',
@@ -483,7 +479,6 @@ const deleteTagGroup = (index) => {
   setTagGroups(updatedGroups);
   // Reset indexToDelete after deleting the group
   setIndexToDelete(null);
-  console.log(tagGroups)
 };
 
 const handleTagChange = (value, index) => {
@@ -491,7 +486,6 @@ const handleTagChange = (value, index) => {
   updatedGroups[index] = value;
   setTagGroups(updatedGroups)
 };
-
 
 const handleOpenTags = () => {
   setOpen(true);
@@ -507,13 +501,15 @@ const handleCancel = () => {
 
 // Function to render tag inputs for each group
 const renderTagInputs = () => {
-  console.log(tagGroups);
   return tagGroups.map((group, index) => (
     <div key={JSON.stringify(group)+index}>
       {/* Render the div only if the index is not the one to be deleted */}
       {index !== indexToDelete && (
         <>
-          <Input defaultValue={group[0]}></Input>
+          <Input 
+            defaultValue={group[0]}
+            onChange={(defaultValue) => group[0] = (defaultValue)}
+          ></Input>
           <TagInput
             block
             value={group.slice(1)} // Exclude the first element as header
@@ -526,7 +522,6 @@ const renderTagInputs = () => {
     </div>
   ));
 };
-
 
   return (
     <body className="story-form">
