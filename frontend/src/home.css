@@ -101,7 +101,7 @@
   display: flex;
   width: 100%;
   align-items: center; /* Center items vertically */
-  justify-content: center; /* Center items horizontally */
+  justify-content: space-between; /* Center items horizontally */
   padding: 20px;
 }
 
@@ -109,6 +109,7 @@
 .home-contact-info {
   display: flex; /* Use Flexbox */
   margin-top: 5px;
+  align-items: center;
   font-size: 13px;
   color: #555; /* This color might need to be adjusted based on your preference */
   background-color: #e2dfdf; /* This should be the background color of the rectangle */
@@ -137,6 +138,8 @@
   font-family: 'Poppins', sans-serif; /* Consistent font for the contact details */
   line-height: 1.5; /* Adjust line height for better readability */
   color: #555; /* Main text color */
+  flex: 1; /* This will make sure it takes up as much space as possible */
+  padding: 0 20px; /* Add padding on the sides */
 }
 
 .contact-details p {
@@ -156,6 +159,15 @@
 .contact-details .contact-email {
   font-size: 16px; /* Normal text size for email */
   word-break: break-all; /* Ensures the email address breaks onto a new line if needed */
+}
+
+/* map container*/
+.leaflet-map-container {
+  /* Adjust height and width as necessary to match your design */
+  height: 250px; /* Adjust to match the height in the image */
+  width: 30%; /* Remaining space */
+  border: 1px solid #ccc; /* Optional: adds a border around the map */
+  position: right;
 }
 
 /****************************************************/
@@ -233,4 +245,5 @@
   margin: 10px;
 }
 /****************************************************/
+
 
