@@ -69,6 +69,7 @@ function App() {
           <Navbar role={role} />
             <div className="pages">
               <Routes>
+                <Route path="/" element={<Home />} />
                 <Route path="/stories" element={<Stories />} />
                 <Route path="/pending" element={<PendingStories />} />
                 <Route path="/class" element={<Class />} />
