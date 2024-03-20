@@ -147,6 +147,9 @@ const StoryForm = () => {
   const [tagsArray, setTagsArray] = useState([]);
   const [indexToDelete, setIndexToDelete] = useState(null);
   const [originalTagGroups, setOriginalTagGroups] = useState([]);
+  const [checkTreeChildrenOpen, setCheckTreeChildrenOpen] = useState(false); // State to manage tree visibility
+  const [checkTreeTagsOpen, setCheckTreeTagsOpen] = useState(false); // State to manage tree visibility
+
 
 
   useEffect(() => {
@@ -199,6 +202,22 @@ const StoryForm = () => {
     const childrenString = Array.isArray(values) ? values.join(',') : '';
     setChildren(childrenString);
   };
+
+    //toggles tree visibility
+    const toggleCheckTreePickerChildren = () => {
+      setCheckTreeChildrenOpen(!checkTreeChildrenOpen);
+      if (checkTreeTagsOpen) {
+        toggleCheckTreePickerTags();
+      }
+    };
+
+    //toggles tree visibility
+    const toggleCheckTreePickerTags = () => {
+      setCheckTreeTagsOpen(!checkTreeTagsOpen);
+      if (checkTreeChildrenOpen) {
+        toggleCheckTreePickerChildren();
+      }
+    };
 
   const handleImageUpload = imageUrl => {
     if (imageUrl.includes("f_auto:video,q_auto"))
@@ -483,7 +502,7 @@ const renderTagInputs = () => {
             value={group.slice(1)} // Exclude the first element as header
             onChange={(value) => handleTagChange([group[0], ...value], index)}
           />
-          <Button className="dropdown-delete-button" onClick={() => deleteTagGroup(index)}>Delete Group</Button>
+          <Button className="dropdown-delete-button" onClick={() => deleteTagGroup(index)} color="red" appearance="primary">Delete Group</Button>
           <Divider />
         </>
       )}
@@ -513,8 +532,23 @@ const renderTagInputs = () => {
           data={sortedData}
           uncheckableItemValues={['1-1', '1-1-2']}
           value={selectedCheckTreeValuesChildren}
+          onOpenChange={setCheckTreeChildrenOpen}
           onChange={handleCheckTreePickerChangeChildren}
+          onClick={toggleCheckTreePickerChildren}
           cascade={false}
+          open={checkTreeChildrenOpen}
+          renderExtraFooter={() => (
+            <div
+              style={{
+                padding: '10px 2px',
+                borderTop: '1px solid #e5e5e5'
+              }}
+            >
+              <Button inline className="checktree-close" appearance="primary" onClick={toggleCheckTreePickerChildren}>
+                Done
+              </Button>
+            </div>
+          )}
         />
         
         <UploadWidget onImageUpload={handleImageUpload} />
@@ -526,12 +560,27 @@ const renderTagInputs = () => {
           data={groupedTags}
           uncheckableItemValues={numbers}
           value={selectedCheckTreeValuesTags}
+          onOpenChange={setCheckTreeTagsOpen}
           onChange={handleCheckTreePickerChangeTags}
+          onClick={toggleCheckTreePickerTags}
+          open={checkTreeTagsOpen}
           cascade={false}
           style={{ width: 660 }}
           renderMenu={(menu) => (
             <div style={{ maxWidth: 'calc(100vh - 100px)' }}>
               {menu}
+            </div>
+          )}
+          renderExtraFooter={() => (
+            <div
+              style={{
+                padding: '10px 2px',
+                borderTop: '1px solid #e5e5e5'
+              }}
+            >
+              <Button inline className="checktree-close" appearance="primary" onClick={toggleCheckTreePickerTags}>
+                Done
+              </Button>
             </div>
           )}
         />

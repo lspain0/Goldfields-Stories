@@ -518,22 +518,19 @@ div.sub, iframe, image {
   min-width: 195px;
 }
 
-.dropdown-primary {
+.dropdown-primary, .checktree-close {
   margin-right: 10px;
   background: #326C6F;
 }
 
-.dropdown-primary:hover {
+.dropdown-primary:hover, .checktree-close:hover {
   background-color: #224957;
 }
 
 .dropdown-delete-button {
   margin-top: 5px;
-  color: white;
-  background: rgb(220, 0, 0);
 }
 
-.dropdown-delete-button:hover {
-  color: white;
-  background: rgb(210, 0, 0);
+.checktree-close {
+  margin-left: 10px;
 }
