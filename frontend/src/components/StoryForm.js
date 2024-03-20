@@ -360,8 +360,21 @@ const StoryForm = () => {
 // Function to update the mongodb tag set
 const updateTagsContent = async () => {
   try {
+    // Gather the text and tags from within the modal body div
+    let modalText = '';
+    const inputElements = document.querySelectorAll('.rs-modal-body input');
+    inputElements.forEach((input, index) => {
+      modalText += `${input.value}\n`; // Add a new line after each tag
+    });
+
+    console.log('Modal Text:', modalText); // Check if this logs the gathered text
+
+    // Replace commas with new line characters only if there's no space after them
+    modalText = modalText.replace(/,(?!\s)/g, '\n');
+
+
     setStringTags(convertArrayToString(tagGroups));
-    const tagsContent = stringTags;
+    const tagsContent = modalText.trim();
     const requestBody = {
       content: tagsContent
     };
@@ -467,12 +480,9 @@ const deleteTagGroup = (index) => {
 };
 
 const handleTagChange = (value, index) => {
-  updateCheck = false;
   var updatedGroups = [...tagGroups];
   updatedGroups[index] = value;
-  setTagGroups(updatedGroups, () => {
-    updateCheck = true;
-  });
+  setTagGroups(updatedGroups)
 };
 
 
