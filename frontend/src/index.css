@@ -526,3 +526,14 @@ div.sub, iframe, image {
 .dropdown-primary:hover {
   background-color: #224957;
 }
+
+.dropdown-delete-button {
+  margin-top: 5px;
+  color: white;
+  background: rgb(220, 0, 0);
+}
+
+.dropdown-delete-button:hover {
+  color: white;
+  background: rgb(210, 0, 0);
+}

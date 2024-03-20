@@ -483,7 +483,7 @@ const renderTagInputs = () => {
             value={group.slice(1)} // Exclude the first element as header
             onChange={(value) => handleTagChange([group[0], ...value], index)}
           />
-          <Button onClick={() => deleteTagGroup(index)}>Delete Group</Button>
+          <Button className="dropdown-delete-button" onClick={() => deleteTagGroup(index)}>Delete Group</Button>
           <Divider />
         </>
       )}
@@ -549,17 +549,17 @@ const renderTagInputs = () => {
         <Modal.Body>   
         {renderTagInputs()}
         <Divider></Divider>
-        <Button appearance="primary" onClick={addTagGroup}>
+        <Button appearance="primary" className="dropdown-primary" onClick={addTagGroup}>
           Create New Tag Group
         </Button>
         </Modal.Body>
         <Modal.Footer>
-        <Button onClick={updateTagsContent} appearance="primary">
-          Save Changes
-        </Button>
           <Button onClick={handleCancel} appearance="subtle">
             Cancel
           </Button>
+          <Button onClick={updateTagsContent} className="dropdown-primary" appearance="primary">
+          Save Changes
+        </Button>
         </Modal.Footer>
       </Modal>
 
