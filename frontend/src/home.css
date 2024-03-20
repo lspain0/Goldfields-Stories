@@ -65,6 +65,7 @@
 .home-container {
   text-align: center;
   font-family: 'Poppins', sans-serif;
+  width: 100%;
 }
 
 .home-header {
@@ -84,15 +85,90 @@
 .home-proverb {
   margin-top: 20px;
   font-style: italic;
-  color: #555; /* Adjust the color as needed */
+  color: #E9AF0C;/* Adjust the color as needed */
+  font-size: 22px;
 }
 
-.home-contact-info{
+.home-welcome {
+  margin-top: 20px;
+  font-style: italic;
+  color: #326C6F;/* Adjust the color as needed */
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.home-footer {
+  display: flex;
+  width: 100%;
+  align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Center items horizontally */
+  padding: 20px;
+}
+
+
+.home-contact-info {
+  display: flex; /* Use Flexbox */
   margin-top: 5px;
-  font-size: 15px;
-  color: #555; /* Adjust the color as needed */
+  align-items: center;
+  font-size: 13px;
+  color: #555; /* This color might need to be adjusted based on your preference */
+  background-color: #e2dfdf; /* This should be the background color of the rectangle */
+  border-radius: 10px; /* This will give slightly rounded corners */
+  width: auto; /* Adjust based on the container size, auto for content width */
+  padding: 20px; /* Adjust the padding as needed */
+  box-shadow: 0 4px 80px rgba(0, 0, 0, 0.1); /* This will give it a slight shadow */
+  text-align: left; /* Aligns the text to the left */
+  box-sizing: border-box; /* This ensures that padding does not affect the total width */
+  transition: box-shadow 0.3s ease; /* Smooth transition for hover effects */
+  width: 100%;
 }
 
+.logo-container {
+  /* Adjustments for the logo size and spacing can be made here */
+  max-width: 250px; /* Adjust if necessary */
+  height: auto; /* Adjust if necessary */
+  flex-shrink: 0; /* Prevent the logo from shrinking */
+}
+.logo-container img {
+  max-width: 200px; /* Example size, adjust as needed */
+  height: auto;
+}
+
+.contact-details {
+  font-family: 'Poppins', sans-serif; /* Consistent font for the contact details */
+  line-height: 1.5; /* Adjust line height for better readability */
+  color: #555; /* Main text color */
+  flex: 1; /* This will make sure it takes up as much space as possible */
+  padding: 0 20px; /* Add padding on the sides */
+}
+
+.contact-details p {
+  margin: 0; /* Remove default paragraph margin */
+}
+
+.contact-details .contact-highlight {
+  color: #E9AF0C; /* The orange color for highlights */
+  font-size: 20px; /* Larger font size for highlighted items */
+  font-weight: bold; /* Bold font for highlighted items */
+}
+
+.contact-details .contact-normal {
+  font-size: 16px; /* Normal text size for contact details */
+}
+
+.contact-details .contact-email {
+  font-size: 16px; /* Normal text size for email */
+  word-break: break-all; /* Ensures the email address breaks onto a new line if needed */
+}
+
+/* map container*/
+.leaflet-map-container {
+  /* Adjust height and width as necessary to match your design */
+  height: 250px; /* Adjust to match the height in the image */
+  width: 30%; /* Remaining space */
+  border: 1px solid #ccc; /* Optional: adds a border around the map */
+  position: right;
+}
 
 /****************************************************/
 
@@ -169,3 +245,5 @@
   margin: 10px;
 }
 /****************************************************/
+
+

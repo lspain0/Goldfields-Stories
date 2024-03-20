@@ -2,6 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import Logo2 from "../components/logov2";
 import Logo from "../components/logo";
 import "../home.css";
+import { MapContainer, TileLayer, Marker, Popup, } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
 function Home() {
   const [images, setImages] = useState([]);
@@ -18,31 +24,31 @@ function Home() {
 
   useEffect(() => {
     cloudinaryWidgetRef.current = window.cloudinary.createUploadWidget({
-        cloudName: "drpnvb7qc",
-        uploadPreset: "tetlineq",
-        sources: ["local"],
-        clientAllowedFormats: ["image"],
-      }, async (error, result) => {
-        if (!error && result && result.event === "success") {
-          try {
-            const response = await fetch('/api/images', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ imageUrl: result.info.secure_url }),
-            });
-            if (!response.ok) {
-              throw new Error('Failed to save the image to the backend');
-            }
-            const newImage = await response.json();
-            setImages(prevImages => [...prevImages, newImage]);
-            setCurrentIndex(prevIndex => prevIndex + 1); // Set to the new image
-          } catch (error) {
-            console.error("Error saving the image:", error);
+      cloudName: "drpnvb7qc",
+      uploadPreset: "tetlineq",
+      sources: ["local"],
+      clientAllowedFormats: ["image"],
+    }, async (error, result) => {
+      if (!error && result && result.event === "success") {
+        try {
+          const response = await fetch('/api/images', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ imageUrl: result.info.secure_url }),
+          });
+          if (!response.ok) {
+            throw new Error('Failed to save the image to the backend');
           }
+          const newImage = await response.json();
+          setImages(prevImages => [...prevImages, newImage]);
+          setCurrentIndex(prevIndex => prevIndex + 1); // Set to the new image
+        } catch (error) {
+          console.error("Error saving the image:", error);
         }
       }
+    }
     );
   }, []);
 
@@ -85,6 +91,16 @@ function Home() {
   const toggleShowImages = () => setShowImages(!showImages);
 
   const currentImage = images[currentIndex]?.imageUrl;
+  const position = [-37.370352, 175.674033];
+  const customIcon = new L.Icon({
+    iconUrl: markerIcon,
+    iconRetinaUrl: markerIcon2x,
+    shadowUrl: markerShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
 
   return (
     <div className="home-container">
@@ -107,7 +123,7 @@ function Home() {
         <div className="image-gallery">
           {images.map((image) => (
             <div key={image._id}>
-              <img src={image.imageUrl} alt="Gallery" className="gallery-image"/>
+              <img src={image.imageUrl} alt="Gallery" className="gallery-image" />
               <button onClick={() => handleDeleteImage(image._id)} className="delete-button">
                 Delete
               </button>
@@ -120,16 +136,39 @@ function Home() {
         <p className="home-proverb">
           I te puāwaitanga o te harakeke, he rito whakakī whāruarua - When the flax blossoms, its many offspring begin their journey
         </p>
-        <h1>Nau Mai, Haere Mai</h1>
+        <p className="home-welcome">
+          Nau Mai, Haere Mai
+        </p>
+
       </div>
       <div className="home-footer">
         <div className="home-contact-info">
-          <p>Monday–Friday 9am–5pm</p>
-          <p>55 Norwood Road</p>
-          <p>Paeroa</p>
-          <p>Phone: 07 862 7172</p>
-          <p>Mobile: 021 277 3214</p>
-          <p>Email: office@gfs.school.nz</p>
+          <div className="logo-container">
+            <Logo />
+          </div>
+          <div className="contact-details">
+            <p className="contact-highlight">Monday–Friday 9am–5pm</p>
+            <p>&nbsp;</p>
+            <p className="contact-normal">55 Norwood Road</p>
+            <p className="contact-normal">Paeroa</p>
+            <p>&nbsp;</p>
+            <p className="contact-normal">Phone: 07 862 7172</p>
+            <p className="contact-normal">Mobile: 021 277 3214</p>
+            <p className="contact-email">Email: <a href="mailto:office@gfs.school.nz">office@gfs.school.nz</a></p>
+          </div>
+          {/* Leaflet Map */}
+          <MapContainer center={position} zoom={15} scrollWheelZoom={false} className="leaflet-map-container">
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={position} icon={customIcon}>
+              <Popup>
+                A pretty CSS3 popup. <br /> Easily customizable.
+              </Popup>
+            </Marker>
+          </MapContainer>
+          {/* End of Leaflet Map */}
         </div>
       </div>
     </div>
