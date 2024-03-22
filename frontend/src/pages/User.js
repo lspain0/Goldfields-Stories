@@ -134,7 +134,7 @@ function Class() {
             <div className="logo-container">
                 <Logo />
             </div>
-            <div className="classes-container" style={{marginTop:"5rem"}}>
+            <div className="classes-container" style={{ marginTop: "5rem" }}>
                 {/* <h3 style={{ fontSize: "30px" }}>All Registered Users
                 </h3> */}
                 <p style={{ color: parseInt(deleteStatus?.status) === 200 ? "green" : "red" }}>{deleteStatus?.msg}</p>
