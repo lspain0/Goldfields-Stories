@@ -85,10 +85,13 @@ const Navbar = (props) => {
                             <Link to="/search" className={isActive("/search")}>
                                 Search Stories
                             </Link>
-                            <Link to="/manage_accounts" className={isActive("/manage_accounts")}>
-                                Manage Accounts
-                            </Link>
                         </>
+                    }
+                    {
+                        ["Admin"].includes(props?.role) &&
+                        <Link to="/manage_accounts" className={isActive("/manage_accounts")}>
+                            Manage Accounts
+                        </Link>
                     }
                     <Link to="/logout" onClick={logoutHandler} className="nav-item">
                         Logout

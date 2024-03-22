@@ -10,16 +10,23 @@ import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
 function Home() {
+  const [role, setRole] = useState("");
+
   const [images, setImages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showImages, setShowImages] = useState(false);
   const cloudinaryWidgetRef = useRef();
 
   useEffect(() => {
+
+    setRole(localStorage.getItem("role"));
+
     document.body.classList.add('home-page-background');
     return () => {
       document.body.classList.remove('home-page-background');
     };
+
+
   }, []);
 
   useEffect(() => {
@@ -112,12 +119,17 @@ function Home() {
         {currentImage && <img src={currentImage} alt="Displayed" className="student-image" />}
       </div>
 
-      <button onClick={handleImageUpload} className="home-upload-button">
-        Upload Image
-      </button>
-      <button onClick={toggleShowImages} className="home-upload-button">
-        {showImages ? 'Hide Images' : 'View Images'}
-      </button>
+      {
+        role == "Admin" &&
+        <>
+          <button onClick={handleImageUpload} className="home-upload-button">
+            Upload Image
+          </button>
+          <button onClick={toggleShowImages} className="home-upload-button">
+            {showImages ? 'Hide Images' : 'View Images'}
+          </button>
+        </>
+      }
 
       {showImages && (
         <div className="image-gallery">
