@@ -26,16 +26,20 @@ const validateCreateStory = (req, res, next) => {
 
 // Get all stories
 const getStories = async (req, res) => {
+  console.log(req?.user);
   //Getting childID
   let child_id = req?.user?.child;
   let filter = {};
 
-  //Checking if the id of child is present and if present then creates expression filter
-  if (child_id) {
-    filter["children"] = new RegExp(child_id);
+
+  if (req?.user?.role == "Parent") {
+    filter["children"] = "";
+    //Checking if the id of child is present and if present then creates expression filter
+    if (child_id) {
+      filter["children"] = new RegExp(child_id);
+    }
   }
 
-  console.log("filter",filter);
 
   //Getting stories from mongo
   const stories = await Story.find(filter).sort({ createdAt: -1 });
