@@ -45,7 +45,7 @@ const ClassDetails = () => {
         return students.sort((a, b) =>
           parseInt(b._id.substring(0, 8), 16) - parseInt(a._id.substring(0, 8), 16)
         );
-      case "earliestAdded":
+      case "oldestFirst":
         // Sort by the timestamp part of the MongoDB ObjectId
         return students.sort((a, b) =>
           parseInt(a._id.substring(0, 8), 16) - parseInt(b._id.substring(0, 8), 16)
@@ -241,7 +241,7 @@ const ClassDetails = () => {
             <option value="prompt">Sort by :</option>
             <option value="alphabetical">Alphabetical Order</option>
             <option value="recentlyAdded">Recently Added</option>
-            <option value="earliestAdded">Earliest Added</option>
+            <option value="earliestAdded">Oldest First</option>
             <option value="youngestToOldest">Youngest to Oldest</option>
             <option value="oldestToYoungest">Oldest to Youngest</option>
           </select>
