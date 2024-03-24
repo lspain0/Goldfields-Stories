@@ -13,7 +13,7 @@ const ClassDetails = () => {
   const [showTransferModal, setShowTransferModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false); // State to manage edit mode
   const [editedClassName, setEditedClassName] = useState(""); // State to manage the edited class name
-  const [sortMethod, setSortMethod] = useState("alphabetical");
+  const [sortMethod, setSortMethod] = useState("prompt");
 
   useEffect(() => {
     const classInfo = classes.find((c) => c.id === classId);
@@ -34,6 +34,8 @@ const ClassDetails = () => {
   // Function to sort students based on the selected method
   const sortStudents = (students) => {
     switch (sortMethod) {
+      case "prompt":
+        return students;
       case "alphabetical":
         return students.sort((a, b) =>
           `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`)
@@ -43,11 +45,25 @@ const ClassDetails = () => {
         return students.sort((a, b) =>
           parseInt(b._id.substring(0, 8), 16) - parseInt(a._id.substring(0, 8), 16)
         );
-      case "oldestFirst":
+      case "earliestAdded":
         // Sort by the timestamp part of the MongoDB ObjectId
         return students.sort((a, b) =>
           parseInt(a._id.substring(0, 8), 16) - parseInt(b._id.substring(0, 8), 16)
         );
+      case "youngestToOldest":
+        // Sort students by age, youngest students first
+        return students.sort((a, b) => {
+          const dobA = new Date(a.dob);
+          const dobB = new Date(b.dob);
+          return dobB - dobA; // This will sort students by DOB, youngest first
+        });
+      case "oldestToYoungest":
+        // Sort students by age, oldest students first
+        return students.sort((a, b) => {
+          const dobA = new Date(a.dob);
+          const dobB = new Date(b.dob);
+          return dobA - dobB; // This will sort students by DOB, oldest first
+        });
       // Add more cases for custom options as needed
       default:
         return students;
@@ -222,9 +238,12 @@ const ClassDetails = () => {
             </div>
           </div>
           <select onChange={handleSortChange} className="sort-dropdown">
+            <option value="prompt">Sort by :</option>
             <option value="alphabetical">Alphabetical Order</option>
             <option value="recentlyAdded">Recently Added</option>
-            <option value="oldestFirst">Oldest First</option>
+            <option value="earliestAdded">Earliest Added</option>
+            <option value="youngestToOldest">Youngest to Oldest</option>
+            <option value="oldestToYoungest">Oldest to Youngest</option>
           </select>
         </div>
 

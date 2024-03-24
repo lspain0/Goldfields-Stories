@@ -10,7 +10,7 @@ function Class() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
   const { classes, addClass } = useContext(ClassesContext);
-  const [sortMethod, setSortMethod] = useState("alphabetical"); 
+  const [sortMethod, setSortMethod] = useState("prompt"); 
   const [sortedClasses, setSortedClasses] = useState([]);
 
   // Function to handle form submission
@@ -48,6 +48,8 @@ function Class() {
     // Function to sort classes based on the selected method
     const sortClasses = (classes) => {
       switch (sortMethod) {
+        case "prompt":
+          return classes;
         case "alphabetical":
           return [...classes].sort((a, b) =>
             a.className.localeCompare(b.className)
@@ -109,6 +111,7 @@ function Class() {
           <h3 className="class-form-h3">Created Classes</h3>
           <div className="sort-dropdown-container">
             <select className="sort-dropdown" onChange={handleSortChange} value={sortMethod}>
+              <option value="prompt">Sort by :</option>
               <option value="alphabetical">Alphabetical</option>
               <option value="recentlyAdded">Recently Added</option>
               <option value="oldestFirst">Oldest First</option>
