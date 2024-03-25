@@ -88,7 +88,7 @@ const UploadWidgetVideo = ({ onVideoUpload }) => {
       uploadPreset: 'tetlineq',
       sources: [ 'local '],
       clientAllowedFormats: ['video'],
-      maxFileSize: 500000000
+      //maxFileSize: 500000000
     }, function (error, result) {
       if (!error && result && result.event === "success") {
         let videoUrl = result.info.secure_url;
