@@ -107,8 +107,7 @@ export const convertStringToGroupedTags = (input) => {
       });
     }
   });
-
-  console.log(result);
+  
   return result;
   
 };
