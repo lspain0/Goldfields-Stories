@@ -45,6 +45,7 @@ const getStories = async (req, res) => {
   const stories = await Story.find(filter).sort({ createdAt: -1 });
   res.status(200).json(stories);
 };
+
 // Get a single story
 const getStory = async (req, res) => {
   const { id } = req.params;

@@ -18,6 +18,7 @@ import EditStudentPage from './pages/EditStudentPage';
 import Home from "./pages/Home";
 import User from './pages/User';
 import CreateFamilyStory from './pages/CreateFamilyStory';
+import SearchStories from './pages/SearchStories';
 
 function App() {
 
@@ -85,6 +86,7 @@ function App() {
                 <Route path="/manage_accounts" element={<User />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/createfamilystory" element={<CreateFamilyStory />} />
+                <Route path="/search" element={<SearchStories />} />
               </Routes>
             </div>
           </BrowserRouter>
