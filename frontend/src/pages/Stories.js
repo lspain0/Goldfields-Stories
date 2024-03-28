@@ -282,6 +282,11 @@ const Stories = () => {
       <body>
         <div>
         <Logo />
+        <span className="createstorylink">
+            <Link to="/createfamilystory">
+              <button className="family-story-button">Create a new Family Story</button>
+            </Link>
+          </span>
         <Navbar appearance='subtle' default='education' active={active} onSelect={setActive} />
         </div>
         {/* Displays all stories as cards on the page */}

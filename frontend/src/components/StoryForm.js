@@ -14,9 +14,14 @@ var optimisedUrl
 var roleCheck = false;
 var groupedTags = [];
 const numbers = Array.from({ length: 101 }, (_, index) => index.toString());
+var role = localStorage.getItem("role");
+
 
 function checkRole () {
-  const role = localStorage.getItem("role");
+  if (window.location.pathname.includes('createfamilystory'))
+  {
+    console.log('yea')
+  }
 
   if (role.includes("Admin"))
   {
@@ -148,7 +153,7 @@ const StoryForm = () => {
   const [indexToDelete, setIndexToDelete] = useState(null);
   const [originalTagGroups, setOriginalTagGroups] = useState([]);
   const [checkTreeChildrenOpen, setCheckTreeChildrenOpen] = useState(false); // State to manage tree visibility
-  const [checkTreeTagsOpen, setCheckTreeTagsOpen] = useState(false); // State to manage tree visibility
+  const [checkTreeTagsOpen, setCheckTreeTagsOpen] = useState(false); // State to manage tree visibility 
 
 
 
@@ -509,140 +514,196 @@ const renderTagInputs = () => {
     </div>
   ));
 };
-
-  return (
-    <body className="story-form">
-      <form className="create-story" onSubmit={handleSubmit}>
-        <div className="input-container">
-          <input
-            className="short-input"
-            placeholder={"Story title..."}
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+  if (!window.location.pathname.includes('family'))
+  {
+    return (
+      <body className="story-form">
+        <form className="create-story" onSubmit={handleSubmit}>
+          <div className="input-container">
+            <input
+              className="short-input"
+              placeholder={"Story title..."}
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <span className="author-input" readOnly>
+              Author: {getName(currentUser)}
+            </span>
+          </div>
+  
+          <CheckTreePicker
+            className="check-tree"
+            placeholder="Add children to this story..."
+            data={sortedData}
+            uncheckableItemValues={['1-1', '1-1-2']}
+            value={selectedCheckTreeValuesChildren}
+            onOpenChange={setCheckTreeChildrenOpen}
+            onChange={handleCheckTreePickerChangeChildren}
+            onClick={toggleCheckTreePickerChildren}
+            cascade={false}
+            open={checkTreeChildrenOpen}
+            renderExtraFooter={() => (
+              <div
+                style={{
+                  padding: '10px 2px',
+                  borderTop: '1px solid #e5e5e5'
+                }}
+              >
+                <Button inline className="checktree-close" appearance="primary" onClick={toggleCheckTreePickerChildren}>
+                  Done
+                </Button>
+              </div>
+            )}
           />
-          <span className="author-input" readOnly>
-            Author: {getName(currentUser)}
-          </span>
-        </div>
-
-        <CheckTreePicker
-          className="check-tree"
-          placeholder="Add children to this story..."
-          data={sortedData}
-          uncheckableItemValues={['1-1', '1-1-2']}
-          value={selectedCheckTreeValuesChildren}
-          onOpenChange={setCheckTreeChildrenOpen}
-          onChange={handleCheckTreePickerChangeChildren}
-          onClick={toggleCheckTreePickerChildren}
-          cascade={false}
-          open={checkTreeChildrenOpen}
-          renderExtraFooter={() => (
-            <div
-              style={{
-                padding: '10px 2px',
-                borderTop: '1px solid #e5e5e5'
-              }}
-            >
-              <Button inline className="checktree-close" appearance="primary" onClick={toggleCheckTreePickerChildren}>
-                Done
-              </Button>
-            </div>
-          )}
-        />
-        
-        <UploadWidget onImageUpload={handleImageUpload} />
-        <div></div>
-
-        <CheckTreePicker
-          className="check-tree2"
-          placeholder="Learning tags..."
-          data={groupedTags}
-          uncheckableItemValues={numbers}
-          value={selectedCheckTreeValuesTags}
-          onOpenChange={setCheckTreeTagsOpen}
-          onChange={handleCheckTreePickerChangeTags}
-          onClick={toggleCheckTreePickerTags}
-          open={checkTreeTagsOpen}
-          cascade={false}
-          style={{ width: 660 }}
-          renderMenu={(menu) => (
-            <div style={{ maxWidth: 'calc(100vh - 100px)' }}>
-              {menu}
-            </div>
-          )}
-          renderExtraFooter={() => (
-            <div
-              style={{
-                padding: '10px 2px',
-                borderTop: '1px solid #e5e5e5'
-              }}
-            >
-              <Button inline className="checktree-close" appearance="primary" onClick={toggleCheckTreePickerTags}>
-                Done
-              </Button>
-            </div>
-          )}
-        />
-        
-        <UploadWidgetVideo onVideoUpload={handleImageUpload} />
-
-        <ButtonToolbar>
-        <Button onClick={handleOpenTags}> Edit Tags</Button>
-      </ButtonToolbar>
-
-      <Modal backdrop="static" open={open} onClose={handleClose}>
-        <Modal.Header>
-          <Modal.Title>Edit Tags</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>   
-        {renderTagInputs()}
-        <Divider></Divider>
-        <Button appearance="primary" className="dropdown-primary" onClick={addTagGroup}>
-          Create New Tag Group
-        </Button>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleCancel} appearance="subtle">
-            Cancel
+          
+          <UploadWidget onImageUpload={handleImageUpload} />
+          <div></div>
+  
+          <CheckTreePicker
+            className="check-tree2"
+            placeholder="Learning tags..."
+            data={groupedTags}
+            uncheckableItemValues={numbers}
+            value={selectedCheckTreeValuesTags}
+            onOpenChange={setCheckTreeTagsOpen}
+            onChange={handleCheckTreePickerChangeTags}
+            onClick={toggleCheckTreePickerTags}
+            open={checkTreeTagsOpen}
+            cascade={false}
+            style={{ width: 660 }}
+            renderMenu={(menu) => (
+              <div style={{ maxWidth: 'calc(100vh - 100px)' }}>
+                {menu}
+              </div>
+            )}
+            renderExtraFooter={() => (
+              <div
+                style={{
+                  padding: '10px 2px',
+                  borderTop: '1px solid #e5e5e5'
+                }}
+              >
+                <Button inline className="checktree-close" appearance="primary" onClick={toggleCheckTreePickerTags}>
+                  Done
+                </Button>
+              </div>
+            )}
+          />
+          
+          <UploadWidgetVideo onVideoUpload={handleImageUpload} />
+  
+          <ButtonToolbar>
+          <Button onClick={handleOpenTags}> Edit Tags</Button>
+        </ButtonToolbar>
+  
+        <Modal backdrop="static" open={open} onClose={handleClose}>
+          <Modal.Header>
+            <Modal.Title>Edit Tags</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>   
+          {renderTagInputs()}
+          <Divider></Divider>
+          <Button appearance="primary" className="dropdown-primary" onClick={addTagGroup}>
+            Create New Tag Group
           </Button>
-          <Button onClick={updateTagsContent} className="dropdown-primary" appearance="primary">
-          Save Changes
-        </Button>
-        </Modal.Footer>
-      </Modal>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={handleCancel} appearance="subtle">
+              Cancel
+            </Button>
+            <Button onClick={updateTagsContent} className="dropdown-primary" appearance="primary">
+            Save Changes
+          </Button>
+          </Modal.Footer>
+        </Modal>
+  
+  
+          <div className="quill">
+            <ReactQuill
+              ref={quillRef}
+              placeholder="Start writing..."
+              onChange={(value) => setContent(value)}
+              value={content}
+              modules={{
+                toolbar: {
+                  container: [
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    [{ 'align': [] }],
+                    [{ 'color': [] }, { 'background': [] }],
+                    ['clean']
+                  ],
+                },
+              }}
+              style={{ height: '67vh' }}
+            />
+          </div>
+  
+          <div className="centered-button">
+            <button className="story-form-button">Post Story</button>
+          </div>
+          {error && <div className="error">{error}</div>}
+        </form>
+      </body>
+    );
+  }
 
+  else {
+    return (
+    <body className="story-form">
+    <form className="create-story" onSubmit={handleSubmit}>
+    <span className="author-input" readOnly>
+          Author: {getName(currentUser)}
+        </span>
+        <span className="author-input" readOnly>
+          Story For: Child Name
+        </span>
+      <div className="input-container">
+        <input
+          className="short-input"
+          placeholder={"Story title..."}
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <span><UploadWidget onImageUpload={handleImageUpload} /></span>
+        <span><UploadWidgetVideo onVideoUpload={handleImageUpload} /></span>
+      </div>
+      <div className="quill">
+        <ReactQuill
+          ref={quillRef}
+          placeholder="Start writing..."
+          onChange={(value) => setContent(value)}
+          value={content}
+          modules={{
+            toolbar: {
+              container: [
+                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                ['blockquote'],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                [{ 'align': [] }],
+                [{ 'color': [] }, { 'background': [] }],
+                ['clean']
+              ],
+            },
+          }}
+          style={{ height: '75vh' }}
+        />
+      </div>
 
-        <div className="quill">
-          <ReactQuill
-            ref={quillRef}
-            placeholder="Start writing..."
-            onChange={(value) => setContent(value)}
-            value={content}
-            modules={{
-              toolbar: {
-                container: [
-                  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                  ['bold', 'italic', 'underline', 'strike'],
-                  ['blockquote'],
-                  [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                  [{ 'align': [] }],
-                  [{ 'color': [] }, { 'background': [] }],
-                  ['clean']
-                ],
-              },
-            }}
-            style={{ height: '67vh' }}
-          />
-        </div>
+      <div className="centered-button">
+        <button className="story-form-button">Post Story</button>
+      </div>
+      {error && <div className="error">{error}</div>}
+    </form>
+  </body>
+    )
+  }
 
-        <div className="centered-button">
-          <button className="story-form-button">Post Story</button>
-        </div>
-        {error && <div className="error">{error}</div>}
-      </form>
-    </body>
-  );
 };
 
 export default StoryForm;

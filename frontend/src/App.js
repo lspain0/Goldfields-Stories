@@ -17,6 +17,7 @@ import NavbarLogin from './components/NavbarLogin';
 import EditStudentPage from './pages/EditStudentPage';
 import Home from "./pages/Home";
 import User from './pages/User';
+import CreateFamilyStory from './pages/CreateFamilyStory';
 
 function App() {
 
@@ -83,6 +84,7 @@ function App() {
                 <Route path="/class/:classId/editstudent/:studentId" element={<EditStudentPage />} />
                 <Route path="/manage_accounts" element={<User />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/createfamilystory" element={<CreateFamilyStory />} />
               </Routes>
             </div>
           </BrowserRouter>
