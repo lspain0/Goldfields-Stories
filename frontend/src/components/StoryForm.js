@@ -141,7 +141,6 @@ const StoryForm = () => {
   const [tags, setTags] = useState('');
   const [content, setContent] = useState('');
   const [state, setState] = useState('pending');
-  const [selectedCategories, setSelectedCategories] = useState([]);
   const [error, setError] = useState('');
   const [selectedCheckTreeValuesTags, setSelectedCheckTreeValuesTags] = useState([]);
   const [selectedCheckTreeValuesChildren, setSelectedCheckTreeValuesChildren] = useState([]);
@@ -244,6 +243,7 @@ const StoryForm = () => {
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     const childrenArray = Array.isArray(children) ? children : [{ value: children }];
     const childrenString = childrenArray.map((child) => child.value).join(',');
@@ -253,10 +253,11 @@ const StoryForm = () => {
       children: childrenString,
       tags: tagsString,
       content,
-      categories: selectedCategories.join(','),
       author: currentUser,
       state,
     };
+
+    console.log(state, tags)
 
     if (editing === true) {
       try {
@@ -306,7 +307,6 @@ const StoryForm = () => {
           setTags('');
           setContent('');
           setState('');
-          setSelectedCategories([]);
           setError(null);
           console.log('New Story Posted', json);
           dispatch({ type: 'CREATE_STORY', payload: json });
@@ -399,6 +399,12 @@ const updateTagsContent = async () => {
   }
 
 };
+
+  const setStateFamily = () => {
+    if (state !== 'family') {
+      setState('family');
+    }
+  }
 
   const getTags = async () => {
     try {
@@ -652,6 +658,7 @@ const renderTagInputs = () => {
   }
 
   else {
+    setStateFamily()
     return (
     <body className="story-form">
     <form className="create-story" onSubmit={handleSubmit}>
@@ -672,6 +679,30 @@ const renderTagInputs = () => {
         <span><UploadWidget onImageUpload={handleImageUpload} /></span>
         <span><UploadWidgetVideo onVideoUpload={handleImageUpload} /></span>
       </div>
+      <CheckTreePicker
+            className="check-tree"
+            placeholder="Add children to this story..."
+            data={sortedData}
+            uncheckableItemValues={['1-1', '1-1-2']}
+            value={selectedCheckTreeValuesChildren}
+            onOpenChange={setCheckTreeChildrenOpen}
+            onChange={handleCheckTreePickerChangeChildren}
+            onClick={toggleCheckTreePickerChildren}
+            cascade={false}
+            open={checkTreeChildrenOpen}
+            renderExtraFooter={() => (
+              <div
+                style={{
+                  padding: '10px 2px',
+                  borderTop: '1px solid #e5e5e5'
+                }}
+              >
+                <Button inline className="checktree-close" appearance="primary" onClick={toggleCheckTreePickerChildren}>
+                  Done
+                </Button>
+              </div>
+            )}
+          />
       <div className="quill">
         <ReactQuill
           ref={quillRef}
