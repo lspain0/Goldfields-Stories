@@ -5,7 +5,9 @@ const {
     createStory,
     deleteStory,
     updateStory,
-    updateStoryState
+    updateStoryState,
+    searchStories,
+     
 } = require('../controllers/storyController')
 const { authenticateToken } = require('../controllers/userController')
 
@@ -14,6 +16,9 @@ const router = express.Router()
 
 //GET all stories
 router.get('/', authenticateToken,getStories)
+
+// Search stories route
+router.get('/search', searchStories);
 
 //GET single story
 router.get('/:id', getStory)

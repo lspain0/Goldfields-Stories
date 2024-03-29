@@ -142,6 +142,38 @@ const updateStoryState = async (req, res) => {
   }
 };
 
+// Search for stories
+const searchStories = async (req, res) => {
+  const searchTerm = req.query.search;
+  if (!searchTerm) {
+    return res.status(400).json({ error: 'Search term is required' });
+  }
+
+  try {
+    // Building the search query to include multiple fields
+    const searchQuery = {
+      $or: [
+        { title: { $regex: searchTerm, $options: 'i' } },
+        { children: { $regex: searchTerm, $options: 'i' } },
+        { tags: { $regex: searchTerm, $options: 'i' } },
+        { content: { $regex: searchTerm, $options: 'i' } },
+        { author: { $regex: searchTerm, $options: 'i' } }
+      ]
+    };
+
+    const stories = await Story.find(searchQuery).sort({ createdAt: -1 }); // Sorting by creation date for relevance
+
+    if (stories.length === 0) {
+      return res.status(404).json({ message: 'No matching stories found' }); // Returning a 404 if no stories match the search term
+    }
+
+    res.status(200).json(stories);
+  } catch (error) {
+    console.error('Search error:', error);
+    res.status(500).json({ error: 'Internal server error during the search' });
+  }
+};
+
 module.exports = {
   logRequest,
   errorHandler,
@@ -152,4 +184,5 @@ module.exports = {
   deleteStory,
   updateStory,
   updateStoryState,
+  searchStories,
 };
