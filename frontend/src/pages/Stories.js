@@ -287,6 +287,14 @@ const Stories = () => {
               <button className="family-story-button">Create a new Family Story</button>
             </Link>
           </span>
+          <span>
+        <Dropdown
+          className="story-sort-dropdown"
+          title={"Sorted by "+sortOption}>
+          <Dropdown.Item onClick={() => handleSortOptionChange("Story Date")}>Story Date</Dropdown.Item>
+          <Dropdown.Item onClick={() => handleSortOptionChange("Story Title")}>Story Title</Dropdown.Item>
+        </Dropdown>
+        </span>
         <Navbar appearance='subtle' default='education' active={active} onSelect={setActive} />
         </div>
         {/* Displays all stories as cards on the page */}

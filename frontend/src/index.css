@@ -544,11 +544,10 @@ div.sub, iframe, image {
   margin-top: 0px;
   margin-right: 1%;
   font-size: 18px;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
 }
 
 .check-tree-family {
   margin-right: 10px;
   min-width: 75%
-
 }
