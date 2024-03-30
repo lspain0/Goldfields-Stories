@@ -15,6 +15,7 @@ var roleCheck = false;
 var groupedTags = [];
 const numbers = Array.from({ length: 101 }, (_, index) => index.toString());
 var role = localStorage.getItem("role");
+var child = localStorage.getItem("child");
 
 
 function checkRole () {
@@ -142,8 +143,7 @@ const StoryForm = () => {
   const [originalTagGroups, setOriginalTagGroups] = useState([]);
   const [checkTreeChildrenOpen, setCheckTreeChildrenOpen] = useState(false); // State to manage tree visibility
   const [checkTreeTagsOpen, setCheckTreeTagsOpen] = useState(false); // State to manage tree visibility 
-
-
+  console.log(child);
 
   useEffect(() => {
     const fetchStoryById = async () => {

@@ -122,7 +122,6 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
 
     
     if (currentState === 'family') {
-        console.log(story.state)
         if (story.state !== 'family') {
             return null;
         }
