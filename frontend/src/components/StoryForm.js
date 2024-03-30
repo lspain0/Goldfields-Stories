@@ -657,41 +657,11 @@ const renderTagInputs = () => {
     <body className="story-form">
     <form className="create-story" onSubmit={handleSubmit}>
       <div className="input-container">
-        <input
-          className="title-input-family"
-          placeholder={"Story title..."}
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-                      <span className="author-input" readOnly>
+      <span className="author-input" readOnly>
           Author: {getName(currentUser)}
+          Child: {child}
         </span>
       </div>
-      <CheckTreePicker
-            className="check-tree-family"
-            placeholder="Add children to this story..."
-            data={sortedData}
-            uncheckableItemValues={['1-1', '1-1-2']}
-            value={selectedCheckTreeValuesChildren}
-            onOpenChange={setCheckTreeChildrenOpen}
-            onChange={handleCheckTreePickerChangeChildren}
-            onClick={toggleCheckTreePickerChildren}
-            cascade={false}
-            open={checkTreeChildrenOpen}
-            renderExtraFooter={() => (
-              <div
-                style={{
-                  padding: '10px 2px',
-                  borderTop: '1px solid #e5e5e5'
-                }}
-              >
-                <Button inline className="checktree-close" appearance="primary" onClick={toggleCheckTreePickerChildren}>
-                  Done
-                </Button>
-              </div>
-            )}
-          />
           <span><UploadWidget onImageUpload={handleImageUpload} /></span>
         <span><UploadWidgetVideo onVideoUpload={handleImageUpload} /></span>
       <div className="quill">
