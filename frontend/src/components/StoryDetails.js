@@ -48,7 +48,7 @@ function getAuthorFirstName(str) {
 }
 
 
-const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, selectedTagFilters }) => {
+const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, selectedTagFilters, currentState }) => {
     //values for selected story filters
     let storyTypeFilter = false;
     let childrenFilter = false;
@@ -116,6 +116,19 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
 
         if (story.state === 'pending')
         {
+            return null;
+        }
+    }
+
+    
+    if (currentState === 'family') {
+        console.log(story.state)
+        if (story.state !== 'family') {
+            return null;
+        }
+    }
+    else {
+        if (story.state === 'family') {
             return null;
         }
     }

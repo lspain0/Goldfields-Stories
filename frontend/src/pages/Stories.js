@@ -293,7 +293,7 @@ const Stories = () => {
         <div className="story-cards-container">
           {sortedStories && sortedStories.map(story => (
             <StoryDetails story={story} key={story._id} selectedRadioValue={selectedRadioValue} 
-            selectedChildrenFilters={selectedChildrenFilters} selectedTagFilters={selectedTagFilters} sortOption={sortOption} />
+            selectedChildrenFilters={selectedChildrenFilters} selectedTagFilters={selectedTagFilters} sortOption={sortOption} currentState={active} />
           ))}
         </div>
       </body>
