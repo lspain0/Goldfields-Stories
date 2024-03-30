@@ -18,11 +18,6 @@ var role = localStorage.getItem("role");
 
 
 function checkRole () {
-  if (window.location.pathname.includes('createfamilystory'))
-  {
-    console.log('yea')
-  }
-
   if (role.includes("Admin"))
   {
     roleCheck = true
@@ -121,12 +116,6 @@ const StoryForm = () => {
 
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
-  
-  checkRole();
-  if (roleCheck === false)
-  {
-    window.location.href = `/`;
-  }
 
   const sortedData = StudentList().sort((a, b) => {
     const nameA = a.label.split(' ')[0].toLowerCase();
@@ -522,6 +511,11 @@ const renderTagInputs = () => {
 };
   if (!window.location.pathname.includes('family'))
   {
+    checkRole();
+    if (roleCheck === false)
+    {
+      window.location.href = `/`;
+    }
     return (
       <body className="story-form">
         <form className="create-story" onSubmit={handleSubmit}>
@@ -662,25 +656,20 @@ const renderTagInputs = () => {
     return (
     <body className="story-form">
     <form className="create-story" onSubmit={handleSubmit}>
-    <span className="author-input" readOnly>
-          Author: {getName(currentUser)}
-        </span>
-        <span className="author-input" readOnly>
-          Story For: Child Name
-        </span>
       <div className="input-container">
         <input
-          className="short-input"
+          className="title-input-family"
           placeholder={"Story title..."}
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <span><UploadWidget onImageUpload={handleImageUpload} /></span>
-        <span><UploadWidgetVideo onVideoUpload={handleImageUpload} /></span>
+                      <span className="author-input" readOnly>
+          Author: {getName(currentUser)}
+        </span>
       </div>
       <CheckTreePicker
-            className="check-tree"
+            className="check-tree-family"
             placeholder="Add children to this story..."
             data={sortedData}
             uncheckableItemValues={['1-1', '1-1-2']}
@@ -703,6 +692,8 @@ const renderTagInputs = () => {
               </div>
             )}
           />
+          <span><UploadWidget onImageUpload={handleImageUpload} /></span>
+        <span><UploadWidgetVideo onVideoUpload={handleImageUpload} /></span>
       <div className="quill">
         <ReactQuill
           ref={quillRef}
