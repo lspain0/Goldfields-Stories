@@ -151,22 +151,40 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
         
     }
     
-    if (storyTypeFilter === true && childrenFilter === true && tagFilter === true)
+    if (storyTypeFilter === true && childrenFilter === true && tagFilter === true) {
+        if (currentState !== 'family') {
+            return (
+                <Link className='story-link' to={`/${link}/${story._id}`} key={story._id}>
+                    <div className="story-card">
+                        <div className="image-container">
+                            <img src={images[0]} alt=""/>
+                        </div>
+                        <sub className="story-children">{checkGroupStory(story.children)}</sub>
+                        <h4 className="story-h4">{truncate(removeTags(story.title), 60)}</h4>
+                        <p className="story-p">{truncate(removeTags(story.content), 60)}</p>
+                        <sub className="story-sub">{"Shared by "+getAuthorFirstName(story.author)+"\n"}</sub> 
+                        <sub className='story-date'>{formatTimestamp(story.createdAt)}</sub>
+                    </div>
+                </Link>
+            )
+        }
+        else {
+            return (
+                <Link className='story-link' to={`/${link}/${story._id}`} key={story._id}>
+                    <div className="story-card">
+                        <div className="image-container">
+                            <img src={images[0]} alt=""/>
+                        </div>
+                        <sub className="story-children">Family moment for {(story.children)}</sub>
+                        <p className="story-p">{truncate(removeTags(story.content), 120)}</p>
+                        <sub className="story-sub">{"Shared by "+getAuthorFirstName(story.author)+"\n"}</sub> 
+                        <sub className='story-date'>{formatTimestamp(story.createdAt)}</sub>
+                    </div>
+                </Link>
+            )
+        }
 
-    return (
-        <Link className='story-link' to={`/${link}/${story._id}`} key={story._id}>
-            <div className="story-card">
-                <div className="image-container">
-                    <img src={images[0]} alt=""/>
-                </div>
-                <sub className="story-children">{checkGroupStory(story.children)}</sub>
-                <h4 className="story-h4">{truncate(removeTags(story.title), 60)}</h4>
-                <p className="story-p">{truncate(removeTags(story.content), 60)}</p>
-                <sub className="story-sub">{"Story shared by "+getAuthorFirstName(story.author)+"\n"}</sub> 
-                <sub className='story-date'>{formatTimestamp(story.createdAt)}</sub>
-            </div>
-        </Link>
-    )
+    }
 }
 
 export default StoryDetails

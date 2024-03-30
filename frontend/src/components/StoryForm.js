@@ -392,6 +392,8 @@ const updateTagsContent = async () => {
   const setStateFamily = () => {
     if (state !== 'family') {
       setState('family');
+      setTitle('null');
+      setChildren(child);
     }
   }
 
