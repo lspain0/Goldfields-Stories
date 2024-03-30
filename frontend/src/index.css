@@ -538,3 +538,17 @@ div.sub, iframe, image {
 .checktree-close {
   margin-left: 10px;
 }
+
+.title-input-family {
+  width: 85%;
+  margin-top: 0px;
+  margin-right: 1%;
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+
+.check-tree-family {
+  margin-right: 10px;
+  min-width: 75%
+
+}
