@@ -178,13 +178,14 @@ const StoryPage = () => {
       {loadStoryID()}
       {adminControls()}
       <div className="story-content">
-        {/* parse HTML content */}
-        <h2 dangerouslySetInnerHTML={parseHTML(currentStory.title)} />
+        {/* Conditional rendering for h2 */}
+        {currentStory.title !== 'null' ? <h2 dangerouslySetInnerHTML={parseHTML(currentStory.title)} /> : null}
         <div dangerouslySetInnerHTML={parseHTML(currentStory.content)} />
       </div>
       {generateStoryInfoHTML()}
     </body>
   );
+  
 };
 
 export default StoryPage;
