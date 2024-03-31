@@ -48,18 +48,18 @@
 
 /****************************************************/
 
-/* Styles for the notification message, updated to match your provided styles */
+/* Styles for the notification message */
 .notification {
   display: inline-flex;
   align-items: center;
   padding: 10px 20px;
   border-radius: 5px;
-  background-color: #f8f2f2; /* Light grey background */
-  color: #333; /* Dark grey text */
+  background-color: #f8f2f2;
+  color: #333; 
   border: 1px solid black;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-family: 'Poppins', sans-serif;
-  position: fixed; /* or absolute */
+  position: fixed;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000; /* Make sure it's above other elements */
