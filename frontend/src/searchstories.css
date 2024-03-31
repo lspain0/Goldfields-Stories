@@ -1,0 +1,107 @@
+
+
+.search-stories-container {
+  margin-top: 30px; /* Adjust as needed */
+}
+
+.search-stories-input {
+  padding: 20px;
+  margin-bottom: 10px; /* Space between input and button */
+  width: 1200px; /* Adjust width as needed */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px auto;
+  display: block;
+}
+
+/* Styles for the button, with a unique class name */
+.search-stories-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  width: 180px;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background: #326C6F;
+  color: white;
+  margin: 10px auto;
+  display: block;
+  
+
+  /* Adding a hover effect */
+  &:hover {
+    background-color: #224957; /* A slightly darker blue */
+  }
+}
+
+/* Styles for the error message, with a unique class name */
+.search-stories-error {
+  color: #ff0000; /* Red color for error messages */
+  margin-top: 10px;
+}
+
+.stories-logo-container{
+  padding: 20px;
+}
+
+/****************************************************/
+
+/* Styles for the notification message, updated to match your provided styles */
+.notification {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #f8f2f2; /* Light grey background */
+  color: #333; /* Dark grey text */
+  border: 1px solid black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+  position: fixed; /* or absolute */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000; /* Make sure it's above other elements */
+  display: none; /* Initially don't display */
+  transition: all 0.3s ease;
+}
+
+.notification.show {
+  display: flex; /* Show the notification as a flex container */
+}
+
+.notification button {
+  margin-left: 10px;
+  cursor: pointer;
+  color: #000000;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+}
+
+.notification button:hover {
+  color: #ff6b6b; /* Hover effect for the close button */
+}
+
+/* These can be used to animate the notification's appearance and disappearance */
+.notification-enter {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.notification-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.notification-exit {
+  opacity: 1;
+}
+
+.notification-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
