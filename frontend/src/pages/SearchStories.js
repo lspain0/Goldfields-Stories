@@ -56,7 +56,7 @@ const SearchStories = () => {
         value={searchTerm}
         onChange={handleInputChange}
         onKeyPress={handleKeyPress} // Add the onKeyPress event listener
-        placeholder="Search for stories..."
+        placeholder="Search by Author, Content, Tags, or Child's Name..."
         className="search-stories-input"
       />
       <button onClick={initiateSearch} className="search-stories-button">Search</button>
