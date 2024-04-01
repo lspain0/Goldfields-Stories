@@ -39,6 +39,13 @@ const SearchStories = () => {
     }
   };
 
+  // Function to handle key press event on the input field
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      initiateSearch();
+    }
+  };
+
   return (
     <div className="search-stories-container">
       <div className="stories-logo-container">
@@ -48,6 +55,7 @@ const SearchStories = () => {
         type="text"
         value={searchTerm}
         onChange={handleInputChange}
+        onKeyPress={handleKeyPress} // Add the onKeyPress event listener
         placeholder="Search for stories..."
         className="search-stories-input"
       />
