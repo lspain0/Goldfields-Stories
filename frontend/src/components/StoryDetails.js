@@ -126,7 +126,7 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
             return null;
         }
     }
-    else {
+    else if (!window.location.href.includes('search')) {
         if (story.state === 'family') {
             return null;
         }
@@ -152,7 +152,7 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
     }
     
     if (storyTypeFilter === true && childrenFilter === true && tagFilter === true) {
-        if (currentState !== 'family') {
+        if (story.state !== 'family') {
             return (
                 <Link className='story-link' to={`/${link}/${story._id}`} key={story._id}>
                     <div className="story-card">
