@@ -194,7 +194,7 @@ const ClassDetails = () => {
   return (
     <div>
       <div className="header-buttons">
-        <button className="standard-button" onClick={handleAddStudent}>
+        <button className="standard-button-std" onClick={handleAddStudent}>
           Add Student
         </button>
         <button className="standard-button" onClick={handleTransferClick}>

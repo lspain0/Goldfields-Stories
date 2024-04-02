@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios_obj from "../axios";
 import StoryDetails from "../components/StoryDetails";
 import "../searchstories.css";
@@ -9,6 +9,16 @@ const SearchStories = () => {
   const [stories, setStories] = useState([]);
   const [error, setError] = useState('');
   const [showNotification, setShowNotification] = useState(false);
+
+  useEffect(() => {
+    // This will run when the component mounts
+    document.body.style.backgroundColor = "#FFFFFF"; // Set the body background color to white
+    
+    return () => {
+      // This will run when the component unmounts
+      document.body.style.backgroundColor = null; // Reset the body background color
+    }
+  }, []);
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
@@ -39,6 +49,13 @@ const SearchStories = () => {
     }
   };
 
+  // Function to handle key press event on the input field
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      initiateSearch();
+    }
+  };
+
   return (
     <div className="search-stories-container">
       <div className="stories-logo-container">
@@ -48,7 +65,8 @@ const SearchStories = () => {
         type="text"
         value={searchTerm}
         onChange={handleInputChange}
-        placeholder="Search for stories..."
+        onKeyPress={handleKeyPress} // Add the onKeyPress event listener
+        placeholder="Search by Author, Content, Tags, or Child's Name..."
         className="search-stories-input"
       />
       <button onClick={initiateSearch} className="search-stories-button">Search</button>

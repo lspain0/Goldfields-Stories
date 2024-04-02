@@ -6,10 +6,10 @@
 
 .search-stories-input {
   padding: 20px;
-  margin-bottom: 10px; /* Space between input and button */
+  margin-bottom: 20px; /* Space between input and button */
   width: 1200px; /* Adjust width as needed */
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 1px solid #326C6F;
+  border-radius: 35px;
   margin: 10px auto;
   display: block;
 }
@@ -26,7 +26,7 @@
   transition: background-color 0.3s ease;
   background: #326C6F;
   color: white;
-  margin: 10px auto;
+  margin: 20px auto;
   display: block;
   
 
@@ -43,7 +43,8 @@
 }
 
 .stories-logo-container{
-  padding: 20px;
+  padding: 30px;
+  padding-top: 15%;
 }
 
 /****************************************************/

@@ -140,6 +140,7 @@ div.error {
   align-items: center;
   min-height: 100px;
   width: 100%;
+  padding-top: 50px;
 }
 
 .collapsed {
@@ -345,7 +346,7 @@ div.error {
 
 .short-input {
   width: 85%;
-  margin-top: 0px;
+  margin-top: 50px;
   margin-right: 1%;
   font-size: 18px;
 }
@@ -405,7 +406,7 @@ div.error {
   background: #326C6F;
   color: white;
   margin-left: 2%;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
 .family-story-button {

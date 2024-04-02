@@ -84,7 +84,7 @@ function Class() {
 
   return (
     <div className="class-page-container">
-      <div className="logo-container">
+      <div className="logo-container-class">
         <Logo />
       </div>
       <div className="class-form-container">
