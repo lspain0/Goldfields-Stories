@@ -487,6 +487,41 @@ const handleCancel = () => {
   setOpen(false); // Close the modal
 };
 
+const familyMomentGetChild = () => {
+  if (role.includes("Parent")) {
+    return <h2>Family moment for {child}</h2>
+  }
+  else {
+    console.log(child)
+    return (<div><h2>Family moment for {child}     <span><CheckTreePicker
+      placeholder="Select Child"
+      data={sortedData}
+      uncheckableItemValues={['1-1', '1-1-2']}
+      value={selectedCheckTreeValuesChildren}
+      onOpenChange={setCheckTreeChildrenOpen}
+      onChange={handleCheckTreePickerChangeChildren}
+      onClick={toggleCheckTreePickerChildren}
+      cascade={false}
+      open={checkTreeChildrenOpen}
+      renderExtraFooter={() => (
+        <div
+          style={{
+            padding: '10px 2px',
+            borderTop: '1px solid #e5e5e5',
+            borderBottom: '5px'
+          }}
+        >
+          <Button inline className="checktree-close" appearance="primary" onClick={toggleCheckTreePickerChildren}>
+            Done
+          </Button>
+        </div>
+      )}
+    /></span></h2>
+    </div>
+    )
+  }
+};
+
 // Function to render tag inputs for each group
 const renderTagInputs = () => {
   return tagGroups.map((group, index) => (
@@ -664,6 +699,8 @@ const renderTagInputs = () => {
         </span>
       </div>
       <br></br>
+
+      {familyMomentGetChild()}
       <span><UploadWidget onImageUpload={handleImageUpload}/> </span>
       <span><UploadWidgetVideo onVideoUpload={handleImageUpload} /></span>
       <div className="quill">
