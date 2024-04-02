@@ -132,7 +132,7 @@ const StoryForm = () => {
   const [content, setContent] = useState('');
   const [state, setState] = useState('pending');
   const [error, setError] = useState('');
-  const [selectedCheckTreeValuesTags, setSelectedCheckTreeValuesTags] = useState([]);
+  const [selectedCheckTreeValuesTags, setSelectedCheckTreeValuesTags] = useState([]); 
   const [selectedCheckTreeValuesChildren, setSelectedCheckTreeValuesChildren] = useState([]);
   const quillRef = useRef();
   const [currentUser, setUser] = useState(localStorage.getItem("name"));
@@ -143,7 +143,6 @@ const StoryForm = () => {
   const [originalTagGroups, setOriginalTagGroups] = useState([]);
   const [checkTreeChildrenOpen, setCheckTreeChildrenOpen] = useState(false); // State to manage tree visibility
   const [checkTreeTagsOpen, setCheckTreeTagsOpen] = useState(false); // State to manage tree visibility 
-  console.log(child);
 
   useEffect(() => {
     const fetchStoryById = async () => {
@@ -664,8 +663,9 @@ const renderTagInputs = () => {
           Child: {child}
         </span>
       </div>
-          <span><UploadWidget onImageUpload={handleImageUpload} /></span>
-        <span><UploadWidgetVideo onVideoUpload={handleImageUpload} /></span>
+      <br></br>
+      <span><UploadWidget onImageUpload={handleImageUpload}/> </span>
+      <span><UploadWidgetVideo onVideoUpload={handleImageUpload} /></span>
       <div className="quill">
         <ReactQuill
           ref={quillRef}
