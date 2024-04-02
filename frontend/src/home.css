@@ -140,9 +140,9 @@
   align-items: center;
   min-height: 100px;
   width: 100%;
-  
-  
+  margin-bottom: 40px;
 }
+
 .logo-container img {
   max-width: 200px; /* Example size, adjust as needed */
   height: auto;
