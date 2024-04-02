@@ -47,6 +47,9 @@ function getAuthorFirstName(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function addSpace(str) {
+    return str.replaceAll(',', (', '))
+  }
 
 const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, selectedTagFilters, currentState }) => {
     //values for selected story filters
@@ -126,7 +129,7 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
             return null;
         }
     }
-    else if (!window.location.href.includes('search')) {
+    else if (!window.location.href.includes('sear')) {
         if (story.state === 'family') {
             return null;
         }
@@ -175,7 +178,7 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
                         <div className="image-container">
                             <img src={images[0]} alt=""/>
                         </div>
-                        <sub className="story-children">Family moment for {(story.children)}</sub>
+                        <sub className="story-children">Family moment for {(truncate(addSpace(story.children), 22))}</sub>
                         <p className="story-p">{truncate(removeTags(story.content), 120)}</p>
                         <sub className="story-sub">{"Shared by "+getAuthorFirstName(story.author)+"\n"}</sub> 
                         <sub className='story-date'>{formatTimestamp(story.createdAt)}</sub>
