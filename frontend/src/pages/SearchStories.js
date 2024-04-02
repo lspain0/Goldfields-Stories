@@ -11,12 +11,10 @@ const SearchStories = () => {
   const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
-    // This will run when the component mounts
-    document.body.style.backgroundColor = "#FFFFFF"; // Set the body background color to white
+    document.body.style.backgroundColor = "#FFFFFF";
     
     return () => {
-      // This will run when the component unmounts
-      document.body.style.backgroundColor = null; // Reset the body background color
+      document.body.style.backgroundColor = null;
     }
   }, []);
 
@@ -24,11 +22,15 @@ const SearchStories = () => {
     setSearchTerm(event.target.value);
   };
 
+  const clearSearchTerm = () => {
+    setSearchTerm('');
+  };
+
   const initiateSearch = async () => {
     const term = searchTerm.trim();
-    setError(''); // Clear any existing errors
-    setShowNotification(false); // Hide any existing notifications
-    setStories([]); // Clear previous stories right at the start of a new search
+    setError('');
+    setShowNotification(false);
+    setStories([]);
 
     if (!term) {
       return;
@@ -45,11 +47,10 @@ const SearchStories = () => {
     } catch (err) {
       console.error('Error searching for stories:', err);
       setError('Failed to fetch stories. Please try again.');
-      setShowNotification(true); // Show notification in case of error
+      setShowNotification(true);
     }
   };
 
-  // Function to handle key press event on the input field
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       initiateSearch();
@@ -61,14 +62,21 @@ const SearchStories = () => {
       <div className="stories-logo-container">
         <Logo2 />
       </div>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={handleInputChange}
-        onKeyPress={handleKeyPress} // Add the onKeyPress event listener
-        placeholder="Search by Author, Content, Tags, or Child's Name..."
-        className="search-stories-input"
-      />
+      <div className="search-bar-container">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
+          placeholder="Search by Author, Content, Tags, or Child's Name..."
+          className="search-stories-input"
+        />
+        {searchTerm && (
+          <button onClick={clearSearchTerm} className="clear-button">
+            ×
+          </button>
+        )}
+      </div>
       <button onClick={initiateSearch} className="search-stories-button">Search</button>
       <div className="story-cards-container">
         {stories.length > 0 && (

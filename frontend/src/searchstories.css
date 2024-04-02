@@ -1,17 +1,21 @@
 
-
 .search-stories-container {
   margin-top: 30px; /* Adjust as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .search-stories-input {
   padding: 20px;
-  margin-bottom: 20px; /* Space between input and button */
-  width: 1200px; /* Adjust width as needed */
+  padding-right: 50px; /* Make room for the clear button */
+  margin-bottom: 20px;
+  width: 100%; /* Make input width responsive */
   border: 1px solid #326C6F;
   border-radius: 35px;
-  margin: 10px auto;
   display: block;
+  font-size: 18px;
 }
 
 /* Styles for the button, with a unique class name */
@@ -26,14 +30,12 @@
   transition: background-color 0.3s ease;
   background: #326C6F;
   color: white;
-  margin: 20px auto;
+  margin-top: 20px;
   display: block;
-  
+}
 
-  /* Adding a hover effect */
-  &:hover {
-    background-color: #224957; /* A slightly darker blue */
-  }
+.search-stories-button:hover {
+  background-color: #224957;
 }
 
 /* Styles for the error message, with a unique class name */
@@ -45,6 +47,25 @@
 .stories-logo-container{
   padding: 30px;
   padding-top: 15%;
+}
+
+.search-bar-container {
+  position: relative;
+  width: 80%; /* Adjust based on preference */
+  max-width: 1160px; /* Maximum width */
+}
+
+
+.clear-button {
+  position: absolute;
+  right: 10px;
+  top: 46%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #000000;
 }
 
 /****************************************************/
@@ -105,4 +126,3 @@
   opacity: 0;
   transition: opacity 300ms;
 }
-
