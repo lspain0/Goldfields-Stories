@@ -1,10 +1,10 @@
 
 .search-stories-container {
   margin-top: 30px; /* Adjust as needed */
-  display: center;
-  justify-content: flex;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  flex-direction: grid;
+  flex-direction: column;
 }
 
 .search-stories-input {
@@ -158,4 +158,8 @@
 }
 .story-filter-dropdown{
 
+}
+
+.search-body {
+  background: white;
 }

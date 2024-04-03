@@ -61,6 +61,7 @@ const SearchStories = () => {
   };
 
   return (
+    <body className='search-body'>
     <div className="search-stories-container">
       <div className="stories-logo-container">
         <Logo2 />
@@ -91,18 +92,19 @@ const SearchStories = () => {
         </select>
       </div>
       <button onClick={initiateSearch} className="search-stories-button">Search</button>
-      <div className="story-cards-container">
+      <div className={`notification ${showNotification ? 'show' : ''}`}>
+        {error}
+        <button onClick={() => setShowNotification(false)}>×</button>
+      </div>
+    </div>
+    <div className="story-cards-container">
         {stories.length > 0 && (
           stories.map(story => (
             <StoryDetails story={story} key={story._id} />
           ))
         )}
       </div>
-      <div className={`notification ${showNotification ? 'show' : ''}`}>
-        {error}
-        <button onClick={() => setShowNotification(false)}>×</button>
-      </div>
-    </div>
+    </body>
   );
 };
 
