@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, Link } from 'react-router-dom';
 import axios_obj from "../axios";
+import { useNavigate } from 'react-router-dom';
 
 var storyId;
 
@@ -92,6 +93,7 @@ function getName(str) {
 
 
 const StoryPage = () => {
+  const navigate = useNavigate(); 
   const location = useLocation();
   const [currentStory, setCurrentStory] = useState(null);
 
@@ -175,6 +177,7 @@ const StoryPage = () => {
 
   return (
     <body className="story-page-body">
+      <div className="back-arrow" onClick={() => navigate(-1)}>&larr; Back</div>
       {loadStoryID()}
       {adminControls()}
       <div className="story-content">

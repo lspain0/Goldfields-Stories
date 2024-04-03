@@ -554,3 +554,20 @@ div.sub, iframe, image {
   margin-right: 10px;
   min-width: 75%
 }
+
+.back-arrow {
+  cursor: pointer;
+  padding: 10px;
+  
+  margin-top: 50px;
+  display: inline-block;
+  background-color: #f0f0f0; /* Light grey background */
+  border: 1px solid #dcdcdc; /* Slight border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 16px; /* Adequate font size */
+  font-weight: bold; /* Make the arrow bold */
+}
+
+.back-arrow:hover {
+  background-color: #e0e0e0; /* Slightly darker on hover */
+}
