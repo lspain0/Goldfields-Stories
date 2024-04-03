@@ -262,10 +262,10 @@
 
 .nav-icon {
   font-size: 24px;
-  color: var(--primary); /* You'll need to define this custom property in your CSS, or replace it with a color value */
+  color: var(--primary);
   cursor: pointer;
   display: inline;
   margin: -5px auto;
-  margin-right: 1px;
+  margin-right: 5px;
 }
 

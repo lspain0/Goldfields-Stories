@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import "../home.css";
-import { FaHome, FaBook, FaChalkboard, FaSearch, FaPenFancy } from 'react-icons/fa';
+import { FaHome, FaBook, FaChalkboard, FaSearch, FaTimes } from 'react-icons/fa';
 
 const Navbar = (props) => {
     const location = useLocation(); // This hook gives us the current location object
@@ -95,7 +95,8 @@ const Navbar = (props) => {
                         </Link>
                     }
                     <Link to="/logout" onClick={logoutHandler} className="nav-item">
-                    <FaUserCircle className="nav-icon" /> Logout
+                    <FaTimes
+                     className="nav-icon" /> Logout
                     </Link>
                     
                 </div>
