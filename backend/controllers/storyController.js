@@ -142,29 +142,41 @@ const updateStoryState = async (req, res) => {
   }
 };
 
-// Search for stories
+// Search for stories with filters
 const searchStories = async (req, res) => {
-  const searchTerm = req.query.search;
-  if (!searchTerm) {
+  const { search, filter } = req.query;
+
+  if (!search) {
     return res.status(400).json({ error: 'Search term is required' });
   }
 
   try {
-    // Building the search query to include multiple fields
-    const searchQuery = {
+    // Initial search query for multiple fields
+    let searchQuery = {
       $or: [
-        { title: { $regex: searchTerm, $options: 'i' } },
-        { children: { $regex: searchTerm, $options: 'i' } },
-        { tags: { $regex: searchTerm, $options: 'i' } },
-        { content: { $regex: searchTerm, $options: 'i' } },
-        { author: { $regex: searchTerm, $options: 'i' } }
+        { title: { $regex: search, $options: 'i' } },
+        { children: { $regex: search, $options: 'i' } },
+        { tags: { $regex: search, $options: 'i' } },
+        { content: { $regex: search, $options: 'i' } },
+        { author: { $regex: search, $options: 'i' } }
       ]
     };
 
-    const stories = await Story.find(searchQuery).sort({ createdAt: -1 }); // Sorting by creation date for relevance
+    // Extend search query based on the filter
+    if (filter) {
+      if (filter === 'Individual') {
+        // Assuming individual stories have a single child
+        searchQuery['$and'] = [{ children: { $not: /,/ } }];
+      } else if (filter === 'Group') {
+        // Assuming group stories have multiple children separated by commas
+        searchQuery['$and'] = [{ children: /,/ }];
+      }
+    }
+
+    const stories = await Story.find(searchQuery).sort({ createdAt: -1 });
 
     if (stories.length === 0) {
-      return res.status(404).json({ message: 'No matching stories found' }); // Returning a 404 if no stories match the search term
+      return res.status(404).json({ message: 'No matching stories found' });
     }
 
     res.status(200).json(stories);
@@ -173,6 +185,7 @@ const searchStories = async (req, res) => {
     res.status(500).json({ error: 'Internal server error during the search' });
   }
 };
+
 
 module.exports = {
   logRequest,

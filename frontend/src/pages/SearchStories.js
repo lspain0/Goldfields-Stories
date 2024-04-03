@@ -9,6 +9,8 @@ const SearchStories = () => {
   const [stories, setStories] = useState([]);
   const [error, setError] = useState('');
   const [showNotification, setShowNotification] = useState(false);
+  // State to hold the selected filter value
+  const [storyFilter, setStoryFilter] = useState('All');
 
   useEffect(() => {
     document.body.style.backgroundColor = "#FFFFFF";
@@ -37,7 +39,8 @@ const SearchStories = () => {
     }
 
     try {
-      const response = await axios_obj.get(`/stories/search?search=${term}`);
+      // Modify the search endpoint to accept and process the filter parameter as needed
+      const response = await axios_obj.get(`/stories/search?search=${term}&filter=${storyFilter}`);
       if (response.status === 200 && response.data.length > 0) {
         setStories(response.data);
       } else {
@@ -76,6 +79,16 @@ const SearchStories = () => {
             ×
           </button>
         )}
+        {/* Dropdown for selecting the story filter */}
+        <select
+          value={storyFilter}
+          onChange={(e) => setStoryFilter(e.target.value)}
+          className="story-filter-dropdown"
+        >
+          <option value="All">All Stories</option>
+          <option value="Individual">Individual Stories</option>
+          <option value="Group">Group Stories</option>
+        </select>
       </div>
       <button onClick={initiateSearch} className="search-stories-button">Search</button>
       <div className="story-cards-container">

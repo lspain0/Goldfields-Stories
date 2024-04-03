@@ -1,10 +1,10 @@
 
 .search-stories-container {
   margin-top: 30px; /* Adjust as needed */
-  display: flex;
-  justify-content: center;
+  display: center;
+  justify-content: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: grid;
 }
 
 .search-stories-input {
@@ -126,4 +126,36 @@
 .notification-exit-active {
   opacity: 0;
   transition: opacity 300ms;
+}
+/****************************************************/
+
+/* Styling for the sorting dropdown */
+.story-filter-dropdown {
+  z-index: 10; /* Keep if necessary to ensure the dropdown is above other elements */
+  display: flex; /* Flex display to align with the class name */
+}
+
+/* Update the .sort-dropdown styles for the header context */
+.story-filter-dropdown{
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 2px solid #326C6F;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  background: white;
+  color: #326C6F;
+  margin: 0 0 0 10px;
+}
+
+.story-filter-dropdown {
+  border-color: #224957;
+}
+
+.story-filter-dropdown{
+  outline: none;
+  border-color: #326C6F;
+}
+.story-filter-dropdown{
+
 }
