@@ -87,6 +87,7 @@
   z-index: 1000; /* Make sure it's above other elements */
   display: none; /* Initially don't display */
   transition: all 0.3s ease;
+  margin-top: 35%;
 }
 
 .notification.show {
