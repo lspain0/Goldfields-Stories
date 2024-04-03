@@ -242,7 +242,7 @@ div.error {
   margin-right: 10px;
   outline:0.01em solid black;
   overflow-y: scroll;
-  margin-top: 30px;
+  margin-top: 15px;
 }
 
 
@@ -411,6 +411,11 @@ div.error {
   margin-top: 30px;
 }
 
+.pending-story-button {
+  margin-top: 0px;
+}
+
+
 .family-story-button {
   width: 250px
 }
@@ -558,10 +563,9 @@ div.sub, iframe, image {
 .back-arrow {
   cursor: pointer;
   padding: 10px;
-  
-  margin-top: 50px;
-  display: inline-block;
-  background-color: #f0f0f0; /* Light grey background */
+  max-width: 100px;
+  margin-top: 40px;
+  background-color: #ffffff6c; /* Light grey background */
   border: 1px solid #dcdcdc; /* Slight border */
   border-radius: 5px; /* Rounded corners */
   font-size: 16px; /* Adequate font size */
