@@ -64,6 +64,9 @@
   font-size: 24px;
   color: var(--primary);
   cursor: pointer;
+  display: inline;
+  margin: -5px auto;
+  margin-right: 5px;
 }
 
 /****************************************************/
@@ -260,12 +263,4 @@
 }
 /****************************************************/
 
-.nav-icon {
-  font-size: 24px;
-  color: var(--primary);
-  cursor: pointer;
-  display: inline;
-  margin: -5px auto;
-  margin-right: 5px;
-}
 
