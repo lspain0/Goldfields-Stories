@@ -6,13 +6,19 @@
     align-items: center;
     min-height: 100px;
     width: 100%;
-    padding-top: 10px;
+    padding-top: 40px;
+    
+
   }
+
+.class-form-input{
+    padding-top: 10px;
+}
 
 .class-form-container {
     width: 300px;
     margin: auto;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .class-form {
@@ -62,7 +68,7 @@
 
 .message-wrapper {
     text-align: center;
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 .message-container {
@@ -226,7 +232,7 @@
     align-items: center; /* Center items vertically */
     gap: 10px; /* Space between items */
     position: relative; /* Position context for absolute children */
-    margin-top: 100px; /* Added space from the top */
+    margin-top: 80px; /* Added space from the top */
   }
   
 .sort-dropdown-container {

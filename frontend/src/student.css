@@ -110,11 +110,8 @@
 
 .student-card-info span {
   display: block;
-  /* Each span on a new line */
   font-size: 18px;
-  /* Adjust font size as needed */
   margin-bottom: 5px;
-  /* Space between lines */
 }
 
 .standard-button {
@@ -128,10 +125,15 @@
   transition: background-color 0.3s ease;
   background: #326C6F;
   color: white;
-  margin: 20px auto;
+  margin: 5px auto;
   display: block;
-  margin-top: 20px
+  margin-top: 10px
 }
+
+.standard-button:hover {
+  background: #224957;
+}
+
 
 .standard-button-std {
   padding: 10px 20px;
@@ -144,14 +146,16 @@
   transition: background-color 0.3s ease;
   background: #326C6F;
   color: white;
-  margin: 20px auto;
+  margin: 10px auto;
   display: block;
   margin-top: 100px
 }
 
-.standard-button:hover {
+.standard-button-std:hover {
   background: #224957;
 }
+
+
 
 /****************************************************/
 
@@ -434,8 +438,8 @@ html, body {
 
 /* Styling for gender dropdown */
 .student-form-input{
-  padding: 2px 7px; /* Provides internal space making the dropdown comfortable to click */
-  font-size: 14px; /* Suitable font size for the content within the dropdown */
+  padding: 4px 7px; /* Provides internal space making the dropdown comfortable to click */
+  font-size: 18px; /* Suitable font size for the content within the dropdown */
   border: 1px solid #326C6F; /* Giving it a distinct border */
   border-radius: 5px; /* Rounded corners for a softer look */
   background-color: #f9f9f9; /* A light background that contrasts well with the text */
