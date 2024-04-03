@@ -143,6 +143,7 @@
     font-family: 'Poppins', sans-serif;
     text-decoration: none;
     color: black;
+    border: 1px solid #326C6F;
 }
 
 .class-card:hover {
