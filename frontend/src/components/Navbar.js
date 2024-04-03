@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import "../home.css";
+import { FaHome, FaBook, FaChalkboard, FaSearch, FaTimes } from 'react-icons/fa';
 
 const Navbar = (props) => {
     const location = useLocation(); // This hook gives us the current location object
@@ -66,13 +67,13 @@ const Navbar = (props) => {
                 </Link>
                 <div className="nav-links">
                     <Link to="/home" className={isActive("/home")}>
-                        Home
+                    <FaHome className="nav-icon" /> Home
                     </Link>
                     {
                         ["Admin", "Teacher", "Parent"].includes(props?.role) &&
 
                         <Link to="/stories" className={isActive("/stories")}>
-                            Stories
+                            <FaBook className="nav-icon" /> Stories
                         </Link>
                     }
                     {
@@ -80,23 +81,24 @@ const Navbar = (props) => {
                         ["Admin", "Teacher"].includes(props?.role) &&
                         <>
                             <Link to="/class" className={isActive("/class")}>
-                                Class
+                            <FaChalkboard className="nav-icon" /> Class
                             </Link>
                             <Link to="/search" className={isActive("/search")}>
-                                Search Stories
+                            <FaSearch className="nav-icon" /> Search Stories
                             </Link>
                         </>
                     }
                     {
                         ["Admin"].includes(props?.role) &&
                         <Link to="/manage_accounts" className={isActive("/manage_accounts")}>
-                            Manage Accounts
+                            <FaUserCircle className="nav-icon" /> Manage Accounts
                         </Link>
                     }
                     <Link to="/logout" onClick={logoutHandler} className="nav-item">
-                        Logout
+                    <FaTimes
+                     className="nav-icon" /> Logout
                     </Link>
-                    <FaUserCircle className="nav-icon" />
+                    
                 </div>
             </nav>
         </header>
