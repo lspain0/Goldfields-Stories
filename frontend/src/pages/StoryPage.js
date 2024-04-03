@@ -12,13 +12,13 @@ function loadStoryID() {
 function adminControls() {
   if (window.location.href.includes('pending')) {
     return (
-      <div className="pending-story-admin-controls">
-        <button className="create-story-button" onClick={handlePostStory}>Post Story</button>
+      <span className="pending-story-admin-controls">
+        <button className="pending-story-button" onClick={handlePostStory}>Post Story</button>
         <Link to={`/editstory/${storyId}`}>
           <button className="pending-story-button">Edit Story</button>
         </Link>
         <button className="pending-story-button" onClick={handleDeleteStory}>Delete Story</button>
-      </div>
+      </span>
     );
   }
 }
