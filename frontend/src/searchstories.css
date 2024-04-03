@@ -1,17 +1,31 @@
 
+
+.search-body {
+  background: white;
+}
 .search-stories-container {
-  margin-top: 30px; /* Adjust as needed */
+  margin-top: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
+.search-bar-container {
+  position: relative;
+  width: 80%;
+  max-width: 1160px;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  margin: 0 auto; 
+}
+
 .search-stories-input {
   padding: 20px;
   padding-right: 50px; /* Make room for the clear button */
   margin-bottom: 20px;
-  width: 100%; /* Make input width responsive */
+  width: 100%;
   border: 1px solid #326C6F;
   border-radius: 35px;
   display: block;
@@ -31,7 +45,7 @@
   background: #326C6F;
   color: white;
   margin-top: 20px;
-  display: block;
+  display: block; /* You may want to change this to 'flex' if you place this inside a flex container */
 }
 
 .search-stories-button:hover {
@@ -59,13 +73,17 @@
 .clear-button {
   position: absolute;
   right: 10px;
-  top: 46%;
+  top: 32%;
   transform: translateY(-50%);
   border: none;
   background: none;
   cursor: pointer;
   font-size: 20px;
   color: #000000;
+}
+
+.clear-button:hover {
+  color: #ff6b6b; /* Hover effect for the close button */
 }
 
 /****************************************************/
@@ -87,11 +105,11 @@
   z-index: 1000; /* Make sure it's above other elements */
   display: none; /* Initially don't display */
   transition: all 0.3s ease;
-  margin-top: 35%;
+  margin-top: 38%;
 }
 
 .notification.show {
-  display: flex; /* Show the notification as a flex container */
+  display: flex;
 }
 
 .notification button {
@@ -107,7 +125,7 @@
   color: #ff6b6b; /* Hover effect for the close button */
 }
 
-/* These can be used to animate the notification's appearance and disappearance */
+
 .notification-enter {
   opacity: 0;
   transform: translateY(-20px);
@@ -131,12 +149,11 @@
 
 /* Styling for the sorting dropdown */
 .story-filter-dropdown {
-  z-index: 10; /* Keep if necessary to ensure the dropdown is above other elements */
-  display: flex; /* Flex display to align with the class name */
+  z-index: 10; 
+  display: flex; 
 }
 
-/* Update the .sort-dropdown styles for the header context */
-.story-filter-dropdown{
+.story-filter-dropdown {
   padding: 5px 10px;
   font-size: 16px;
   border: 2px solid #326C6F;
@@ -145,7 +162,10 @@
   cursor: pointer;
   background: white;
   color: #326C6F;
-  margin: 0 0 0 10px;
+  width: auto; 
+  box-sizing: border-box; 
+  margin-top: 10px; 
+  display: block; 
 }
 
 .story-filter-dropdown {
@@ -155,11 +175,4 @@
 .story-filter-dropdown{
   outline: none;
   border-color: #326C6F;
-}
-.story-filter-dropdown{
-
-}
-
-.search-body {
-  background: white;
 }
