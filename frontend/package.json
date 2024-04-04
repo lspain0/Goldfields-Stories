@@ -12,6 +12,7 @@
     "cloudinary": "^1.41.3",
     "cors": "^2.8.5",
     "leaflet": "^1.9.4",
+    "query-string": "^9.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-html-parser": "^2.0.2",

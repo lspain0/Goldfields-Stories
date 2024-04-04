@@ -1,30 +1,45 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 import axios_obj from "../axios";
 import StoryDetails from "../components/StoryDetails";
 import "../searchstories.css";
 import Logo2 from "../components/logov2";
 
 const SearchStories = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation(); 
+
+  const queryParams = queryString.parse(location.search);
+  const initialSearchTerm = queryParams.search || '';
+  const initialFilter = queryParams.filter || 'All';
+  const initialSortOption = queryParams.sort || 'Date';
+
+  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [stories, setStories] = useState([]);
   const [error, setError] = useState('');
   const [showNotification, setShowNotification] = useState(false);
-  const [storyFilter, setStoryFilter] = useState('All');
-  const [sortOption, setSortOption] = useState('Date');
+  const [storyFilter, setStoryFilter] = useState(initialFilter);
+  const [sortOption, setSortOption] = useState(initialSortOption);
 
   useEffect(() => {
     document.body.style.backgroundColor = "#FFFFFF";
-    
     return () => {
       document.body.style.backgroundColor = null;
-    }
+    };
   }, []);
 
   useEffect(() => {
-    if (searchTerm) { 
-      initiateSearch();
-    }
-  }, [storyFilter, sortOption]);
+    initiateSearch();
+  }, [location.search]); // Rerun search when query parameters change
+
+  useEffect(() => {
+    initiateSearch(); // Trigger search when filter or sort options change
+  }, [storyFilter, sortOption]); // Listen for changes in filter and sort options
+
+  const updateQueryParams = () => {
+    navigate(`?search=${searchTerm}&filter=${storyFilter}&sort=${sortOption}`, { replace: true });
+  };
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
@@ -35,6 +50,7 @@ const SearchStories = () => {
     setStories([]);
     setError(''); 
     setShowNotification(false);
+    navigate('/'); 
   };
 
   const sortStories = (stories) => {
@@ -56,7 +72,7 @@ const SearchStories = () => {
     }
 
     try {
-      const response = await axios_obj.get(`/stories/search?search=${term}&filter=${storyFilter}`);
+      const response = await axios_obj.get(`/stories/search?search=${term}&filter=${storyFilter}&sort=${sortOption}`);
       if (response.status === 200 && response.data.length > 0) {
         const sortedStories = sortStories(response.data);
         setStories(sortedStories);
@@ -69,6 +85,8 @@ const SearchStories = () => {
       setError('Failed to fetch stories. Please try again.');
       setShowNotification(true);
     }
+
+    updateQueryParams();
   };
 
   const handleKeyPress = (event) => {
