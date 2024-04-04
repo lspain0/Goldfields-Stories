@@ -45,7 +45,7 @@
   background: #326C6F;
   color: white;
   margin-top: 20px;
-  display: block; /* You may want to change this to 'flex' if you place this inside a flex container */
+  display: block; 
 }
 
 .search-stories-button:hover {
@@ -60,7 +60,7 @@
 
 .stories-logo-container{
   padding: 30px;
-  padding-top: 15%;
+  padding-top: 7%;
 }
 
 .search-bar-container {
@@ -105,7 +105,7 @@
   z-index: 1000; /* Make sure it's above other elements */
   display: none; /* Initially don't display */
   transition: all 0.3s ease;
-  margin-top: 38%;
+  margin-top: 33%;
 }
 
 .notification.show {
@@ -147,12 +147,7 @@
 }
 /****************************************************/
 
-/* Styling for the sorting dropdown */
-.story-filter-dropdown {
-  z-index: 10; 
-  display: flex; 
-}
-
+/* Styling for the sorting filter dropdown */
 .story-filter-dropdown {
   padding: 5px 10px;
   font-size: 16px;
@@ -176,3 +171,47 @@
   outline: none;
   border-color: #326C6F;
 }
+
+/* Styling for the sorting dropdown */
+.sort-dropdown {
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 2px solid #326C6F;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  background: white;
+  color: #326C6F;
+  width: auto; 
+  box-sizing: border-box; 
+  margin-top: 10px; 
+  display: block; 
+}
+
+.sort-dropdown {
+  border-color: #224957;
+}
+
+.sort-dropdown {
+  outline: none;
+  border-color: #326C6F;
+}
+
+.filters-container {
+  display: flex;
+  justify-content: center; 
+  width: 20%; 
+  max-width: 1160px; 
+  margin-top: 10px; 
+}
+
+.story-filter-dropdown, .sort-dropdown {
+  margin: 0; 
+  margin-right: 10px; 
+}
+
+.sort-dropdown {
+  margin-right: 0;
+}
+
+/****************************************************/

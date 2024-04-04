@@ -9,8 +9,8 @@ const SearchStories = () => {
   const [stories, setStories] = useState([]);
   const [error, setError] = useState('');
   const [showNotification, setShowNotification] = useState(false);
-  // State to hold the selected filter value
   const [storyFilter, setStoryFilter] = useState('All');
+  const [sortOption, setSortOption] = useState('Date');
 
   useEffect(() => {
     document.body.style.backgroundColor = "#FFFFFF";
@@ -20,12 +20,29 @@ const SearchStories = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (searchTerm) { 
+      initiateSearch();
+    }
+  }, [storyFilter, sortOption]);
+
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
   const clearSearchTerm = () => {
     setSearchTerm('');
+    setStories([]);
+    setError(''); 
+    setShowNotification(false);
+  };
+
+  const sortStories = (stories) => {
+    if (sortOption === 'Title') {
+      return stories.sort((a, b) => a.title.localeCompare(b.title));
+    } else {
+      return stories.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
   };
 
   const initiateSearch = async () => {
@@ -39,10 +56,10 @@ const SearchStories = () => {
     }
 
     try {
-      // Modify the search endpoint to accept and process the filter parameter as needed
       const response = await axios_obj.get(`/stories/search?search=${term}&filter=${storyFilter}`);
       if (response.status === 200 && response.data.length > 0) {
-        setStories(response.data);
+        const sortedStories = sortStories(response.data);
+        setStories(sortedStories);
       } else {
         setError('No stories found. Please try again.');
         setShowNotification(true);
@@ -80,16 +97,25 @@ const SearchStories = () => {
             ×
           </button>
         )}
-        {/* Dropdown for selecting the story filter */}
-        <select
-          value={storyFilter}
-          onChange={(e) => setStoryFilter(e.target.value)}
-          className="story-filter-dropdown"
-        >
-          <option value="All">All Stories</option>
-          <option value="Individual">Individual Stories</option>
-          <option value="Group">Group Stories</option>
-        </select>
+        <div className="filters-container"> {/* New container for filters */}
+          <select
+            value={storyFilter}
+            onChange={(e) => setStoryFilter(e.target.value)}
+            className="story-filter-dropdown"
+          >
+            <option value="All">All Stories</option>
+            <option value="Individual">Individual Stories</option>
+            <option value="Group">Group Stories</option>
+          </select>
+          <select
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            className="sort-dropdown"
+          >
+            <option value="Date">Sort by Date</option>
+            <option value="Title">Sort by Title</option>
+          </select>
+        </div>
       </div>
       <button onClick={initiateSearch} className="search-stories-button">Search</button>
       <div className={`notification ${showNotification ? 'show' : ''}`}>
