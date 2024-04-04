@@ -50,7 +50,7 @@ const SearchStories = () => {
     setStories([]);
     setError(''); 
     setShowNotification(false);
-    navigate('/'); 
+    updateQueryParams();
   };
 
   const sortStories = (stories) => {
