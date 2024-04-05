@@ -248,7 +248,7 @@ div.error {
 
 
 .story-info {
-  margin-top: 40px;
+  margin-top: 0px;
   float: right;
   width: 28%;
   overflow-wrap: break-word;
@@ -301,7 +301,11 @@ div.error {
 .story-page-body {
   padding-left: 0%;
   overflow: hidden;
+  margin: 0;
+  height: 100%;
+  overflow-y: hidden;
 }
+
 
 .right-align-span {
   text-align: right;
