@@ -1,7 +1,7 @@
 const { default: mongoose } = require('mongoose');
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
-const secretKey = 'secret_key'; 
+const secretKey = 'secret_key';
 
 
 // Middleware to extract and verify JWT
@@ -20,21 +20,21 @@ const authenticateToken = (req, res, next) => {
 
     const { exp } = decoded;
 
-    
+
     if (Date.now() >= exp * 1000) {
       return res.status(401).json({ message: 'Token has expired' });
     }
     req.user = decoded;
     next();
   });
-  
+
 };
 
 
 //Validate update on users request
 const validateUpdateUser = (req, res, next) => {
   const { id, role } = req.body;
-//int array to store error message
+  //int array to store error message
 
   let err = [];
   if (!id) {
@@ -154,7 +154,15 @@ const loginUser = async (req, res) => {
 // Route to get all users without their password
 const UserList = async (req, res) => {
   try {
-    const user = await User.find({}).select("-password");
+    const { name } = req.body;
+
+    console.log(name);
+    let filter = {};
+    if (name) {
+      filter["name"] = { $regex: new RegExp(name, "i") };
+
+    }
+    const user = await User.find(filter).select("-password");
     res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });

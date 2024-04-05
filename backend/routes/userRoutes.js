@@ -32,7 +32,7 @@ router.post('/delete', validateDeleteUser, deleteUser)
 router.post('/update', validateUpdateUser, updateUser)
 
 //Getting all users
-router.get('/userList', UserList)
+router.post('/userList', UserList)
 
 
 module.exports = router
