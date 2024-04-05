@@ -178,7 +178,7 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
                         <div className="image-container">
                             <img src={images[0]} alt=""/>
                         </div>
-                        <sub className="story-children">Family moment for {(truncate(addSpace(story.children), 22))}</sub>
+                        <sub className="story-children">Family moment for {(truncate(addSpace(story.children), 20))}</sub>
                         <p className="story-p">{truncate(removeTags(story.content), 120)}</p>
                         <sub className="story-sub">{"Shared by "+getAuthorFirstName(story.author)+"\n"}</sub> 
                         <sub className='story-date'>{formatTimestamp(story.createdAt)}</sub>
