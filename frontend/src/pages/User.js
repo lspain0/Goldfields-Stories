@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Logo from "../components/logo.js";
 import "../class.css";
 import axios from "../axios.js";
+import { FaSearch } from "react-icons/fa";
 
 function Class() {
 
@@ -15,6 +16,17 @@ function Class() {
     });
 
     const [selecetUser, setSelecetUser] = useState({});
+
+//Search user when enter key  is pressed, invoking the function of getData
+    const [name, setName] = useState("");
+
+
+    const nameHandler = (e) => {
+        if (e.key === 'Enter') {
+            getData();
+
+        }
+    }
 
 
     //Fetching stories from backend
@@ -35,7 +47,7 @@ function Class() {
         try {
             const list = "/users/userList";
             // Make a POST request to login details
-            const response = await axios.get(list);
+            const response = await axios.post(list, { name: name });
             for (let row of response?.data) {
                 if (row?.email == selecetUser?.email) {
                     setSelecetUser(row);
@@ -139,8 +151,13 @@ function Class() {
                 </h3> */}
                 <p style={{ color: parseInt(deleteStatus?.status) === 200 ? "green" : "red" }}>{deleteStatus?.msg}</p>
                 <div>
+                    {/* Creating the the search container with an icon, name handler gets called when pressed*/}
+                    <div style={{ display: "flex", flexDirection: "row", alignItems: "center", borderRadius: "5px", background: "#FFF", width: "300px", height: "40px" }}>
+                        <FaSearch style={{ marginLeft: "5px" }} className="nav-icon" />
+                        <input onKeyPress={nameHandler} value={name} onChange={(e) => setName(e.target.value)} style={{ border: "none", outline: "none" }} placeholder="Search by Full Name" type="text" />
+                    </div>
                     {/*The table displaying with the details  */}
-                    <table style={{ width: "100%", border: "solid 1px", borderCollapse: "collapse", borderRadius: "15px", padding: "30px", background: "white" }}>
+                    <table style={{ width: "100%", border: "solid 1px", borderCollapse: "collapse", borderRadius: "15px", padding: "30px", background: "white", marginTop: "10px" }}>
                         <thead >
                             <tr style={{ border: "solid", borderWidth: "1px 0" }}>
 
