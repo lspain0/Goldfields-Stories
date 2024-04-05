@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, Link } from 'react-router-dom';
 import axios_obj from "../axios";
 import { useNavigate } from 'react-router-dom';
+import { Input, Button } from 'rsuite';
 
 var storyId;
 
@@ -12,13 +13,13 @@ function loadStoryID() {
 function adminControls() {
   if (window.location.href.includes('pending')) {
     return (
-      <span className="pending-story-admin-controls">
-        <button className="pending-story-button" onClick={handlePostStory}>Post Story</button>
+      <div className="pending-story-admin-controls">
+        <button className="create-story-button" onClick={handlePostStory}>Post Story</button>
         <Link to={`/editstory/${storyId}`}>
           <button className="pending-story-button">Edit Story</button>
         </Link>
         <button className="pending-story-button" onClick={handleDeleteStory}>Delete Story</button>
-      </span>
+      </div>
     );
   }
 }
@@ -171,9 +172,17 @@ const StoryPage = () => {
             <hr className="solid" />
           </>
         )}
+        <p>Comments: </p>
       </div>
     );
   };
+
+  const commentFooter = () => {
+    return <div className="comment-footer">
+      <Input className="comment-footer-input" as="textarea" rows={3} placeholder="Add a comment..." />
+      <Button className="comment-post-button">Post</Button>
+    </div>
+  }
 
   return (
     <body className="story-page-body">
@@ -186,6 +195,7 @@ const StoryPage = () => {
         <div dangerouslySetInnerHTML={parseHTML(currentStory.content)} />
       </div>
       {generateStoryInfoHTML()}
+      {commentFooter()}
     </body>
   );
   
