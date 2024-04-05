@@ -26,6 +26,10 @@ const storySchema = new Schema({
     state: {
         type: String,
         required: true
+    },
+    comments: {
+        type: String,
+        required: false
     }
 
 }, { timestamps: true })
