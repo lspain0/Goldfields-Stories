@@ -173,6 +173,28 @@ const StoryPage = () => {
           </>
         )}
         <p>Comments: </p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        <p>Wow!</p>
+        
       </div>
     );
   };

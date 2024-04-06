@@ -241,71 +241,20 @@ div.error {
   height: 85vh;
   word-wrap: break-word;
   margin-right: 10px;
-  outline:0.01em solid black;
-  overflow-y: scroll;
+  box-shadow: 0.3px 0 0 #000;  overflow-y: scroll;
   margin-top: 15px;
 }
 
 
 .story-info {
   margin-top: 0px;
+  margin-right: 0px;
   float: right;
   width: 28%;
   overflow-wrap: break-word;
-  height: 700px;
+  height: 75vh;
   overflow-y: scroll;
 }
-@media (max-width: 600px) {
-  .story-content,
-  .story-info {
-    width: 100%;
-    float: none;
-    margin-right: 0; /* Reset margin for small screens */
-  }
-
-@media (max-height: 870px) {
-  .story-content {
-    float: left;
-    width: 70%;
-    height: 750px;
-    overflow-y: scroll;
-    margin-right: 10px;
-  }
-  .story-info {
-    float: right;
-    width: 28%;
-    word-break: break-all;
-    height: 750px;
-    overflow-y: scroll;
-  }
-}
-}
-
-@media (max-height: 770px) {
-  .story-content {
-    float: left;
-    width: 70%;
-    height: 650px;
-    overflow-y: scroll;
-    margin-right: 10px;
-  }
-  .story-info {
-    float: right;
-    width: 28%;
-    word-break: break-all;
-    height: 650px;
-    overflow-y: scroll;
-  }
-}
-
-.story-page-body {
-  padding-left: 0%;
-  overflow: hidden;
-  margin: 0;
-  height: 100%;
-  overflow-y: hidden;
-}
-
 
 .right-align-span {
   text-align: right;
@@ -582,6 +531,7 @@ div.sub, iframe, image {
 }
 
 .comment-footer {
+  margin-bottom: 1%;
   margin-top: 0px;
   float: right;
   width: 28%;
@@ -599,4 +549,5 @@ div.sub, iframe, image {
 .comment-post-button {
   float: right;
   margin-top: 2px;
+  margin-bottom: 5px;
 }
