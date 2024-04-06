@@ -343,6 +343,36 @@ const StoryForm = () => {
     }
   };*/
 
+const editTagsDisplay = () => {
+  if (role.includes("Admin")) {
+    return <div>
+          <ButtonToolbar>
+          <Button onClick={handleOpenTags}> Edit Tags</Button>
+        </ButtonToolbar>
+        <Modal backdrop="static" open={open} onClose={handleClose}>
+    <Modal.Header>
+      <Modal.Title>Edit Tags</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>   
+    {renderTagInputs()}
+    <Divider></Divider>
+    <Button appearance="primary" className="dropdown-primary" onClick={addTagGroup}>
+      Create New Tag Group
+    </Button>
+    </Modal.Body>
+    <Modal.Footer>
+      <Button onClick={handleCancel} appearance="subtle">
+        Cancel
+      </Button>
+      <Button onClick={updateTagsContent} className="dropdown-primary" appearance="primary">
+      Save Changes
+    </Button>
+    </Modal.Footer>
+  </Modal>
+        </div>
+  }
+}
+
 
 // Function to update the mongodb tag set
 const updateTagsContent = async () => {
@@ -629,31 +659,7 @@ const renderTagInputs = () => {
           
           <UploadWidgetVideo onVideoUpload={handleImageUpload} />
   
-          <ButtonToolbar>
-          <Button onClick={handleOpenTags}> Edit Tags</Button>
-        </ButtonToolbar>
-  
-        <Modal backdrop="static" open={open} onClose={handleClose}>
-          <Modal.Header>
-            <Modal.Title>Edit Tags</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>   
-          {renderTagInputs()}
-          <Divider></Divider>
-          <Button appearance="primary" className="dropdown-primary" onClick={addTagGroup}>
-            Create New Tag Group
-          </Button>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={handleCancel} appearance="subtle">
-              Cancel
-            </Button>
-            <Button onClick={updateTagsContent} className="dropdown-primary" appearance="primary">
-            Save Changes
-          </Button>
-          </Modal.Footer>
-        </Modal>
-  
+        {editTagsDisplay()}
   
           <div className="quill">
             <ReactQuill
@@ -693,10 +699,6 @@ const renderTagInputs = () => {
     <body className="story-form">
     <form className="create-story" onSubmit={handleSubmit}>
       <div className="input-container">
-      <span className="author-input" readOnly>
-          Author: {getName(currentUser)}
-          Child: {child}
-        </span>
       </div>
       <br></br>
 
