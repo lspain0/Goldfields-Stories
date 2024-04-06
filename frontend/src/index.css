@@ -252,7 +252,7 @@ div.error {
   float: right;
   width: 28%;
   overflow-wrap: break-word;
-  height: 75vh;
+  height: 73vh;
   overflow-y: scroll;
 }
 
@@ -362,7 +362,6 @@ div.error {
   background: #326C6F;
   color: white;
   margin-left: 2%;
-  margin-top: 30px;
 }
 
 .pending-story-button {

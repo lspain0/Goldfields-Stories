@@ -200,10 +200,13 @@ const StoryPage = () => {
   };
 
   const commentFooter = () => {
-    return <div className="comment-footer">
-      <Input className="comment-footer-input" as="textarea" rows={3} placeholder="Add a comment..." />
-      <Button className="comment-post-button">Post</Button>
-    </div>
+    if (!window.location.href.includes('pending')) {
+      return <div className="comment-footer">
+        <hr className="solid" />
+        <Input className="comment-footer-input" as="textarea" rows={3} placeholder="Add a comment..." />
+        <Button className="comment-post-button">Post</Button>
+      </div>
+    }
   }
 
   return (
