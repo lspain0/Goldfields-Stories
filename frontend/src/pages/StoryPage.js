@@ -79,6 +79,27 @@ const handlePostStory = async () => {
   }
 };
 
+const handlePostComment = async () => {
+  try {
+    const response = await fetch(`/api/stories/${storyId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ comments: 'test' }) // Update state to 'approved'
+    });
+    if (!response.ok) {
+      const errorResponseText = await response.text();
+      console.error(`Error posting comment: `, errorResponseText);
+    }
+    else {
+      console.log('yep')
+    }
+  } catch (error) {
+    console.error(`Error posting comment: `, error);
+  }
+};
+
 
 function addSpace(str) {
   return str.replaceAll(',', (', '))
@@ -204,7 +225,7 @@ const StoryPage = () => {
       return <div className="comment-footer">
         <hr className="solid" />
         <Input className="comment-footer-input" as="textarea" rows={3} placeholder="Add a comment..." />
-        <Button className="comment-post-button">Post</Button>
+        <Button onClick={handlePostComment} className="comment-post-button">Post</Button>
       </div>
     }
   }
