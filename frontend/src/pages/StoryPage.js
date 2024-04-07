@@ -98,10 +98,11 @@ const StoryPage = () => {
   const location = useLocation();
   const [currentStory, setCurrentStory] = useState(null);
   const [comments, setComments] = useState('');
+  var newComment = '';
 
   const handlePostComment = async () => {
     // Update comments in the state
-    setComments((prevComments) => prevComments + 'test');
+    setComments((prevComments) => prevComments + newComment);
     
     try {
       // Fetch request to update comments in the backend
@@ -110,7 +111,7 @@ const StoryPage = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ comments: comments + 'test' }) // Update state to 'approved'
+        body: JSON.stringify({ comments: comments }) // Update state to 'approved'
       });
       
       if (!response.ok) {
@@ -219,7 +220,7 @@ useEffect(() => {
     if (!window.location.href.includes('pending')) {
       return <div className="comment-footer">
         <hr className="solid" />
-        <Input className="comment-footer-input" as="textarea" rows={3} placeholder="Add a comment..." />
+        <Input onChange={(value) => newComment = value} className="comment-footer-input" as="textarea" rows={3} placeholder="Add a comment..." />
         <Button onClick={handlePostComment} className="comment-post-button">Post</Button>
       </div>
     }
