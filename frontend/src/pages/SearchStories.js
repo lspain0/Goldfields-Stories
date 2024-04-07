@@ -5,6 +5,8 @@ import axios_obj from "../axios";
 import StoryDetails from "../components/StoryDetails";
 import "../searchstories.css";
 import Logo2 from "../components/logov2";
+import { FaSearch } from 'react-icons/fa';
+
 
 const SearchStories = () => {
   const navigate = useNavigate();
@@ -102,6 +104,7 @@ const SearchStories = () => {
         <Logo2 />
       </div>
       <div className="search-bar-container">
+      <FaSearch className="search-icon"/>
         <input
           type="text"
           value={searchTerm}
