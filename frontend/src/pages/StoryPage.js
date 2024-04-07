@@ -79,7 +79,28 @@ const handlePostStory = async () => {
   }
 };
 
-const handlePostComment = async () => {
+
+function addSpace(str) {
+  return str.replaceAll(',', (', '))
+}
+
+function getName(str) {
+  var firstName = str.split(' ')[0];
+  var lastName = str.split(' ')[1];
+  var fullName = firstName.charAt(0).toUpperCase() + firstName.slice(1) + (' ') + lastName.charAt(0).toUpperCase() + lastName.slice(1)
+
+  return fullName;
+}
+
+
+const StoryPage = () => {
+  const navigate = useNavigate(); 
+  const location = useLocation();
+  const [currentStory, setCurrentStory] = useState(null);
+  const [comments, setComments] = useState('');
+
+  const handlePostComment = async () => {
+  setComments(comments+'test');
   try {
     const response = await fetch(`/api/stories/${storyId}`, {
       method: 'PUT',
@@ -100,47 +121,39 @@ const handlePostComment = async () => {
   }
 };
 
+useEffect(() => {
+  const fetchStoryById = async () => {
+    const storyId = location.pathname.split('/')[2];
+    
+    if (storyId) {
+      try {
+        const response = await axios_obj.get(`/stories/${storyId}`);
+        const json = response.data;
 
-function addSpace(str) {
-  return str.replaceAll(',', (', '))
-}
-
-function getName(str) {
-  var firstName = str.split(' ')[0];
-  var lastName = str.split(' ')[1];
-  var fullName = firstName.charAt(0).toUpperCase() + firstName.slice(1) + (' ') + lastName.charAt(0).toUpperCase() + lastName.slice(1)
-
-  return fullName;
-}
-
-
-const StoryPage = () => {
-  const navigate = useNavigate(); 
-  const location = useLocation();
-  const [currentStory, setCurrentStory] = useState(null);
-
-  useEffect(() => {
-    const fetchStoryById = async () => {
-      const storyId = location.pathname.split('/')[2];
-      
-      if (storyId) {
-        try {
-          const response = await axios_obj.get(`/stories/${storyId}`);
-          const json = response.data;
-
-          if (parseInt(response.status) === 200) {
-            setCurrentStory(json);
-          } else {
-            console.error(`Error fetching story with ID ${storyId}:`, json);
-          }
-        } catch (error) {
-          console.error(`Error fetching story with ID ${storyId}:`, error);
+        if (parseInt(response.status) === 200) {
+          setCurrentStory(json);
+        } else {
+          console.error(`Error fetching story with ID ${storyId}:`, json);
         }
+      } catch (error) {
+        console.error(`Error fetching story with ID ${storyId}:`, error);
       }
-    };
+    }
+  };
 
-    fetchStoryById();
-  }, [location.pathname]);
+  fetchStoryById();
+}, [location.pathname]);
+
+const loadComments = () => {
+  setComments(currentStory.comments);
+}
+
+useEffect(() => {
+  if (currentStory) {
+    loadComments();
+  }
+}, [currentStory]);
+  
 
   // Render nothing while currentStory is being loaded
   if (!currentStory) {
@@ -194,28 +207,7 @@ const StoryPage = () => {
           </>
         )}
         <p>Comments: </p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        <p>Wow!</p>
-        
+        {comments}
       </div>
     );
   };
