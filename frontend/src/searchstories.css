@@ -22,15 +22,19 @@
 }
 
 .search-stories-input {
-  padding: 20px;
+  padding: 15px;
   padding-right: 50px; /* Make room for the clear button */
   margin-bottom: 20px;
-  width: 100%;
+  width: 80%;
   border: 1px solid #326C6F;
-  border-radius: 35px;
+  border-radius: 45px;
   display: block;
   font-size: 18px;
+  padding-left: 60px;
+  padding-top: 25px;
 }
+
+
 
 /* Styles for the button, with a unique class name */
 .search-stories-button {
@@ -72,8 +76,8 @@
 
 .clear-button {
   position: absolute;
-  right: 10px;
-  top: 32%;
+  right: 130px;
+  top: 35%;
   transform: translateY(-50%);
   border: none;
   background: none;
@@ -84,6 +88,17 @@
 
 .clear-button:hover {
   color: #ff6b6b; /* Hover effect for the close button */
+}
+
+/****************************************************/
+/* search icon inside search bar */
+.search-icon {
+  position: absolute;
+  left: 130px;
+  top: 33%;
+  transform: translateY(-50%);
+  color: #E9AF0C; /* Adjust the color as per your theme */
+  font-size: 25px; /* Adjust the size as needed */
 }
 
 /****************************************************/
@@ -214,4 +229,3 @@
   margin-right: 0;
 }
 
-/****************************************************/
