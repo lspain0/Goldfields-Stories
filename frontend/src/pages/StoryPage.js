@@ -100,26 +100,29 @@ const StoryPage = () => {
   const [comments, setComments] = useState('');
 
   const handlePostComment = async () => {
-  setComments(comments+'test');
-  try {
-    const response = await fetch(`/api/stories/${storyId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ comments: 'test' }) // Update state to 'approved'
-    });
-    if (!response.ok) {
-      const errorResponseText = await response.text();
-      console.error(`Error posting comment: `, errorResponseText);
+    // Update comments in the state
+    setComments((prevComments) => prevComments + 'test');
+    
+    try {
+      // Fetch request to update comments in the backend
+      const response = await fetch(`/api/stories/${storyId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ comments: comments + 'test' }) // Update state to 'approved'
+      });
+      
+      if (!response.ok) {
+        const errorResponseText = await response.text();
+        console.error(`Error posting comment: `, errorResponseText);
+      } else {
+        console.log('Comment posted successfully');
+      }
+    } catch (error) {
+      console.error(`Error posting comment: `, error);
     }
-    else {
-      console.log('yep')
-    }
-  } catch (error) {
-    console.error(`Error posting comment: `, error);
-  }
-};
+  };
 
 useEffect(() => {
   const fetchStoryById = async () => {
