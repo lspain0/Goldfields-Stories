@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Logo from "../components/logov2.js";
 import "../class.css";
 import axios from "../axios.js";
+import "../login.css";
 
 function SignUP() {
   const [name, setName] = useState("");
@@ -9,6 +10,9 @@ function SignUP() {
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
+
+  const [code, setCode] = useState("");
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +25,8 @@ function SignUP() {
       const response = await axios.post(loginEndpoint, {
         email,
         password,
-        name: name
+        name: name,
+        code: code
       });
       console.log(response?.data);
       localStorage.setItem("name", response?.data?.name);
@@ -55,68 +60,75 @@ function SignUP() {
 
   return (
     <div>
-    {/* Adding hardcode background to body*/}
-    <style>
-      {`
+      {/* Adding hardcode background to body*/}
+      <style>
+        {`
         body {
           background: linear-gradient(90deg, white 0%, white 0%, white 100%);
           margin: 0;
           padding: 0;
         }
       `}
-    </style>
-    <div className="class-form-container-login">
-      <div className="logo-container2">
-        <Logo />
-      </div>
-      <div className="">
-        <h1 className="heading-login">CREATE ACCOUNT</h1>
+      </style>
+      <div className="class-form-container-login">
+        <div className="logo-container2">
+          <Logo />
+        </div>
         <div className="">
+          <h1 className="heading-login">CREATE ACCOUNT</h1>
+          <div className="">
 
-          <form onSubmit={handleSubmit} className="class-form">
-            <input
-              type="text"
-              placeholder="Full Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="login"
+            <form onSubmit={handleSubmit} className="class-form">
+              <input
+                type="text"
+                placeholder="Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="loginPage"
 
-              required
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="login"
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="loginPage"
 
-              required
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="login"
-              required
-            />
-            <button type="submit" disabled={isSubmitting} className="class-form-button submit-login">
-              Sign Up
-            </button>
-          </form>
-        </div>
-        <div className="message-wrapper">
-          {message && (
-            <div className="message-container">
-              <p>{message}</p>
-              <button className="message-close-btn" onClick={clearMessage}>
-                &times;
+                required
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="loginPage"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Invite Code(Optional)"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                className="loginPage"
+              />
+              <button type="submit" disabled={isSubmitting} className="class-form-button submit-login">
+                Sign Up
               </button>
-            </div>
-          )}
+            </form>
+          </div>
+          <div className="message-wrapper">
+            {message && (
+              <div className="message-container">
+                <p>{message}</p>
+                <button className="message-close-btn" onClick={clearMessage}>
+                  &times;
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }

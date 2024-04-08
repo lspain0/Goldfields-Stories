@@ -1,0 +1,30 @@
+.family-container {
+    margin-top: "5rem"
+}
+
+
+.familyButton:hover {
+    background-color: #224957 !important;
+}
+
+.familyMainConatiner {
+    background-color: white;
+    display: flex;
+    height: 70px;
+    justify-items: flex-end;
+    justify-content: space-between;
+    flex-direction: row;
+    border-radius: 10px;
+    border: solid 1px #326C6F;
+    margin: 5px;
+    padding: 10px;
+    width: 600px;
+    align-items: center;
+    gap: 10px
+}
+
+.familySuperConatiner {
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
