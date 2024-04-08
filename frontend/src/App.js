@@ -19,6 +19,8 @@ import Home from "./pages/Home";
 import User from './pages/User';
 import CreateFamilyStory from './pages/CreateFamilyStory';
 import SearchStories from './pages/SearchStories';
+import InviteFamily from './pages/inviteFamily';
+
 
 function App() {
 
@@ -87,6 +89,8 @@ function App() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/createfamilystory" element={<CreateFamilyStory />} />
                 <Route path="/search" element={<SearchStories />} />
+                <Route path="/invite_family" element={<InviteFamily />} />
+
               </Routes>
             </div>
           </BrowserRouter>

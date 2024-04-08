@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Logo2 from "../components/logov2.js";
 import "../class.css";
 import axios from "../axios.js";
+import "../login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -34,7 +35,7 @@ function Login() {
       }, 1000);
     } catch (error) {
       if (error.response) {
-        const {  data } = error.response;
+        const { data } = error.response;
         console.log(data);
         setMessage(data?.error);
 
@@ -54,61 +55,61 @@ function Login() {
 
   return (
     <div>
-    {/* Adding hardcode background to body */}
-    <style>
-      {`
+      {/* Adding hardcode background to body */}
+      <style>
+        {`
         body {
           background: linear-gradient(90deg, white 0%, white 0%, white 100%);
           margin: 0;
           padding: 0;
         }
       `}
-    </style>
-    
-   
-    <div className="class-form-container-login" >
-      <div className="logo-container2">
-        <Logo2 />
-      </div>
-      <div className="">
-      <h1 className="heading-login" style={{ textAlign: 'center' }}> Sign In </h1>
+      </style>
+
+
+      <div className="class-form-container-login" >
+        <div className="logo-container2">
+          <Logo2 />
+        </div>
         <div className="">
+          <h1 className="heading-login" style={{ textAlign: 'center' }}> Sign In </h1>
+          <div className="">
 
-          <form onSubmit={handleSubmit} className="class-form">
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="login"
+            <form onSubmit={handleSubmit} className="class-form">
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="loginPage"
 
-              required
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="login"
-              required
-            />
-            <button type="submit" disabled={isSubmitting} className="class-form-button submit-login">
-              Login
-            </button>
-          </form>
-        </div>
-        <div className="message-wrapper">
-          {message && (
-            <div className="message-container">
-              <p>{message}</p>
-              <button className="message-close-btn" onClick={clearMessage}>
-                &times;
+                required
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="loginPage"
+                required
+              />
+              <button type="submit" disabled={isSubmitting} className="class-form-button submit-login">
+                Login
               </button>
-            </div>
-          )}
+            </form>
+          </div>
+          <div className="message-wrapper">
+            {message && (
+              <div className="message-container">
+                <p>{message}</p>
+                <button className="message-close-btn" onClick={clearMessage}>
+                  &times;
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }
