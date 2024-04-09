@@ -119,12 +119,11 @@ const StoryPage = () => {
       if (!response.ok) {
         const errorResponseText = await response.text();
         console.error(`Error posting comment: `, errorResponseText);
-      } else {
-        console.log('Comment posted successfully');
       }
     } catch (error) {
       console.error(`Error posting comment: `, error);
     }
+    setNewComment('');
   };
 
 useEffect(() => {
@@ -155,7 +154,7 @@ const loadComments = () => {
 }
 
 const handleCommentChange = (values) => {
-  setNewComment('<sub>'+name+'<br>Tue 9 April</sub><br>'+(values.replace(/<\/?[^>]+(>|$)/g, "")).replace(/(?:\r\n|\r|\n)/g, '<br>')+'<br><br>');
+  setNewComment('<sub>'+name+'<br>Tue 9 April<br></sub>'+(values.replace(/<\/?[^>]+(>|$)/g, "")).replace(/(?:\r\n|\r|\n)/g, '<br>')+'<br><br>');
 };
 
 useEffect(() => {
@@ -217,7 +216,7 @@ useEffect(() => {
           </>
         )}
         <p>Comments: </p>
-        <div dangerouslySetInnerHTML={parseHTML(comments)} />
+        <div className="story-comments" dangerouslySetInnerHTML={parseHTML(comments)} />
       </div>
     );
   };
