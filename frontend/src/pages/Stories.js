@@ -178,7 +178,7 @@ const Stories = () => {
     return (
       <body>
         <div>
-        <Logo />
+      
         {/* Display for Teacher Role */}
         {
           ["Teacher"].includes(role) &&

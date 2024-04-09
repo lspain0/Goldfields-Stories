@@ -46,7 +46,7 @@ const PendingStories = () => {
 
   return (
     <body>
-      <Logo />
+
       <div className="createstorylink">  
           <Link to={`/stories`}>
             <button className="create-story-button">Approved Stories</button>

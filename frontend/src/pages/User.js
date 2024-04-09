@@ -143,9 +143,6 @@ function Class() {
     //Display all users, each user gets a small shape format which has name email current role and delete user
     return (
         <div className="class-page-container">
-            <div className="logo-container">
-                <Logo />
-            </div>
             <div className="classes-container" style={{ marginTop: "5rem" }}>
                 {/* <h3 style={{ fontSize: "30px" }}>All Registered Users
                 </h3> */}
