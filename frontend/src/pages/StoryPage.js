@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { Input, Button } from 'rsuite';
 
 var storyId;
+var name = localStorage.getItem("name");
+
 
 function loadStoryID() {
   storyId = window.location.pathname.split('/')[2];
@@ -153,7 +155,7 @@ const loadComments = () => {
 }
 
 const handleCommentChange = (values) => {
-  setNewComment(values);
+  setNewComment('<sub>'+name+'<br>Tue 9 April</sub><br>'+values.replace(/<\/?[^>]+(>|$)/g, "")+'<br><br>');
 };
 
 useEffect(() => {
@@ -215,7 +217,7 @@ useEffect(() => {
           </>
         )}
         <p>Comments: </p>
-        {comments}
+        <div dangerouslySetInnerHTML={parseHTML(comments)} />
       </div>
     );
   };
