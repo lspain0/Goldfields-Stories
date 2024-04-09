@@ -13,7 +13,6 @@ import {
   ButtonToolbar,
   Nav
 } from 'rsuite';
-import Logo from "../components/logo";
 import StoryDetails from "../components/StoryDetails";
 import { convertStringToGroupedTags, splitLines } from "../components/docs/tags";
 
@@ -289,7 +288,6 @@ const Stories = () => {
     return (
       <body>
         <div>
-        <Logo />
         <span className="createstorylink">
             <Link to="/createfamilystory">
               <button className="family-story-button">Create a new Family Story</button>
