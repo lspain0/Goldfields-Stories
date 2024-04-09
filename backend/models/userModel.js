@@ -16,11 +16,19 @@ const userSchema = new Schema({
         required: true
     },
     role: {
-        type: String, 
+        type: String,
         default: ""
     },
     child: {
-        type: String, 
+        type: String,
+        default: ""
+    },
+    code1: {
+        type: String,
+        default: ""
+    },
+    code2: {
+        type: String,
         default: ""
     }
 

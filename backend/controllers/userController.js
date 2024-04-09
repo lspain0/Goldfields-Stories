@@ -105,17 +105,30 @@ const validateLoginUser = (req, res, next) => {
 
 // Sign up new user
 const createUser = async (req, res) => {
-  const { name, email, password } = req.body;
-
+  const { name, email, password, code } = req.body;
   try {
-
     let isExist = await User.findOne({ email: email });
     if (!isExist) {
-      const user = await User.create({ name, email, password });
-      res.status(200).json(user);
+      if (code) {
+        //If statement for when code has been input in the field
+        let _user = await User.findOne({ $or: [{ code1: code }, { code2: code }] });
+        if (_user) {
+          //Creating a new acc when input field code code
+          const user = await User.create({ name, email, password, child: _user?.child, role: "Parent" });
+          res.status(200).json(user);
+        }
+        else {
+          res.status(400).json({ error: "Invalid parent code" });
+        }
+      }
+      //else statement for if code has not been input
+      else {
+        const user = await User.create({ name, email, password });
+        res.status(200).json(user);
+      }
     }
     else {
-      res.status(400).json({ error: "already exist user" });
+      res.status(400).json({ error: "Already exist user" });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -154,14 +167,19 @@ const loginUser = async (req, res) => {
 // Route to get all users without their password
 const UserList = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, role, email } = req.body;
 
-    console.log(name);
     let filter = {};
     if (name) {
       filter["name"] = { $regex: new RegExp(name, "i") };
-
     }
+    //Adding filters for role
+    if (role && email) {
+      filter["role"] = role;
+      filter['child'] = { $ne: "" };
+      filter['email'] = email;
+    }
+
     const user = await User.find(filter).select("-password");
     res.status(200).json(user);
   } catch (error) {

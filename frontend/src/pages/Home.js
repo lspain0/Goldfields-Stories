@@ -72,7 +72,7 @@ function Home() {
     };
 
     fetchImages();
-    const intervalId = setInterval(() => setCurrentIndex(prevIndex => (prevIndex + 1) % images.length), 3000);
+    const intervalId = setInterval(() => setCurrentIndex(prevIndex => (prevIndex + 1) % images.length), 3100);
     return () => clearInterval(intervalId);
   }, [images.length]);
 
