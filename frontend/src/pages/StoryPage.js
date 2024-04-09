@@ -155,7 +155,7 @@ const loadComments = () => {
 }
 
 const handleCommentChange = (values) => {
-  setNewComment('<sub>'+name+'<br>Tue 9 April</sub><br>'+values.replace(/<\/?[^>]+(>|$)/g, "")+'<br><br>');
+  setNewComment('<sub>'+name+'<br>Tue 9 April</sub><br>'+(values.replace(/<\/?[^>]+(>|$)/g, "")).replace(/(?:\r\n|\r|\n)/g, '<br>')+'<br><br>');
 };
 
 useEffect(() => {
