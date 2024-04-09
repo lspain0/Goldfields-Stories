@@ -101,6 +101,7 @@ const StoryPage = () => {
   const [currentStory, setCurrentStory] = useState(null);
   const [comments, setComments] = useState('');
   const [newComment, setNewComment] = useState('');
+  const [commentPostEnabled, setCommentPostEnabled] = useState(false);
 
   const handlePostComment = async () => {
     // Update comments in the state
@@ -154,7 +155,13 @@ const loadComments = () => {
 }
 
 const handleCommentChange = (values) => {
-  setNewComment('<sub>'+name+'<br>Tue 9 April<br></sub>'+(values.replace(/<\/?[^>]+(>|$)/g, "")).replace(/(?:\r\n|\r|\n)/g, '<br>')+'<br><br>');
+  if (values.trim() !== '') {
+    setNewComment('<sub>'+name+'<br>Tue 9 April<br></sub>'+(values.replace(/<\/?[^>]+(>|$)/g, "")).replace(/(?:\r\n|\r|\n)/g, '<br>')+'<br><br>');
+    setCommentPostEnabled(true);
+  } else {
+    setNewComment('');
+    setCommentPostEnabled(false);
+  }
 };
 
 useEffect(() => {
@@ -226,7 +233,7 @@ useEffect(() => {
       return <div className="comment-footer">
         <hr className="solid" />
         <Input onChange={handleCommentChange} className="comment-footer-input" as="textarea" rows={3} placeholder="Add a comment..." />
-        <Button onClick={handlePostComment} className="comment-post-button">Post</Button>
+        <Button onClick={handlePostComment} disabled={!commentPostEnabled} className="comment-post-button">Post</Button>
       </div>
     }
   }
