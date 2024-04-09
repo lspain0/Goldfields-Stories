@@ -107,7 +107,7 @@ function SignUP() {
               />
               <input
                 type="text"
-                placeholder="Invite Code(Optional)"
+                placeholder="Family Invite Code (Optional)"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 className="loginPage"
