@@ -12,6 +12,16 @@ function loadStoryID() {
   storyId = window.location.pathname.split('/')[2];
 }
 
+function getDate() {
+  const currentDate = new Date();
+
+  const day = currentDate.getDate();
+  const month = currentDate.toLocaleString('default', { month: 'short' });
+
+  const formattedDate = `${day} ${month}`;
+  return formattedDate;
+}
+
 function adminControls() {
   if (window.location.href.includes('pending')) {
     return (
@@ -159,7 +169,7 @@ const loadComments = () => {
 
 const handleCommentChange = (values) => {
   if (values.trim() !== '') {
-    setNewComment('<sub>'+name+'<br>Tue 9 April<br><br></sub>'+(values.replace(/<\/?[^>]+(>|$)/g, "")).replace(/(?:\r\n|\r|\n)/g, '<br>')+'<br><br><br>');
+    setNewComment('<sub>'+name+'<br>'+getDate()+'<br><br></sub>'+(values.replace(/<\/?[^>]+(>|$)/g, "")).replace(/(?:\r\n|\r|\n)/g, '<br>')+'<br><br><br>');
     setCommentPostEnabled(true);
   } else {
     setNewComment('');
