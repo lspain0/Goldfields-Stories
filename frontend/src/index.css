@@ -552,6 +552,7 @@ div.sub, iframe, image {
   margin-bottom: 5px;
 }
 
-.story-comments {
-  line-height: 20px;
+div.story-comments sub {
+  display: block;
+  margin: -15px 0;
 }

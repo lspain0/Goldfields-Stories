@@ -125,6 +125,9 @@ const StoryPage = () => {
       console.error(`Error posting comment: `, error);
     }
     setNewComment('');
+  
+    // Clear the input field
+    document.querySelector('.comment-footer-input').value = '';
   };
 
 useEffect(() => {
@@ -156,7 +159,7 @@ const loadComments = () => {
 
 const handleCommentChange = (values) => {
   if (values.trim() !== '') {
-    setNewComment('<sub>'+name+'<br>Tue 9 April<br></sub>'+(values.replace(/<\/?[^>]+(>|$)/g, "")).replace(/(?:\r\n|\r|\n)/g, '<br>')+'<br><br>');
+    setNewComment('<sub>'+name+'<br>Tue 9 April<br><br></sub>'+(values.replace(/<\/?[^>]+(>|$)/g, "")).replace(/(?:\r\n|\r|\n)/g, '<br>')+'<br><br><br>');
     setCommentPostEnabled(true);
   } else {
     setNewComment('');
