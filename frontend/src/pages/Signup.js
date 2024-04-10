@@ -71,11 +71,11 @@ function SignUP() {
       `}
       </style>
       <div className="class-form-container-login">
-        <div className="logo-container2">
+        {/* <div className="logo-container2">
           <Logo />
-        </div>
+        </div> */}
         <div className="">
-          <h1 className="heading-login">CREATE ACCOUNT</h1>
+        <h1 style={{textAlign:"center",fontSize:"40px"}} className="heading-login">CREATE ACCOUNT</h1>
           <div className="">
 
             <form onSubmit={handleSubmit} className="class-form">
@@ -107,7 +107,7 @@ function SignUP() {
               />
               <input
                 type="text"
-                placeholder="Invite Code(Optional)"
+                placeholder="Family Invite Code (Optional)"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 className="loginPage"
