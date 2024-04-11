@@ -97,11 +97,17 @@ const Navbar = (props) => {
                             <FaUserCircle className="nav-icon" /> Manage Accounts
                         </Link>
                     }
-                    {
-                        ["Parent"].includes(props?.role) && <Link to="/invite_family" className={isActive("/invite_family")}>
-                            <FaUserPlus className="nav-icon" />  Invite Family
-                        </Link>
-                    }
+{
+    ["Parent"].includes(props?.role) &&
+    <>
+        <Link to="/invite_family" className={isActive("/invite_family")}>
+            <FaUserPlus className="nav-icon" /> Invite Family
+        </Link>
+        <Link to="/search" className={isActive("/search")}>
+            <FaSearch className="nav-icon" /> Search Stories
+        </Link>
+    </>
+}
                     <Link to="/logout" onClick={logoutHandler} className="nav-item">
                         <FaTimes
                             className="nav-icon" /> Logout
