@@ -263,3 +263,7 @@
     border-color: #0270e6; /* Sets a distinct border color for focus, choose color as needed */
     outline: none; /* Removes the default focus outline */
   }
+
+  input {
+    background-color: white;
+  }
