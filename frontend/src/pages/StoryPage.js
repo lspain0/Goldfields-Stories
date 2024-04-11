@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { Input, Button } from 'rsuite';
 
 var storyId;
-var name = localStorage.getItem("name");
 
 
 function loadStoryID() {
@@ -112,19 +111,37 @@ const StoryPage = () => {
   const [comments, setComments] = useState('');
   const [newComment, setNewComment] = useState('');
   const [commentPostEnabled, setCommentPostEnabled] = useState(false);
+  const [name, setName] = useState(localStorage.getItem("name"));
+
 
   const handlePostComment = async () => {
+    let firstComment = true;
+    setName(localStorage.getItem("name"));
     // Update comments in the state
-    setComments((prevComments) => prevComments + newComment);
+    if (comments == null) {
+      setComments(newComment);    }
+    else {
+      setComments((prevComments) => prevComments + newComment);
+      firstComment = false;
+    }
     
     try {
       // Fetch request to update comments in the backend
+      let commentSubmit;
+
+      if (firstComment === true) {
+        commentSubmit = newComment;
+      }
+      else {
+        commentSubmit = comments+newComment;
+      }
+
       const response = await fetch(`/api/stories/${storyId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ comments: comments+newComment }) // Update state to 'approved'
+        body: JSON.stringify({ comments: commentSubmit }) // Update state to 'approved'
       });
       
       if (!response.ok) {
@@ -236,6 +253,7 @@ useEffect(() => {
           </>
         )}
         <p>Comments: </p>
+        <br></br>
         <div className="story-comments" dangerouslySetInnerHTML={parseHTML(comments)} />
       </div>
     );
@@ -258,7 +276,7 @@ useEffect(() => {
       {adminControls()}
       <div className="story-content">
         {/* Conditional rendering for h2 */}
-        {currentStory.title !== 'null' ? <h2 dangerouslySetInnerHTML={parseHTML(currentStory.title)} /> : null}
+        {currentStory.title !== 'zzznull' ? <h2 dangerouslySetInnerHTML={parseHTML(currentStory.title)} /> : null}
         <div dangerouslySetInnerHTML={parseHTML(currentStory.content)} />
       </div>
       {generateStoryInfoHTML()}
