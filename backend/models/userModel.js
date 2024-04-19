@@ -30,6 +30,46 @@ const userSchema = new Schema({
     code2: {
         type: String,
         default: ""
+    },
+
+    code3: {
+        type: String,
+        default: ""
+    },
+
+    code4: {
+        type: String,
+        default: ""
+    },
+
+    code5: {
+        type: String,
+        default: ""
+    },
+
+    code6: {
+        type: String,
+        default: ""
+    },
+
+    code7: {
+        type: String,
+        default: ""
+    },
+
+    code8: {
+        type: String,
+        default: ""
+    },
+
+    code9: {
+        type: String,
+        default: ""
+    },
+
+    code10: {
+        type: String,
+        default: ""
     }
 
 }, { timestamps: true })

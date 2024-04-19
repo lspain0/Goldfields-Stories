@@ -111,7 +111,7 @@ const createUser = async (req, res) => {
     if (!isExist) {
       if (code) {
         //If statement for when code has been input in the field
-        let _user = await User.findOne({ $or: [{ code1: code }, { code2: code }] });
+        let _user = await User.findOne({ $or: [{ code1: code }, { code2: code }, { code3: code }, { code4: code }, { code5: code }, { code6: code }, { code7: code }, { code8: code }, { code9: code }, { code10: code }] });
         if (_user) {
           //Creating a new acc when input field code code
           const user = await User.create({ name, email, password, child: _user?.child, role: "Parent" });
