@@ -20,12 +20,13 @@ const numbers = Array.from({ length: 101 }, (_, index) => index.toString());
 var groupedTags = [];
 
 const Navbar = ({ active, onSelect, ...props }) => {
-  return (
-    <Nav {...props} activeKey={active} onSelect={onSelect} style={{ marginLeft: 50, marginTop: 15, maxWidth: 150}}>
-      <Nav.Item eventKey="education">Education</Nav.Item>
-      <Nav.Item eventKey="family">Family</Nav.Item>
-    </Nav>
-  );
+    return (
+      <Nav {...props} activeKey={active} onSelect={onSelect} style={{ marginLeft: 50, marginTop: 15, maxWidth: 150}}>
+        <Nav.Item eventKey="education">Education</Nav.Item>
+        <Nav.Item eventKey="family">Family</Nav.Item>
+        <Nav.Item eventKey="mystories">My Stories</Nav.Item>
+      </Nav>
+    )
 };
 
 const Stories = () => {
@@ -176,6 +177,7 @@ const Stories = () => {
   if (active === 'education') {
     return (
       <body>
+        <Navbar className='story-page-select-bar' appearance='subtle' default='education' active={active} onSelect={setActive} />
         <div>
       
         {/* Display for Teacher Role */}
@@ -271,7 +273,6 @@ const Stories = () => {
           </div>
           </Dropdown>
         </span>
-        <Navbar appearance='subtle' default='education' active={active} onSelect={setActive} />
         </div>
         {/* Displays all stories as cards on the page */}
         <div className="story-cards-container">
@@ -288,24 +289,25 @@ const Stories = () => {
     return (
       <body>
         <div>
-        <span className="createstorylink">
-            <Link to="/createfamilystory">
-              <button className="family-story-button">Create a new Family Story</button>
-            </Link>
-          </span>
-        <Navbar appearance='subtle' default='education' active={active} onSelect={setActive} />
+          <Navbar className='story-page-select-bar' appearance='subtle' default='education' active={active} onSelect={setActive} />
+          {active === 'family' ? (
+            <span className="createstorylink">
+              <Link to="/createfamilystory">
+                <button className="family-story-button">Create a new Family Story</button>
+              </Link>
+            </span>
+          ) : null}
         </div>
         {/* Displays all stories as cards on the page */}
         <div className="story-cards-container">
           {sortedStories && sortedStories.map(story => (
             <StoryDetails story={story} key={story._id} selectedRadioValue={selectedRadioValue} 
-            selectedChildrenFilters={selectedChildrenFilters} selectedTagFilters={selectedTagFilters} sortOption={sortOption} currentState={active} />
+              selectedChildrenFilters={selectedChildrenFilters} selectedTagFilters={selectedTagFilters} sortOption={sortOption} currentState={active} />
           ))}
         </div>
       </body>
     )
   }
-
 }
 
 export default Stories

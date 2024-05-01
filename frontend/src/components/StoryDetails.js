@@ -129,6 +129,13 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
             return null;
         }
     }
+    else if (currentState === 'mystories')
+    {
+        if (story.author !== localStorage.getItem("name"))
+        {
+            return null;
+        }
+    }
     else if (!window.location.href.includes('sear')) {
         if (story.state === 'family') {
             return null;
