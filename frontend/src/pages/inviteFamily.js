@@ -115,7 +115,7 @@ function InviteFamily() {
                                 {/* Family 1 generate code*/}
                                     <div className="familyMainConatiner" key={"listing1" + index} >
                                         <div>
-                                            <p style={{ marginRight: "20px" }}>Invite code for
+                                            <p style={{ marginRight: "20px" }}>Invite
                                                 <span style={{ marginLeft: "5px" }}>Family - 1 </span> </p>
                                             {
                                                 row?.code1 &&
@@ -140,7 +140,7 @@ function InviteFamily() {
                                     {/* Family 2 generate code*/}
                                     <div className="familyMainConatiner" key={"listing2" + index} >
                                         <div>
-                                            <p style={{ marginRight: "20px" }}>Invite code for
+                                            <p style={{ marginRight: "20px" }}>Invite
                                                 <span style={{ marginLeft: "5px" }}>Family - 2</span> </p>
                                             {
                                                 row?.code2 &&
@@ -166,7 +166,7 @@ function InviteFamily() {
                                                                         {/* Family 3 generate code*/}
                                                                         <div className="familyMainConatiner" key={"listing2" + index} >
                                         <div>
-                                            <p style={{ marginRight: "20px" }}>Invite code for
+                                            <p style={{ marginRight: "20px" }}>Invite
                                                 <span style={{ marginLeft: "5px" }}>Family - 3</span> </p>
                                             {
                                                 row?.code3 &&
@@ -192,7 +192,7 @@ function InviteFamily() {
                                                                         {/* Family 4 generate code*/}
                                                                         <div className="familyMainConatiner" key={"listing2" + index} >
                                         <div>
-                                            <p style={{ marginRight: "20px" }}>Invite code for
+                                            <p style={{ marginRight: "20px" }}>Invite 
                                                 <span style={{ marginLeft: "5px" }}>Family - 4</span> </p>
                                             {
                                                 row?.code4 &&
@@ -218,7 +218,7 @@ function InviteFamily() {
                                                                         {/* Family 5 generate code*/}
                                                                         <div className="familyMainConatiner" key={"listing2" + index} >
                                         <div>
-                                            <p style={{ marginRight: "20px" }}>Invite code for
+                                            <p style={{ marginRight: "20px" }}>Invite
                                                 <span style={{ marginLeft: "5px" }}>Family - 5</span> </p>
                                             {
                                                 row?.code5 &&
@@ -244,7 +244,7 @@ function InviteFamily() {
                                                                         {/* Family 6 generate code*/}
                                                                         <div className="familyMainConatiner" key={"listing2" + index} >
                                         <div>
-                                            <p style={{ marginRight: "20px" }}>Invite code for
+                                            <p style={{ marginRight: "20px" }}>Invite
                                                 <span style={{ marginLeft: "5px" }}>Family - 6</span> </p>
                                             {
                                                 row?.code6 &&
@@ -270,7 +270,7 @@ function InviteFamily() {
                                                                         {/* Family 7 generate code*/}
                                                                         <div className="familyMainConatiner" key={"listing2" + index} >
                                         <div>
-                                            <p style={{ marginRight: "20px" }}>Invite code for
+                                            <p style={{ marginRight: "20px" }}>Invite
                                                 <span style={{ marginLeft: "5px" }}>Family - 7</span> </p>
                                             {
                                                 row?.code7 &&
@@ -296,7 +296,7 @@ function InviteFamily() {
                                                                         {/* Family 8 generate code*/}
                                                                         <div className="familyMainConatiner" key={"listing2" + index} >
                                         <div>
-                                            <p style={{ marginRight: "20px" }}>Invite code for
+                                            <p style={{ marginRight: "20px" }}>Invite
                                                 <span style={{ marginLeft: "5px" }}>Family - 8</span> </p>
                                             {
                                                 row?.code8 &&
@@ -322,7 +322,7 @@ function InviteFamily() {
                                                                         {/* Family 9 generate code*/}
                                                                         <div className="familyMainConatiner" key={"listing2" + index} >
                                         <div>
-                                            <p style={{ marginRight: "20px" }}>Invite code for
+                                            <p style={{ marginRight: "20px" }}>Invite
                                                 <span style={{ marginLeft: "5px" }}>Family - 9</span> </p>
                                             {
                                                 row?.code9 &&
@@ -348,7 +348,7 @@ function InviteFamily() {
                                                                         {/* Family 10 generate code*/}
                                                                         <div className="familyMainConatiner" key={"listing2" + index} >
                                         <div>
-                                            <p style={{ marginRight: "20px" }}>Invite code for
+                                            <p style={{ marginRight: "20px" }}>Invite
                                                 <span style={{ marginLeft: "5px" }}>Family - 10</span> </p>
                                             {
                                                 row?.code10 &&
