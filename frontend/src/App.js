@@ -90,7 +90,7 @@ function App() {
                 <Route path="/createfamilystory" element={<CreateFamilyStory />} />
                 <Route path="/search" element={<SearchStories />} />
                 <Route path="/invite_family" element={<InviteFamily />} />
-                <Route path="/student/:studentId" element={<StudentDetail />} />
+                <Route path="/class/:classId/student/:studentId" element={<StudentDetail />} />
                 
               </Routes>
             </div>

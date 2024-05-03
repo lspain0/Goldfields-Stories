@@ -256,7 +256,7 @@ const ClassDetails = () => {
      {classDetails.students && classDetails.students.length > 0 ? (
       <div className="student-cards-container">
         {sortStudents([...classDetails.students]).map((student) => (
-          <div key={student._id} className="student-card" onClick={() => navigate(`/student/${student._id}`)}>
+          <div key={student._id} className="student-card" onClick={() => navigate(`/class/${classId}/student/${student._id}`)}>
             {student.image && (
               <img
                 src={student.image}
