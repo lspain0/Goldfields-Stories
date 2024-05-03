@@ -78,7 +78,7 @@ function InviteFamily() {
 
             //If statement for when request is successful and displays message
             if (parseInt(response?.status) === 200) {
-                setDeleteStatus({ status: 200, msg: `Invite Code-${code_no} has been saved successfully!` });
+                setDeleteStatus({ status: 200, msg: `Invite Family-${code_no} has been saved successfully!` });
                 setTimeout(() => {
                     setDeleteStatus({ status: "", msg: "" });
                 }, 2000);
@@ -124,7 +124,7 @@ function InviteFamily() {
                                                 </p>
                                             }
                                         </div>
-                                        {/* Invite code button 1*/}
+                                        {/* Invite Family button 1*/}
                                         <p style={{ marginLeft: "70px" }}>
                                             <button className="familyButton" style={{ width: "150px", cursor: row?.code1 ? "not-allowed" : "pointer", padding: "10px", backgroundColor: row?.code1 ? "#326c6f4a" : "#326C6F" }}
                                                 onClick={() => {
@@ -132,7 +132,7 @@ function InviteFamily() {
                                                         updateUser(row?._id, generateRandomString(), 1)
                                                     }
                                                 }}>
-                                                Invite Code
+                                                Invite Family
                                             </button>
 
                                         </p>
@@ -149,7 +149,7 @@ function InviteFamily() {
                                                 </p>
                                             }
                                         </div>
-                                          {/* Invite code button 2*/}
+                                          {/* Invite Family button 2*/}
                                         <p style={{ marginLeft: "70px" }}>
                                             <button className="familyButton" style={{ width: "150px", cursor: row?.code2 ? "not-allowed" : "pointer", padding: "10px", backgroundColor: row?.code2 ? "#326c6f4a" : "#326C6F" }}
                                                 onClick={() => {
@@ -157,7 +157,7 @@ function InviteFamily() {
                                                         updateUser(row?._id, generateRandomString(), 2)
                                                     }
                                                 }}>
-                                                Invite Code
+                                                Invite Family
                                             </button>
 
                                         </p>
@@ -175,7 +175,7 @@ function InviteFamily() {
                                                 </p>
                                             }
                                         </div>
-                                          {/* Invite code button 3*/}
+                                          {/* Invite Family button 3*/}
                                         <p style={{ marginLeft: "70px" }}>
                                             <button className="familyButton" style={{ width: "150px", cursor: row?.code3 ? "not-allowed" : "pointer", padding: "10px", backgroundColor: row?.code3 ? "#326c6f4a" : "#326C6F" }}
                                                 onClick={() => {
@@ -183,7 +183,7 @@ function InviteFamily() {
                                                         updateUser(row?._id, generateRandomString(), 3)
                                                     }
                                                 }}>
-                                                Invite Code
+                                                Invite Family
                                             </button>
 
                                         </p>
@@ -209,7 +209,7 @@ function InviteFamily() {
                                                         updateUser(row?._id, generateRandomString(), 4)
                                                     }
                                                 }}>
-                                                Invite Code
+                                                Invite Family
                                             </button>
 
                                         </p>
@@ -227,7 +227,7 @@ function InviteFamily() {
                                                 </p>
                                             }
                                         </div>
-                                          {/* Invite code button 5*/}
+                                          {/* Invite Family button 5*/}
                                         <p style={{ marginLeft: "70px" }}>
                                             <button className="familyButton" style={{ width: "150px", cursor: row?.code5 ? "not-allowed" : "pointer", padding: "10px", backgroundColor: row?.code5 ? "#326c6f4a" : "#326C6F" }}
                                                 onClick={() => {
@@ -235,7 +235,7 @@ function InviteFamily() {
                                                         updateUser(row?._id, generateRandomString(), 5)
                                                     }
                                                 }}>
-                                                Invite Code
+                                                Invite Family
                                             </button>
 
                                         </p>
@@ -253,7 +253,7 @@ function InviteFamily() {
                                                 </p>
                                             }
                                         </div>
-                                          {/* Invite code button 6*/}
+                                          {/* Invite Family button 6*/}
                                         <p style={{ marginLeft: "70px" }}>
                                             <button className="familyButton" style={{ width: "150px", cursor: row?.code6 ? "not-allowed" : "pointer", padding: "10px", backgroundColor: row?.code6 ? "#326c6f4a" : "#326C6F" }}
                                                 onClick={() => {
@@ -261,7 +261,7 @@ function InviteFamily() {
                                                         updateUser(row?._id, generateRandomString(), 6)
                                                     }
                                                 }}>
-                                                Invite Code
+                                                Invite Family
                                             </button>
 
                                         </p>
@@ -279,7 +279,7 @@ function InviteFamily() {
                                                 </p>
                                             }
                                         </div>
-                                          {/* Invite code button 7*/}
+                                          {/* Invite Family button 7*/}
                                         <p style={{ marginLeft: "70px" }}>
                                             <button className="familyButton" style={{ width: "150px", cursor: row?.code7 ? "not-allowed" : "pointer", padding: "10px", backgroundColor: row?.code7 ? "#326c6f4a" : "#326C6F" }}
                                                 onClick={() => {
@@ -287,7 +287,7 @@ function InviteFamily() {
                                                         updateUser(row?._id, generateRandomString(), 7)
                                                     }
                                                 }}>
-                                                Invite Code
+                                                Invite Family
                                             </button>
 
                                         </p>
@@ -305,7 +305,7 @@ function InviteFamily() {
                                                 </p>
                                             }
                                         </div>
-                                          {/* Invite code button 8*/}
+                                          {/* Invite Family button 8*/}
                                         <p style={{ marginLeft: "70px" }}>
                                             <button className="familyButton" style={{ width: "150px", cursor: row?.code8 ? "not-allowed" : "pointer", padding: "10px", backgroundColor: row?.code8 ? "#326c6f4a" : "#326C6F" }}
                                                 onClick={() => {
@@ -313,7 +313,7 @@ function InviteFamily() {
                                                         updateUser(row?._id, generateRandomString(), 8)
                                                     }
                                                 }}>
-                                                Invite Code
+                                                Invite Family
                                             </button>
 
                                         </p>
@@ -331,7 +331,7 @@ function InviteFamily() {
                                                 </p>
                                             }
                                         </div>
-                                          {/* Invite code button 9*/}
+                                          {/* Invite Family button 9*/}
                                         <p style={{ marginLeft: "70px" }}>
                                             <button className="familyButton" style={{ width: "150px", cursor: row?.code9 ? "not-allowed" : "pointer", padding: "10px", backgroundColor: row?.code9 ? "#326c6f4a" : "#326C6F" }}
                                                 onClick={() => {
@@ -339,7 +339,7 @@ function InviteFamily() {
                                                         updateUser(row?._id, generateRandomString(), 9)
                                                     }
                                                 }}>
-                                                Invite Code
+                                                Invite Family
                                             </button>
 
                                         </p>
@@ -357,7 +357,7 @@ function InviteFamily() {
                                                 </p>
                                             }
                                         </div>
-                                          {/* Invite code button 10*/}
+                                          {/* Invite Family button 10*/}
                                         <p style={{ marginLeft: "70px" }}>
                                             <button className="familyButton" style={{ width: "150px", cursor: row?.code3 ? "not-allowed" : "pointer", padding: "10px", backgroundColor: row?.code10 ? "#326c6f4a" : "#326C6F" }}
                                                 onClick={() => {
@@ -365,7 +365,7 @@ function InviteFamily() {
                                                         updateUser(row?._id, generateRandomString(), 10)
                                                     }
                                                 }}>
-                                                Invite Code
+                                                Invite Family
                                             </button>
 
                                         </p>
