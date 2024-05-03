@@ -190,6 +190,11 @@ const ClassDetails = () => {
     return <p>Class not found.</p>;
   }
 
+  // Function to navigate to the student detail page
+  const goToStudentDetail = (studentId) => {
+    navigate(`/student/${studentId}`);
+  };
+
   // Render the class details
   return (
     <div>
@@ -248,48 +253,46 @@ const ClassDetails = () => {
         </div>
 
       )}
-      {classDetails.students && classDetails.students.length > 0 ? (
-        <div className="student-cards-container">
-          {sortStudents([...classDetails.students]).map((student, index) => (
-            <React.Fragment key={student._id}>
-              <div className="student-card">
-                {student.image && (
-                  <img
-                    src={student.image} // Use the direct URL from the student object
-                    alt={`${student.firstName} ${student.lastName}`}
-                    className="student-card-image"
-                  />
-                )}
-                <div className="student-card-info">
-                  <span className="student-name">
-                    {student.firstName} {student.lastName}
-                  </span>
-                  <span>DOB: {formatDate(student.dob)}</span>
-                </div>
-                <select
-                  onChange={(e) => {
-                    if (e.target.value === "edit") {
-                      handleEditStudent(student._id);
-                    } else if (e.target.value === "delete") {
-                      handleDeleteStudent(student._id);
-                    }
-                  }}
-                  className="student-actions-dropdown"
-                >student-actions-dropdown
-                  <option value="">Actions</option>
-                  <option value="edit">Edit</option>
-                  <option value="delete">Delete</option>
-                </select>
-              </div>
-            </React.Fragment>
-          ))}
-        </div>
-      ) : (
-        <p>No students in this class yet.</p>
-      )}
-
-    </div>
-  );
+     {classDetails.students && classDetails.students.length > 0 ? (
+      <div className="student-cards-container">
+        {sortStudents([...classDetails.students]).map((student) => (
+          <div key={student._id} className="student-card" onClick={() => navigate(`/student/${student._id}`)}>
+            {student.image && (
+              <img
+                src={student.image}
+                alt={`${student.firstName} ${student.lastName}`}
+                className="student-card-image"
+              />
+            )}
+            <div className="student-card-info">
+              <span className="student-name">
+                {student.firstName} {student.lastName}
+              </span>
+              <span>DOB: {formatDate(student.dob)}</span>
+            </div>
+            <select
+              onChange={(e) => {
+                e.stopPropagation(); // Prevent the select change from triggering the card's onClick event
+                if (e.target.value === "edit") {
+                  handleEditStudent(student._id);
+                } else if (e.target.value === "delete") {
+                  handleDeleteStudent(student._id);
+                }
+              }}
+              className="student-actions-dropdown"
+            >
+              <option value="">Actions</option>
+              <option value="edit">Edit</option>
+              <option value="delete">Delete</option>
+            </select>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p>No students in this class yet.</p>
+    )}
+  </div>
+);
 };
 
 export default ClassDetails;

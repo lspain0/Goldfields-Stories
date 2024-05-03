@@ -45,6 +45,7 @@ const EditStudentPage = () => {
     fetchStudent();
   }, [classId, studentId, fetchStudentData]);
 
+  //handleSubmit function to update the student
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Prepare the dob for the backend in ISO format
