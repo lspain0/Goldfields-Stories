@@ -20,7 +20,7 @@ import User from './pages/User';
 import CreateFamilyStory from './pages/CreateFamilyStory';
 import SearchStories from './pages/SearchStories';
 import InviteFamily from './pages/inviteFamily';
-
+import StudentDetail from './pages/StudentDetail';
 
 function App() {
 
@@ -90,7 +90,8 @@ function App() {
                 <Route path="/createfamilystory" element={<CreateFamilyStory />} />
                 <Route path="/search" element={<SearchStories />} />
                 <Route path="/invite_family" element={<InviteFamily />} />
-
+                <Route path="/class/:classId/student/:studentId" element={<StudentDetail />} />
+                
               </Routes>
             </div>
           </BrowserRouter>
