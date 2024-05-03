@@ -1,4 +1,3 @@
-/* StudentDetail.css */
 .student-detail-container {
     max-width: 600px;
     margin: 100px auto;
@@ -11,6 +10,7 @@
     flex-direction: column;
     align-items: center;
   }
+  
   
   .student-detail-container h1 {
     color: #333;

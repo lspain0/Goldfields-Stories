@@ -26,7 +26,7 @@ function App() {
 
   const [role, setRole] = useState("");
 
-  //Login status
+  //Check if user is logged in or not
   const [login, setLogin] = useState(false);
   useEffect(() => {
 
@@ -70,7 +70,7 @@ function App() {
       <ClassesProvider>
         <div className="App">
           <BrowserRouter>
-          <Navbar role={role} />
+            <Navbar role={role} />
             <div className="pages">
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -91,7 +91,7 @@ function App() {
                 <Route path="/search" element={<SearchStories />} />
                 <Route path="/invite_family" element={<InviteFamily />} />
                 <Route path="/class/:classId/student/:studentId" element={<StudentDetail />} />
-                
+
               </Routes>
             </div>
           </BrowserRouter>

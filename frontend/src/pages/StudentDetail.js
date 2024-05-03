@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from 'axios'; // Import axios to make HTTP requests
+import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
 import { ClassesContext } from "../context/ClassesContext";
 import StoryDetails from "../components/StoryDetails";
-import '../StudentDetail.css'; 
-import '../searchstories.css'; // Ensure the styles are applied
+import '../StudentDetail.css';
+import '../searchstories.css';
 
+// Display student details and stories
 const StudentDetail = () => {
   const [student, setStudent] = useState({
     image: null,
@@ -21,6 +22,7 @@ const StudentDetail = () => {
   const navigate = useNavigate();
   const { fetchStudentData } = useContext(ClassesContext);
 
+  // Fetch student data and stories on component mount
   useEffect(() => {
     const fetchStudent = async () => {
       try {
@@ -46,6 +48,7 @@ const StudentDetail = () => {
     fetchStudent();
   }, [classId, studentId, fetchStudentData]);
 
+  // Fetch stories for the student
   const fetchStories = async (firstName, lastName) => {
     try {
       const response = await axios.get(`/api/stories/search?search=${firstName} ${lastName}`);
@@ -59,7 +62,9 @@ const StudentDetail = () => {
     }
   };
 
+  // Render student details and stories
   return (
+    // Display student details
     <div className="page-container">
       <div className="student-detail-container">
         {error ? <p className="error">{error}</p> : (
@@ -72,6 +77,7 @@ const StudentDetail = () => {
           </>
         )}
       </div>
+      {/* Display stories for the student */}
       <div className="story-cards-container">
         {stories.length > 0 ? stories.map(story => (
           <StoryDetails key={story._id} story={story} />

@@ -123,7 +123,7 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
         }
     }
 
-    
+    //prevents family stories from being displayed
     if (currentState === 'family') {
         if (story.state !== 'family') {
             return null;
@@ -142,6 +142,7 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
         }
     }
 
+    //parse the story content to extract the image file name
     var domParser = new DOMParser();
     var docElement = domParser.parseFromString(story.content, "text/html").documentElement;
     var imgTags = docElement.getElementsByTagName("img");
@@ -156,11 +157,13 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
         
     }
 
+    //if there are no images in the story, display the default image
     if (images.length === 0) {
         images[0] = './goldfieldslogo.png'
         
     }
     
+    //if the story fits the filters, display the story
     if (storyTypeFilter === true && childrenFilter === true && tagFilter === true) {
         if (story.state !== 'family') {
             return (

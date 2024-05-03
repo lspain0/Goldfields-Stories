@@ -7,16 +7,14 @@ import "../searchstories.css";
 import Logo2 from "../components/logov2";
 import { FaSearch } from 'react-icons/fa';
 
-
+// Search for stories by author, content, tags, or child's name
 const SearchStories = () => {
-  const navigate = useNavigate();
-  const location = useLocation(); 
-
-  const queryParams = queryString.parse(location.search);
-  const initialSearchTerm = queryParams.search || '';
-  const initialFilter = queryParams.filter || 'All';
-  const initialSortOption = queryParams.sort || 'Date';
-
+  const navigate = useNavigate(); // Navigate to a new URL
+  const location = useLocation(); // Get current location
+  const queryParams = queryString.parse(location.search); 
+  const initialSearchTerm = queryParams.search || ''; 
+  const initialFilter = queryParams.filter || 'All'; 
+  const initialSortOption = queryParams.sort || 'Date'; // Default sort option
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [stories, setStories] = useState([]);
   const [error, setError] = useState('');
@@ -24,6 +22,7 @@ const SearchStories = () => {
   const [storyFilter, setStoryFilter] = useState(initialFilter);
   const [sortOption, setSortOption] = useState(initialSortOption);
 
+  // Set background color to white
   useEffect(() => {
     document.body.style.backgroundColor = "#FFFFFF";
     return () => {
@@ -31,6 +30,7 @@ const SearchStories = () => {
     };
   }, []);
 
+  // Fetch stories when query parameters change
   useEffect(() => {
     initiateSearch();
   }, [location.search]); // Rerun search when query parameters change
@@ -39,14 +39,17 @@ const SearchStories = () => {
     initiateSearch(); // Trigger search when filter or sort options change
   }, [storyFilter, sortOption]); // Listen for changes in filter and sort options
 
+  // Update query parameters when search term, filter, or sort option changes
   const updateQueryParams = () => {
     navigate(`?search=${searchTerm}&filter=${storyFilter}&sort=${sortOption}`, { replace: true });
   };
 
+  // Handle input change in search bar
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
+  // Clear search term and reset stories
   const clearSearchTerm = () => {
     setSearchTerm('');
     setStories([]);
@@ -55,6 +58,7 @@ const SearchStories = () => {
     updateQueryParams();
   };
 
+  // Sort stories by title or date
   const sortStories = (stories) => {
     if (sortOption === 'Title') {
       return stories.sort((a, b) => a.title.localeCompare(b.title));
@@ -63,6 +67,7 @@ const SearchStories = () => {
     }
   };
 
+  // Initiate search for stories
   const initiateSearch = async () => {
     const term = searchTerm.trim();
     setError('');
@@ -73,6 +78,7 @@ const SearchStories = () => {
       return;
     }
 
+    // Fetch stories based on search term, filter, and sort option
     try {
       const response = await axios_obj.get(`/stories/search?search=${term}&filter=${storyFilter}&sort=${sortOption}`);
       if (response.status === 200 && response.data.length > 0) {
@@ -91,12 +97,14 @@ const SearchStories = () => {
     updateQueryParams();
   };
 
+  // Handle Enter key press to initiate search
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       initiateSearch();
     }
   };
 
+  // Render search stories page
   return (
     <body className='search-body'>
     <div className="search-stories-container">
@@ -138,13 +146,13 @@ const SearchStories = () => {
           </select>
         </div>
       </div>
-      <button onClick={initiateSearch} className="search-stories-button">Search</button>
-      <div className={`notification ${showNotification ? 'show' : ''}`}>
+      <button onClick={initiateSearch} className="search-stories-button">Search</button> 
+      <div className={`notification ${showNotification ? 'show' : ''}`}> 
         {error}
-        <button onClick={() => setShowNotification(false)}>×</button>
+        <button onClick={() => setShowNotification(false)}>×</button> 
       </div>
     </div>
-    <div className="story-cards-container">
+    <div className="story-cards-container"> 
         {stories.length > 0 && (
           stories.map(story => (
             <StoryDetails story={story} key={story._id} />
