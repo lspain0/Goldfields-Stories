@@ -80,12 +80,12 @@ const StudentDetail = () => {
           </>
         )}
       </div>
-      <div className="story-cards-container">
-        {stories.length > 0 ? stories.map(story => (
-          <div onClick={() => handleStoryClick(story._id)} key={story._id}>
-            <StoryDetails story={story} />
-          </div>
-        )) : <p>No stories available for this student.</p>}
+      <div className="story-cards-container"> 
+        {stories.length > 0 && (
+          stories.map(story => (
+            <StoryDetails story={story} key={story._id} />
+          ))
+        )}
       </div>
     </div>
   );
