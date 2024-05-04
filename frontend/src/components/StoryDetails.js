@@ -113,7 +113,7 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
     }
 
     //prevents pending stories from being displayed
-    else if (window.location.href.includes('stories') || window.location.href.includes('search'))
+    else if (window.location.href.includes('stories') || window.location.href.includes('search') || window.location.href.includes('class'))
     {
         link = "stories";
 
