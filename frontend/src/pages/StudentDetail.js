@@ -5,7 +5,6 @@ import { ClassesContext } from "../context/ClassesContext";
 import StoryDetails from "../components/StoryDetails";
 import '../StudentDetail.css';
 
-
 const StudentDetail = () => {
   const [student, setStudent] = useState({
     image: null,
@@ -15,6 +14,7 @@ const StudentDetail = () => {
     dob: "",
   });
   const [stories, setStories] = useState([]);
+  const [loading, setLoading] = useState(true);  // Added loading state
   const [error, setError] = useState("");
 
   const { classId, studentId } = useParams();
@@ -39,10 +39,12 @@ const StudentDetail = () => {
           fetchStories(data.firstName, data.lastName);
         } else {
           setError("No data found for this student.");
+          setLoading(false);  // Update loading state
         }
       } catch (error) {
         console.error("Failed to fetch student:", error);
         setError("Failed to fetch student data. Please check the console for more details.");
+        setLoading(false);  // Update loading state
       }
     };
 
@@ -52,19 +54,14 @@ const StudentDetail = () => {
   const fetchStories = async (firstName, lastName) => {
     try {
       const response = await axios.get(`/api/stories/search?search=${firstName} ${lastName}`);
-      if (response.status === 200 && response.data.length > 0) {
+      if (response.status === 200) {
         setStories(response.data);
-      } else {
-        console.log('No stories found for this student.');
       }
+      setLoading(false);  // Update loading state
     } catch (error) {
       console.error("Failed to fetch stories:", error);
+      setLoading(false);  // Update loading state
     }
-  };
-
-  // Function to handle story click
-  const handleStoryClick = (storyId) => {
-    navigate(`/stories/${storyId}`); // Adjust the URL path as necessary
   };
 
   return (
@@ -80,12 +77,14 @@ const StudentDetail = () => {
           </>
         )}
       </div>
-      <div className="story-cards-container"> 
-        {stories.length > 0 && (
+      <div className="story-cards-container">
+        {loading ? (
+          <p>Loading stories...</p>
+        ) : stories.length > 0 ? (
           stories.map(story => (
             <StoryDetails story={story} key={story._id} />
           ))
-        )}
+        ) : <p>No stories available for this student.</p>}
       </div>
     </div>
   );
