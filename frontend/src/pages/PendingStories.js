@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 
 // components
 import StoryDetails from "../components/StoryDetails"
-import Logo from "../components/logo"
 
 var roleCheck = false;
 
@@ -49,7 +48,7 @@ const PendingStories = () => {
 
       <div className="createstorylink">  
           <Link to={`/stories`}>
-            <button className="create-story-button">Approved Stories</button>
+            <button className="back-story-page-button">Approved Stories</button>
           </Link>
           </div>
         <div className="story-cards-container">
