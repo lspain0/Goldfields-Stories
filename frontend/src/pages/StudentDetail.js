@@ -20,36 +20,49 @@ const StudentDetail = () => {
   const { classId, studentId } = useParams();
   const navigate = useNavigate();
   const context = useContext(ClassesContext);
-  
+
   // Using useCallback to memoize fetchStudentData
   const fetchStudentData = useCallback(() => context.fetchStudentData, [context]);
 
+  // Fetch student data and stories
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const data = await fetchStudentData()(classId, studentId);  // Adjusted to call the memoized function
+        // Fetch student data
+        const data = await fetchStudentData()(classId, studentId);
+        // Capitalize the first letter of a string
+        const capitalizeFirstLetter = (str) => {
+          return str.charAt(0).toUpperCase() + str.slice(1);
+        };
+
         if (data) {
           setStudent({
             image: data.image || null,
             firstName: data.firstName,
             lastName: data.lastName,
-            gender: data.gender,
-            dob: new Date(data.dob).toLocaleDateString()
+            gender: capitalizeFirstLetter(data.gender),
+            dob: new Date(data.dob).toLocaleDateString('en-GB', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric'
+            })
           });
           fetchStories(data.firstName, data.lastName);
         } else {
           setError("No data found for this student.");
-          setLoading(false);  // Update loading state
+          setLoading(false);
         }
       } catch (error) {
         console.error("Failed to fetch student:", error);
         setError("Failed to fetch student data. Please check the console for more details.");
-        setLoading(false);  // Update loading state
+        setLoading(false);
       }
     };
-
+  
     fetchStudent();
   }, [classId, studentId, fetchStudentData]);
+  
+
 
   const fetchStories = async (firstName, lastName) => {
     try {
@@ -57,10 +70,10 @@ const StudentDetail = () => {
       if (response.status === 200) {
         setStories(response.data);
       }
-      setLoading(false);  // Update loading state
+      setLoading(false);
     } catch (error) {
       console.error("Failed to fetch stories:", error);
-      setLoading(false);  // Update loading state
+      setLoading(false);
     }
   };
 
