@@ -1,7 +1,8 @@
+
 .student-detail-container {
-  max-width: 600px;
-  margin: 100px auto;
-  padding: 40px 20px;
+  max-width: 400px; /* Reduced width for a smaller profile box */
+  margin: 50px auto; /* Adjusted margin for better centering */
+  padding: 20px 10px; /* Reduced padding for a tighter layout */
   border: 1px solid #326C6F; /* Stylish teal border */
   border-radius: 45px; /* Rounded corners for a softer look */
   background-color: #f9f9f9;
@@ -19,19 +20,20 @@
 }
 
 .student-detail-container img {
-  width: 90%;
+  width: 100%; /* Adjusted to fill the container width */
   height: auto;
-  margin: 20px 0;
+  margin: 10px 0; /* Reduced margin for a more compact layout */
   border-radius: 8px; /* Slightly more rounded */
 }
 
 .student-detail-container p {
   color: #444;
   font-size: 17px;
-  line-height: 1.6;
+  line-height: 1.2;
   text-align: center;
   width: 100%;
   font-family: 'Poppins', sans-serif; /* Consistent font */
+  margin: 5px 0;
 }
 
 .student-detail-container button {
@@ -51,54 +53,4 @@
 .student-detail-container button:hover {
   background-color: #224957; /* Darker teal on hover */
   box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Added shadow for depth */
-}
-
-/* Additional CSS for clear and search icons, similar to your search bar styling */
-.clear-button, .search-icon {
-  position: absolute;
-  cursor: pointer;
-  font-size: 20px;
-  background: none;
-  border: none;
-}
-
-.clear-button {
-  right: 130px;
-  top: 35%;
-  transform: translateY(-50%);
-  color: #000;
-}
-
-.clear-button:hover {
-  color: #ff6b6b; /* Hover effect */
-}
-
-.search-icon {
-  left: 130px;
-  top: 33%;
-  transform: translateY(-50%);
-  color: #E9AF0C; /* Golden color */
-}
-
-.notification {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 20px;
-  border-radius: 5px;
-  background-color: #f8f2f2;
-  color: #333;
-  border: 1px solid black;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: 'Poppins', sans-serif;
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  display: none;
-  transition: all 0.3s ease;
-  margin-top: 33%;
-}
-
-.notification.show {
-  display: flex;
 }
