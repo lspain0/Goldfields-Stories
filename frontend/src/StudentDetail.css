@@ -1,51 +1,104 @@
 .student-detail-container {
-    max-width: 600px;
-    margin: 100px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  
-  .student-detail-container h1 {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .student-detail-container img {
-    width: 90%; /* Responsive width */
-    height: auto;
-    margin: 10px 0;
-    border-radius: 4px;
-  }
-  
-  .student-detail-container p {
-    color: #666;
-    font-size: 16px;
-    line-height: 1.5;
-    text-align: center; /* Center-align the text for better readability */
-    width: 100%; /* Ensure full-width for alignment */
-  }
-  
-  .student-detail-container button {
-    width: 90%; /* Slightly less than full width for aesthetics */
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
-  }
-  
-  .student-detail-container button:hover {
-    background-color: #0056b3;
-  }
-  
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 40px 20px;
+  border: 1px solid #326C6F; /* Stylish teal border */
+  border-radius: 45px; /* Rounded corners for a softer look */
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.student-detail-container h1 {
+  color: #333;
+  font-family: 'Poppins', sans-serif; /* Consistent font */
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+.student-detail-container img {
+  width: 90%;
+  height: auto;
+  margin: 20px 0;
+  border-radius: 8px; /* Slightly more rounded */
+}
+
+.student-detail-container p {
+  color: #444;
+  font-size: 17px;
+  line-height: 1.6;
+  text-align: center;
+  width: 100%;
+  font-family: 'Poppins', sans-serif; /* Consistent font */
+}
+
+.student-detail-container button {
+  padding: 12px 20px;
+  font-size: 16px;
+  width: 180px; /* Standard width for uniformity */
+  border: none;
+  border-radius: 20px; /* More rounded */
+  font-family: 'Poppins', sans-serif; /* Consistent font */
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.2s;
+  background: #326C6F; /* Stylish teal background */
+  color: white;
+  margin-top: 20px; /* Standard spacing */
+}
+
+.student-detail-container button:hover {
+  background-color: #224957; /* Darker teal on hover */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Added shadow for depth */
+}
+
+/* Additional CSS for clear and search icons, similar to your search bar styling */
+.clear-button, .search-icon {
+  position: absolute;
+  cursor: pointer;
+  font-size: 20px;
+  background: none;
+  border: none;
+}
+
+.clear-button {
+  right: 130px;
+  top: 35%;
+  transform: translateY(-50%);
+  color: #000;
+}
+
+.clear-button:hover {
+  color: #ff6b6b; /* Hover effect */
+}
+
+.search-icon {
+  left: 130px;
+  top: 33%;
+  transform: translateY(-50%);
+  color: #E9AF0C; /* Golden color */
+}
+
+.notification {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #f8f2f2;
+  color: #333;
+  border: 1px solid black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: none;
+  transition: all 0.3s ease;
+  margin-top: 33%;
+}
+
+.notification.show {
+  display: flex;
+}

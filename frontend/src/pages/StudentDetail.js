@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
 import { ClassesContext } from "../context/ClassesContext";
 import StoryDetails from "../components/StoryDetails";
 import '../StudentDetail.css';
-import '../searchstories.css';
 
-// Display student details and stories
+
 const StudentDetail = () => {
   const [student, setStudent] = useState({
     image: null,
@@ -20,13 +19,15 @@ const StudentDetail = () => {
 
   const { classId, studentId } = useParams();
   const navigate = useNavigate();
-  const { fetchStudentData } = useContext(ClassesContext);
+  const context = useContext(ClassesContext);
+  
+  // Using useCallback to memoize fetchStudentData
+  const fetchStudentData = useCallback(() => context.fetchStudentData, [context]);
 
-  // Fetch student data and stories on component mount
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const data = await fetchStudentData(classId, studentId);
+        const data = await fetchStudentData()(classId, studentId);  // Adjusted to call the memoized function
         if (data) {
           setStudent({
             image: data.image || null,
@@ -48,7 +49,6 @@ const StudentDetail = () => {
     fetchStudent();
   }, [classId, studentId, fetchStudentData]);
 
-  // Fetch stories for the student
   const fetchStories = async (firstName, lastName) => {
     try {
       const response = await axios.get(`/api/stories/search?search=${firstName} ${lastName}`);
@@ -62,9 +62,12 @@ const StudentDetail = () => {
     }
   };
 
-  // Render student details and stories
+  // Function to handle story click
+  const handleStoryClick = (storyId) => {
+    navigate(`/stories/${storyId}`); // Adjust the URL path as necessary
+  };
+
   return (
-    // Display student details
     <div className="page-container">
       <div className="student-detail-container">
         {error ? <p className="error">{error}</p> : (
@@ -77,10 +80,11 @@ const StudentDetail = () => {
           </>
         )}
       </div>
-      {/* Display stories for the student */}
       <div className="story-cards-container">
         {stories.length > 0 ? stories.map(story => (
-          <StoryDetails key={story._id} story={story} />
+          <div onClick={() => handleStoryClick(story._id)} key={story._id}>
+            <StoryDetails story={story} />
+          </div>
         )) : <p>No stories available for this student.</p>}
       </div>
     </div>

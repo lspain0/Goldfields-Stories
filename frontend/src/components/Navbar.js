@@ -26,6 +26,8 @@ const Navbar = (props) => {
         pageTitle = "Add a New Student";
     } else if (isDynamicRoute("^/class/.+$")) {
         pageTitle = "Class Management";
+    } else if (isDynamicRoute("^/class/.+/StudentDetail$")) {
+        pageTitle = "Student Details";
     } else {
         switch (location.pathname) {
             case "/home":
