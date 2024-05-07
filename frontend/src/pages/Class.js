@@ -25,12 +25,13 @@ function Class() {
     const isDuplicate = classes.some(
       (c) => c.className.toLowerCase() === newClassNameLower
     );
+    // Check if class name is empty
     if (isDuplicate) {
       setMessage(`Error: A class with the name '${className}' already exists.`);
       setIsSubmitting(false);
       return;
     }
-
+    // Add the new class
     try {
       await addClass({ className });
       setMessage(`Class '${className}' created successfully.`);
@@ -43,7 +44,7 @@ function Class() {
     }
   };
 
-
+  // Sort classes based on the selected method  
   useEffect(() => {
     // Function to sort classes based on the selected method
     const sortClasses = (classes) => {
