@@ -14,7 +14,9 @@ const EditStudentPage = () => {
     dob: "",
   });
 
+  // Get classId and studentId from URL params
   const { classId, studentId } = useParams();
+  //  Get the updateStudentInClass and fetchStudentData functions from the ClassesContext
   const navigate = useNavigate();
   const { updateStudentInClass, fetchStudentData } = useContext(ClassesContext);
 
@@ -56,6 +58,7 @@ const EditStudentPage = () => {
       dobParts[2]
     ).toISOString();
 
+    // Update the student with the new dob
     const updatedStudent = {
       ...student,
       dob: dobISO,
@@ -69,10 +72,12 @@ const EditStudentPage = () => {
     }
   };
 
+  // Function to navigate back to the class page
   const handleBack = () => {
     navigate(`/class/${classId}`);
   };
 
+  // Render the EditStudentPage
   return (
     <div>
       <h1 class="custom-h1">Edit Student</h1>

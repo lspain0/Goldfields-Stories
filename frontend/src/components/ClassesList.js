@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { ClassesContext } from '../context/ClassesContext';
 
+// render the list of classes
 const ClassesList = () => {
   const { classes } = useContext(ClassesContext);
 

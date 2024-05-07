@@ -9,18 +9,21 @@ import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
+// Home page component
 function Home() {
   const [role, setRole] = useState("");
-
   const [images, setImages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showImages, setShowImages] = useState(false);
   const cloudinaryWidgetRef = useRef();
 
+  // Fetch images from the backend
   useEffect(() => {
 
+    // Get the role from local storage
     setRole(localStorage.getItem("role"));
 
+    // Add the home-page-background class to the body
     document.body.classList.add('home-page-background');
     return () => {
       document.body.classList.remove('home-page-background');
@@ -29,6 +32,7 @@ function Home() {
 
   }, []);
 
+  // Initialize the Cloudinary widget
   useEffect(() => {
     cloudinaryWidgetRef.current = window.cloudinary.createUploadWidget({
       cloudName: "drpnvb7qc",
@@ -59,6 +63,7 @@ function Home() {
     );
   }, []);
 
+  // Fetch images from the backend
   useEffect(() => {
     const fetchImages = async () => {
       try {
@@ -76,10 +81,12 @@ function Home() {
     return () => clearInterval(intervalId);
   }, [images.length]);
 
+  // Event handler for uploading images
   const handleImageUpload = () => {
     cloudinaryWidgetRef.current.open();
   };
 
+  // Event handler for deleting images
   const handleDeleteImage = async (imageId) => {
     try {
       const response = await fetch(`/api/images/${imageId}`, { method: 'DELETE' });
@@ -95,8 +102,10 @@ function Home() {
     }
   };
 
+  // Event handler for toggling the image gallery
   const toggleShowImages = () => setShowImages(!showImages);
 
+  // Get the current image URL
   const currentImage = images[currentIndex]?.imageUrl;
   const position = [-37.370352, 175.674033];
   const customIcon = new L.Icon({
@@ -109,6 +118,7 @@ function Home() {
     shadowSize: [41, 41]
   });
 
+  // Render the home page
   return (
     <div className="home-container">
       <div className="home-header">

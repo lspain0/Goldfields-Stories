@@ -1,5 +1,5 @@
 import React from 'react';
-
+// ClassForm component
 const ClassForm = ({ className, setClassName, isSubmitting, handleSubmit }) => {
   return (
     <div className="class-form-container">

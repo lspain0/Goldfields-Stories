@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import "../student.css";
 
+// StudentForm component
 const StudentForm = ({
   student,
   setStudent,
@@ -10,6 +11,7 @@ const StudentForm = ({
 }) => {
   const cloudinaryWidgetRef = useRef();
 
+  // Initialize the Cloudinary widget
   useEffect(() => {
     cloudinaryWidgetRef.current = window.cloudinary.createUploadWidget(
       {
@@ -41,14 +43,17 @@ const StudentForm = ({
     setStudent({ ...student, [e.target.name]: e.target.value });
   };
 
+  // Open the Cloudinary widget when the user clicks the "Upload Image" button
   const handleImageUpload = (e) => {
     e.preventDefault();
     cloudinaryWidgetRef.current.open();
   };
 
+  // Get today's date in the format "YYYY-MM-DD"
   const today = new Date().toISOString().split("T")[0];
   const minDate = "1980-01-01";
 
+  // Render the student form
   return (
     <div className="student-form-container">
       <form onSubmit={handleSubmit} className="student-form">

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { ClassesContext } from "../context/ClassesContext";
 
+// Transfer student modal component
 const TransferStudentModal = ({ students, currentClassId, onClose }) => {
   const [selectedStudent, setSelectedStudent] = useState("");
   const [newClassId, setNewClassId] = useState("");
@@ -13,6 +14,7 @@ const TransferStudentModal = ({ students, currentClassId, onClose }) => {
     onClose();
   };
 
+  // Render transfer student modal
   return (
     <div className="modal">
       <form className="transfer-form" onSubmit={handleSubmit}>

@@ -4,6 +4,7 @@ import { ClassesContext } from "../context/ClassesContext";
 import "../student.css";
 import TransferStudentModal from "../components/TransferStudentModal";
 
+// ClassDetails component
 const ClassDetails = () => {
   const { classId } = useParams();
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const ClassDetails = () => {
   const [editedClassName, setEditedClassName] = useState(""); // State to manage the edited class name
   const [sortMethod, setSortMethod] = useState("prompt");
 
+  // Fetch class details when the component mounts
   useEffect(() => {
     const classInfo = classes.find((c) => c.id === classId);
     if (classInfo) {
@@ -91,6 +93,7 @@ const ClassDetails = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
+      // Update the class details with the new class name
       const updatedClass = await response.json();
       setClassDetails(updatedClass);
 
