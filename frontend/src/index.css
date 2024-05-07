@@ -302,13 +302,14 @@ div.error {
 
 .short-input {
   width: 85%;
-  margin-top: 50px;
+  margin-top: 5px;
   margin-right: 1%;
   font-size: 18px;
+  max-height: 50px;
 }
 
 .author-input {
-  padding-top: 60px;
+  padding-top: 15px;
 }
 
 .story-form-button {

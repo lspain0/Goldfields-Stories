@@ -112,6 +112,8 @@ const StoryPage = () => {
   const [newComment, setNewComment] = useState('');
   const [commentPostEnabled, setCommentPostEnabled] = useState(false);
   const [name, setName] = useState(localStorage.getItem("name"));
+  const [active, setActive] = React.useState('education');
+
 
 
   const handlePostComment = async () => {

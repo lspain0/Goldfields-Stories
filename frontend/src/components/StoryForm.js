@@ -2,10 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useStoriesContext } from "../hooks/useStoriesContext";
-import { CheckTreePicker, ButtonToolbar, Modal, Button, Input, Divider, TagInput } from 'rsuite';
+import { CheckTreePicker, ButtonToolbar, Modal, Button, Input, Divider, TagInput, Nav } from 'rsuite';
 import '../index.css';
 import { convertStringToGroupedTags, splitLines } from "./docs/tags";
 import StudentList from "./docs/StudentList";
+import { useContext } from "react";
+import { ClassesContext } from "../context/ClassesContext";
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" />
 
 var editing = false;
@@ -143,6 +145,73 @@ const StoryForm = () => {
   const [originalTagGroups, setOriginalTagGroups] = useState([]);
   const [checkTreeChildrenOpen, setCheckTreeChildrenOpen] = useState(false); // State to manage tree visibility
   const [checkTreeTagsOpen, setCheckTreeTagsOpen] = useState(false); // State to manage tree visibility 
+  const [active, setActive] = React.useState('individual');
+  const { classes, addClass } = useContext(ClassesContext);
+
+  const Navbar = ({ active, onSelect, ...props }) => {
+    return (
+      <Nav {...props} activeKey={active} onSelect={onSelect} style={{ marginLeft: 50, marginTop: 5, maxWidth: 150}}>
+        <Nav.Item eventKey="individual">Individual Story</Nav.Item>
+        <Nav.Item eventKey="class">Class Story</Nav.Item>
+      </Nav>
+    )
+  };
+
+  const checkTreeState = () => {
+    if (active === 'individual') {
+      return <CheckTreePicker
+      className="check-tree"
+      placeholder="Add children to this story..."
+      data={sortedData}
+      uncheckableItemValues={['1-1', '1-1-2']}
+      value={selectedCheckTreeValuesChildren}
+      onOpenChange={setCheckTreeChildrenOpen}
+      onChange={handleCheckTreePickerChangeChildren}
+      onClick={toggleCheckTreePickerChildren}
+      cascade={false}
+      open={checkTreeChildrenOpen}
+      renderExtraFooter={() => (
+        <div
+          style={{
+            padding: '10px 2px',
+            borderTop: '1px solid #e5e5e5'
+          }}
+        >
+          <Button inline className="checktree-close" appearance="primary" onClick={toggleCheckTreePickerChildren}>
+            Done
+          </Button>
+        </div>
+      )}
+    />
+    }
+    else {
+      console.log(classes)
+      return <CheckTreePicker
+      className="check-tree"
+      placeholder="Add a class to this story..."
+      data={classes}
+      uncheckableItemValues={['1-1', '1-1-2']}
+      value={selectedCheckTreeValuesChildren}
+      onOpenChange={setCheckTreeChildrenOpen}
+      onChange={handleCheckTreePickerChangeChildren}
+      onClick={toggleCheckTreePickerChildren}
+      cascade={false}
+      open={checkTreeChildrenOpen}
+      renderExtraFooter={() => (
+        <div
+          style={{
+            padding: '10px 2px',
+            borderTop: '1px solid #e5e5e5'
+          }}
+        >
+          <Button inline className="checktree-close" appearance="primary" onClick={toggleCheckTreePickerChildren}>
+            Done
+          </Button>
+        </div>
+      )}
+    />
+    }
+  }
 
   useEffect(() => {
     const fetchStoryById = async () => {
@@ -244,8 +313,6 @@ const StoryForm = () => {
       author: currentUser,
       state,
     };
-
-    console.log(state, tags)
 
     if (editing === true) {
       try {
@@ -584,6 +651,7 @@ const renderTagInputs = () => {
     }
     return (
       <body className="story-form">
+        <Navbar className='story-form-select-bar' appearance='subtle' default='education' active={active} onSelect={setActive} />
         <form className="create-story" onSubmit={handleSubmit}>
           <div className="input-container">
             <input
@@ -598,34 +666,11 @@ const renderTagInputs = () => {
             </span>
           </div>
   
-          <CheckTreePicker
-            className="check-tree"
-            placeholder="Add children to this story..."
-            data={sortedData}
-            uncheckableItemValues={['1-1', '1-1-2']}
-            value={selectedCheckTreeValuesChildren}
-            onOpenChange={setCheckTreeChildrenOpen}
-            onChange={handleCheckTreePickerChangeChildren}
-            onClick={toggleCheckTreePickerChildren}
-            cascade={false}
-            open={checkTreeChildrenOpen}
-            renderExtraFooter={() => (
-              <div
-                style={{
-                  padding: '10px 2px',
-                  borderTop: '1px solid #e5e5e5'
-                }}
-              >
-                <Button inline className="checktree-close" appearance="primary" onClick={toggleCheckTreePickerChildren}>
-                  Done
-                </Button>
-              </div>
-            )}
-          />
+          {checkTreeState()}
           
           <UploadWidget onImageUpload={handleImageUpload} />
           <div></div>
-  
+
           <CheckTreePicker
             className="check-tree2"
             placeholder="Learning tags..."
@@ -680,7 +725,7 @@ const renderTagInputs = () => {
                   ],
                 },
               }}
-              style={{ height: '67vh' }}
+              style={{ height: '63vh' }}
             />
           </div>
   
