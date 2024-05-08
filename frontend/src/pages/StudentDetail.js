@@ -66,12 +66,13 @@ const StudentDetail = () => {
 
   // Fetch the parent data for the student
   const fetchParent = async (firstName, lastName) => {
+    setLoadingParent(true); // Ensure loading state is true when the function starts
     try {
       const response = await axios.get(`/api/users/parent/${firstName} ${lastName}`);
-      if (response.status === 200 && response.data) {
+      if (response.status === 200 && response.data && response.data.parentName) {
         setParent(response.data.parentName);
       } else {
-        setParent("No parent data available");
+        setParent("No parent data available"); // Handle cases where data is incomplete or missing
       }
     } catch (error) {
       console.error("Failed to fetch parent:", error);
@@ -80,21 +81,25 @@ const StudentDetail = () => {
       setLoadingParent(false);
     }
   };
-
+  
   // Fetch the stories for the student
-  const fetchStories = async (firstName, lastName) => {
-    try {
-      // Fetch stories by searching for the student's full name
-      const response = await axios.get(`/api/stories/search?search=${firstName} ${lastName}`);
-      if (response.status === 200) {
-        setStories(response.data);
-      }
-    } catch (error) {
-      console.error("Failed to fetch stories:", error);
-    } finally {
-      setLoadingStories(false);
+const fetchStories = async (firstName, lastName) => {
+  setLoadingStories(true); // Ensure loading state is set to true at the beginning
+  try {
+    // Fetch stories by searching for the student's full name
+    const response = await axios.get(`/api/stories/search?search=${firstName} ${lastName}`);
+    if (response.status === 200 && response.data.length > 0) {
+      setStories(response.data);
+    } else {
+      setStories([]); // Explicitly set an empty array if no stories are found or the response is not as expected
     }
-  };
+  } catch (error) {
+    console.error("Failed to fetch stories:", error);
+    setStories([]); // Ensure stories are set to an empty array on error
+  } finally {
+    setLoadingStories(false); // Ensure loading state is set to false after the API call
+  }
+};
 
   // Display the student details
   return (
