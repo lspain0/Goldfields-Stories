@@ -26,7 +26,7 @@ const PendingStories = () => {
   checkRole();
   if (roleCheck === false)
   {
-    window.location.href = `/`;
+    window.location.href = `/home`;
   }
   const { stories, dispatch } = useStoriesContext()
 

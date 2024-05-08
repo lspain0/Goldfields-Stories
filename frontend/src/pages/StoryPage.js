@@ -112,8 +112,10 @@ const StoryPage = () => {
   const [newComment, setNewComment] = useState('');
   const [commentPostEnabled, setCommentPostEnabled] = useState(false);
   const [name, setName] = useState(localStorage.getItem("name"));
-  const [active, setActive] = React.useState('education');
 
+  if (window.location.href.includes('pending') && localStorage.getItem("role") !== 'Admin') {
+    window.location.href = `/home`;
+  }
 
 
   const handlePostComment = async () => {

@@ -51,11 +51,37 @@ function addSpace(str) {
     return str.replaceAll(',', (', '))
   }
 
+
 const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, selectedTagFilters, currentState }) => {
     //values for selected story filters
     let storyTypeFilter = false;
     let childrenFilter = false;
     let tagFilter = false;
+
+    const handleDeleteStory = async () => {
+        if (window.confirm("Are you sure you want to delete this story?")) {
+          try {
+            const response = await fetch(`/api/stories/${story._id}`, {
+              method: 'DELETE'
+            });
+      
+            if (response.ok) {
+              // Update state or perform any necessary actions upon successful update
+              alert("Story Deleted!");
+              setTimeout(function () {
+                window.location.href = '/stories';
+              }, 1);
+      
+            } else {
+              const errorResponseText = await response.text();
+              console.error(`Error deleting story with ID ${story._id}:`, errorResponseText);
+            }
+      
+          } catch (error) {
+            console.error(`Error deleting story with ID ${story._id}:`, error);
+          }
+        }
+      };
 
     //only display stories that fit the filters
     if (window.location.href.includes('stories')) {
@@ -167,35 +193,71 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
     if (storyTypeFilter === true && childrenFilter === true && tagFilter === true) {
         if (story.state !== 'family') {
             return (
-                <Link className='story-link' to={`/${link}/${story._id}`} key={story._id}>
+                <div>              
                     <div className="story-card">
-                        <div className="image-container">
-                            <img src={images[0]} alt=""/>
+                    {
+                        ["Admin"].includes(localStorage.getItem('role')) &&
+                
+                        <select
+                        className="story-actions-dropdown"
+                        onChange={(e) => {
+                            if (e.target.value === "delete") {
+                                handleDeleteStory();
+                            }
+                        }}
+                    >
+                        <option value=""></option>
+                        <option value="delete">Delete</option>
+                    </select>
+                        }
+                <Link className='story-link' to={`/${link}/${story._id}`} key={story._id}>
+
+                            <div className="image-container">
+                                <img src={images[0]} alt=""/>
+                            </div>
+                            <sub className="story-children">{checkGroupStory(story.children)}</sub>
+                            <h4 className="story-h4">{truncate(removeTags(story.title), 60)}</h4>
+                            <p className="story-p">{truncate(removeTags(story.content), 60)}</p>
+                            <sub className="story-sub">{"Shared by "+getAuthorFirstName(story.author)+"\n"}</sub> 
+                            <sub className='story-date'>{formatTimestamp(story.createdAt)}</sub>
+                            </Link>
                         </div>
-                        <sub className="story-children">{checkGroupStory(story.children)}</sub>
-                        <h4 className="story-h4">{truncate(removeTags(story.title), 60)}</h4>
-                        <p className="story-p">{truncate(removeTags(story.content), 60)}</p>
-                        <sub className="story-sub">{"Shared by "+getAuthorFirstName(story.author)+"\n"}</sub> 
-                        <sub className='story-date'>{formatTimestamp(story.createdAt)}</sub>
-                    </div>
-                </Link>
+                </div>
             )
         }
         else {
             return (
-                <Link className='story-link' to={`/${link}/${story._id}`} key={story._id}>
-                    <div className="story-card">
-                        <div className="image-container">
+                <div>              
+                <div className="story-card">
+                {
+                    ["Admin"].includes(localStorage.getItem('role')) &&
+            
+                    <select
+                    className="story-actions-dropdown"
+                    onChange={(e) => {
+                        if (e.target.value === "delete") {
+                            handleDeleteStory();
+                        }
+                    }}
+                >
+                    <option value=""></option>
+                    <option value="delete">Delete</option>
+                </select>
+                    }
+            <Link className='story-link' to={`/${link}/${story._id}`} key={story._id}>
+
+            <div className="image-container">
                             <img src={images[0]} alt=""/>
                         </div>
                         <sub className="story-children">Family moment for {(truncate(addSpace(story.children), 20))}</sub>
                         <p className="story-p">{truncate(removeTags(story.content), 120)}</p>
                         <sub className="story-sub">{"Shared by "+getAuthorFirstName(story.author)+"\n"}</sub> 
                         <sub className='story-date'>{formatTimestamp(story.createdAt)}</sub>
+                        </Link>
                     </div>
-                </Link>
-            )
-        }
+            </div>
+        )
+    }
 
     }
 }
