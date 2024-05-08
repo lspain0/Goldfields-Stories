@@ -13,24 +13,21 @@ const StudentDetail = () => {
     gender: "",
     dob: "",
   });
+  const [parent, setParent] = useState(null);
   const [stories, setStories] = useState([]);
-  const [loading, setLoading] = useState(true);  // Added loading state
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   const { classId, studentId } = useParams();
   const navigate = useNavigate();
   const context = useContext(ClassesContext);
 
-  // Using useCallback to memoize fetchStudentData
   const fetchStudentData = useCallback(() => context.fetchStudentData, [context]);
 
-  // Fetch student data and stories
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        // Fetch student data
         const data = await fetchStudentData()(classId, studentId);
-        // Capitalize the first letter of a string
         const capitalizeFirstLetter = (str) => {
           return str.charAt(0).toUpperCase() + str.slice(1);
         };
@@ -47,6 +44,7 @@ const StudentDetail = () => {
               year: 'numeric'
             })
           });
+          fetchParent(data.firstName, data.lastName);
           fetchStories(data.firstName, data.lastName);
         } else {
           setError("No data found for this student.");
@@ -58,11 +56,20 @@ const StudentDetail = () => {
         setLoading(false);
       }
     };
-  
+
     fetchStudent();
   }, [classId, studentId, fetchStudentData]);
-  
 
+  const fetchParent = async (firstName, lastName) => {
+    try {
+      const response = await axios.get(`/api/users/parent/${firstName} ${lastName}`);
+      if (response.status === 200 && response.data) {
+        setParent(response.data.parentName);
+      }
+    } catch (error) {
+      console.error("Failed to fetch parent:", error);
+    }
+  };
 
   const fetchStories = async (firstName, lastName) => {
     try {
@@ -86,6 +93,7 @@ const StudentDetail = () => {
             {student.image && <img src={student.image} alt={`${student.firstName} ${student.lastName}`} className="student-image" />}
             <p>Gender: {student.gender}</p>
             <p>Date of Birth: {student.dob}</p>
+            <p>Parent: {parent || "No parent data available"}</p>
             <button onClick={() => navigate(-1)}>Back</button>
           </>
         )}

@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const {
     loginUser,
     createUser,
@@ -9,30 +9,33 @@ const {
     validateUpdateUser,
     deleteUser,
     updateUser,
-    validateDeleteUser
-} = require('../controllers//userController')
+    validateDeleteUser,
+    getParentByChildName // Make sure to create this controller function
+} = require('../controllers/userController');
 
-const router = express.Router()
+const router = express.Router();
 
+// POST a new user
+router.post('/create', validateCreateUser, createUser);
 
-//POST a new story
-router.post('/create', validateCreateUser, createUser)
+// POST to login a user
+router.post('/login', validateLoginUser, loginUser);
 
-//POST a new story
-router.post('/login', validateLoginUser, loginUser)
-
+// GET to check token validity and user role
 router.get('/checkValidity', authenticateToken, (req, res) => {
-    res.status(200).json({ suucess: 'Passed', role: req?.user?.role });
-})
+    res.status(200).json({ success: 'Passed', role: req.user.role });
+});
 
-//Delete user
-router.post('/delete', validateDeleteUser, deleteUser)
+// POST to delete a user
+router.post('/delete', validateDeleteUser, deleteUser);
 
-//Updating tab
-router.post('/update', validateUpdateUser, updateUser)
+// POST to update a user
+router.post('/update', validateUpdateUser, updateUser);
 
-//Getting all users
-router.post('/userList', UserList)
+// POST to get all users
+router.post('/userList', UserList);
 
+// GET a parent by child's name
+router.get('/parent/:childName', getParentByChildName);
 
-module.exports = router
+module.exports = router;

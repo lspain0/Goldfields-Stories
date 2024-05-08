@@ -215,6 +215,20 @@ const updateUser = async (req, res) => {
   res.status(200).json(_user);
 };
 
+// Controller to fetch a parent by the child's name
+const getParentByChildName = async (req, res) => {
+  const { childName } = req.params;
+  try {
+      const parent = await User.findOne({ child: childName });
+      if (!parent) {
+          return res.status(404).json({ message: 'Parent not found' });
+      }
+      res.status(200).json({ parentName: parent.name });
+  } catch (error) {
+      console.error('Error fetching parent:', error);
+      res.status(500).json({ message: 'Failed to retrieve parent', error: error.message });
+  }
+};
 
 module.exports = {
   loginUser,
@@ -226,5 +240,6 @@ module.exports = {
   deleteUser,
   updateUser,
   validateUpdateUser,
-  validateDeleteUser
+  validateDeleteUser,
+  getParentByChildName
 };
