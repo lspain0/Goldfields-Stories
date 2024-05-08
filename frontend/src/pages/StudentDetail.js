@@ -16,7 +16,6 @@ const StudentDetail = () => {
   });
   const [parent, setParent] = useState();
   const [stories, setStories] = useState([]); // New state for stories
-  const [loading, setLoading] = useState(true); // New loading state for student
   const [loadingParent, setLoadingParent] = useState(true); // New loading state for parent
   const [loadingStories, setLoadingStories] = useState(true); // New loading state for stories
   const [error, setError] = useState("");
@@ -52,12 +51,10 @@ const StudentDetail = () => {
           fetchStories(data.firstName, data.lastName);
         } else {
           setError("No data found for this student.");
-          setLoading(false);
         }
       } catch (error) {
         console.error("Failed to fetch student:", error);
         setError("Failed to fetch student data. Please check the console for more details.");
-        setLoading(false);
       }
     };
 
@@ -101,6 +98,19 @@ const fetchStories = async (firstName, lastName) => {
   }
 };
 
+const mapStories = () => {
+  const storyMap = stories.map(story => (
+    <StoryDetails story={story} key={story._id} />
+  ))
+
+  if ((storyMap.length - 1) === 0) {
+    return <p>No stories available for this student.</p>
+  }
+  else {
+    return storyMap
+  }
+}
+
   // Display the student details
   return (
     <div className="page-container">
@@ -117,14 +127,10 @@ const fetchStories = async (firstName, lastName) => {
         )}
       </div>
       {/* Display the stories for the student */}
-      <div className="story-cards-container">  
+      <div className="story-cards-container">
         {loadingStories ? (
           <p>Loading stories...</p>
-        ) : stories.length > 0 ? (
-          stories.map(story => (
-            <StoryDetails story={story} key={story._id} />
-          ))
-        ) : <p>No stories available for this student.</p>}
+        ) : mapStories()}
       </div>
     </div>
   );
