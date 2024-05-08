@@ -258,7 +258,6 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
             </div>
         )
     }
-
     }
 }
 

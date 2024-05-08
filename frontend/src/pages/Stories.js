@@ -11,7 +11,8 @@ import {
   CheckTree,
   Button,
   ButtonToolbar,
-  Nav
+  Nav,
+  Badge
 } from 'rsuite';
 import StoryDetails from "../components/StoryDetails";
 import { convertStringToGroupedTags, splitLines } from "../components/docs/tags";
@@ -30,7 +31,7 @@ const Navbar = ({ active, onSelect, ...props }) => {
 };
 
 const Stories = () => {
-  const { stories, dispatch } = useStoriesContext();
+    const { stories, dispatch } = useStoriesContext();
   var sortedStories = null;
   const [role, setRole] = useState(""); //current user role state
   const [selectedRadioValue, setSelectedRadioValue] = useState("All"); //dropdown radio value state
@@ -137,8 +138,16 @@ const Stories = () => {
     setSortOption(option)
   }
 
+  const getPendingStoryCount = (stories) => {
+    let pendingStories = stories.filter(story => story.state === 'pending');
+    let numberOfPendingStories = pendingStories.length;
+
+    return numberOfPendingStories;
+  }
+
   //sort stories according to selected sort option
   const sortStories = (stories) => {
+
     if (sortOption === "Story Title") {
       return [...stories].sort((a, b) =>
       a.title.localeCompare(b.title)
@@ -172,7 +181,7 @@ const Stories = () => {
   }, [active]); 
   
 
-  sortedStories = sortStories(stories);
+  sortedStories = sortStories(stories)
   
   if (active === 'education') {
     return (
@@ -199,7 +208,10 @@ const Stories = () => {
               <button className="create-story-button">Create a new Story</button>
             </Link>
             <Link to="/pending">
+            {getPendingStoryCount(stories) > 0 && (
+            <Badge content={getPendingStoryCount(stories)}>
               <button className="pending-story-button">Pending Stories</button>
+            </Badge>)}
             </Link>
           </span>
         }
