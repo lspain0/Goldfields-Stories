@@ -6,8 +6,7 @@ import { CheckTreePicker, ButtonToolbar, Modal, Button, Input, Divider, TagInput
 import '../index.css';
 import { convertStringToGroupedTags, splitLines } from "./docs/tags";
 import StudentList from "./docs/StudentList";
-import { useContext } from "react";
-import { ClassesContext } from "../context/ClassesContext";
+import ClassList from "./docs/ClassList";
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" />
 
 var editing = false;
@@ -146,7 +145,6 @@ const StoryForm = () => {
   const [checkTreeChildrenOpen, setCheckTreeChildrenOpen] = useState(false); // State to manage tree visibility
   const [checkTreeTagsOpen, setCheckTreeTagsOpen] = useState(false); // State to manage tree visibility 
   const [active, setActive] = React.useState('individual');
-  const { classes, addClass } = useContext(ClassesContext);
 
   const Navbar = ({ active, onSelect, ...props }) => {
     return (
@@ -158,6 +156,7 @@ const StoryForm = () => {
   };
 
   const checkTreeState = () => {
+    console.log(ClassList())
     if (active === 'individual') {
       return <CheckTreePicker
       className="check-tree"
@@ -185,11 +184,10 @@ const StoryForm = () => {
     />
     }
     else {
-      console.log(classes)
       return <CheckTreePicker
       className="check-tree"
       placeholder="Add a class to this story..."
-      data={classes}
+      data={ClassList()}
       uncheckableItemValues={['1-1', '1-1-2']}
       value={selectedCheckTreeValuesChildren}
       onOpenChange={setCheckTreeChildrenOpen}
