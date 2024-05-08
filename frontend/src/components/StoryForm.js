@@ -156,7 +156,6 @@ const StoryForm = () => {
   };
 
   const checkTreeState = () => {
-    console.log(ClassList())
     if (active === 'individual') {
       return <CheckTreePicker
       className="check-tree"
@@ -587,7 +586,6 @@ const familyMomentGetChild = () => {
     return <h2>Family moment for {child}</h2>
   }
   else {
-    console.log(child)
     return (<div><h2>Family moment for {child}     <span><CheckTreePicker
       placeholder="Select Child"
       data={sortedData}
