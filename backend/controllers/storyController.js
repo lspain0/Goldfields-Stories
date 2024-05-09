@@ -1,5 +1,8 @@
 const Story = require('../models/storyModel');
 const mongoose = require('mongoose');
+const axios = require('axios');
+const User = require('../models/userModel');
+
 
 // Middleware for logging requests
 const logRequest = (req, res, next) => {
@@ -15,14 +18,15 @@ const errorHandler = (err, req, res, next) => {
 
 // Validation middleware example (you can replace this with a library like Joi)
 const validateCreateStory = (req, res, next) => {
-  const { title, tags, content } = req.body;
+  const { title, tags, content, children } = req.body;
 
-  if (!title || !tags || !content) {
-    return res.status(400).json({ error: 'Title, tags, and content are required' });
+  if (!title || !tags || !content || typeof children !== 'string' || children.trim() === '') {
+    return res.status(400).json({ error: 'Title, tags, content, and children (as a non-empty string) are required' });
   }
 
   next();
 };
+
 
 // Get all stories
 const getStories = async (req, res) => {
@@ -63,14 +67,62 @@ const getStory = async (req, res) => {
   res.status(200).json(story);
 };
 
+const emailjsServiceId = 'service_z931pq9';
+const emailjsTemplateId = 'template_fda1n9w';
+const emailjsAPIKey = '5kvxyVXjU2JkYqPBO'
+
+// Function to send email
+const sendEmail = (templateParams) => {
+  axios({
+    method: 'post',
+    url: `https://api.emailjs.com/api/v1.0/email/send`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: {
+      service_id: emailjsServiceId,
+      template_id: emailjsTemplateId,
+      user_id: emailjsAPIKey,
+      template_params: templateParams
+    }
+  })
+  .then(response => {
+    console.log('Email sent successfully:', response.data);
+  })
+  .catch(error => {
+    console.error('Failed to send email:', error);
+  });
+}
+
 // Create a new story
 const createStory = async (req, res) => {
   const { title, children, tags, content, author, state } = req.body;
 
   try {
     const story = await Story.create({ title, children, tags, content, author, state });
-    res.status(200).json(story);
+
+    const childrenArray = children.split(',').map(child => child.trim().toLowerCase());
+
+    User.find({ child: { $in: childrenArray } })
+      .then(parents => {
+        parents.forEach(parent => {
+          const templateParams = {
+            to_name: parent.name,
+            to_email: parent.email,
+            story_title: content,
+            from_name: "Goldfields School"
+          };
+          sendEmail(templateParams);
+        });
+      })
+      .catch(err => {
+        console.error("Failed to find parents or send email:", err);
+        res.status(500).json({ error: 'Failed to process your request' });
+      });
+
+    res.status(201).json(story);
   } catch (error) {
+    console.error('Error creating story:', error);
     res.status(400).json({ error: error.message });
   }
 };
