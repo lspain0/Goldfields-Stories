@@ -7,7 +7,6 @@ import '../index.css';
 import { convertStringToGroupedTags, splitLines } from "./docs/tags";
 import StudentList from "./docs/StudentList";
 import ClassList from "./docs/ClassList";
-import emailjs from '@emailjs/browser';
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" />
 
 
@@ -299,26 +298,6 @@ const StoryForm = () => {
   };
 
   const handleSubmit = async (e) => {
-
-    // Set your EmailJS user ID and public key
-    emailjs.init('5kvxyVXjU2JkYqPBO');
-    
-    const templateParams = {
-      to_name: 'test',
-      to_email: 'lspain573@gmail.com',
-      story_title: content,
-      from_name: "Goldfields School",
-      
-    };
-    
-    emailjs.send('service_z931pq9', 'template_fda1n9w', templateParams).then(
-      (response) => {
-        console.log('SUCCESS!', response.status, response.text);
-      },
-      (error) => {
-        console.log('FAILED...', error);
-      }
-    );
 
     e.preventDefault();
     const childrenArray = Array.isArray(children) ? children : [{ value: children }];
