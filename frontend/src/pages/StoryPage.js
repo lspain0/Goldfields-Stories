@@ -61,8 +61,31 @@ const handleDeleteStory = async () => {
   }
 };
 
+const sendEmail = () => {
+      // Set your EmailJS user ID and public key
+      emailjs.init('5kvxyVXjU2JkYqPBO');
+
+      const templateParams = {
+        to_name: 'test',
+        to_email: 'lspain573@gmail.com',
+        story_title: "Story Title again",
+        from_name: "Goldfields School",
+
+      };
+
+      emailjs.send('service_z931pq9', 'template_fda1n9w', templateParams).then(
+        (response) => {
+          console.log('SUCCESS!', response.status, response.text);
+        },
+        (error) => {
+          console.log('FAILED...', error);
+        }
+      );
+}
+
 const handlePostStory = async () => {
   if (window.confirm("Are you sure you want to post this story?")) {
+    sendEmail();
     try {
       const response = await fetch(`/api/stories/${storyId}/state`, {
         method: 'PUT',
@@ -73,25 +96,6 @@ const handlePostStory = async () => {
       });
 
       if (response.ok) {
-        // Set your EmailJS user ID and public key
-        emailjs.init('5kvxyVXjU2JkYqPBO');
-
-        const templateParams = {
-          to_name: 'test',
-          to_email: 'lspain573@gmail.com',
-          story_title: "Story Title",
-          from_name: "Goldfields School",
-
-        };
-
-        emailjs.send('service_z931pq9', 'template_fda1n9w', templateParams).then(
-          (response) => {
-            console.log('SUCCESS!', response.status, response.text);
-          },
-          (error) => {
-            console.log('FAILED...', error);
-          }
-        );
         // Update state or perform any necessary actions upon successful update
         alert("Story Posted!");
         setTimeout(function () {
