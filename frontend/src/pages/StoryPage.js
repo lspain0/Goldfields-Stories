@@ -3,6 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 import axios_obj from "../axios";
 import { useNavigate } from 'react-router-dom';
 import { Input, Button } from 'rsuite';
+import emailjs from '@emailjs/browser';
 
 var storyId;
 
@@ -72,6 +73,25 @@ const handlePostStory = async () => {
       });
 
       if (response.ok) {
+        // Set your EmailJS user ID and public key
+        emailjs.init('5kvxyVXjU2JkYqPBO');
+
+        const templateParams = {
+          to_name: 'test',
+          to_email: 'lspain573@gmail.com',
+          story_title: "Story Title",
+          from_name: "Goldfields School",
+
+        };
+
+        emailjs.send('service_z931pq9', 'template_fda1n9w', templateParams).then(
+          (response) => {
+            console.log('SUCCESS!', response.status, response.text);
+          },
+          (error) => {
+            console.log('FAILED...', error);
+          }
+        );
         // Update state or perform any necessary actions upon successful update
         alert("Story Posted!");
         setTimeout(function () {
@@ -105,7 +125,7 @@ function getName(str) {
 
 
 const StoryPage = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const location = useLocation();
   const [currentStory, setCurrentStory] = useState(null);
   const [comments, setComments] = useState('');
@@ -123,12 +143,13 @@ const StoryPage = () => {
     setName(localStorage.getItem("name"));
     // Update comments in the state
     if (comments == null) {
-      setComments(newComment);    }
+      setComments(newComment);
+    }
     else {
       setComments((prevComments) => prevComments + newComment);
       firstComment = false;
     }
-    
+
     try {
       // Fetch request to update comments in the backend
       let commentSubmit;
@@ -137,7 +158,7 @@ const StoryPage = () => {
         commentSubmit = newComment;
       }
       else {
-        commentSubmit = comments+newComment;
+        commentSubmit = comments + newComment;
       }
 
       const response = await fetch(`/api/stories/${storyId}`, {
@@ -147,7 +168,7 @@ const StoryPage = () => {
         },
         body: JSON.stringify({ comments: commentSubmit }) // Update state to 'approved'
       });
-      
+
       if (!response.ok) {
         const errorResponseText = await response.text();
         console.error(`Error posting comment: `, errorResponseText);
@@ -156,54 +177,54 @@ const StoryPage = () => {
       console.error(`Error posting comment: `, error);
     }
     setNewComment('');
-  
+
     // Clear the input field
     document.querySelector('.comment-footer-input').value = '';
   };
 
-useEffect(() => {
-  const fetchStoryById = async () => {
-    const storyId = location.pathname.split('/')[2];
-    
-    if (storyId) {
-      try {
-        const response = await axios_obj.get(`/stories/${storyId}`);
-        const json = response.data;
+  useEffect(() => {
+    const fetchStoryById = async () => {
+      const storyId = location.pathname.split('/')[2];
 
-        if (parseInt(response.status) === 200) {
-          setCurrentStory(json);
-        } else {
-          console.error(`Error fetching story with ID ${storyId}:`, json);
+      if (storyId) {
+        try {
+          const response = await axios_obj.get(`/stories/${storyId}`);
+          const json = response.data;
+
+          if (parseInt(response.status) === 200) {
+            setCurrentStory(json);
+          } else {
+            console.error(`Error fetching story with ID ${storyId}:`, json);
+          }
+        } catch (error) {
+          console.error(`Error fetching story with ID ${storyId}:`, error);
         }
-      } catch (error) {
-        console.error(`Error fetching story with ID ${storyId}:`, error);
       }
+    };
+
+    fetchStoryById();
+  }, [location.pathname]);
+
+  const loadComments = () => {
+    setComments(currentStory.comments);
+  }
+
+  const handleCommentChange = (values) => {
+    if (values.trim() !== '') {
+      setNewComment('<sub>' + name + '<br>' + getDate() + '<br><br></sub>' + (values.replace(/<\/?[^>]+(>|$)/g, "")).replace(/(?:\r\n|\r|\n)/g, '<br>') + '<br><br><br>');
+      setCommentPostEnabled(true);
+    } else {
+      setNewComment('');
+      setCommentPostEnabled(false);
     }
   };
 
-  fetchStoryById();
-}, [location.pathname]);
+  useEffect(() => {
+    if (currentStory) {
+      loadComments();
+    }
+  }, [currentStory]);
 
-const loadComments = () => {
-  setComments(currentStory.comments);
-}
-
-const handleCommentChange = (values) => {
-  if (values.trim() !== '') {
-    setNewComment('<sub>'+name+'<br>'+getDate()+'<br><br></sub>'+(values.replace(/<\/?[^>]+(>|$)/g, "")).replace(/(?:\r\n|\r|\n)/g, '<br>')+'<br><br><br>');
-    setCommentPostEnabled(true);
-  } else {
-    setNewComment('');
-    setCommentPostEnabled(false);
-  }
-};
-
-useEffect(() => {
-  if (currentStory) {
-    loadComments();
-  }
-}, [currentStory]);
-  
 
   // Render nothing while currentStory is being loaded
   if (!currentStory) {
@@ -287,7 +308,7 @@ useEffect(() => {
       {commentFooter()}
     </body>
   );
-  
+
 };
 
 export default StoryPage;
