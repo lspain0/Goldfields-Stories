@@ -10,7 +10,7 @@ const {
     deleteUser,
     updateUser,
     validateDeleteUser,
-    getParentByChildName
+    getParentsByChildName
 } = require('../controllers/userController');
 
 const router = express.Router();
@@ -35,7 +35,7 @@ router.post('/update', validateUpdateUser, updateUser);
 // POST to get all users
 router.post('/userList', UserList);
 
-// GET a parent by child's name using URL parameters
-router.get('/parent/:childName', getParentByChildName);
+// GET parents by child's name using URL parameters
+router.get('/parent/:childName', getParentsByChildName);
 
 module.exports = router;

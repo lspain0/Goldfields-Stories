@@ -90,43 +90,45 @@ const StoryPage = () => {
     }
   }
   
-  const fetchParentEmail = async (childName) => {
+  const fetchParentEmails = async (childName) => {
     try {
       const response = await axios.get(`/api/users/parent/${childName.trim()}`);
-      if (response.status === 200 && response.data.email) {
-        return response.data.email;
+      if (response.status === 200 && response.data.length) {
+        return response.data.map(parent => parent.email);  // Return an array of emails
       } else {
-        throw new Error(`Email not found for ${childName}`);
+        throw new Error(`Emails not found for ${childName}`);
       }
     } catch (error) {
-      console.error(`Failed to fetch parent email for ${childName}:`, error);
-      return null;  // Return null if there is an error
+      console.error(`Failed to fetch parent emails for ${childName}:`, error);
+      return [];  // Return empty array if there is an error
     }
   };
   
   const sendEmail = async (childName, storyTitle) => {
-    const parentEmail = await fetchParentEmail(childName);
-    if (!parentEmail) {
-      console.log(`No email found for the parent of ${childName}`);
+    const parentEmails = await fetchParentEmails(childName);
+    if (!parentEmails.length) {
+      console.log(`No emails found for the parents of ${childName}`);
       return;
     }
   
-    emailjs.init('5kvxyVXjU2JkYqPBO');
-    const templateParams = {
-      to_name: childName,
-      to_email: parentEmail,
-      story_title: storyTitle,
-      from_name: "Goldfields School",
-    };
+    parentEmails.forEach(email => {
+      emailjs.init('5kvxyVXjU2JkYqPBO');
+      const templateParams = {
+        to_name: childName,
+        to_email: email,
+        story_title: storyTitle,
+        from_name: "Goldfields School",
+      };
   
-    emailjs.send('service_z931pq9', 'template_fda1n9w', templateParams).then(
-      (response) => {
-        console.log(`SUCCESS! Email sent to ${parentEmail}`, response.status, response.text);
-      },
-      (error) => {
-        console.error(`FAILED to send email to ${parentEmail}`, error);
-      }
-    );
+      emailjs.send('service_z931pq9', 'template_fda1n9w', templateParams).then(
+        (response) => {
+          console.log(`SUCCESS! Email sent to ${email}`, response.status, response.text);
+        },
+        (error) => {
+          console.error(`FAILED to send email to ${email}`, error);
+        }
+      );
+    });
   };
   
   const handlePostStory = async () => {
