@@ -90,49 +90,51 @@ const StoryPage = () => {
     }
   }
   
-  const fetchParentEmails = async (childNames) => {
-    const emails = [];
-    for (const childName of childNames) {
-      try {
-        const response = await axios.get(`/api/users/parent/${childName.trim()}`);
-        if (response.status === 200 && response.data.email) {
-          emails.push(response.data.email);
-        } else {
-          console.error(`Email not found for ${childName}`);
-        }
-      } catch (error) {
-        console.error(`Failed to fetch parent email for ${childName}:`, error);
+  const fetchParentEmail = async (childName) => {
+    try {
+      const response = await axios.get(`/api/users/parent/${childName.trim()}`);
+      if (response.status === 200 && response.data.email) {
+        return response.data.email;
+      } else {
+        throw new Error(`Email not found for ${childName}`);
       }
+    } catch (error) {
+      console.error(`Failed to fetch parent email for ${childName}:`, error);
+      return null;  // Return null if there is an error
     }
-    return emails;
   };
   
-  const sendEmails = async (childNames, storyTitle) => {
-    const parentEmails = await fetchParentEmails(childNames);
-    for (const email of parentEmails) {
-      emailjs.init('5kvxyVXjU2JkYqPBO');
-      const templateParams = {
-        to_name: childNames.join(', '), // Adjust as necessary if you want individual names
-        to_email: email,
-        story_title: storyTitle,
-        from_name: "Goldfields School",
-      };
-  
-      emailjs.send('service_z931pq9', 'template_fda1n9w', templateParams).then(
-        (response) => {
-          console.log(`Email sent successfully to ${email}!`, response.status, response.text);
-        },
-        (error) => {
-          console.error(`Failed to send email to ${email}:`, error);
-        }
-      );
+  const sendEmail = async (childName, storyTitle) => {
+    const parentEmail = await fetchParentEmail(childName);
+    if (!parentEmail) {
+      console.log(`No email found for the parent of ${childName}`);
+      return;
     }
+  
+    emailjs.init('5kvxyVXjU2JkYqPBO');
+    const templateParams = {
+      to_name: childName,
+      to_email: parentEmail,
+      story_title: storyTitle,
+      from_name: "Goldfields School",
+    };
+  
+    emailjs.send('service_z931pq9', 'template_fda1n9w', templateParams).then(
+      (response) => {
+        console.log(`SUCCESS! Email sent to ${parentEmail}`, response.status, response.text);
+      },
+      (error) => {
+        console.error(`FAILED to send email to ${parentEmail}`, error);
+      }
+    );
   };
   
   const handlePostStory = async () => {
     if (window.confirm("Are you sure you want to post this story?")) {
-      const childNames = currentStory.children.split(','); // Assumes children's names are comma-separated
-      await sendEmails(childNames, currentStory.title);
+      const childNames = currentStory.children.split(',');
+      for (const childName of childNames) {
+        await sendEmail(childName.trim(), currentStory.title);
+      }
   
       try {
         const response = await fetch(`/api/stories/${storyId}/state`, {
@@ -157,8 +159,8 @@ const StoryPage = () => {
         console.error(`Error approving story with ID ${storyId}:`, error);
       }
     }
-  };  
-
+  };
+  
   const handlePostComment = async () => {
     let firstComment = true;
     setName(localStorage.getItem("name"));
