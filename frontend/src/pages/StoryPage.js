@@ -112,7 +112,7 @@ const StoryPage = () => {
     }
   
     parentEmails.forEach(email => {
-      emailjs.init('5kvxyVXjU2JkYqPBO');
+      emailjs.init('EpPv7PHQnymglutDn');
       const templateParams = {
         to_name: childName,
         to_email: email,
@@ -120,7 +120,7 @@ const StoryPage = () => {
         from_name: "Goldfields School",
       };
   
-      emailjs.send('service_z931pq9', 'template_fda1n9w', templateParams).then(
+      emailjs.send('service_gh6zyr9', 'template_7a90zid', templateParams).then(
         (response) => {
           console.log(`SUCCESS! Email sent to ${email}`, response.status, response.text);
         },
