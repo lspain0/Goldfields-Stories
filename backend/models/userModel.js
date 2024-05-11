@@ -70,7 +70,15 @@ const userSchema = new Schema({
     code10: {
         type: String,
         default: ""
-    }
+    },
+    defaultPassword: {
+        type: String,
+        default: ""
+    },
+    createdBy: {
+        type: String,
+        default: ""
+    },
 
 }, { timestamps: true })
 

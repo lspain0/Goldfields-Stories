@@ -28,7 +28,7 @@ function SignUP() {
         name: name,
         code: code
       });
-      console.log(response?.data);
+   //   console.log(response?.data);
       localStorage.setItem("name", response?.data?.name);
       localStorage.setItem("email", response?.data?.email);
       localStorage.setItem("token", response?.data?.token);
@@ -75,7 +75,7 @@ function SignUP() {
           <Logo />
         </div> */}
         <div className="">
-        <h1 style={{textAlign:"center",fontSize:"40px"}} className="heading-login">CREATE ACCOUNT</h1>
+          <h1 style={{ textAlign: "center", fontSize: "40px" }} className="heading-login">CREATE ACCOUNT</h1>
           <div className="">
 
             <form onSubmit={handleSubmit} className="class-form">

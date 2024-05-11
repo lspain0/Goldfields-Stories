@@ -17,7 +17,7 @@ function Class() {
 
     const [selecetUser, setSelecetUser] = useState({});
 
-//Search user when enter key  is pressed, invoking the function of getData
+    //Search user when enter key  is pressed, invoking the function of getData
     const [name, setName] = useState("");
 
 
@@ -184,6 +184,7 @@ function Class() {
                                                             <select value={row?.role} onChange={(e) => updateUser(row?._id, e.target.value)} style={{ padding: "10px", cursor: "pointer", marginTop: "0px" }}>
                                                                 <option value=""> Select Role</option>
                                                                 <option value="Parent"> Parent</option>
+                                                                <option value="Family"> Family</option>
                                                                 <option value="Admin"> Admin</option>
                                                                 <option value="Teacher"> Teacher</option>
                                                             </select>
@@ -192,7 +193,7 @@ function Class() {
                                                 </td>
                                                 <td style={{ padding: "30px", textAlign: "center", height: "20px" }}>
                                                     {
-                                                        ["Parent"].includes(row?.role) && localStorage.getItem("email") !== row?.email && ["Admin", "Parent"].includes(localStorage.getItem("role")) &&
+                                                        ["Parent","Family"].includes(row?.role) && localStorage.getItem("email") !== row?.email && ["Admin", "Parent"].includes(localStorage.getItem("role")) &&
                                                         <>
                                                             <select value={row?.child} onChange={(e) => updateChild(row?._id, e.target.value)} style={{ padding: "10px", cursor: "pointer", marginTop: "0px" }}>
                                                                 <option value=""> Select Child</option>
