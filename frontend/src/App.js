@@ -21,7 +21,8 @@ import CreateFamilyStory from './pages/CreateFamilyStory';
 import SearchStories from './pages/SearchStories';
 import InviteFamily from './pages/inviteFamily';
 import StudentDetail from './pages/StudentDetail';
-
+import InviteParent from "./pages/inviteParent";
+import ChangePassword from './pages/changePassword';
 function App() {
 
   const [role, setRole] = useState("");
@@ -65,6 +66,23 @@ function App() {
     }
     checkValidity();
   }, []);
+
+// Based on the current role of user it will ensure that the user gets redirected to the right page if condition are met
+  useEffect(() => {
+
+    const currentRoute = window.location.pathname;
+    try {
+      if (currentRoute != "/login" && currentRoute != "/signup" && currentRoute != "/change_password") {
+        let change = localStorage.getItem("change");
+        if (change == "1") {
+          window.location.href = "/change_password";
+        }
+      }
+    }
+    catch (ex) {
+    }
+  }, []);
+
   if (login) {
     return (
       <ClassesProvider>
@@ -90,6 +108,9 @@ function App() {
                 <Route path="/createfamilystory" element={<CreateFamilyStory />} />
                 <Route path="/search" element={<SearchStories />} />
                 <Route path="/invite_family" element={<InviteFamily />} />
+                <Route path="/invite_parent" element={<InviteParent />} />
+                <Route path="/change_password" element={<ChangePassword />} />
+
                 <Route path="/class/:classId/student/:studentId" element={<StudentDetail />} />
 
               </Routes>

@@ -95,6 +95,26 @@ function InviteFamily() {
     }
 
     useEffect(() => {
+
+        //Getting the route path from window location
+        const currentRoute = window.location.pathname;
+        try {
+          //if current route is not in change password then checks for change in the localStorage
+          if (currentRoute != "/change_password") {
+            let change = localStorage.getItem("change");
+    
+            //if change is set to '1' that means user needs to change password
+            if (change == "1") {
+              window.location.href = "/change_password";
+            }
+          }
+        }
+        //Catching any exceptions that might happen, does nothing if it does happen
+        catch (ex) {
+        }
+      }, []);
+      
+    useEffect(() => {
         getData();
     }, [])
     

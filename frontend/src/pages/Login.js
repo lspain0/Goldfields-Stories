@@ -22,17 +22,37 @@ function Login() {
         email,
         password,
       });
+      
+      // Setting name, role, email, token, child, id and pass in local storage
+
       console.log(response?.data);
       localStorage.setItem("name", response?.data?.name);
       localStorage.setItem("role", response?.data?.role);
       localStorage.setItem("email", response?.data?.email);
       localStorage.setItem("token", response?.data?.token);
       localStorage.setItem("child", response?.data?.child);
+      localStorage.setItem("id", response?.data?._id);
+      localStorage.setItem("_pass", response?.data?.defaultPassword ?? "ABC");
 
       setMessage(`User login successfully.`);
-      setTimeout(() => {
-        window.location.href = '/home';
-      }, 1000);
+
+
+      //If statement for user that needs to change thier password, and it will set change key in local storage to 1
+      if (response?.data?.changePassword == "1") {
+        localStorage.setItem("change", 1);
+
+        setTimeout(() => {
+          window.location.href = '/change_password';
+        }, 1000);
+      }
+
+      //If the user doesn't need to change their password, it will redirect to home page in 1 second
+      else {
+
+        setTimeout(() => {
+          window.location.href = '/home';
+        }, 1000);
+      }
     } catch (error) {
       if (error.response) {
         const { data } = error.response;

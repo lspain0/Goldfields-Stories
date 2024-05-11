@@ -105,7 +105,7 @@ const validateLoginUser = (req, res, next) => {
 
 // Sign up new user
 const createUser = async (req, res) => {
-  const { name, email, password, code } = req.body;
+  const { name, email, password, code, role, createdBy } = req.body;
   try {
     let isExist = await User.findOne({ email: email });
     if (!isExist) {
@@ -114,7 +114,7 @@ const createUser = async (req, res) => {
         let _user = await User.findOne({ $or: [{ code1: code }, { code2: code }, { code3: code }, { code4: code }, { code5: code }, { code6: code }, { code7: code }, { code8: code }, { code9: code }, { code10: code }] });
         if (_user) {
           //Creating a new acc when input field code code
-          const user = await User.create({ name, email, password, child: _user?.child, role: "Parent" });
+          const user = await User.create({ name, email, password, child: _user?.child, role: "Family" });
           res.status(200).json(user);
         }
         else {
@@ -123,7 +123,14 @@ const createUser = async (req, res) => {
       }
       //else statement for if code has not been input
       else {
-        const user = await User.create({ name, email, password });
+        let user = {};
+        if (role && createdBy) {
+          user = await User.create({ name, email, password, role, createdBy });
+        }
+        else {
+          user = await User.create({ name, email, password });
+
+        }
         res.status(200).json(user);
       }
     }
@@ -144,11 +151,17 @@ const loginUser = async (req, res) => {
     if (user) {
       if (user?.password == password) {
 
+        //If statement for the user that requires password to be changed
+        let changePassword = "";
+
+        if (user?._doc?.password == user?._doc?.createdBy) {
+          changePassword = "1";
+        }
         delete user?._doc?.password;
         const expirationTime = Math.floor(Date.now() / 1000) + 2 * 60 * 60; // 2 hours
         const token = jwt.sign({ ...user?._doc, exp: expirationTime }, secretKey);
 
-        res.status(200).json({ ...user?._doc, token: token });
+        res.status(200).json({ ...user?._doc, token: token, changePassword: changePassword });
       }
       else {
         res.status(400).json({ error: "Invalid credentials" });
