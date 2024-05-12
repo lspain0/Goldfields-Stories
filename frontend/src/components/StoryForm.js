@@ -583,7 +583,7 @@ const handleCancel = () => {
 };
 
 const familyMomentGetChild = () => {
-  if (role.includes("Parent")) {
+  if (role.includes("Parent") || role.includes("Family")) {
     return <h2>Family moment for {child}</h2>
   }
   else {
