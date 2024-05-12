@@ -96,7 +96,7 @@ const Navbar = (props) => {
                             ["Admin", "Teacher"].includes(props?.role) &&
                             <>
                                 <Link to="/class" className={isActive("/class")}>
-                                    <FaChalkboard className="nav-icon" /> Class
+                                    <FaChalkboard className="nav-icon" /> Classes
                                 </Link>
                                 <Link to="/search" className={isActive("/search")}>
                                     <FaSearch className="nav-icon" /> Search Stories
