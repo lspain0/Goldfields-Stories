@@ -54,3 +54,18 @@
   background-color: #224957; /* Darker teal on hover */
   box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Added shadow for depth */
 }
+
+.placeholder-icon {
+  width: 100px; /* Fixed size for the image/icon */
+  height: 100px; /* Fixed size for the image/icon */
+  margin: 10px 1px; /* Reduced margin for a more compact layout */
+  padding: 10px; 
+  border-radius: 9px; /* Slightly more rounded */
+  border: 1px solid #000000; /* Border color matching the container */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff; /* White background for the icon box */
+  size: 200px; /* Fixed size for the icon */
+  color: #ccc;
+}
