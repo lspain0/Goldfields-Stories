@@ -99,41 +99,36 @@ const fetchStories = async (firstName, lastName) => {
 };
 
 const mapStories = () => {
-  const storyMap = stories.map(story => (
-    <StoryDetails story={story} key={story._id} />
-  ))
-
-  if ((storyMap.length - 1) === 0) {
+  if (stories.length === 0) {
     return <p>No stories available for this student.</p>
   }
-  else {
-    return storyMap
-  }
+  return stories.map(story => (
+    <StoryDetails story={story} key={story._id} />
+  ));
 }
 
-  // Display the student details
-  return (
-    <div className="page-container">
-      <div className="student-detail-container">
-        {error ? <p className="error">{error}</p> : (
-          <>
-            <h1>{student.firstName} {student.lastName}</h1>
-            {student.image && <img src={student.image} alt={`${student.firstName} ${student.lastName}`} className="student-image" />}
-            <p>Gender: {student.gender}</p>
-            <p>Date of Birth: {student.dob}</p>
-            <p>Parent: {parent || (loadingParent ? "Loading parent..." : "No parent data available")}</p>
-            <button onClick={() => navigate(-1)}>Back</button>
-          </>
-        )}
-      </div>
-      {/* Display the stories for the student */}
-      <div className="story-cards-container">
-        {loadingStories ? (
-          <p>Loading stories...</p>
-        ) : mapStories()}
-      </div>
+// Display the student details and stories
+return (
+  <div className="page-container">
+    <div className="student-detail-container">
+      {error ? <p className="error">{error}</p> : (
+        <>
+          <h1>{student.firstName} {student.lastName}</h1>
+          {student.image && <img src={student.image} alt={`${student.firstName} ${student.lastName}`} className="student-image" />}
+          <p>Gender: {student.gender}</p>
+          <p>Date of Birth: {student.dob}</p>
+          <p>Parent: {parent || (loadingParent ? "Loading parent..." : "No parent data available")}</p>
+          <button onClick={() => navigate(-1)}>Back</button>
+        </>
+      )}
     </div>
-  );
+    {/* Display the stories for the student */}
+    <div className="story-cards-container">
+      {loadingStories ? <p>Loading stories...</p> : mapStories()}
+    </div>
+  </div>
+);
+
 };
 
 export default StudentDetail;
