@@ -397,7 +397,7 @@ html, body {
   left: 50%; /* 50% from the left of the parent element */
   transform: translate(-50%, -50%); /* Offsets the element by its own height and width */
   padding-top: 200px;
-  padding-bottom: 100px;
+  padding-bottom: 0px;
   
 }
 
@@ -433,6 +433,19 @@ html, body {
   padding-top: 150px;
   padding-bottom: 1px;
 }
+
+.student-image-placeholder {
+  width: 120px; /* Set the width of the placeholder area */
+  height: 120px; /* Set the height of the placeholder area */
+  border: 2px dashed #326C6F; /* Dashed border for the placeholder */
+  border-radius: 50%; /* Makes the placeholder circular */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #326C6F;
+  font-size: 24px; /* Icon size */
+}
+
 
 /****************************************************/
 

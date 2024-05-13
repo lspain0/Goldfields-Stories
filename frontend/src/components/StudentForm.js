@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import "../student.css";
+import { MdAddAPhoto } from "react-icons/md";
 
 // StudentForm component
 const StudentForm = ({
@@ -61,7 +62,9 @@ const StudentForm = ({
           {student.image ? (
             <img src={student.image} alt="Student" className="student-image"/>
           ) : (
-            <div className="student-image-placeholder"></div>
+            <div className="student-image-placeholder">
+            <MdAddAPhoto size={50} />
+            </div>
           )}
           <button onClick={handleImageUpload} className="standard-button">
             Upload Image
