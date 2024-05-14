@@ -573,3 +573,19 @@ div.story-comments sub {
   max-width: 30px;
   margin-left: 90%;
 }
+
+.story-actions-icon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 1.5em;
+  color: #f44336;
+  cursor: pointer;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.story-actions-icon:hover {
+  color: #d32f2f;
+  transform: scale(1.2);
+  transition: none;
+}
