@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { BsTrash } from "react-icons/bs";
 
 //truncate story content
 function truncate(str, n){
@@ -190,52 +189,76 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
         
     }
     
-//if the story fits the filters, display the story
-if (storyTypeFilter === true && childrenFilter === true && tagFilter === true) {
-    if (story.state !== 'family') {
-        return (
-            <div>
-                <div className="story-card">
+    //if the story fits the filters, display the story
+    if (storyTypeFilter === true && childrenFilter === true && tagFilter === true) {
+        if (story.state !== 'family') {
+            return (
+                <div>              
+                    <div className="story-card">
                     {
                         ["Admin"].includes(localStorage.getItem('role')) &&
-                        <BsTrash className="story-actions-icon" onClick={handleDeleteStory} />
-                    }
-                    <Link className='story-link' to={`/${link}/${story._id}`} key={story._id}>
-                        <div className="image-container">
-                            <img src={images[0]} alt="" />
+                
+                        <select
+                        className="story-actions-dropdown"
+                        onChange={(e) => {
+                            if (e.target.value === "delete") {
+                                handleDeleteStory();
+                            }
+                        }}
+                    >
+                        <option value=""></option>
+                        <option value="delete">Delete</option>
+                    </select>
+                        }
+                <Link className='story-link' to={`/${link}/${story._id}`} key={story._id}>
+
+                            <div className="image-container">
+                                <img src={images[0]} alt=""/>
+                            </div>
+                            <sub className="story-children">{checkGroupStory(story.children)}</sub>
+                            <h4 className="story-h4">{truncate(removeTags(story.title), 60)}</h4>
+                            <p className="story-p">{truncate(removeTags(story.content), 60)}</p>
+                            <sub className="story-sub">{"Shared by "+getAuthorFirstName(story.author)+"\n"}</sub> 
+                            <sub className='story-date'>{formatTimestamp(story.createdAt)}</sub>
+                            </Link>
                         </div>
-                        <sub className="story-children">{checkGroupStory(story.children)}</sub>
-                        <h4 className="story-h4">{truncate(removeTags(story.title), 60)}</h4>
-                        <p className="story-p">{truncate(removeTags(story.content), 60)}</p>
-                        <sub className="story-sub">{"Shared by " + getAuthorFirstName(story.author) + "\n"}</sub>
-                        <sub className='story-date'>{formatTimestamp(story.createdAt)}</sub>
-                    </Link>
                 </div>
-            </div>
-        )
-    }
-    else {
-        return (
-            <div>
+            )
+        }
+        else {
+            return (
+                <div>              
                 <div className="story-card">
-                    {
-                        ["Admin"].includes(localStorage.getItem('role')) &&
-                        <BsTrash className="story-actions-icon" onClick={handleDeleteStory} />
+                {
+                    ["Admin"].includes(localStorage.getItem('role')) &&
+            
+                    <select
+                    className="story-actions-dropdown"
+                    onChange={(e) => {
+                        if (e.target.value === "delete") {
+                            handleDeleteStory();
+                        }
+                    }}
+                >
+                    <option value=""></option>
+                    <option value="delete">Delete</option>
+                </select>
                     }
-                    <Link className='story-link' to={`/${link}/${story._id}`} key={story._id}>
-                        <div className="image-container">
-                            <img src={images[0]} alt="" />
+            <Link className='story-link' to={`/${link}/${story._id}`} key={story._id}>
+
+            <div className="image-container">
+                            <img src={images[0]} alt=""/>
                         </div>
                         <sub className="story-children">Family moment for {(truncate(addSpace(story.children), 20))}</sub>
                         <p className="story-p">{truncate(removeTags(story.content), 120)}</p>
-                        <sub className="story-sub">{"Shared by " + getAuthorFirstName(story.author) + "\n"}</sub>
+                        <sub className="story-sub">{"Shared by "+getAuthorFirstName(story.author)+"\n"}</sub> 
                         <sub className='story-date'>{formatTimestamp(story.createdAt)}</sub>
-                    </Link>
-                </div>
+                        </Link>
+                    </div>
             </div>
         )
     }
-}
+    }
 }
 
-export default StoryDetails;
+export default StoryDetails
