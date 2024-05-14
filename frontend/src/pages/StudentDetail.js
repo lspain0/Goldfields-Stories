@@ -16,7 +16,7 @@ const StudentDetail = () => {
     gender: "",
     dob: "",
   });
-  const [parent, setParent] = useState();
+  const [parent, setParent] = useState(null); // Ensure initial state is null
   const [stories, setStories] = useState([]); // New state for stories
   const [loadingParent, setLoadingParent] = useState(true); // New loading state for parent
   const [loadingStories, setLoadingStories] = useState(true); // New loading state for stories
@@ -49,8 +49,8 @@ const StudentDetail = () => {
               year: 'numeric'
             })
           });
-          fetchParent(data.firstName, data.lastName);
-          fetchStories(data.firstName, data.lastName);
+          fetchParent(`${data.firstName} ${data.lastName}`);
+          fetchStories(`${data.firstName} ${data.lastName}`);
         } else {
           setError("No data found for this student.");
         }
@@ -64,12 +64,14 @@ const StudentDetail = () => {
   }, [classId, studentId, fetchStudentData]);
 
   // Fetch the parent data for the student
-  const fetchParent = async (firstName, lastName) => {
+  const fetchParent = async (childName) => {
     setLoadingParent(true); // Ensure loading state is true when the function starts
+    console.log(`Fetching parent for child: ${childName}`); // Debugging log
     try {
-      const response = await axios.get(`/api/users/parent/${firstName} ${lastName}`);
-      if (response.status === 200 && response.data && response.data.parentName) {
-        setParent(response.data.parentName);
+      const response = await axios.get(`/api/users/parent/${encodeURIComponent(childName)}`);
+      console.log("Parent response:", response); // Debugging log
+      if (response.status === 200 && response.data && response.data.length > 0) {
+        setParent(response.data[0].parentName); // Assuming you want the first parent's name
       } else {
         setParent("No parent data available"); // Handle cases where data is incomplete or missing
       }
@@ -82,11 +84,13 @@ const StudentDetail = () => {
   };
 
   // Fetch the stories for the student
-  const fetchStories = async (firstName, lastName) => {
+  const fetchStories = async (childName) => {
     setLoadingStories(true); // Ensure loading state is set to true at the beginning
+    console.log(`Fetching stories for child: ${childName}`); // Debugging log
     try {
       // Fetch stories by searching for the student's full name
-      const response = await axios.get(`/api/stories/search?search=${firstName} ${lastName}`);
+      const response = await axios.get(`/api/stories/search?search=${encodeURIComponent(childName)}`);
+      console.log("Stories response:", response); // Debugging log
       if (response.status === 200 && response.data.length > 0) {
         setStories(response.data);
       } else {
@@ -123,7 +127,7 @@ const StudentDetail = () => {
             )}
             <p>Gender: {student.gender}</p>
             <p>Date of Birth: {student.dob}</p>
-            <p>Parent: {parent || (loadingParent ? "Loading parent..." : "No parent data available")}</p>
+            <p>Parent: {parent !== null ? parent : (loadingParent ? "Loading parent..." : "No parent data available")}</p>
             <button onClick={() => navigate(-1)}>Back</button>
           </>
         )}
