@@ -28,7 +28,7 @@ const Navbar = (props) => {
 
     // Determine the page title based on the current path
     if (isDynamicRoute("^/class/.+/addstudent$")) {
-        pageTitle = "Add a New Student";
+        pageTitle = "Create Student Profile";
     } else if (isDynamicRoute("^/class/.+/.+$")) {
         pageTitle = "Student Profile";
     } else if (isDynamicRoute("^/class/.+$")) {
