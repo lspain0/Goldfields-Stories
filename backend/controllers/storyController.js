@@ -32,7 +32,7 @@ const getStories = async (req, res) => {
   let filter = {};
 
 
-  if (req?.user?.role == "Parent") {
+  if (["Parent","Family"].includes(req?.user?.role)) {
     filter["children"] = "";
     //Checking if the id of child is present and if present then creates expression filter
     if (child_id) {

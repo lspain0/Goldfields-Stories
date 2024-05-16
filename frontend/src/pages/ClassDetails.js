@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ClassesContext } from "../context/ClassesContext";
 import "../student.css";
 import TransferStudentModal from "../components/TransferStudentModal";
+import { BsPersonSlash } from "react-icons/bs";
+
 
 // ClassDetails component
 const ClassDetails = () => {
@@ -255,13 +257,16 @@ const ClassDetails = () => {
         <div className="student-cards-container">
           {sortStudents([...classDetails.students]).map((student) => (
             <div key={student._id} className="student-card" onClick={() => navigate(`/class/${classId}/student/${student._id}`)}>
-              {student.image && (
+              {student.image && student.image.trim() !== '' ? (
                 <img
                   src={student.image}
                   alt={`${student.firstName} ${student.lastName}`}
                   className="student-card-image"
                 />
+              ) : (
+                <BsPersonSlash className="student-card-no-image-icon" />
               )}
+
               <div className="student-card-info">
                 <span className="student-name">
                   {student.firstName} {student.lastName}

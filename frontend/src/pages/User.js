@@ -149,9 +149,9 @@ function Class() {
                 <p style={{ color: parseInt(deleteStatus?.status) === 200 ? "green" : "red" }}>{deleteStatus?.msg}</p>
                 <div>
                     {/* Creating the the search container with an icon, name handler gets called when pressed*/}
-                    <div style={{ display: "flex", flexDirection: "row", alignItems: "center", borderRadius: "5px", background: "#FFF", width: "300px", height: "40px" }}>
+                    <div style={{ display: "flex", flexDirection: "row", alignItems: "center", borderRadius: "5px", background: "#f0f0f0", width: "300px", height: "40px" }}>
                         <FaSearch style={{ marginLeft: "5px" }} className="nav-icon" />
-                        <input onKeyPress={nameHandler} value={name} onChange={(e) => setName(e.target.value)} style={{ border: "none", outline: "none" }} placeholder="Search by Full Name" type="text" />
+                        <input onKeyPress={nameHandler} value={name} onChange={(e) => setName(e.target.value)} style={{ border: "none", outline: "none", background: "#f0f0f0" }} placeholder="Search by Full Name" type="text" />
                     </div>
                     {/*The table displaying with the details  */}
                     <table style={{ width: "100%", border: "solid 1px", borderCollapse: "collapse", borderRadius: "15px", padding: "30px", background: "white", marginTop: "10px" }}>
@@ -193,7 +193,7 @@ function Class() {
                                                 </td>
                                                 <td style={{ padding: "30px", textAlign: "center", height: "20px" }}>
                                                     {
-                                                        ["Parent","Family"].includes(row?.role) && localStorage.getItem("email") !== row?.email && ["Admin", "Parent"].includes(localStorage.getItem("role")) &&
+                                                        ["Parent", "Family"].includes(row?.role) && localStorage.getItem("email") !== row?.email && ["Admin", "Parent"].includes(localStorage.getItem("role")) &&
                                                         <>
                                                             <select value={row?.child} onChange={(e) => updateChild(row?._id, e.target.value)} style={{ padding: "10px", cursor: "pointer", marginTop: "0px" }}>
                                                                 <option value=""> Select Child</option>

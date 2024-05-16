@@ -4,8 +4,19 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ClassesContext } from "../context/ClassesContext";
 import StoryDetails from "../components/StoryDetails";
 import '../StudentDetail.css';
+import { BsPersonSlash } from "react-icons/bs";
 
-// This component will display the details of a student, including
+const ErrorMessage = ({ message, loading }) => {
+  const [show, setShow] = useState(true);
+
+  return (
+    <div className={`notification ${show ? 'show' : ''}`}>
+      <span>{loading ? "Loading..." : message}</span>
+      {!loading && <button onClick={() => setShow(false)}>×</button>}
+    </div>
+  );
+};
+
 const StudentDetail = () => {
   const [student, setStudent] = useState({
     image: null,
@@ -14,10 +25,10 @@ const StudentDetail = () => {
     gender: "",
     dob: "",
   });
-  const [parent, setParent] = useState();
-  const [stories, setStories] = useState([]); // New state for stories
-  const [loadingParent, setLoadingParent] = useState(true); // New loading state for parent
-  const [loadingStories, setLoadingStories] = useState(true); // New loading state for stories
+  const [parents, setParents] = useState([]);
+  const [stories, setStories] = useState([]);
+  const [loadingParent, setLoadingParent] = useState(true);
+  const [loadingStories, setLoadingStories] = useState(true);
   const [error, setError] = useState("");
 
   const { classId, studentId } = useParams();
@@ -26,7 +37,6 @@ const StudentDetail = () => {
 
   const fetchStudentData = useCallback(() => context.fetchStudentData, [context]);
 
-  // Fetch student data when the component mounts
   useEffect(() => {
     const fetchStudent = async () => {
       try {
@@ -47,8 +57,8 @@ const StudentDetail = () => {
               year: 'numeric'
             })
           });
-          fetchParent(data.firstName, data.lastName);
-          fetchStories(data.firstName, data.lastName);
+          fetchParents(`${data.firstName} ${data.lastName}`);
+          fetchStories(`${data.firstName} ${data.lastName}`);
         } else {
           setError("No data found for this student.");
         }
@@ -61,76 +71,83 @@ const StudentDetail = () => {
     fetchStudent();
   }, [classId, studentId, fetchStudentData]);
 
-  // Fetch the parent data for the student
-  const fetchParent = async (firstName, lastName) => {
-    setLoadingParent(true); // Ensure loading state is true when the function starts
+  const fetchParents = async (childName) => {
+    setLoadingParent(true);
     try {
-      const response = await axios.get(`/api/users/parent/${firstName} ${lastName}`);
-      if (response.status === 200 && response.data && response.data.parentName) {
-        setParent(response.data.parentName);
+      const response = await axios.get(`/api/users/parent/${encodeURIComponent(childName)}`);
+      if (response.status === 200 && response.data.length > 0) {
+        setParents(response.data);
       } else {
-        setParent("No parent data available"); // Handle cases where data is incomplete or missing
+        setParents([]);
       }
     } catch (error) {
-      console.error("Failed to fetch parent:", error);
-      setParent("No parent data available");
+      console.error("Failed to fetch parents:", error);
+      setParents([]);
     } finally {
       setLoadingParent(false);
     }
   };
-  
-  // Fetch the stories for the student
-const fetchStories = async (firstName, lastName) => {
-  setLoadingStories(true); // Ensure loading state is set to true at the beginning
-  try {
-    // Fetch stories by searching for the student's full name
-    const response = await axios.get(`/api/stories/search?search=${firstName} ${lastName}`);
-    if (response.status === 200 && response.data.length > 0) {
-      setStories(response.data);
-    } else {
-      setStories([]); // Explicitly set an empty array if no stories are found or the response is not as expected
+
+  const fetchStories = async (childName) => {
+    setLoadingStories(true);
+    try {
+      const response = await axios.get(`/api/stories/search?search=${encodeURIComponent(childName)}`);
+      if (response.status === 200 && response.data.length > 0) {
+        setStories(response.data);
+      } else {
+        setStories([]);
+      }
+    } catch (error) {
+      console.error("Failed to fetch stories:", error);
+      setStories([]);
+    } finally {
+      setLoadingStories(false);
     }
-  } catch (error) {
-    console.error("Failed to fetch stories:", error);
-    setStories([]); // Ensure stories are set to an empty array on error
-  } finally {
-    setLoadingStories(false); // Ensure loading state is set to false after the API call
-  }
-};
+  };
 
-const mapStories = () => {
-  const storyMap = stories.map(story => (
-    <StoryDetails story={story} key={story._id} />
-  ))
+  const mapStories = () => {
+    if (loadingStories) {
+      return <ErrorMessage loading={true} />;
+    }
+    if (stories.length === 0) {
+      return <ErrorMessage message="No stories available for this student." />;
+    }
+    return stories.map(story => (
+      <StoryDetails story={story} key={story._id} />
+    ));
+  };
 
-  if ((storyMap.length - 1) === 0) {
-    return <p>No stories available for this student.</p>
-  }
-  else {
-    return storyMap
-  }
-}
-
-  // Display the student details
   return (
     <div className="page-container">
       <div className="student-detail-container">
-        {error ? <p className="error">{error}</p> : (
+        {error ? <ErrorMessage message={error} /> : (
           <>
             <h1>{student.firstName} {student.lastName}</h1>
-            {student.image && <img src={student.image} alt={`${student.firstName} ${student.lastName}`} className="student-image" />}
+            {student.image ? (
+              <img src={student.image} alt={`${student.firstName} ${student.lastName}`} className="student-image" />
+            ) : (
+              <BsPersonSlash size={200} className="placeholder-icon" />
+            )}
             <p>Gender: {student.gender}</p>
             <p>Date of Birth: {student.dob}</p>
-            <p>Parent: {parent || (loadingParent ? "Loading parent..." : "No parent data available")}</p>
+            <div className="parent-list">
+              <p>Parents:</p>
+              <ul>
+                {loadingParent ? <ErrorMessage loading={true} /> : parents.length > 0 ? (
+                  parents.map(parent => (
+                    <li key={parent.email}>
+                      {parent.parentName} ({parent.email})
+                    </li>
+                  ))
+                ) : "No parents have been assigned."}
+              </ul>
+            </div>
             <button onClick={() => navigate(-1)}>Back</button>
           </>
         )}
       </div>
-      {/* Display the stories for the student */}
       <div className="story-cards-container">
-        {loadingStories ? (
-          <p>Loading stories...</p>
-        ) : mapStories()}
+        {mapStories()}
       </div>
     </div>
   );

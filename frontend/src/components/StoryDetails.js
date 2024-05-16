@@ -187,7 +187,7 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
 
     //if there are no images in the story, display the default image
     if (images.length === 0) {
-        images[0] = './goldfieldslogo.png'
+        images[0] = '/goldfieldslogo.png'
         
     }
     
