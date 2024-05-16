@@ -4,8 +4,18 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ClassesContext } from "../context/ClassesContext";
 import StoryDetails from "../components/StoryDetails";
 import '../StudentDetail.css';
-import { MdAddAPhoto } from "react-icons/md";
 import { BsPersonSlash } from "react-icons/bs";
+
+const ErrorMessage = ({ message, loading }) => {
+  const [show, setShow] = useState(true);
+
+  return (
+    <div className={`notification ${show ? 'show' : ''}`}>
+      <span>{loading ? "Loading..." : message}</span>
+      {!loading && <button onClick={() => setShow(false)}>×</button>}
+    </div>
+  );
+};
 
 const StudentDetail = () => {
   const [student, setStudent] = useState({
@@ -96,18 +106,21 @@ const StudentDetail = () => {
   };
 
   const mapStories = () => {
+    if (loadingStories) {
+      return <ErrorMessage loading={true} />;
+    }
     if (stories.length === 0) {
-      return <p>No stories available for this student.</p>
+      return <ErrorMessage message="No stories available for this student." />;
     }
     return stories.map(story => (
       <StoryDetails story={story} key={story._id} />
     ));
-  }
+  };
 
   return (
     <div className="page-container">
       <div className="student-detail-container">
-        {error ? <p className="error">{error}</p> : (
+        {error ? <ErrorMessage message={error} /> : (
           <>
             <h1>{student.firstName} {student.lastName}</h1>
             {student.image ? (
@@ -120,13 +133,13 @@ const StudentDetail = () => {
             <div className="parent-list">
               <p>Parents:</p>
               <ul>
-                {loadingParent ? "Loading parents..." : parents.length > 0 ? (
+                {loadingParent ? <ErrorMessage loading={true} /> : parents.length > 0 ? (
                   parents.map(parent => (
                     <li key={parent.email}>
                       {parent.parentName} ({parent.email})
                     </li>
                   ))
-                ) : "No parent data available"}
+                ) : "No parents have been assigned."}
               </ul>
             </div>
             <button onClick={() => navigate(-1)}>Back</button>
@@ -134,7 +147,7 @@ const StudentDetail = () => {
         )}
       </div>
       <div className="story-cards-container">
-        {loadingStories ? <p>Loading stories...</p> : mapStories()}
+        {mapStories()}
       </div>
     </div>
   );

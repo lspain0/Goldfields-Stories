@@ -97,3 +97,41 @@
   line-height: 1.2;
   font-family: 'Poppins', sans-serif;
 }
+/****************************************************/
+
+/* Styles for the notification message */
+.notification {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #fdfdfd;
+  color: #333; 
+  border: 1px solid black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: none;
+  transition: all 0.3s ease;
+}
+
+.notification.show {
+  display: flex;
+}
+
+.notification button {
+  margin-left: 10px;
+  cursor: pointer;
+  color: #000000;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+}
+
+.notification button:hover {
+  color: #ff6b6b;
+}
