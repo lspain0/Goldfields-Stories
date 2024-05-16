@@ -191,6 +191,12 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
         
     }
     
+    if (localStorage.getItem('role').includes('Parent') || localStorage.getItem('role').includes('Family')) {
+        if (!story.children.includes(localStorage.getItem('child'))) {
+            return null;
+        }
+    }
+    
 //if the story fits the filters, display the story
 if (storyTypeFilter === true && childrenFilter === true && tagFilter === true) {
     if (story.state !== 'family') {
