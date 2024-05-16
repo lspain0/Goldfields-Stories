@@ -149,7 +149,7 @@ function Class() {
                 <p style={{ color: parseInt(deleteStatus?.status) === 200 ? "green" : "red" }}>{deleteStatus?.msg}</p>
                 <div>
                     {/* Creating the the search container with an icon, name handler gets called when pressed*/}
-                    <div style={{ display: "flex", flexDirection: "row", alignItems: "center", borderRadius: "5px", background: "#FFF", width: "300px", height: "40px" }}>
+                    <div style={{ display: "flex", flexDirection: "row", alignItems: "center", borderRadius: "5px", background: "#f0f0f0", width: "300px", height: "40px" }}>
                         <FaSearch style={{ marginLeft: "5px" }} className="nav-icon" />
                         <input onKeyPress={nameHandler} value={name} onChange={(e) => setName(e.target.value)} style={{ border: "none", outline: "none", background: "#f0f0f0" }} placeholder="Search by Full Name" type="text" />
                     </div>
