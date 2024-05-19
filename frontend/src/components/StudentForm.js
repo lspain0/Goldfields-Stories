@@ -1,3 +1,4 @@
+// Import necessary modules and components
 import React, { useRef, useEffect } from "react";
 import "../student.css";
 import { MdAddAPhoto } from "react-icons/md";
@@ -10,16 +11,16 @@ const StudentForm = ({
   handleBack,
   formType,
 }) => {
-  const cloudinaryWidgetRef = useRef();
+  const cloudinaryWidgetRef = useRef(); // Ref to store the Cloudinary widget instance
 
   // Initialize the Cloudinary widget
   useEffect(() => {
     cloudinaryWidgetRef.current = window.cloudinary.createUploadWidget(
       {
-        cloudName: 'drpnvb7qc',
-        uploadPreset: 'tetlineq',
-        sources: [ 'local '],
-      clientAllowedFormats: ['image']
+        cloudName: 'drpnvb7qc', // Your Cloudinary cloud name
+        uploadPreset: 'tetlineq', // Your Cloudinary upload preset
+        sources: ['local'], // Allowed upload sources
+        clientAllowedFormats: ['image'], // Allowed file formats
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
@@ -28,31 +29,31 @@ const StudentForm = ({
         }
       }
     );
-  }, [student, setStudent]);
+  }, [student, setStudent]); // Dependencies to re-initialize the widget if student or setStudent changes
 
   // Update the student state when the user types in the form
   const updateField = (e) => {
     if (e.target.name === "dob") {
       const selectedDate = new Date(e.target.value);
       const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      today.setHours(0, 0, 0, 0); // Set time to 00:00:00 to compare dates only
       if (selectedDate > today) {
-        alert("Date of birth cannot be in the future.");
+        alert("Date of birth cannot be in the future."); // Alert if date of birth is in the future
         return;
       }
     }
-    setStudent({ ...student, [e.target.name]: e.target.value });
+    setStudent({ ...student, [e.target.name]: e.target.value }); // Update the student state
   };
 
   // Open the Cloudinary widget when the user clicks the "Upload Image" button
   const handleImageUpload = (e) => {
     e.preventDefault();
-    cloudinaryWidgetRef.current.open();
+    cloudinaryWidgetRef.current.open(); // Open the Cloudinary upload widget
   };
 
   // Get today's date in the format "YYYY-MM-DD"
   const today = new Date().toISOString().split("T")[0];
-  const minDate = "1980-01-01";
+  const minDate = "1980-01-01"; // Minimum date for date of birth
 
   // Render the student form
   return (
@@ -60,10 +61,11 @@ const StudentForm = ({
       <form onSubmit={handleSubmit} className="student-form">
         <div className="image-upload-container">
           {student.image ? (
-            <img src={student.image} alt="Student" className="student-image"/>
+            <img src={student.image} alt="Student" className="student-image"/> // Display uploaded image
           ) : (
             <div className="student-image-placeholder">
-            <MdAddAPhoto size={50} />
+              { /* Display placeholder icon if no image */ }
+              <MdAddAPhoto size={50} />
             </div>
           )}
           <button onClick={handleImageUpload} className="standard-button">
@@ -103,7 +105,7 @@ const StudentForm = ({
         <input
           type="date"
           name="dob"
-          value={student.dob ? student.dob.split("/").reverse().join("-") : ""}
+          value={student.dob ? student.dob.split("/").reverse().join("-") : ""} // Format date value
           onChange={updateField}
           required
           className="student-form-input"
@@ -121,4 +123,4 @@ const StudentForm = ({
   );
 };
 
-export default StudentForm;
+export default StudentForm; // Export the component
