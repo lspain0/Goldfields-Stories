@@ -129,7 +129,7 @@ const StudentDetail = () => {
       <div className="student-detail-container">
         {error ? <ErrorMessage message={error} /> : ( // Show error message if error exists
           <>
-            <h1>{student.firstName} {student.lastName}</h1> Display student name*/
+            <h1>{student.firstName} {student.lastName}</h1>
             {student.image ? (
               <img src={student.image} alt={`${student.firstName} ${student.lastName}`} className="student-image" />
             ) : (
@@ -143,7 +143,7 @@ const StudentDetail = () => {
                 {loadingParent ? <ErrorMessage loading={true} /> : parents.length > 0 ? ( // Show loading or list of parents
                   parents.map(parent => (
                     <li key={parent.email}>
-                      {parent.parentName} ({parent.email}) // Display each parent
+                      {parent.parentName} ({parent.email})
                     </li>
                   ))
                 ) : "No parents have been assigned."} 
