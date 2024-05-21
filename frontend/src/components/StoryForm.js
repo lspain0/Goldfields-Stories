@@ -1,3 +1,7 @@
+//this component is a forn that is used for the creation of stories, it can be used for creation of both education and family stories
+//however the layout is slighly different for each of these
+//this form can also be used for editing stories that have already been made and are pending approval
+
 import React, { useState, useRef, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -9,7 +13,7 @@ import StudentList from "./docs/StudentList";
 import ClassList from "./docs/ClassList";
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" />
 
-
+//global variables
 var editing = false;
 var storyId;
 var optimisedUrl
@@ -19,7 +23,7 @@ const numbers = Array.from({ length: 101 }, (_, index) => index.toString());
 var role = localStorage.getItem("role");
 var child = localStorage.getItem("child");
 
-
+//checks role of current user
 function checkRole () {
   if (role.includes("Admin"))
   {
@@ -31,6 +35,7 @@ function checkRole () {
   }
 }
 
+//checks if the form is being used to edit an exisitng story
 function isEditing() {
   if (window.location.pathname.includes('editstory')) {
     editing = true;
@@ -41,6 +46,7 @@ function isEditing() {
   }
 };
 
+//gets name of ucrrent user to use as author entry
 function getName(str) {
   var firstName = str.split(' ')[0];
   var lastName = str.split(' ')[1];
@@ -49,6 +55,7 @@ function getName(str) {
   return fullName;
 }
 
+//cloudinary upload widget used for image uploads
 const UploadWidget = ({ onImageUpload }) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
@@ -80,6 +87,7 @@ const UploadWidget = ({ onImageUpload }) => {
   );
 };
 
+//cloudinary upload widget for video upload
 const UploadWidgetVideo = ({ onVideoUpload }) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
@@ -117,6 +125,7 @@ const UploadWidgetVideo = ({ onVideoUpload }) => {
 
 const StoryForm = () => {
 
+  //variables
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
 
@@ -147,6 +156,7 @@ const StoryForm = () => {
   const [checkTreeTagsOpen, setCheckTreeTagsOpen] = useState(false); // State to manage tree visibility 
   const [active, setActive] = React.useState('individual');
 
+  //navbar
   const Navbar = ({ active, onSelect, ...props }) => {
     return (
       <Nav {...props} activeKey={active} onSelect={onSelect} style={{ marginLeft: 50, marginTop: 5, maxWidth: 150}}>
@@ -156,7 +166,9 @@ const StoryForm = () => {
     )
   };
 
+  //will return a different check tree picker depending on if a class or individual story is selected
   const checkTreeState = () => {
+    //individual checktreepicker
     if (active === 'individual') {
       return <CheckTreePicker
       className="check-tree"
@@ -183,6 +195,7 @@ const StoryForm = () => {
       )}
     />
     }
+    //class checktreepicker
     else {
       return <CheckTreePicker
       className="check-tree"
@@ -213,6 +226,7 @@ const StoryForm = () => {
 
   useEffect(() => {
     const fetchStoryById = async () => {
+      //if currently editing a story, gets the story from mongodb database
       if (editing === true) {
         const storyId = window.location.pathname.split('/')[2];
 
@@ -221,6 +235,7 @@ const StoryForm = () => {
             const response = await fetch(`/api/stories/${storyId}`);
             const json = await response.json();
 
+            //sets the content of the form according to the story retrieved from the database
             if (response.ok) {
               setTitle(json.title);
               setChildren(json.children ? json.children.split(',').map(child => child.trim()) : []);
@@ -244,18 +259,21 @@ const StoryForm = () => {
     fetchStoryById();
   }, []);
 
+  //reactquill wysiwyg
   useEffect(() => {
     if (quillRef.current) {
       // Additional setup or handling can be added here
     }
   }, []);
 
+  //handles change in selected values for the tag checktreepicker
   const handleCheckTreePickerChangeTags = (values) => {
     setSelectedCheckTreeValuesTags(values);
     const tagsString = Array.isArray(values) ? values.join('|') : '';
     setTags(tagsString);
   };
 
+  //handles change in selected values for the children checktreepicker
   const handleCheckTreePickerChangeChildren = (values) => {
     setSelectedCheckTreeValuesChildren(values);
     const childrenString = Array.isArray(values) ? values.join(',') : '';
@@ -278,6 +296,7 @@ const StoryForm = () => {
       }
     };
 
+    //handle image upload to cloudinary as well as retrieving the link to the image and adding it to the story content
   const handleImageUpload = imageUrl => {
     if (imageUrl.includes("f_auto:video,q_auto"))
     {
@@ -297,6 +316,7 @@ const StoryForm = () => {
     }   
   };
 
+  //handle story submit - when post story button is clicked 
   const handleSubmit = async (e) => {
 
     e.preventDefault();
@@ -312,6 +332,7 @@ const StoryForm = () => {
       state,
     };
 
+    //if editing it will find the story and update it
     if (editing === true) {
       try {
         const response = await fetch(`/api/stories/${storyId}`, {
@@ -338,6 +359,7 @@ const StoryForm = () => {
       }
     }
 
+    //if not editing post a new story entry
     else {
       try {
         const response = await fetch('/api/stories', {
@@ -374,7 +396,7 @@ const StoryForm = () => {
       }
     }
   };
-  //function to post the initial tag set on mongodb, should only ever need to be used once
+  //function to post the initial tag set on mongodb, should only ever need to be used once if there is not already an exisiing tag set
   /*const postTags = async () => {
     try {
       // Convert grouped tags to a string using convertToString function
@@ -408,6 +430,7 @@ const StoryForm = () => {
     }
   };*/
 
+  //the modal display used by admins to edit the tags that are available
 const editTagsDisplay = () => {
   if (role.includes("Admin")) {
     return <div>
@@ -483,6 +506,7 @@ const updateTagsContent = async () => {
 
 };
 
+  //used for family stories
   const setStateFamily = () => {
     if (state !== 'family') {
       setState('family');
@@ -491,6 +515,7 @@ const updateTagsContent = async () => {
     }
   }
 
+  //get tag set from mongodb
   const getTags = async () => {
     try {
       const response = await fetch(`/api/tags/${tagID}`);
@@ -564,29 +589,34 @@ const deleteTagGroup = (index) => {
   setIndexToDelete(null);
 };
 
+//handle change in tags
 const handleTagChange = (value, index) => {
   var updatedGroups = [...tagGroups];
   updatedGroups[index] = value;
   setTagGroups(updatedGroups)
 };
 
+//handles opening tag selection
 const handleOpenTags = () => {
   setOpen(true);
   // Save the current tagGroups state as the originalTagGroups state
   setOriginalTagGroups(tagGroups);
 };
 
+//cancel button handling
 const handleCancel = () => {
   // Revert back to the original tagGroups state when cancel button is clicked
   setTagGroups(originalTagGroups);
   setOpen(false); // Close the modal
 };
 
+//if the form is being used for a family story, get the current users child
 const familyMomentGetChild = () => {
   if (role.includes("Parent") || role.includes("Family")) {
     return <h2>Family moment for {child}</h2>
   }
   else {
+    //if a admin or teacher is using the family story form, include a checktreepicker to select a child
     return (<div><h2>Family moment for {child}     <span><CheckTreePicker
       placeholder="Select Child"
       data={sortedData}
@@ -639,8 +669,10 @@ const renderTagInputs = () => {
     </div>
   ));
 };
+//story form for creation of education stories
   if (!window.location.pathname.includes('family'))
   {
+    //redirect users without permissions
     checkRole();
     if (roleCheck === false)
     {
@@ -735,6 +767,7 @@ const renderTagInputs = () => {
     );
   }
 
+  //story form for family stories
   else {
     setStateFamily()
     return (

@@ -1,3 +1,7 @@
+//this page contains a list of all stories available to the current user, as well as links to the create story page
+//some links are only to users with certain roles - for example only admins can access pending stories
+//only admins and teachers can access the create story page for education stories
+
 import React from 'react';
 import { useEffect, useState } from "react";
 import { useStoriesContext } from "../hooks/useStoriesContext";
@@ -20,6 +24,7 @@ import { convertStringToGroupedTags, splitLines } from "../components/docs/tags"
 const numbers = Array.from({ length: 101 }, (_, index) => index.toString());
 var groupedTags = [];
 
+//navbar
 const Navbar = ({ active, onSelect, ...props }) => {
     return (
       <Nav {...props} activeKey={active} onSelect={onSelect} style={{ marginLeft: 50, marginTop: 15, maxWidth: 150}}>
@@ -31,6 +36,7 @@ const Navbar = ({ active, onSelect, ...props }) => {
 };
 
 const Stories = () => {
+  //variables
     const { stories, dispatch } = useStoriesContext();
   var sortedStories = null;
   const [role, setRole] = useState(""); //current user role state
@@ -45,6 +51,7 @@ const Stories = () => {
   const [tagsArray, setTagsArray] = useState([]);
   const [active, setActive] = React.useState('education');
 
+  //get tag set from mongodb database - used for story filter menu
   const getTags = async () => {
     try {
       const response = await fetch(`/api/tags/${tagID}`);
@@ -108,6 +115,7 @@ const Stories = () => {
   };
   
 
+  //get stories from mongodb database
   useEffect(() => {
     const fetchStories = async () => {
       const response = await axios_obj.get('/stories')
@@ -158,6 +166,7 @@ const Stories = () => {
     setSortOption(option)
   }
 
+  //displays number of current pending stories
   const getPendingStoryCount = (stories) => {
     let pendingStories = stories.filter(story => story.state === 'pending');
     let numberOfPendingStories = pendingStories.length;
@@ -201,8 +210,10 @@ const Stories = () => {
   }, [active]); 
   
 
+  //sort stories
   sortedStories = sortStories(stories)
   
+  //display education stories
   if (active === 'education') {
     return (
       <body>
@@ -318,6 +329,7 @@ const Stories = () => {
   }
 
   else {
+    //display other story pages
     return (
       <body>
         <div>

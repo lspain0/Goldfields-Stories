@@ -1,3 +1,5 @@
+//this file contains all routes used to interact with tag sets on the mongodb database
+
 const express = require('express');
 const { createTag, updateTag, getTags } = require('../controllers/tagController');
 

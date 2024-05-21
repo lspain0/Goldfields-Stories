@@ -23,6 +23,7 @@ function checkRole () {
 }
 
 const PendingStories = () => {
+  //redirects users without admin role
   checkRole();
   if (roleCheck === false)
   {
@@ -30,6 +31,7 @@ const PendingStories = () => {
   }
   const { stories, dispatch } = useStoriesContext()
 
+  //get stories from mongodb database
   useEffect(() => {
     const fetchStories = async () => {
       const response = await fetch('/api/stories')
@@ -43,6 +45,7 @@ const PendingStories = () => {
     fetchStories()
   }, [dispatch])
 
+  //return a container with all pending stories
   return (
     <body>
 

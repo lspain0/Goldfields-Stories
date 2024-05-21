@@ -1,3 +1,7 @@
+//this page contains the full view of a story, here users can see all information regarding the story as well as being able to make comments
+//this page can also be interacted with by admins to delete, edit, or post pending stories
+//there is also logic for sending an email to a parent when a pending story containing their child is posted 
+
 import React, { useEffect, useState } from "react";
 import { useLocation, Link } from 'react-router-dom';
 import axios_obj from "../axios";
@@ -8,11 +12,12 @@ import emailjs from '@emailjs/browser';
 
 var storyId;
 
-
+//get story id from link
 function loadStoryID() {
   storyId = window.location.pathname.split('/')[2];
 }
 
+//get current date - used for comments
 function getDate() {
   const currentDate = new Date();
 
@@ -23,6 +28,7 @@ function getDate() {
   return formattedDate;
 }
 
+//hanlde deletion of story by admin user
 const handleDeleteStory = async () => {
   if (window.confirm("Are you sure you want to delete this story?")) {
     try {
@@ -48,12 +54,12 @@ const handleDeleteStory = async () => {
   }
 };
 
-
-
+//add space in place of comma
 function addSpace(str) {
   return str.replaceAll(',', (', '))
 }
 
+//get full name of author
 function getName(str) {
   var firstName = str.split(' ')[0];
   var lastName = str.split(' ')[1];
@@ -72,10 +78,12 @@ const StoryPage = () => {
   const [commentPostEnabled, setCommentPostEnabled] = useState(false);
   const [name, setName] = useState(localStorage.getItem("name"));
 
+  //redirect users without permissions 
   if (window.location.href.includes('pending') && localStorage.getItem("role") !== 'Admin') {
     window.location.href = `/home`;
   }
 
+  //display admin controls for pending stories
   function adminControls() {
     if (window.location.href.includes('pending')) {
       return (
@@ -90,6 +98,7 @@ const StoryPage = () => {
     }
   }
   
+  //get parent emails - used to notify parents by email when childs story is posted
   const fetchParentEmails = async (childName) => {
     try {
       const response = await axios.get(`/api/users/parent/${childName.trim()}`);
@@ -104,6 +113,7 @@ const StoryPage = () => {
     }
   };
   
+  //send email to parents
   const sendEmail = async (childName, storyTitle) => {
     const parentEmails = await fetchParentEmails(childName);
     if (!parentEmails.length) {
@@ -131,6 +141,7 @@ const StoryPage = () => {
     });
   };
   
+  //handles posting pending story - changes state to approved
   const handlePostStory = async () => {
     if (window.confirm("Are you sure you want to post this story?")) {
       const childNames = currentStory.children.split(',');
@@ -163,6 +174,7 @@ const StoryPage = () => {
     }
   };
   
+  //handle posting comment
   const handlePostComment = async () => {
     let firstComment = true;
     setName(localStorage.getItem("name"));
@@ -207,6 +219,7 @@ const StoryPage = () => {
     document.querySelector('.comment-footer-input').value = '';
   };
 
+  //get story from database using id from link
   useEffect(() => {
     const fetchStoryById = async () => {
       const storyId = location.pathname.split('/')[2];
@@ -230,10 +243,12 @@ const StoryPage = () => {
     fetchStoryById();
   }, [location.pathname]);
 
+  //load existing comments for story
   const loadComments = () => {
     setComments(currentStory.comments);
   }
 
+  //handle change in comment entry field
   const handleCommentChange = (values) => {
     if (values.trim() !== '') {
       setNewComment('<sub>' + name + '<br>' + getDate() + '<br><br></sub>' + (values.replace(/<\/?[^>]+(>|$)/g, "")).replace(/(?:\r\n|\r|\n)/g, '<br>') + '<br><br><br>');
@@ -261,6 +276,7 @@ const StoryPage = () => {
     return { __html: html };
   };
 
+  //formats timestamp used for comments
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
 
@@ -270,6 +286,7 @@ const StoryPage = () => {
     return formattedDate;
   };
 
+  //generate story info and layout using mongodb content
   const generateStoryInfoHTML = () => {
     return (
       <div className="story-info">
@@ -309,6 +326,7 @@ const StoryPage = () => {
     );
   };
 
+  //footer for comment entry
   const commentFooter = () => {
     if (!window.location.href.includes('pending')) {
       return <div className="comment-footer">
@@ -319,6 +337,7 @@ const StoryPage = () => {
     }
   }
 
+  //page layout
   return (
     <body className="story-page-body">
       <div className="back-arrow" onClick={() => navigate(-1)}>&larr; Back</div>

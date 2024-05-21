@@ -1,6 +1,9 @@
+//this file contains functions that interact with the tag set entry on mongodb database
+
 const Tag = require('../models/tagModel');
 const mongoose = require('mongoose');
 
+//create tag entry
 const createTag = async (req, res) => {
   const { content } = req.body;
 
@@ -12,6 +15,7 @@ const createTag = async (req, res) => {
   }
 };
 
+//update tag entry
 const updateTag = async (req, res) => {
   const { id } = req.params;
 

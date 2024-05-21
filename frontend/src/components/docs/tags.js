@@ -1,4 +1,6 @@
+//logic for dealing with tags
 
+//converts tag data to text
 export function convertToText(inputData) {
   let outputData = {};
 
@@ -16,6 +18,7 @@ export function convertToText(inputData) {
   return outputData;
 }
 
+//converts data to group of tags
 export function convertToTags(inputData) {
   let outputData = [];
   let counter = 1;
@@ -42,6 +45,7 @@ export function convertToTags(inputData) {
   return outputData;
 }
 
+//converts a group of tags to a string
 export function convertToString(groupedTags) {
   let result = '';
 
@@ -85,6 +89,7 @@ export function splitLines(str) {
   return result;
 }
 
+//converts a string to a list of tags that can be used as data for a checklist
 export const convertStringToGroupedTags = (input) => {
   const lines = input.split(/\n\s*\n/);
   let value = 1;
@@ -112,7 +117,7 @@ export const convertStringToGroupedTags = (input) => {
   
 };
 
-
+//original hard coded list of tags, this probably isnt needed anymore as all tags should be stored on the mongodb database
 export const groupedTags = [
     {
       label: 'Achievement Key',

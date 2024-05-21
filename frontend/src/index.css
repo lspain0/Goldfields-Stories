@@ -327,7 +327,7 @@ div.error {
   transition: background-color 0.3s ease;
   background: #326C6F;
   color: white;
-  height: 45px
+  height: 45px;
 }
 
 .story-form-button:hover {

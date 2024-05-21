@@ -1,3 +1,5 @@
+//This file contains the model for a story entry on the mongodb database
+
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema

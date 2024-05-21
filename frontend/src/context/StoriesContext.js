@@ -1,3 +1,5 @@
+//includes context for story controls
+
 import { createContext, useReducer } from 'react';
 
 export const StoriesContext = createContext();

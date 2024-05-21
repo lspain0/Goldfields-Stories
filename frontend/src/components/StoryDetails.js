@@ -1,6 +1,11 @@
-import { Link } from 'react-router-dom'
-import { BsTrash } from "react-icons/bs";
+// this component return a group of stories in a card format, the cards contain a link to the full view of the story
+//used for stories page, student profile page, search stories page etc
+//much of the logic used in this file is doing checks to display correct stories based on search terms, filters, current user etc
+//if you need a better understanding of what each of the filter variables are for check stories.js page
 
+import { Link } from 'react-router-dom'
+//trash icon used for story deletion, only visible to admin users
+import { BsTrash } from "react-icons/bs";
 
 //truncate story content
 function truncate(str, n){
@@ -49,6 +54,7 @@ function getAuthorFirstName(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+//adds a space where there is a comma
 function addSpace(str) {
     return str.replaceAll(',', (', '))
   }
@@ -60,6 +66,7 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
     let childrenFilter = false;
     let tagFilter = false;
 
+    //handle deletion of stories - will remove from mongodb database
     const handleDeleteStory = async () => {
         if (window.confirm("Are you sure you want to delete this story?")) {
           try {
@@ -157,6 +164,7 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
             return null;
         }
     }
+    //will only display stories created by current logged in user
     else if (currentState === 'mystories')
     {
         if (story.author !== localStorage.getItem("name"))
@@ -191,6 +199,7 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
         
     }
     
+    //
     if (localStorage.getItem('role').includes('Parent') || localStorage.getItem('role').includes('Family')) {
         if (!story.children.includes(localStorage.getItem('child'))) {
             return null;
@@ -198,6 +207,7 @@ const StoryDetails = ({ story, selectedRadioValue, selectedChildrenFilters, sele
     }
     
 //if the story fits the filters, display the story
+//education stories
 if (storyTypeFilter === true && childrenFilter === true && tagFilter === true) {
     if (story.state !== 'family') {
         return (
@@ -221,6 +231,7 @@ if (storyTypeFilter === true && childrenFilter === true && tagFilter === true) {
             </div>
         )
     }
+    //family stories
     else {
         return (
             <div>

@@ -1,3 +1,5 @@
+//this file contains all routes used to interact with stories on the mongodb database
+
 const express = require('express')
 const {
     getStories,
