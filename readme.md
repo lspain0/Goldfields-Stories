@@ -28,10 +28,15 @@ The Goldfields Student Information & Reporting System is a custom web applicatio
 •	Notification System: Alerts parents automatically about new updates or reports regarding their children.
 
 ## Technical Stack
+
 •	Frontend: React.js
+
 •	Backend: Node.js with Express.js
+
 •	Database: MongoDB
+
 •	Cloud Storage: Cloudinary
+
 •	Development Tools: Visual Studio Code, GitHub
 
 ### Project Setup
@@ -149,13 +154,20 @@ PENDING STORIES PAGE
 1.	Once logged in, navigate to the "Classes" section using the navigation bar at the top of the page.
 2.	The "Classes" page allows you to create and manage classes.
 3.	To create a new class:
+
 •	Enter the class name in the input field labeled "Class Name."
+
 •	Click on the "Add Class" button to create the class.
+
 4.	Below the class creation form, there is a section labeled "Created Classes" where all created classes are displayed as buttons.
 5.	You can sort the list of created classes using the "Sort by" dropdown menu. Sorting options include:
+
 •	Alphabetical: Sort classes in alphabetical order.
+
 •	Recently Added: Sort classes by the date they were added, with the most recent first.
+
 •	Oldest First: Sort classes by the date they were added, with the oldest first.
+
 
 --------------------------------------
 CREATE STUDENT PROFILE PAGE
@@ -164,11 +176,17 @@ CREATE STUDENT PROFILE PAGE
 2.	To add a new student, click on the "Add Student" button, which will take you to the "Create Student Profile" page.
 3.	The "Create Student Profile" page allows you to enter the details of the new student.
 4.	Follow these steps to create a new student profile:
+
 •	Upload Image: Click on the "Upload Image" button to add a profile picture for the student.
+
 •	First Name: Enter the student's first name in the provided field.
+
 •	Last Name: Enter the student's last name in the provided field.
+
 •	Gender: Select the student's gender from the dropdown menu. Options include Male, Female, and Other.
+
 •	Date of Birth: Enter the student's date of birth in the format dd/mm/yyyy.
+
 5.	After filling in all the required fields, click on the "Add Student" button to save the student's profile.
 6.	If you want to go back to the previous page without adding a new student, click the "Back" button.
 
@@ -178,20 +196,34 @@ CLASS MANAGEMENT PAGE
 1.	Once logged in, navigate to the "Classes" section and select a class to manage.
 2.	The "Class Management" page allows you to manage students within a selected class.
 3.	At the top of the page, you have options to:
+
 •	Add Student: Add a new student to the class.
+
 •	Transfer Student: Transfer a student from the current class to another class. Use the "Select Student" dropdown to choose the student and the "Select New Class" dropdown to choose the destination class. Click "Transfer" to complete the action or "Cancel" to discard it.
+
 •	Delete Class: Permanently delete the current class and all its associated data.
+
 •	Back: Return to the previous page.
+
 4.	The class name is displayed, followed by a section where the students in the class are listed. Each student is represented by a card showing their name, date of birth (DOB), and an image.
 5.	You can sort the list of students using the "Sort by" dropdown menu. Sorting options include:
+
 •	Alphabetical Order: Sort students in alphabetical order.
+
 •	Recently Added: Sort students by the date they were added, with the most recent first.
+
 •	Oldest First: Sort students by the date they were added, with the oldest first.
+
 •	Youngest to Oldest: Sort students from youngest to oldest based on their DOB.
+
 •	Oldest to Youngest: Sort students from oldest to youngest based on their DOB.
+
 6.	Each student card has an "Actions" dropdown menu with the following options:
+
 •	Edit: Modify the student's details.
+
 •	Delete: Remove the student from the class.
+
 
 --------------------------------------
 STUDENT PROFILE PAGE
@@ -199,11 +231,17 @@ STUDENT PROFILE PAGE
 1.	Once logged in, navigate to the "Classes" section and select a class to manage.
 2.	In the "Class Management" page, click on the student you wish to view. This will take you to the "Student Profile" page.
 3.	The "Student Profile" page displays detailed information about the selected student:
+
 •	Profile Picture: An image of the student.
+
 •	Name: The student's full name.
+
 •	Gender: The student's gender.
+
 •	Date of Birth: The student's date of birth.
+
 •	Parents: The names and email addresses of the student's parents.
+
 4.	Below the student's profile information, there is a section displaying the stories related to the student. Each story is represented by a card showing an image, title, a brief description, the type of story, and the date it was shared.
 5.	You can click on any story card to view the full story.
 6.	Click the "Back" button to return to the previous page.
@@ -214,15 +252,25 @@ SEARCH STORIES PAGE
 1.	Once logged in, navigate to the "Search Stories" section using the navigation bar at the top of the page.
 2.	The "Search Stories" page allows you to search for stories related to the school.
 3.	To search for a story:
+
 •	Enter the search term in the search bar at the top of the page.
+
 •	Use the dropdown menu to filter the stories by type:
+
 •	All Stories: View all stories.
+
 •	Individual Stories: View only individual stories.
+
 •	Group Stories: View only group stories.
+
 •	Use the "Sort by" dropdown menu to sort the stories:
+
 •	Sort by Date: Sort stories by the date they were added, with the most recent first.
+
 •	Sort by Title: Sort stories alphabetically by their title.
+
 •	Click the "Search" button OR “Enter button on your keyboard” to execute the search.
+
 4.	The search results will display as a gallery of story cards, each showing an image, title, a brief description, the type of story, and the date it was shared.
 5.	You can click on any story card to view the full story.
 
@@ -232,24 +280,43 @@ MANAGE ACCOUNTS PAGE
 1.	Once logged in, navigate to the “Manage Accounts” section using the navigation bar at the top of the page.
 2.	The “Manage Accounts” page allows you to see all the accounts, change roles, assign a parent to a child, delete accounts and search accounts.
 3.	To search a user:
+
 •	Click on the “Search by Full Name” rectangular box.
+
 •	Input either the first or last name of the account you wish to find.
+
 •	Search results will only display matching name accounts.
+
 4.	To change roles:
+
 •	Follow the search a user step to locate the user you wish to change role.
+
 •	Click the drop-down button under Change role for variation of role.
+
 •	Admin: Highest management role, able to make changes of all content
+
 •	Teacher: Second highest role, able to create stories and view classes
+
 •	Parent: Able to view child’s stories only and to invite family members
+
 •	Family: Only able to view child stories invited by the parent.
+
 •	Select the role you want the user to have.
+
 5.	To Assign to Child:
+
 •	Follow step 3 to locate the user
+
 •	Follow step 4 but select a parent role.
+
 •	Select the child from the drop-down list.
+
 6.	To delete an account.
+
 •	Follow step 3 to find the account.
+
 •	Click on the delete icon.
+
 •	Click on ok on the pop-up screen to delete the account permanently.
 
 --------------------------------------
@@ -264,14 +331,25 @@ MANAGE ACCOUNTS PAGE
 4.	Input parents email address in the email field.
 5.	Click on Create Account.
 6.	Parent to login.
+
 •	Parent then goes into Login screen.
+
 •	Input email address in the email field
+
 •	Input the default password in the password field, that has been set by the administrator
+
 •	Clicks on Login.
+
 •	Parent password change
+
 •	Input the password in the rectangular empty box, different from the default password.
+
 •	Click on “Change Password”
+
 •	Pop up screen to confirm changes and logs you out
+
 •	Input email address in the email field
+
 •	Input the changed password in the password field
+
 •	Click on “Login”
