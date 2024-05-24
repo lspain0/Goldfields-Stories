@@ -1,5 +1,4 @@
-========a================================================================
-
+========================================================================
 Goldfields Student Information and Reporting System
 
 Authors: Fahim Kaidawala,  Lucas Spain, Biju Bhattarai
@@ -12,15 +11,22 @@ The Goldfields Student Information & Reporting System is a custom web applicatio
 
 ### Features:
 •	Student Profiles: Secure creation and management of individual student profiles.
+
 •	Class Management: Facilitates the easy transition of student profiles between different classes.
+
 •	Story Creation: Creation of stories with a title, students/classes, custom learning tags, and content. Also supports use of image and video uploads.
+
 •	Story Management and Search: Allows searching for stories related to the school, filtering by individual or group stories, and sorting search results by date or title, with the ability to click on story cards to view detailed stories. There are also options for managing stories for administrators such as approving or editing pending stories and deletion of stories.
+
 •	Home Page Features: Displays a rotating gallery of images showcasing school activities and events, with options to upload, hide, and delete images, along with a welcome message in both English and Māori.
+
 •	Reporting System: Automated generation of detailed reports and assessments, which can be shared with parents and staff.
+
 •	Secure Data Sharing: Ensures that student information, including photos, videos, and academic reports, can be securely shared among teachers and with parents.
+
 •	Notification System: Alerts parents automatically about new updates or reports regarding their children.
 
-###Technical Stack
+## Technical Stack
 •	Frontend: React.js
 •	Backend: Node.js with Express.js
 •	Database: MongoDB
