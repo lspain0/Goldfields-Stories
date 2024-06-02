@@ -45,8 +45,8 @@ ENV file: To connect to the database a .env file is required in the backend fold
 
 Follow these steps to set up the project on your local machine:
 1.	Clone the Repository: Go to https://github.com/lspain0/Goldfields-Stories/tree/main and clone the repository to your local machine.
-2.	Install Backend Dependencies: Open a terminal, navigate to the backend directory by typing cd backend, and then install the necessary dependencies by running npm install.
-3.	Install Frontend Dependencies: Open a second terminal, navigate to the frontend directory by typing cd frontend, and then install the necessary dependencies by running npm install.
+2.	Install Backend Dependencies: Open a terminal, navigate to the backend directory by typing cd backend, and then install the necessary dependencies by running npm install (or npm install --force).
+3.	Install Frontend Dependencies: Open a second terminal, navigate to the frontend directory by typing cd frontend, and then install the necessary dependencies by running npm install (or npm install --force).
 4.	Run the Application: Start the application by running npm run dev the backend directory and npm start in the frontend directory through the terminal.
 
 --------------------------------------
